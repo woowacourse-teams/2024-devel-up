@@ -1,8 +1,8 @@
 ---
-name: PROBLEM
+name: BUG
 about: 공습경보
 title: ''
-labels: 문제
+labels: 버그
 assignees: ''
 
 ---
