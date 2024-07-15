@@ -1,8 +1,8 @@
 ---
-name: TASK
-about: 신규 작업 이슈를 발행합니다.
+name: FEATURE
+about: 신규 기능 구현 이슈를 발행합니다.
 title: ''
-labels: 작업
+labels: 기능
 assignees: ''
 
 ---

@@ -5,7 +5,6 @@ export default function App() {
   return (
     <GlobalLayout>
       <Header />
-      <div>컨텐츠</div>
     </GlobalLayout>
   );
 }
