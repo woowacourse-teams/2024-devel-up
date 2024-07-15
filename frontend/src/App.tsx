@@ -1,3 +1,11 @@
+import Header from './components/header';
+import { GlobalLayout } from './styles/GlobalLayout';
+
 export default function App() {
-  return <div>App</div>;
+  return (
+    <GlobalLayout>
+      <Header />
+      <div>컨텐츠</div>
+    </GlobalLayout>
+  );
 }
