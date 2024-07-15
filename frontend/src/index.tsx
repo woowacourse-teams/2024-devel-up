@@ -5,7 +5,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import MissionDetail from './components/missionDetail/MissionDetail';
+import MissionDetailPage from './pages/MissionDetailPage';
 
 const queryClient = new QueryClient();
 
@@ -33,7 +33,7 @@ const routes = [
     path: ROUTES.missionDetail,
     element: (
       <App>
-        <MissionDetail />
+        <MissionDetailPage />
       </App>
     ),
   },
