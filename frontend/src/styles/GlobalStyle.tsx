@@ -194,9 +194,6 @@ html,
     --grey-800:#2F2F2F;
     --grey-900:#0E0E0E;
   }
-
-
-
 `;
 
 export default GlobalStyle;
