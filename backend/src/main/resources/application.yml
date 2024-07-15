@@ -1,0 +1,17 @@
+spring:
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+    hibernate:
+      ddl-auto: create
+
+logging:
+  level:
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.orm.transaction: DEBUG
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
