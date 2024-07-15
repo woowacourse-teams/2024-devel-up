@@ -12,3 +12,7 @@ export const Container = styled.nav`
 export const Logo = styled.h1`
   font-size: 2rem;
 `;
+
+export const Spacer = styled.div`
+  height: 8rem;
+`;
