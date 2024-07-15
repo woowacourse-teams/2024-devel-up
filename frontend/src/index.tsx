@@ -6,6 +6,7 @@ import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetail from './components/missionDetail/MissionDetail';
+import MissionList from './pages/missionList';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +18,7 @@ const routes = [
     path: ROUTES.main,
     element: (
       <App>
-        <div>메인</div>
+        <MissionList />
       </App>
     ),
   },
