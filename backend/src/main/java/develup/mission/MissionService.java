@@ -18,4 +18,10 @@ class MissionService {
                 .map(MissionResponse::from)
                 .toList();
     }
+
+    public MissionResponse getMissionById(Long id) {
+        return missionRepository.findById(id)
+                .map(MissionResponse::from)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 미션입니다."));
+    }
 }
