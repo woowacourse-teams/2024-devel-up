@@ -6,6 +6,7 @@ import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
+import MissionListPage from './pages/MissionListPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
 
 const queryClient = new QueryClient();
@@ -18,7 +19,7 @@ const routes = [
     path: ROUTES.main,
     element: (
       <App>
-        <div>메인</div>
+        <MissionListPage />
       </App>
     ),
   },
