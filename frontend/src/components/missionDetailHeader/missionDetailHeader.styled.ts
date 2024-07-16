@@ -14,7 +14,6 @@ export const ThumbnailImg = styled.img`
   height: 100%;
   object-fit: cover;
 
-  background-image: url('https://avatars.githubusercontent.com/u/175586735');
   background-size: cover;
   background-position: center;
 

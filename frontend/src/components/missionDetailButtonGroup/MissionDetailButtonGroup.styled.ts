@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const MissionDetailButtonGroupContainer = styled.div`
@@ -7,6 +6,6 @@ export const MissionDetailButtonGroupContainer = styled.div`
   justify-content: flex-end;
 `;
 
-export const Button = styled(Link)`
+export const Button = styled.button`
   background-color: var(--primary-100);
 `;
