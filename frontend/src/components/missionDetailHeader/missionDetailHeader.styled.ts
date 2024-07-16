@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MissionDetailHeaderContainer = styled.div`
-  width: 170rem;
+  width: 100%;
   height: 20rem;
   margin: 0 auto;
   display: flex;
@@ -10,9 +10,9 @@ export const MissionDetailHeaderContainer = styled.div`
 `;
 
 export const ThumbnailImg = styled.img`
-  width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 3rem;
 
   background-size: cover;
   background-position: center;
@@ -22,7 +22,11 @@ export const ThumbnailImg = styled.img`
 
 export const Title = styled.h1`
   position: absolute;
+  left: 2.4rem;
   bottom: 0;
+
   font-size: 4.8rem;
   font-weight: bold;
+  color: var(--white-color);
+  background-color: rgba(0, 0, 0, 0.3);
 `;

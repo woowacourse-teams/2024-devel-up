@@ -34,6 +34,14 @@ class Mission {
     protected Mission() {
     }
 
+    public Mission(String title, Language language, String description, String thumbnail, String url) {
+        this.title = title;
+        this.language = language;
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.url = url;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,10 +1,19 @@
 import * as S from './missionDetailHeader.styled';
+import { missionMocks } from '../missionList/missionMocks';
+import type { Mission } from '../missionList/missionMocks';
 
-export default function MissionDetailHeader() {
+interface MissionDetailHeaderProps {
+  id: number;
+}
+
+export default function MissionDetailHeader({ id }: MissionDetailHeaderProps) {
+  const thumbnailUrl = missionMocks.find((mission: Mission) => mission.id === id)?.thumbnail;
+  const title = missionMocks.find((mission: Mission) => mission.id === id)?.title;
+
   return (
     <S.MissionDetailHeaderContainer>
-      <S.ThumbnailImg src="https://avatars.githubusercontent.com/u/175586735" />
-      <S.Title>미션미션미션</S.Title>
+      <S.ThumbnailImg src={thumbnailUrl} alt="미션 썸네일 이미지" />
+      <S.Title>{title}</S.Title>
     </S.MissionDetailHeaderContainer>
   );
 }
