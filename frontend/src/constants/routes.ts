@@ -1,5 +1,5 @@
 export const ROUTES = {
   main: '/',
-  submit: '/submit',
+  submit: '/submit/:id',
   missionDetail: '/missions/:id',
 } as const;

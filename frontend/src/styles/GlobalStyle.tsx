@@ -141,6 +141,15 @@ html,
     padding-inline: 0;
     padding-block: 0;
   }
+  input{
+    border:none;
+    outline : none;
+  }
+  textarea{
+    resize : none;
+    border:none;
+    outline:none;
+  }
   *,
   *::before,
   *::after {
