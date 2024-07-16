@@ -15,7 +15,7 @@ export default function MissionDetailButtonGroup({ id }: MissionDetailButtonGrou
       <Link to="https://github.com/develup-mission/docs/blob/main/mission-guide.md" target="_blank">
         <S.Button>미션 제출 방법</S.Button>
       </Link>
-      <Link to={url}>
+      <Link to={url} target="_blank">
         <S.Button>미션 참여하기</S.Button>
       </Link>
       <Link to={`/submit/${id}`}>

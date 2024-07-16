@@ -10,6 +10,6 @@ export const Button = styled.button`
   background-color: var(--primary-100);
 
   padding: 0.75rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   color: var(--black-color);
 `;

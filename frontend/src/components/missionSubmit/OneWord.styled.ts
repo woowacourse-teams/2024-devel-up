@@ -13,6 +13,7 @@ export const Title = styled.h1`
 `;
 
 export const TextArea = styled.textarea`
+  border-radius: 0.5rem;
   background: var(--grey-100);
   padding: 1rem;
   height: 14rem;
