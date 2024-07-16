@@ -34,7 +34,7 @@ export default function MissionSubmitPage() {
       <MissionSubmitForm>
         <PRLink />
         <OneWord />
-        <SubmitButton onSubmitMission={handleMissionSubmit} />
+        <SubmitButton onSubmit={handleMissionSubmit} />
       </MissionSubmitForm>
     </S.Container>
   );
