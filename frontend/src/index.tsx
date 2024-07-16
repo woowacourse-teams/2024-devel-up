@@ -7,6 +7,7 @@ import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
 import MissionListPage from './pages/MissionListPage';
+import MissionSubmitPage from './pages/MissionSubmitPage';
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,7 @@ const routes = [
     path: ROUTES.submit,
     element: (
       <App>
-        <div>서브밋</div>
+        <MissionSubmitPage />
       </App>
     ),
   },
