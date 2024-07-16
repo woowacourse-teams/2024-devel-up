@@ -3,6 +3,8 @@ package develup.mission;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,17 @@ class MissionServiceTest {
     @BeforeEach
     void setUp() {
         missionRepository.deleteAll();
+    }
+
+    @Test
+    @DisplayName("모든 미션을 조회한다.")
+    void getMissions() {
+        missionRepository.save(new Mission("미션 1", Language.JAVA, "미션 설명", "미션 썸네일", "미션 url"));
+        missionRepository.save(new Mission("미션 2", Language.JAVA, "미션 설명", "미션 썸네일", "미션 url"));
+
+        List<MissionResponse> missions = missionService.getMissions();
+
+        assertThat(missions).hasSize(2);
     }
 
     @Test
