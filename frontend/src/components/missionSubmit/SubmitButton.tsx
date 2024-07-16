@@ -1,13 +1,13 @@
 import * as S from './SubmitButton.styled';
 
-type SubmitButtonProps = {
-  onSubmitMission: () => void;
-};
+interface SubmitButtonProps {
+  onSubmit: () => void;
+}
 
-export default function SubmitButton({ onSubmitMission }: SubmitButtonProps) {
+export default function SubmitButton({ onSubmit }: SubmitButtonProps) {
   return (
     <S.Container>
-      <S.Button onClick={onSubmitMission}>제출</S.Button>
+      <S.Button onClick={onSubmit}>제출</S.Button>
     </S.Container>
   );
 }

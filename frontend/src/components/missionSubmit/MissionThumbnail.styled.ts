@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const Container = styled.div``;
+export const MissionImageContainer = styled.div``;
 
 export const MissionImageWrapper = styled.div`
   display: flex;

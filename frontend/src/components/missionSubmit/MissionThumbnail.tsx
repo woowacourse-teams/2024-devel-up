@@ -1,14 +1,14 @@
 import * as S from './MissionThumbnail.styled';
 
-type MissionImageProps = {
+interface MissionImageProps {
   thumbnail: string;
   title: string;
   language: string;
-};
+}
 
 export default function MissionImage({ thumbnail, title, language }: MissionImageProps) {
   return (
-    <S.Container>
+    <S.MissionImageContainer>
       <S.MissionImageWrapper>
         <S.MissionImg src={thumbnail} alt="미션 이미지" />
         <S.MissionSummaryWrapper>
@@ -16,6 +16,6 @@ export default function MissionImage({ thumbnail, title, language }: MissionImag
           <S.MissionSummaryText>{language}</S.MissionSummaryText>
         </S.MissionSummaryWrapper>
       </S.MissionImageWrapper>
-    </S.Container>
+    </S.MissionImageContainer>
   );
 }
