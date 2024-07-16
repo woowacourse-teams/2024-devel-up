@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MissionDetailHeaderContainer = styled.div`
-  width: 80%;
+  width: 170rem;
   height: 20rem;
   margin: 0 auto;
   display: flex;
