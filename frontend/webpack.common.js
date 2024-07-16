@@ -19,8 +19,12 @@ module.exports = {
         use: ['@svgr/webpack'],
       },
       {
-        test: /\.(png|jpeg|jpg)$/,
+        test: /\.(png|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
+        generator: {
+          publicPath: 'http://localhost:3000/assets/',
+          outputPath: 'assets/',
+        },
       },
     ],
   },
@@ -35,6 +39,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
