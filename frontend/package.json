@@ -16,7 +16,6 @@
   "license": "ISC",
   "dependencies": {
     "@tanstack/react-query": "^5.50.1",
-    "file-loader": "^6.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1",
