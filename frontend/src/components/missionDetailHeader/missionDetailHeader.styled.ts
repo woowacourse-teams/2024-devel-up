@@ -10,9 +10,10 @@ export const MissionDetailHeaderContainer = styled.div`
 `;
 
 export const ThumbnailImg = styled.img`
+  border: 1px solid var(--grey-200);
   height: 100%;
   object-fit: cover;
-  border-radius: 3rem;
+  border-radius: 1rem;
 
   background-size: cover;
   background-position: center;

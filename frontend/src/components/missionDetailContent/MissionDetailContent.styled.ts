@@ -5,6 +5,6 @@ export const MissionDescription = styled.div`
   font-size: 1.8rem;
 
   background-color: var(--grey-50);
-  border-radius: 3rem;
+  border-radius: 1rem;
   padding: 2rem;
 `;

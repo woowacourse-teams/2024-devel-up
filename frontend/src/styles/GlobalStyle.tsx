@@ -168,8 +168,9 @@ html,
   button {
     cursor: pointer;
   }
-  a {
+  a:visited, a:link, a {
     text-decoration: none;
+    color:black;
   }
   #root {
     --primary-50:#E7E9F8;

@@ -8,6 +8,7 @@ export const Container = styled.div`
 `;
 
 export const Button = styled.button`
+  border-radius: 0.5rem;
   background: #000;
   color: #fff;
   width: 50rem;
