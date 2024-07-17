@@ -32,5 +32,8 @@ jobs:
       - name: Setup Gradle
         run: chmod +x ./backend/gradlew
 
+      - name: Setup position
+        run: cd backend
+
       - name: Build with Gradle
-        run: ./backend/gradlew build
+        run: ./gradlew build
