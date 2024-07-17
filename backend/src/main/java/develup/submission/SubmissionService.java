@@ -21,7 +21,7 @@ class SubmissionService {
     public SubmissionResponse submit(Member member, CreateSubmissionRequest request) {
         Mission mission = missionRepository.findById(request.missionId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 미션입니다."));
-        Submission newSubmission = submissionRepository.save(request.toEntity(member, mission));
+        Submission newSubmission = submissionRepository.save(request.toSubmission(member, mission));
         return SubmissionResponse.of(newSubmission);
     }
 }

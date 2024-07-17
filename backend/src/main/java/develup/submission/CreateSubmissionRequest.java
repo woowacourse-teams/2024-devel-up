@@ -9,7 +9,7 @@ record CreateSubmissionRequest(
         String comment
 ) {
 
-    public Submission toEntity(Member member, Mission mission) {
+    public Submission toSubmission(Member member, Mission mission) {
         return new Submission(url, comment, member, mission);
     }
 }
