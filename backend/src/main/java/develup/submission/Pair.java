@@ -1,6 +1,5 @@
-package develup.pair;
+package develup.submission;
 
-import develup.submission.Submission;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

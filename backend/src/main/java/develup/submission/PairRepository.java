@@ -2,6 +2,7 @@ package develup.pair;
 
 import java.util.Optional;
 import develup.submission.MyMission;
+import develup.submission.Pair;
 import develup.submission.Submission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
