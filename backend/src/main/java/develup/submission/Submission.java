@@ -59,4 +59,12 @@ public class Submission {
     public Mission getMission() {
         return mission;
     }
+
+    public Long getMemberId() {
+        return member.getId();
+    }
+
+    public Long getMissionId() {
+        return mission.getId();
+    }
 }

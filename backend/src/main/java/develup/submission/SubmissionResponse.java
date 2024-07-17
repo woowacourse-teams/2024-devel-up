@@ -11,8 +11,8 @@ public record SubmissionResponse(
     public static SubmissionResponse from(Submission submission) {
         return new SubmissionResponse(
                 submission.getId(),
-                submission.getMember().getId(),
-                submission.getMission().getId(),
+                submission.getMemberId(),
+                submission.getMissionId(),
                 submission.getUrl(),
                 submission.getComment()
         );
