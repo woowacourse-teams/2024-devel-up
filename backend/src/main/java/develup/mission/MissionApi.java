@@ -1,5 +1,6 @@
 package develup.mission;
 
+import java.util.List;
 import develup.support.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,12 @@ class MissionApi {
     }
 
     @GetMapping("/missions")
-    public ResponseEntity<ApiResponse> getMissions() {
-        return ResponseEntity.ok(new ApiResponse(missionService.getMissions()));
+    public ResponseEntity<ApiResponse<List<MissionResponse>>> getMissions() {
+        return ResponseEntity.ok(new ApiResponse<>(missionService.getMissions()));
     }
 
     @GetMapping("/missions/{id}")
-    public ResponseEntity<ApiResponse> getMission(@PathVariable Long id) {
-        return ResponseEntity.ok(new ApiResponse(missionService.getMissionById(id)));
+    public ResponseEntity<ApiResponse<MissionResponse>> getMission(@PathVariable Long id) {
+        return ResponseEntity.ok(new ApiResponse<>(missionService.getMissionById(id)));
     }
 }
