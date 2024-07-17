@@ -1,6 +1,6 @@
 package develup.mission;
 
-enum Language {
+public enum Language {
 
     JAVA, JAVASCRIPT
 }

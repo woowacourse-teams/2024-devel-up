@@ -32,4 +32,31 @@ public class Submission {
 
     protected Submission() {
     }
+
+    public Submission(String url, String comment, Member member, Mission mission) {
+        this.url = url;
+        this.comment = comment;
+        this.member = member;
+        this.mission = mission;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
 }
