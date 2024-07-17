@@ -20,8 +20,8 @@ class SubmissionApi {
     @PostMapping("/submissions")
     public ResponseEntity<ApiResponse<SubmissionResponse>> postSubmission(@RequestBody CreateSubmissionRequest request) {
         Member member = new Member(1L);
-        SubmissionResponse newSubmission = submissionService.submit(member, request);
-        return ResponseEntity.created(URI.create("/submissions/" + newSubmission.id()))
-                .body(new ApiResponse<>(newSubmission));
+        SubmissionResponse response = submissionService.submit(member, request);
+        return ResponseEntity.created(URI.create("/submissions/" + response.id()))
+                .body(new ApiResponse<>(response));
     }
 }
