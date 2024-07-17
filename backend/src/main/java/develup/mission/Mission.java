@@ -9,7 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-class Mission {
+public class Mission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
