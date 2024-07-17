@@ -8,7 +8,7 @@ public record SubmissionResponse(
         String comment
 ) {
 
-    public static SubmissionResponse of(Submission submission) {
+    public static SubmissionResponse from(Submission submission) {
         return new SubmissionResponse(
                 submission.getId(),
                 submission.getMember().getId(),
