@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import develup.member.Member;
+import develup.member.MemberRepository;
 import develup.mission.Language;
 import develup.mission.Mission;
 import develup.mission.MissionRepository;
@@ -22,9 +23,13 @@ class SubmissionRepositoryTest {
     @Autowired
     private MissionRepository missionRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
     @BeforeEach
     void setUp() {
         submissionRepository.deleteAll();
+        memberRepository.deleteAll();
         missionRepository.deleteAll();
     }
 
@@ -56,7 +61,9 @@ class SubmissionRepositoryTest {
     }
 
     private Submission createSubmission(Mission mission) {
-        Member member = new Member(1L);
+        Member member = new Member();
+        memberRepository.save(member);
+
         Submission submission = new Submission(
                 "sample",
                 "comment",
