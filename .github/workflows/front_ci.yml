@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches: [ 'main' ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        task: [lint, build, test]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Early exit
+        if: ${{ contains(github.event.pull_request.labels.*.name, '백엔드') }}
+        run: |
+          gh run cancel ${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.1'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ${{ matrix.task }}
+        id: npm_run
+        run: npm run ${{ matrix.task }}
+
+      - name: Get teamMember List
+        id: teamMembers
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const workers = JSON.parse(fs.readFileSync('.github/workflows/teamMember.json'));
+            const mention = context.payload.pull_request.assignees.map((user) => {
+            const login = user.login;
+            const mappedValue = workers[login];
+            return mappedValue ? `<@${mappedValue}>` : `No mapping found for ${login}`;
+            })
+            return mention.join(', ');
+
+      - name: slack mention
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+                "text": "pr 테스트 결과",
+                "blocks": [
+                  {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "pr 테스트 ${{ steps.npm_run.outcome}} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: \${{ steps.teamMembers.outputs.result }}
+                      }
+                  }
+                ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
