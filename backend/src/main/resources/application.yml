@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: optional:file:.env[.properties]
   h2:
     console:
       enabled: true
@@ -26,11 +24,16 @@ logging:
     org.hibernate.orm.jdbc.bind: trace
 
 api-host: http://localhost:8080
-client-host: http://localhost:3000
+client-host: http://localhost:8080
 
 auth:
   github:
-    client-id: ${GITHUB_CLIENT_ID}
-    client-secret: ${GITHUB_CLIENT_SECRET}
+    client-id: develup-test-develup-test-develup-test-develup-test-develup-test
+    client-secret: develup-test-develup-test-develup-test-develup-test-develup-test
     redirect-uri: ${api-host}/auth/social/callback/github
     client-uri: ${client-host}
+
+security:
+  jwt:
+    secret-key: 7b3dc341c033816045cc11c6f9fba3187f4dbdb7
+    expiration-time: 3600000 # 1 hour
