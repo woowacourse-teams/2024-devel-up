@@ -31,6 +31,9 @@ VALUES (1, 2, 'https://github.com/develup-mission/java-word-puzzle/pull/1', '코
 INSERT INTO submission (member_id, mission_id, url, comment)
 VALUES (2, 2, 'https://github.com/develup-mission/java-word-puzzle/pull/2', '코멘트 4');
 
+INSERT INTO submission (member_id, mission_id, url, comment)
+VALUES (1, 3, 'https://github.com/develup-mission/java-guessing-number/pull/1', '코멘트 5');
+
 INSERT INTO pair (submission1_id, submission2_id, status)
 VALUES (1, 2, '완료');
 
