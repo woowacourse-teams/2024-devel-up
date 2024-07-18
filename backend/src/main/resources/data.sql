@@ -15,3 +15,30 @@ VALUES ('숫자 추리 게임', 'JAVA', 'https://raw.githubusercontent.com/devel
 
 INSERT INTO member (id)
 VALUES (1);
+
+INSERT INTO member (id)
+VALUES (2);
+
+INSERT INTO submission (member_id, mission_id, url, comment)
+VALUES (1, 1, 'https://github.com/develup-mission/java-smoking/pull/1', '코멘트 1');
+
+INSERT INTO submission (member_id, mission_id, url, comment)
+VALUES (2, 1, 'https://github.com/develup-mission/java-smoking/pull/2', '코멘트 2');
+
+INSERT INTO submission (member_id, mission_id, url, comment)
+VALUES (1, 2, 'https://github.com/develup-mission/java-word-puzzle/pull/1', '코멘트 3');
+
+INSERT INTO submission (member_id, mission_id, url, comment)
+VALUES (2, 2, 'https://github.com/develup-mission/java-word-puzzle/pull/2', '코멘트 4');
+
+INSERT INTO pair (submission1_id, submission2_id, status)
+VALUES (1, 2, '완료');
+
+INSERT INTO pair (submission1_id, submission2_id, status)
+VALUES (2, 1, '완료');
+
+INSERT INTO pair (submission1_id, submission2_id, status)
+VALUES (3, 4, '리뷰 완료');
+
+INSERT INTO pair (submission1_id, submission2_id, status)
+VALUES (4, 3, '진행 중');

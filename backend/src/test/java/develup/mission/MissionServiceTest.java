@@ -4,14 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 
 @SpringBootTest
+@Sql(value = {"classpath:clean_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class MissionServiceTest {
 
     @Autowired
@@ -19,11 +20,6 @@ class MissionServiceTest {
 
     @Autowired
     private MissionRepository missionRepository;
-
-    @BeforeEach
-    void setUp() {
-        missionRepository.deleteAll();
-    }
 
     @Test
     @DisplayName("모든 미션을 조회한다.")
