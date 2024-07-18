@@ -53,15 +53,21 @@ jobs:
         with:
           status: ${{ job.status }}
           author_name: Github Action Test
-          fields: repo,pullRequest,eventName,author,message,commit,action,took
           custom_payload: |
             {
-              "text": "Build ${{ job.status }}",
+              "text": ":출입금지: Failed GitHub Actions",
               "attachments": [
                 {
                   "author_name": "Github Action Test",
                   "fields": [
-                    {"title": "Author", "value": "<@${{ steps.slack-user-mapping.outputs.slack_user_id }}>", "short": true}
+                    {"title": "repo", "value": "${{ github.repository }}", "short": true},
+                    {"title": "message", "value": "${{ github.event.head_commit.message }}", "short": true},
+                    {"title": "commit", "value": "${{ github.sha }}", "short": true},
+                    {"title": "author", "value": "<@${{ steps.slack-user-mapping.outputs.slack_user_id }}>", "short": true},
+                    {"title": "action", "value": "${{ github.event.action }}", "short": true},
+                    {"title": "took", "value": "${{ github.run_duration_seconds }} sec", "short": true},
+                    {"title": "eventName", "value": "${{ github.event_name }}", "short": true},
+                    {"title": "pullRequest", "value": "${{ github.event.pull_request.title }} #${{ github.event.pull_request.number }}", "short": true}
                   ]
                 }
               ]
