@@ -8,6 +8,10 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      actions: write
     strategy:
       matrix:
         task: [lint, build, test]
@@ -28,11 +32,15 @@ jobs:
           node-version: '20.15.1'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd frontend
+          npm install
 
       - name: Run ${{ matrix.task }}
         id: npm_run
-        run: npm run ${{ matrix.task }}
+        run: |
+          cd frontend
+          npm run ${{ matrix.task }}
 
       - name: Get teamMember List
         id: teamMembers
