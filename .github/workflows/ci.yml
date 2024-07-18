@@ -46,13 +46,15 @@ jobs:
           *) SLACK_USER_ID="" ;;
           esac
           echo "::set-output name=slack_user_id::$SLACK_USER_ID"
-          echo "::set-output name=slack_mention::@${{ steps.slack-user-mapping.outputs.slack_user_id }}"
 
-      - name: Prepare Slack payload
-        id: prepare-slack-payload
+      - name: Prepare Slack mention
+        id: prepare-slack-mention
         run: |
-          MENTION="<@${{ steps.slack-user-mapping.outputs.slack_user_id }}"
-          echo "::set-output name=slack_mention::${MENTION}"
+          if [ "${{ steps.slack-user-mapping.outputs.slack_user_id }}" != "" ]; then
+            echo "::set-output name=slack_mention::<@${{ steps.slack-user-mapping.outputs.slack_user_id }}>"
+          else
+            echo "::set-output name=slack_mention::"
+          fi
 
       - name: Send Slack notification
         uses: 8398a7/action-slack@v3
@@ -60,7 +62,7 @@ jobs:
           status: ${{ job.status }}
           author_name: Github Action Test
           fields: repo,pullRequest,eventName,author,message,commit,action,took
-          mention: ${{ steps.prepare-slack-payload.outputs.slack_mention }}
+          mention: '${{ steps.prepare-slack-mention.outputs.slack_mention }}'
           if_mention: failure,cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
