@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
 import MissionListPage from './pages/MissionListPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
+import MyMissionPage from './pages/MyMissionPage';
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,14 @@ const routes = [
     element: (
       <App>
         <MissionDetailPage />
+      </App>
+    ),
+  },
+  {
+    path: ROUTES.myMission,
+    element: (
+      <App>
+        <MyMissionPage />
       </App>
     ),
   },
