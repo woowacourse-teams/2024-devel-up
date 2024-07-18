@@ -37,6 +37,7 @@ jobs:
           npm install
 
       - name: Run ${{ matrix.task }}
+        continue-on-error: true
         id: npm_run
         run: |
           cd frontend
