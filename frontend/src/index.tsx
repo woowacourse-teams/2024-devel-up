@@ -8,12 +8,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
 import MissionListPage from './pages/MissionListPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-//TODO 각자 맡은 페이지로 구현해서 채워놓아야합니다 @버건대
+//TODO 각자 맡은 페이지로 구현해서 채워놓아야합니다 @버건디
 const routes = [
   {
     path: ROUTES.main,
@@ -36,6 +37,14 @@ const routes = [
     element: (
       <App>
         <MissionDetailPage />
+      </App>
+    ),
+  },
+  {
+    path: ROUTES.profile,
+    element: (
+      <App>
+        <UserProfilePage />
       </App>
     ),
   },
