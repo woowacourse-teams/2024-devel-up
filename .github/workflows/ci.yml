@@ -52,7 +52,6 @@ jobs:
             return mappedValue ? `<@${mappedValue}>` : `No mapping found for ${login}`;
             })
             return mention.join(', ');
-            result-encoding: string
 
       - name: slack mention
         uses: slackapi/slack-github-action@v1.24.0
