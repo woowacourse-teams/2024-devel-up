@@ -2,6 +2,8 @@ package develup.submission;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,9 +26,16 @@ public class Pair {
     private Submission other;
 
     @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private PairStatus status;
 
     protected Pair() {
+    }
+
+    public Pair(Submission main, Submission other, PairStatus status) {
+        this.main = main;
+        this.other = other;
+        this.status = status;
     }
 
     public Long getId() {
@@ -41,18 +50,12 @@ public class Pair {
         return other;
     }
 
-    public String getStatus() {
+    public PairStatus getStatus() {
         return status;
     }
 
     public String getOtherUrl() {
         return other.getUrl();
-    }
-
-    public Pair(Submission main, Submission other, String status) {
-        this.main = main;
-        this.other = other;
-        this.status = status;
     }
 
     public Submission getMain() {

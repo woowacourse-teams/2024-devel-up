@@ -45,8 +45,8 @@ class PairService {
     private void matchWithOtherSubmission(Submission submission) {
         Submission other = findCanMatchSubmission(submission)
                 .orElseThrow(() -> new IllegalStateException("매칭할 제출이 존재하지 않습니다."));
-        Pair mainPair = new Pair(submission, other, "진행중");
-        Pair otherPair = new Pair(other, submission, "진행중");
+        Pair mainPair = new Pair(submission, other, PairStatus.IN_PROGRESS);
+        Pair otherPair = new Pair(other, submission, PairStatus.IN_PROGRESS);
 
         pairRepository.save(mainPair);
         pairRepository.save(otherPair);
