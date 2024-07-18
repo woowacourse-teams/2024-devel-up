@@ -22,16 +22,15 @@ jobs:
       actions: write
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
       - name: Early exit
         if: contains(github.event.issue.labels.*.name, '백엔드') == false
         run: |
           gh run cancel ${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
       - uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
