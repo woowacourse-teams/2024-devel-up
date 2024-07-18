@@ -3,8 +3,10 @@ package develup.submission;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 class PairService {
 
     private final SubmissionRepository submissionRepository;
