@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import develup.submission.MyMission;
+import develup.submission.PairRepository;
 import develup.submission.Submission;
 import develup.submission.SubmissionRepository;
 import org.junit.jupiter.api.DisplayName;

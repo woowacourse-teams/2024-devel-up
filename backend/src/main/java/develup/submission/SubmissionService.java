@@ -4,7 +4,6 @@ import java.util.List;
 import develup.member.Member;
 import develup.mission.Mission;
 import develup.mission.MissionRepository;
-import develup.pair.PairRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
