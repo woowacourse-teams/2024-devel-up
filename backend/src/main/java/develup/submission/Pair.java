@@ -34,11 +34,11 @@ public class Pair {
     }
 
     public Submission getSubmission1() {
-        return submission1;
+        return main;
     }
 
     public Submission getSubmission2() {
-        return submission2;
+        return other;
     }
 
     public String getStatus() {
@@ -46,6 +46,16 @@ public class Pair {
     }
 
     public String getOtherUrl() {
-        return submission2.getUrl();
+        return other.getUrl();
+    }
+
+    public Pair(Submission main, Submission other, String status) {
+        this.main = main;
+        this.other = other;
+        this.status = status;
+    }
+
+    public Submission getMain() {
+        return main;
     }
 }
