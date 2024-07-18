@@ -42,20 +42,26 @@ jobs:
         run: |
           EMAIL=$(git log -1 --pretty=format:'%ae')
           case "$EMAIL" in
-            "choiyoonseo02@gmail.com") SLACK_USER_ID="U07AQJWU8S3" ;; # @릴리
-            "anotheruser@example.com") SLACK_USER_ID="U87654321" ;; # 다른 사용자
-            *) SLACK_USER_ID="" ;;
+          "choiyoonseo02@gmail.com") SLACK_USER_ID="U07AQJWU8S3" ;; # @릴리
+          *) SLACK_USER_ID="" ;;
           esac
           echo "::set-output name=slack_user_id::$SLACK_USER_ID"
+          echo "::set-output name=slack_mention::@${{ steps.slack-user-mapping.outputs.slack_user_id }}"
 
-      - name: action-slack
+      - name: Prepare Slack payload
+        id: prepare-slack-payload
+        run: |
+          MENTION="<@${{ steps.slack-user-mapping.outputs.slack_user_id }}"
+          echo "::set-output name=slack_mention::${MENTION}"
+
+      - name: Send Slack notification
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
           author_name: Github Action Test
           fields: repo,pullRequest,eventName,author,message,commit,action,took
-          mention: '@릴리(최윤서)' #<@${{ steps.slack-user-mapping.outputs.slack_user_id }}>
+          mention: ${{ steps.prepare-slack-payload.outputs.slack_mention }}
           if_mention: failure,cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
+        if: failure()
