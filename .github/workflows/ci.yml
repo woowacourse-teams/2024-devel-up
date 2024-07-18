@@ -14,17 +14,24 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+      actions: write
 
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
+      - name: Early exit
+        if: !contains(github.event.pull_request.labels.*.name, '백엔드')
+        run: |
+          gh run cancel ${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-java@v4
-        if: contains(github.event.pull_request.labels.*.name, '백엔드') == true
         with:
           distribution: 'corretto'
           java-version: '21'
@@ -32,11 +39,9 @@ jobs:
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: Setup Gradle
-        if: contains(github.event.pull_request.labels.*.name, '백엔드') == true
         run: chmod +x ./backend/gradlew
 
       - name: Build with Gradle
-        if : contains(github.event.pull_request.labels.*.name, '백엔드') == true
         continue-on-error: true
         id: gradle_build
         run: |
@@ -44,7 +49,6 @@ jobs:
           ./gradlew build
 
       - name: Get teamMember List
-        if: contains(github.event.pull_request.labels.*.name, '백엔드') == true
         id: teamMembers
         uses: actions/github-script@v6
         with:
@@ -59,7 +63,6 @@ jobs:
             return mention.join(', ');
 
       - name: slack mention
-        if: contains(github.event.pull_request.labels.*.name, '백엔드') == true
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
