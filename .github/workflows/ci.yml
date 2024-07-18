@@ -37,19 +37,14 @@ jobs:
           cd backend
           ./gradlew build
 
-      - name: Send Slack notification on failure
-        if: failure()
-        run: |
-          SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
-          TEXT="<@U012AB3CD>, there was a failure in the CI pipeline for commit $GITHUB_SHA"
-          curl -X POST -H 'Content-type: application/json' --data '{"text": "'"$TEXT"'"}' $SLACK_WEBHOOK_URL
-
       - name: Send Slack notification
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
           author_name: Github Action Test
           fields: repo,pullRequest,eventName,author,message,commit,action,took
+          mention: 'here'
+          if_mention: failure,cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
+        if: always()
