@@ -18,8 +18,8 @@ public interface SubmissionRepository extends JpaRepository<Submission, Long> {
                     SELECT 1
                     FROM Pair p
                     WHERE
-                        p.submission1 = s OR
-                        p.submission2 = s
+                        p.main = s OR
+                        p.other = s
             )
             """)
     List<Submission> findNonMatchedSubmissions(Mission mission);
