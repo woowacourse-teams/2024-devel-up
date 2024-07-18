@@ -1,10 +1,10 @@
 import Tabs from '@/components/tab/Tabs';
 import HowToFork from '@/components/guide/HowToFork';
-import { TabData } from '@/types';
+import type { TabInfo } from '@/types';
 
 //TODO 여기서만 쓰일 데이터 같아서 일단 위에 선언해놓습니다. @버건디
 
-const TAB_LIST: TabData[] = [
+const TAB_LIST: TabInfo[] = [
   {
     name: 'step1(포크 클론 방법)',
     content: <HowToFork />,
@@ -22,14 +22,14 @@ const TAB_LIST: TabData[] = [
 export default function GuidePage() {
   return (
     <Tabs tabList={TAB_LIST}>
-      <Tabs.List>
+      <Tabs.ListWrapper>
         {TAB_LIST.map((tab, index) => (
-          <Tabs.Tab key={index} index={index}>
+          <Tabs.TabHeader key={index} index={index}>
             {tab.name}
-          </Tabs.Tab>
+          </Tabs.TabHeader>
         ))}
-      </Tabs.List>
-      <Tabs.CurrentTab />
+      </Tabs.ListWrapper>
+      <Tabs.CurrentContent />
     </Tabs>
   );
 }

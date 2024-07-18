@@ -1,13 +1,14 @@
-import { TabsContext } from '@/hooks/useTabs';
-import { PropsWithChildren, useState } from 'react';
-import Tab from './Tab';
-import TabList from './TabList';
-import TabCurrentTab from './TabCurrentTab';
+import { TabsContext } from '@/contexts/TabsContext';
+import { useState } from 'react';
+import type { PropsWithChildren } from 'react';
+import TabHeader from './TabHeader';
+import TabListWrapper from './TabListWrapper';
+import TabCurrentContent from './TabCurrentContent';
 import * as S from './Tab.styled';
-import { TabData } from '@/types';
+import type { TabInfo } from '@/types';
 
 interface TabsProps extends PropsWithChildren {
-  tabList: TabData[];
+  tabList: TabInfo[];
 }
 
 export default function Tabs({ children, tabList }: TabsProps) {
@@ -24,6 +25,6 @@ export default function Tabs({ children, tabList }: TabsProps) {
   );
 }
 
-Tabs.List = TabList;
-Tabs.Tab = Tab;
-Tabs.CurrentTab = TabCurrentTab;
+Tabs.ListWrapper = TabListWrapper;
+Tabs.TabHeader = TabHeader;
+Tabs.CurrentContent = TabCurrentContent;
