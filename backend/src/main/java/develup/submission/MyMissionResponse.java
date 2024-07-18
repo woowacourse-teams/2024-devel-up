@@ -16,7 +16,7 @@ public record MyMissionResponse(
                 MissionResponse.from(myMission.getMission()),
                 myMission.getMyPrLink(),
                 myMission.getPairPrLink(),
-                myMission.getStatus()
+                myMission.getStatusDescription()
         );
     }
 }

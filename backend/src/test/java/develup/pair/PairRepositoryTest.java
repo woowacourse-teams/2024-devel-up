@@ -33,7 +33,7 @@ class PairRepositoryTest {
 
         assertAll(
                 () -> assertThat(myMission.getId()).isEqualTo(1L),
-                () -> assertThat(myMission.getStatus()).isEqualTo("완료")
+                () -> assertThat(myMission.getStatusDescription()).isEqualTo("완료")
         );
     }
 }

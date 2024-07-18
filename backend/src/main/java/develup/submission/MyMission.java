@@ -8,13 +8,9 @@ public class MyMission {
     private final Mission mission;
     private final String myPrLink;
     private final String pairPrLink;
-    private final String status;
+    private final PairStatus status;
 
     public MyMission(Long id, Mission mission, String myPrLink, String pairPrLink, PairStatus status) {
-        this(id, mission, myPrLink, pairPrLink, status.getDescription());
-    }
-
-    public MyMission(Long id, Mission mission, String myPrLink, String pairPrLink, String status) {
         this.id = id;
         this.mission = mission;
         this.myPrLink = myPrLink;
@@ -42,7 +38,7 @@ public class MyMission {
         return pairPrLink;
     }
 
-    public String getStatus() {
-        return status;
+    public String getStatusDescription() {
+        return status.getDescription();
     }
 }
