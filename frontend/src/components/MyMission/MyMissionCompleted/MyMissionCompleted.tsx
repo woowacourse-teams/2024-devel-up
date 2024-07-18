@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import * as S from './MyMissionCompleted.styled';
 
 const mocks = [
@@ -68,24 +69,30 @@ export default function MyMissionCompleted() {
     <S.MyMissionCompletedContainer>
       <S.Title>완료한 미션</S.Title>
       <S.MissionCardListWrapper>
-        {mocks.map((mock) => (
-          <S.MissionCardWrapper key={mock.id}>
-            <S.MissionCardHeaderWrapper>
-              <S.ThumbnailImg src={mock.mission.thumbnail} />
-              <S.MissionLanguageBox>{mock.mission.language}</S.MissionLanguageBox>
-            </S.MissionCardHeaderWrapper>
+        {mocks.map((data) => (
+          <S.MissionCardWrapper key={data.id}>
+            <Link to={`/missions/${data.mission.id}`} style={{ height: '100%' }}>
+              <S.MissionCardHeaderWrapper>
+                <S.ThumbnailImg src={data.mission.thumbnail} />
+                <S.MissionLanguageBox>{data.mission.language}</S.MissionLanguageBox>
+              </S.MissionCardHeaderWrapper>
 
-            <S.MissionCardContentWrapper>
-              <div>
-                <S.MissionTitle>{mock.mission.title}</S.MissionTitle>
-                <S.MissionDate>2024.07.17 ~ 2024.07.24</S.MissionDate>
-              </div>
+              <S.MissionCardContentWrapper>
+                <div>
+                  <S.MissionTitle>{data.mission.title}</S.MissionTitle>
+                  <S.MissionDate>2024.07.17 ~ 2024.07.24</S.MissionDate>
+                </div>
 
-              <S.PrButtonWrapper>
-                <S.PrButton>페어 PR 이동</S.PrButton>
-                <S.PrButton>내 PR 이동</S.PrButton>
-              </S.PrButtonWrapper>
-            </S.MissionCardContentWrapper>
+                <S.PrButtonWrapper>
+                  <Link to={data.pairPrLink} target="_blank" onClick={(e) => e.stopPropagation()}>
+                    <S.PrButton>페어 PR 이동</S.PrButton>
+                  </Link>
+                  <Link to={data.myPrLink} target="_blank" onClick={(e) => e.stopPropagation()}>
+                    <S.PrButton>내 PR 이동</S.PrButton>
+                  </Link>{' '}
+                </S.PrButtonWrapper>
+              </S.MissionCardContentWrapper>
+            </Link>
           </S.MissionCardWrapper>
         ))}
       </S.MissionCardListWrapper>
