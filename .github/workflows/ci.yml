@@ -26,7 +26,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
       - name: Early exit
-        if: !contains(github.event.pull_request.labels.*.name, '백엔드')
+        if: ${{ !contains(github.event.pull_request.labels.*.name, '백엔드') }}
         run: |
           gh run cancel ${{ github.run_id }}
         env:
