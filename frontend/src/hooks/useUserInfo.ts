@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '@/apis/authAPI';
-import { UserInfo } from '@/types';
+import type { UserInfo } from '@/types';
 
 const useUserInfo = () => {
   //TODO 아직 토큰 로직에 관한 부분이 미정이라서

@@ -1,4 +1,4 @@
-import { UserInfo } from '@/types';
+import type { UserInfo } from '@/types';
 import * as S from './UserProfile.styled';
 
 type UserProfileEmailProps = Pick<UserInfo, 'email'>;
