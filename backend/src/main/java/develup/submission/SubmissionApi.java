@@ -1,9 +1,11 @@
 package develup.submission;
 
 import java.net.URI;
+import java.util.List;
 import develup.member.Member;
 import develup.support.ApiResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,13 @@ class SubmissionApi {
 
     public SubmissionApi(SubmissionService submissionService) {
         this.submissionService = submissionService;
+    }
+
+    @GetMapping("/submissions")
+    public ResponseEntity<ApiResponse<List<MyMissionResponse>>> getMyMissions() {
+        Member member = new Member(1L);
+
+        return ResponseEntity.ok(new ApiResponse<>(submissionService.getMyMissions(member)));
     }
 
     @PostMapping("/submissions")

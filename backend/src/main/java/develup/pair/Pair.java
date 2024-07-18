@@ -29,4 +29,24 @@ public class Pair {
 
     protected Pair() {
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Submission getSubmission1() {
+        return submission1;
+    }
+
+    public Submission getSubmission2() {
+        return submission2;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getOtherUrl() {
+        return submission2.getUrl();
+    }
 }
