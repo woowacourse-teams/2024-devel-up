@@ -32,11 +32,7 @@ public class Member {
     @Column(nullable = false)
     private String imageUrl;
 
-    public Member() {
-    }
-
-    public Member(Long id) {
-        this.id = id;
+    protected Member() {
     }
 
     public Member(String email, Provider provider, Long socialId, String name, String imageUrl) {
