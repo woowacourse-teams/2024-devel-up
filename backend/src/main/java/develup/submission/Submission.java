@@ -46,6 +46,10 @@ public class Submission {
         this.mission = mission;
     }
 
+    public boolean isNotSameOwner(Submission other) {
+        return !this.member.equals(other.member);
+    }
+
     public Long getId() {
         return id;
     }
@@ -72,10 +76,6 @@ public class Submission {
 
     public Long getMissionId() {
         return mission.getId();
-    }
-
-    public boolean isNotSameOwner(Submission other) {
-        return !this.member.equals(other.member);
     }
 
     @Override
