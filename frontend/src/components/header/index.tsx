@@ -1,13 +1,20 @@
 import { Link } from 'react-router-dom';
 import * as S from './Header.styled';
 import { ROUTES } from '@/constants/routes';
+import NotiModal from './NotiModal';
 import { useState } from 'react';
 
 export default function Header() {
-  const [, setIsNotiModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleBellClick = () => {
-    setIsNotiModalOpen((prev) => !prev);
+    setIsModalOpen((prev) => !prev);
+  };
+
+  const closeModal = () => {
+    if (isModalOpen) {
+      setIsModalOpen(false);
+    }
   };
 
   return (
@@ -21,6 +28,7 @@ export default function Header() {
         <S.RightSection>
           <S.BellIcon onClick={handleBellClick} />
         </S.RightSection>
+        {isModalOpen && <NotiModal closeModal={closeModal} />}
       </S.Container>
       <S.Spacer />
     </>

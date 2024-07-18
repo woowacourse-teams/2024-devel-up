@@ -37,6 +37,23 @@ export const BellIcon = styled(Bell)`
   cursor: pointer;
 `;
 
-export const RightSection = styled.div``;
+export const RightSection = styled.div`
+  position: relative;
+`;
 
 export const LeftSection = styled.div``;
+
+// NotiModal
+
+export const NotiModalContainer = styled.div`
+  z-index: 101;
+  position: absolute;
+  top: 5.5rem;
+  right: 17rem;
+  width: 30rem;
+  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.1);
+
+  border-radius: 1rem;
+  padding: 2rem;
+  background-color: var(--grey-100);
+`;
