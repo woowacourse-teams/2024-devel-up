@@ -33,18 +33,43 @@ jobs:
         run: chmod +x ./backend/gradlew
 
       - name: Build with Gradle
+        continue-on-error: true
+        id: gradle_build
         run: |
           cd backend
           ./gradlew build
 
-      - name: Send Slack notification
-        uses: 8398a7/action-slack@v3
+      - name: Get teamMember List
+        id: teamMembers
+        uses: actions/github-script@v6
         with:
-          status: ${{ job.status }}
-          author_name: Github Action Test
-          fields: repo,pullRequest,eventName,author,message,commit,action,took
-          mention: 'here'
-          if_mention: failure,cancelled
+          script: |
+            const fs = require('fs');
+            const workers = JSON.parse(fs.readFileSync('.github/workflows/teamMember.json'));
+            const mention = context.payload.pull_request.assignees.map((user) => {
+            const login = user.login;
+            const mappedValue = workers[login];
+            return mappedValue ? `<@${mappedValue}>` : `No mapping found for ${login}`;
+            })
+            return mention.join(', ');
+            result-encoding: string
+
+      - name: slack mention
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+              "text": "pr 테스트 결과",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "pr 테스트 ${{ steps.gradle_build.outcome}} \\n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \\n • pr 담당자: ${{ steps.teamMembers.outputs.result }}"
+                  }
+                }
+              ]
+            }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
