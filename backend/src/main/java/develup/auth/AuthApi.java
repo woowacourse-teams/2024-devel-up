@@ -14,10 +14,12 @@ public class AuthApi {
 
     private final GithubOAuthService githubOAuthService;
     private final MemberService memberService;
+    private final AuthService authService;
 
-    public AuthApi(GithubOAuthService githubOAuthService, MemberService memberService) {
+    public AuthApi(GithubOAuthService githubOAuthService, MemberService memberService, AuthService authService) {
         this.githubOAuthService = githubOAuthService;
         this.memberService = memberService;
+        this.authService = authService;
     }
 
     @GetMapping("/auth/social/redirect/github")
@@ -26,7 +28,6 @@ public class AuthApi {
             HttpServletResponse response
     ) throws IOException {
         String redirectUri = githubOAuthService.getLoginUrl(next);
-
         response.sendRedirect(redirectUri);
     }
 
@@ -38,9 +39,11 @@ public class AuthApi {
     ) throws IOException {
         String accessToken = githubOAuthService.getAccessToken(code);
         SocialProfile socialProfile = githubOAuthService.getUserInfo(accessToken);
-        MemberResponse memberResponse = memberService.findOrCreateMember(socialProfile, Provider.GITHUB);
 
-        String redirectUri = githubOAuthService.getClientUri(next);
+        MemberResponse memberResponse = memberService.findOrCreateMember(socialProfile, Provider.GITHUB);
+        String token = authService.createToken(memberResponse.id());
+
+        String redirectUri = githubOAuthService.getClientUri(next, token);
         response.sendRedirect(redirectUri);
     }
 }

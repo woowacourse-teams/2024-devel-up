@@ -56,9 +56,10 @@ public class GithubOAuthService {
         return socialProfile;
     }
 
-    public String getClientUri(String next) {
+    public String getClientUri(String next, String token) {
         return UriComponentsBuilder.fromHttpUrl(properties.clientUri())
                 .path(next)
+                .queryParam("token", token)
                 .build()
                 .toUriString();
     }
