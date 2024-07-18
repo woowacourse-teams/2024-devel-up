@@ -13,6 +13,7 @@ class PairTest {
         Submission submission = new Submission(1L, "url", "comment", null, null);
 
         assertThatThrownBy(() -> new Pair(submission, submission, PairStatus.IN_PROGRESS))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 제출끼리 페어가 될 수 없습니다.");
     }
 }
