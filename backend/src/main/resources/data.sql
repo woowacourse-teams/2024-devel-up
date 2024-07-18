@@ -12,3 +12,6 @@ INSERT INTO mission (title, language, description, thumbnail, url)
 VALUES ('숫자 추리 게임', 'JAVA', 'https://raw.githubusercontent.com/develup-mission/java-guessing-number/main/README.md',
         'https://private-user-images.githubusercontent.com/80797824/348618796-753cae7d-779e-4847-b1b5-31ab9ff2d1cb.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjEwNDA3NTIsIm5iZiI6MTcyMTA0MDQ1MiwicGF0aCI6Ii84MDc5NzgyNC8zNDg2MTg3OTYtNzUzY2FlN2QtNzc5ZS00ODQ3LWIxYjUtMzFhYjlmZjJkMWNiLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA3MTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNzE1VDEwNDczMlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE2ODM0ZjI2YWMxMGEzNGUzNDk2MjVlMTdlMWRkNjI4NjkyMWUxMTQzZDdhZjRlYjM2NTgzNjE0MTQ0YTZlZmQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.yk09dRTA7LefjF0uTyYNkCgBRJcLizoKSJ8Otq7J1Gs',
         'https://github.com/develup-mission/java-guessing-number');
+
+INSERT INTO member (id)
+VALUES (1);
