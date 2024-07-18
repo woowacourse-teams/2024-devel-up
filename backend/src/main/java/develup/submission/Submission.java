@@ -35,6 +35,11 @@ public class Submission {
     }
 
     public Submission(String url, String comment, Member member, Mission mission) {
+        this(null, url, comment, member, mission);
+    }
+
+    public Submission(Long id, String url, String comment, Member member, Mission mission) {
+        this.id = id;
         this.url = url;
         this.comment = comment;
         this.member = member;
@@ -67,6 +72,10 @@ public class Submission {
 
     public Long getMissionId() {
         return mission.getId();
+    }
+
+    public boolean isNotSameOwner(Submission other) {
+        return !this.member.equals(other.member);
     }
 
     @Override
