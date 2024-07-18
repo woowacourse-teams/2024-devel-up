@@ -46,22 +46,6 @@ public class Pair {
         return id;
     }
 
-    public Submission getSubmission1() {
-        return main;
-    }
-
-    public Submission getSubmission2() {
-        return other;
-    }
-
-    public PairStatus getStatus() {
-        return status;
-    }
-
-    public String getOtherUrl() {
-        return other.getUrl();
-    }
-
     public Submission getMain() {
         return main;
     }
