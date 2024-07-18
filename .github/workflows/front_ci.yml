@@ -12,9 +12,7 @@ jobs:
       contents: read
       packages: write
       actions: write
-    strategy:
-      matrix:
-        task: [lint, build, test]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,12 +34,27 @@ jobs:
           cd frontend
           npm install
 
-      - name: Run ${{ matrix.task }}
+      - name: Run lint
         continue-on-error: true
-        id: npm_run
+        id: npm_run_lint
         run: |
           cd frontend
-          npm run ${{ matrix.task }}
+          npm run lint
+
+      - name: Run build
+        continue-on-error: true
+        id: npm_run_build
+        run: |
+          pwd
+          cd frontend
+          npm run build
+
+      - name: Run test
+        continue-on-error: true
+        id: npm_run_test
+        run: |
+          cd frontend
+          npm run test
 
       - name: Get teamMember List
         id: teamMembers
@@ -69,7 +82,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "pr 테스트 ${{ steps.npm_run.outcome}} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: \${{ steps.teamMembers.outputs.result }}
+                        "text": "pr 테스트 \n lint : ${{ steps.npm_run_lint.outcome}} \n build : ${{ steps.npm_run_build.outcome}} \n test : ${{ steps.npm_run_test.outcome}} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: \${{ steps.teamMembers.outputs.result }}
                       }
                   }
                 ]
