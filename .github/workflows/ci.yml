@@ -37,12 +37,35 @@ jobs:
           cd backend
           ./gradlew build
 
+      - name: Set up Slack user mapping
+        id: slack-user-mapping
+        run: |
+          EMAIL=$(git log -1 --pretty=format:'%ae')
+          case "$EMAIL" in
+            "choiyoonseo02@gmail.com") SLACK_USER_ID="U07AQJWU8S3" ;; # @릴리
+            "anotheruser@example.com") SLACK_USER_ID="U87654321" ;; # 다른 사용자
+            *) SLACK_USER_ID="" ;;
+          esac
+          echo "::set-output name=slack_user_id::$SLACK_USER_ID"
+
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
           author_name: Github Action Test
-          fields: repo,message,commit,author,action,eventName,job,took
+          fields: repo,pullRequest,eventName,author,message,commit,action,took
+          custom_payload: |
+            {
+              "text": "Build ${{ job.status }}",
+              "attachments": [
+                {
+                  "author_name": "Github Action Test",
+                  "fields": [
+                    {"title": "Author", "value": "<@${{ steps.slack-user-mapping.outputs.slack_user_id }}>", "short": true}
+                  ]
+                }
+              ]
+            }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: failure()
