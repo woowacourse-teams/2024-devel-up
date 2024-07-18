@@ -16,12 +16,12 @@ public class Pair {
     private Long id;
 
     @OneToOne
-    @JoinColumn(nullable = false)
-    private Submission submission1;
+    @JoinColumn(name = "main_submission", nullable = false)
+    private Submission main;
 
     @OneToOne
-    @JoinColumn(nullable = false)
-    private Submission submission2;
+    @JoinColumn(name = "pair_submission", nullable = false)
+    private Submission other;
 
     @Column(nullable = false)
     private String status;
