@@ -1,6 +1,6 @@
 package develup.mission;
 
-record MissionResponse(
+public record MissionResponse(
         Long id,
         String title,
         Language language,
