@@ -14,11 +14,11 @@ class SubmissionTest {
     @Test
     @DisplayName("같은 사용자의 제출이 아닌지 확인할 수 있다.")
     void isNotSameOwner() {
-        Member member1 = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
-        Member member2 = new Member(2L, "email", Provider.GITHUB, 1234L, "name", "image");
-        Mission mission = new Mission("title", Language.JAVA, "description", "thumbnail", "url");
-        Submission submission1 = new Submission("url", "comment", member1, mission);
-        Submission submission2 = new Submission("url", "comment", member2, mission);
+        Member member1 = createMember(1L);
+        Member member2 = createMember(2L);
+        Mission mission = createMission();
+        Submission submission1 = createSubmission(member1, mission);
+        Submission submission2 = createSubmission(member2, mission);
 
         boolean result = submission1.isNotSameOwner(submission2);
 
@@ -28,13 +28,25 @@ class SubmissionTest {
     @Test
     @DisplayName("같은 사용자의 제출인지 확인할 수 있다.")
     void isSameOwner() {
-        Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
-        Mission mission = new Mission("title", Language.JAVA, "description", "thumbnail", "url");
-        Submission submission1 = new Submission("url", "comment", member, mission);
-        Submission submission2 = new Submission("url", "comment", member, mission);
+        Member member = createMember(1L);
+        Mission mission = createMission();
+        Submission submission2 = createSubmission(member, mission);
+        Submission submission1 = createSubmission(member, mission);
 
         boolean result = submission1.isNotSameOwner(submission2);
 
         assertThat(result).isFalse();
+    }
+
+    private Member createMember(Long id) {
+        return new Member(id, "email", Provider.GITHUB, 1234L, "name", "image");
+    }
+
+    private Mission createMission() {
+        return new Mission("title", Language.JAVA, "description", "thumbnail", "url");
+    }
+
+    private Submission createSubmission(Member member1, Mission mission) {
+        return new Submission("url", "comment", member1, mission);
     }
 }
