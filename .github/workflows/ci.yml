@@ -53,25 +53,9 @@ jobs:
         with:
           status: ${{ job.status }}
           author_name: Github Action Test
-          custom_payload: |
-            {
-              "text": ":출입금지: Failed GitHub Actions",
-              "attachments": [
-                {
-                  "author_name": "Github Action Test",
-                  "fields": [
-                    {"title": "repo", "value": "${{ github.repository }}", "short": true},
-                    {"title": "message", "value": "${{ github.event.head_commit.message }}", "short": true},
-                    {"title": "commit", "value": "${{ github.sha }}", "short": true},
-                    {"title": "author", "value": "<@${{ steps.slack-user-mapping.outputs.slack_user_id }}>", "short": true},
-                    {"title": "action", "value": "${{ github.event.action }}", "short": true},
-                    {"title": "took", "value": "${{ github.run_duration_seconds }} sec", "short": true},
-                    {"title": "eventName", "value": "${{ github.event_name }}", "short": true},
-                    {"title": "pullRequest", "value": "${{ github.event.pull_request.title }} #${{ github.event.pull_request.number }}", "short": true}
-                  ]
-                }
-              ]
-            }
+          fields: repo,pullRequest,eventName,author,message,commit,action,took
+          mention: '<@${{ steps.slack-user-mapping.outputs.slack_user_id }}>'
+          if_mention: failure,cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
+        if: always()
