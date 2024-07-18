@@ -1,5 +1,6 @@
 package develup.submission;
 
+import java.util.Objects;
 import develup.member.Member;
 import develup.mission.Mission;
 import jakarta.persistence.Column;
@@ -66,5 +67,22 @@ public class Submission {
 
     public Long getMissionId() {
         return mission.getId();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Submission submission)) {
+            return false;
+        }
+
+        return this.getId() != null && Objects.equals(getId(), submission.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
