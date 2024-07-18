@@ -33,6 +33,10 @@ public class Pair {
     }
 
     public Pair(Submission main, Submission other, PairStatus status) {
+        if (main.equals(other)) {
+            throw new IllegalArgumentException("같은 제출끼리 페어가 될 수 없습니다.");
+        }
+
         this.main = main;
         this.other = other;
         this.status = status;
