@@ -37,8 +37,8 @@ export const BellIcon = styled(Bell)`
   cursor: pointer;
 `;
 
-export const RightSection = styled.div`
+export const RightPart = styled.div`
   position: relative;
 `;
 
-export const LeftSection = styled.div``;
+export const LeftPart = styled.div``;

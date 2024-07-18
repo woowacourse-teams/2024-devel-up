@@ -20,14 +20,14 @@ export default function Header() {
   return (
     <>
       <S.Container>
-        <S.LeftSection>
+        <S.LeftPart>
           <Link to={ROUTES.main}>
             <S.Logo>🚀 Devel Up</S.Logo>
           </Link>
-        </S.LeftSection>
-        <S.RightSection>
+        </S.LeftPart>
+        <S.RightPart>
           <S.BellIcon onClick={handleBellClick} />
-        </S.RightSection>
+        </S.RightPart>
       </S.Container>
       {isModalOpen && <NotiModal closeModal={closeModal} />}
       <S.Spacer />
