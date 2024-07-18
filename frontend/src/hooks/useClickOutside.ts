@@ -23,9 +23,7 @@ export const useClickOutside = <T extends Node = HTMLElement>(callback: () => vo
   }, [callback]);
 
   // react-router-dom Link 클릭 시 클릭 이벤트가 감지되지 않는 문제를 해결하기 위함 @라이언
-  router.subscribe(() => {
-    callback();
-  });
+  router.subscribe(callback);
 
   return { targetRef: ref };
 };

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import * as S from './Header.styled';
 import { ROUTES } from '@/constants/routes';
-import NotiModal from './NotiModal';
+import NotiModal from './notiModal';
 import { useState } from 'react';
 
 export default function Header() {
@@ -28,8 +28,8 @@ export default function Header() {
         <S.RightSection>
           <S.BellIcon onClick={handleBellClick} />
         </S.RightSection>
-        {isModalOpen && <NotiModal closeModal={closeModal} />}
       </S.Container>
+      {isModalOpen && <NotiModal closeModal={closeModal} />}
       <S.Spacer />
     </>
   );
