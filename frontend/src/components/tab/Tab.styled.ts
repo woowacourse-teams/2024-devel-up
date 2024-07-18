@@ -21,7 +21,7 @@ const fadeIn = keyframes`
   }
 `;
 
-export const CurrentTabContentContainer = styled.div`
+export const CurrentContentContainer = styled.div`
   word-break: break-all;
   margin-top: 2rem;
   animation: ${fadeIn} 0.3s ease-out;
