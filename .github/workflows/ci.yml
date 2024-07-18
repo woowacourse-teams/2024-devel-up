@@ -54,7 +54,7 @@ jobs:
           status: ${{ job.status }}
           author_name: Github Action Test
           fields: repo,pullRequest,eventName,author,message,commit,action,took
-          mention: '<@${{ steps.slack-user-mapping.outputs.slack_user_id }}>'
+          mention: '@릴리(최윤서)' #<@${{ steps.slack-user-mapping.outputs.slack_user_id }}>
           if_mention: failure,cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
