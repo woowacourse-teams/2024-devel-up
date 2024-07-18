@@ -7,8 +7,8 @@ export const MissionDetailButtonGroupContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  background-color: var(--primary-100);
-
+  background-color: var(--grey-300);
+  font-size: 1.5rem;
   padding: 0.75rem;
   border-radius: 0.5rem;
   color: var(--black-color);

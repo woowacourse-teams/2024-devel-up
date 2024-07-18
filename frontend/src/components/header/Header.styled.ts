@@ -27,5 +27,5 @@ export const Logo = styled.h1`
 `;
 
 export const Spacer = styled.div`
-  height: 8rem;
+  height: 6rem;
 `;
