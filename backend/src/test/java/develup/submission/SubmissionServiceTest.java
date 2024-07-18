@@ -2,17 +2,20 @@ package develup.submission;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import develup.member.Member;
 import develup.mission.Language;
 import develup.mission.Mission;
 import develup.mission.MissionRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 
 @SpringBootTest
+@Sql(value = {"classpath:clean_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class SubmissionServiceTest {
 
     @Autowired
@@ -24,12 +27,6 @@ class SubmissionServiceTest {
     @Autowired
     private MissionRepository missionRepository;
 
-    @BeforeEach
-    void setUp() {
-        submissionRepository.deleteAll();
-        missionRepository.deleteAll();
-    }
-
     @Test
     @DisplayName("미션을 제출한다.")
     void createSubmission() {
@@ -40,5 +37,31 @@ class SubmissionServiceTest {
         submissionService.submit(member, request);
 
         assertThat(submissionRepository.findAll()).hasSize(1);
+    }
+
+    @Nested
+    @Sql(value = {"classpath:mymissions.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @DisplayName("특정 유저 미션 현황 서비스 테스트")
+    class MyMission {
+
+        @Test
+        @DisplayName("참여한 모든 미션을 조회한다.")
+        void getMyMissions() {
+            Member member = new Member(1L);
+
+            List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
+
+            assertThat(myMissions).hasSize(3);
+        }
+
+        @Test
+        @DisplayName("매칭된 제출이 없는 경우 `매칭 대기` 상태로 설정된다.")
+        void getMyMissionsWhenNoPair() {
+            Member member = new Member(1L);
+
+            List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
+
+            assertThat(myMissions.getFirst().status()).isEqualTo("매칭 대기");
+        }
     }
 }
