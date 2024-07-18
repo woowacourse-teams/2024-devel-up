@@ -21,6 +21,7 @@ class SubmissionApi {
     public ResponseEntity<ApiResponse<SubmissionResponse>> postSubmission(@RequestBody CreateSubmissionRequest request) {
         Member member = new Member(1L);
         SubmissionResponse response = submissionService.submit(member, request);
+
         return ResponseEntity.created(URI.create("/submissions/" + response.id()))
                 .body(new ApiResponse<>(response));
     }
