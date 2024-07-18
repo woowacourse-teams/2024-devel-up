@@ -36,6 +36,11 @@ public class Member {
     }
 
     public Member(String email, Provider provider, Long socialId, String name, String imageUrl) {
+        this(null, email, provider, socialId, name, imageUrl);
+    }
+
+    public Member(Long id, String email, Provider provider, Long socialId, String name, String imageUrl) {
+        this.id = id;
         this.email = email;
         this.provider = provider;
         this.socialId = socialId;
