@@ -23,7 +23,7 @@ jobs:
       checks: write
 
     steps:
-      - uses: danielchabr/pr-labels-checker@v3
+      - uses: danielchabr/pr-labels-checker@v3.3
         id: checkLabel
         with:
           hasSome: 백엔드
