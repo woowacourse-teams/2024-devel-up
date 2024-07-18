@@ -10,6 +10,10 @@ public class MyMission {
     private final String pairPrLink;
     private final String status;
 
+    public MyMission(Long id, Mission mission, String myPrLink, String pairPrLink, PairStatus status) {
+        this(id, mission, myPrLink, pairPrLink, status.getDescription());
+    }
+
     public MyMission(Long id, Mission mission, String myPrLink, String pairPrLink, String status) {
         this.id = id;
         this.mission = mission;
@@ -19,7 +23,7 @@ public class MyMission {
     }
 
     public static MyMission waitPairMatching(Submission submission) {
-        return new MyMission(submission.getId(), submission.getMission(), submission.getUrl(), null, "매칭 대기");
+        return new MyMission(submission.getId(), submission.getMission(), submission.getUrl(), null, PairStatus.WAITING);
     }
 
     public Long getId() {
