@@ -20,7 +20,7 @@ public class Member {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Provider provider; // github
+    private Provider provider;
 
     @Column(nullable = false)
     private Long socialId;
