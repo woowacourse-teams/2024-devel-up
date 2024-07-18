@@ -19,11 +19,15 @@ jobs:
     permissions:
       contents: read
       packages: write
+      actions: write
 
     steps:
-      - name: backendCheck
+      - name: Early exit
         if: contains(github.event.issue.labels.*.name, '백엔드') == false
-        run: exit 0
+        run: |
+          gh run cancel ${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v4
         with:
