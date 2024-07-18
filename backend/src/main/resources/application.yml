@@ -22,3 +22,18 @@ logging:
     org.springframework.orm.transaction: DEBUG
     org.hibernate.SQL: debug
     org.hibernate.orm.jdbc.bind: trace
+
+api-host: http://localhost:8080
+client-host: http://localhost:8080
+
+auth:
+  github:
+    client-id: develup-test-develup-test-develup-test-develup-test-develup-test
+    client-secret: develup-test-develup-test-develup-test-develup-test-develup-test
+    redirect-uri: ${api-host}/auth/social/callback/github
+    client-uri: ${client-host}
+
+security:
+  jwt:
+    secret-key: 7b3dc341c033816045cc11c6f9fba3187f4dbdb7
+    expiration-time: 3600000 # 1 hour
