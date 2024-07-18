@@ -6,16 +6,18 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import develup.member.Member;
 import develup.member.MemberRepository;
+import develup.member.Provider;
 import develup.mission.Language;
 import develup.mission.Mission;
 import develup.mission.MissionRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 
 @SpringBootTest
+@Sql(value = {"classpath:clean_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class PairServiceTest {
 
     @Autowired
@@ -32,14 +34,6 @@ class PairServiceTest {
 
     @Autowired
     private PairRepository pairRepository;
-
-    @BeforeEach
-    void setUp() {
-        pairRepository.deleteAll();
-        submissionRepository.deleteAll();
-        missionRepository.deleteAll();
-        memberRepository.deleteAll();
-    }
 
     @Test
     @DisplayName("매칭 가능한 페어가 존재하는지 확인한다.")
@@ -172,7 +166,7 @@ class PairServiceTest {
     }
 
     private Member createMember() {
-        Member member = new Member();
+        Member member = new Member("email", Provider.GITHUB, 1234L, "name", "image");
 
         return memberRepository.save(member);
     }
