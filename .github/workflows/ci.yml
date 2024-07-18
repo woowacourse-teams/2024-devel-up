@@ -59,16 +59,16 @@ jobs:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
           payload: |
             {
-              "text": "pr 테스트 결과",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "pr 테스트 ${{ steps.gradle_build.outcome}} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: ${{ steps.teamMembers.outputs.result }}
+                "text": "pr 테스트 결과",
+                "blocks": [
+                  {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": 'pr 테스트 ${{ steps.gradle_build.outcome}} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: ${{ steps.teamMembers.outputs.result }}'
+                      }
                   }
-                }
-              ]
+                ]
             }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
