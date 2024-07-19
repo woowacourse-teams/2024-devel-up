@@ -9,7 +9,7 @@ name: backend_cd
 
 on:
   pull_request:
-    types: [ opened, reopened, synchronize ]
+    types: [ closed ]
     branches: [ 'main' ]
 
 jobs:
@@ -22,8 +22,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
       - name: Early exit
         if: ${{ !contains(github.event.pull_request.labels.*.name, '백엔드') }}
         run: |

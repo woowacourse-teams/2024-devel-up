@@ -1,4 +1,4 @@
-name: CI
+name: front_ci
 
 on:
   pull_request:
