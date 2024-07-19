@@ -58,7 +58,8 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("참여한 모든 미션을 조회한다.")
         void getMyMissions() {
-            Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
+            Member member = createMember();
+
 
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
@@ -68,11 +69,15 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("매칭된 제출이 없는 경우 `매칭 대기` 상태로 설정된다.")
         void getMyMissionsWhenNoPair() {
-            Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
+            Member member = createMember();
 
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
             assertThat(myMissions.getFirst().status()).isEqualTo("매칭 대기");
+        }
+
+        private Member createMember() {
+            return new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
         }
     }
 }
