@@ -35,4 +35,11 @@ class SubmissionApi {
         return ResponseEntity.created(URI.create("/submissions/" + response.id()))
                 .body(new ApiResponse<>(response));
     }
+
+    @GetMapping("/submissions/now")
+    public ResponseEntity<ApiResponse<MyMissionResponse>> getMyMission() {
+        Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
+
+        return ResponseEntity.ok(new ApiResponse<>(submissionService.getMyMission(member)));
+    }
 }

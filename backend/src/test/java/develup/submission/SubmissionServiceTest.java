@@ -53,7 +53,7 @@ class SubmissionServiceTest {
     @Nested
     @Sql(value = {"classpath:mymissions.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @DisplayName("특정 유저 미션 현황 서비스 테스트")
-    class MyMission {
+    class MyMissionTest {
 
         @Test
         @DisplayName("참여한 모든 미션을 조회한다.")
@@ -73,6 +73,26 @@ class SubmissionServiceTest {
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
             assertThat(myMissions.getFirst().status()).isEqualTo("매칭 대기");
+        }
+
+        @Test
+        @DisplayName("진행 중인 미션이 있는 경우 해당 미션 한 개를 반환한다.")
+        void getMyMission() {
+            Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
+
+            MyMissionResponse response = submissionService.getMyMission(member);
+
+            assertThat(response.status()).isEqualTo(PairStatus.WAITING.getDescription());
+        }
+
+        @Test
+        @DisplayName("진행 중인 미션이 없는 경우 null을 반환한다.")
+        void getMyMissionWhenAllFinished() {
+            Member member = new Member(3L, "email", Provider.GITHUB, 1234L, "name", "image");
+
+            MyMissionResponse response = submissionService.getMyMission(member);
+
+            assertThat(response).isNull();
         }
 
         private Member createMember() {

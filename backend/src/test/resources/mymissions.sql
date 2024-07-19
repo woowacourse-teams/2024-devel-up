@@ -36,6 +36,9 @@ VALUES (1, 'test1@gmail.com', 'GITHUB', '1234', '구름', 'www.naver.com');
 INSERT INTO member (id, email, provider, social_id, name, image_url)
 VALUES (2, 'test1@gmail.com', 'GITHUB', '1234', '리브', 'www.naver.com');
 
+INSERT INTO member (id, email, provider, social_id, name, image_url)
+VALUES (3, 'test1@gmail.com', 'GITHUB', '1234', '아톰', 'www.naver.com');
+
 INSERT INTO submission (member_id, mission_id, url, comment)
 VALUES (1, 1, 'https://github.com/develup-mission/java-smoking/pull/1', '코멘트 1');
 
