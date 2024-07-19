@@ -18,7 +18,7 @@ export const SlideWrapper = styled.div`
 
 interface SlideTrackProps {
   currentIndex: number;
-  isAnimating: boolean;
+  isSliding: boolean;
 }
 
 export const SlideTrack = styled.ul<SlideTrackProps>`
@@ -26,7 +26,7 @@ export const SlideTrack = styled.ul<SlideTrackProps>`
   flex-direction: row;
   position: relative;
   transform-style: preserve-3d;
-  transition: ${({ isAnimating }) => (isAnimating ? 'transform 400ms ease-in-out' : 'none')};
+  transition: ${({ isSliding }) => (isSliding ? 'transform 400ms ease-in-out' : 'none')};
   transform: ${({ currentIndex }) => `translateX(-${currentIndex * 100}%)`};
   padding: 0;
   margin: 0;

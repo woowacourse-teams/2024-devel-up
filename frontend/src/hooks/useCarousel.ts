@@ -4,8 +4,8 @@ import React, { useState, useRef, useEffect } from 'react';
 const useCarousel = ({ children }: PropsWithChildren) => {
   const carouselItems = React.Children.toArray(children);
   const carouselItemLength = carouselItems.length;
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSliding, setIsSliding] = useState(false);
   const trackRef = useRef<HTMLUListElement>(null);
 
   const handleTransitionEnd = () => {
@@ -14,7 +14,7 @@ const useCarousel = ({ children }: PropsWithChildren) => {
     } else if (currentIndex === 0) {
       setCurrentIndex(carouselItemLength);
     }
-    setIsAnimating(false);
+    setIsSliding(false);
   };
 
   useEffect(() => {
@@ -28,15 +28,15 @@ const useCarousel = ({ children }: PropsWithChildren) => {
   }, [currentIndex, carouselItemLength]);
 
   const handleNextSlide = () => {
-    if (!isAnimating) {
-      setIsAnimating(true);
+    if (!isSliding) {
+      setIsSliding(true);
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
   };
 
   const handlePreviousSlide = () => {
-    if (!isAnimating) {
-      setIsAnimating(true);
+    if (!isSliding) {
+      setIsSliding(true);
       setCurrentIndex((prevIndex) => prevIndex - 1);
     }
   };
@@ -45,7 +45,7 @@ const useCarousel = ({ children }: PropsWithChildren) => {
     carouselItems,
     trackRef,
     currentIndex,
-    isAnimating,
+    isSliding,
     handleNextSlide,
     handlePreviousSlide,
   };

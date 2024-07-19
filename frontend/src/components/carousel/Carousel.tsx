@@ -3,19 +3,13 @@ import type { PropsWithChildren } from 'react';
 import * as S from './Carousel.styled';
 
 export default function Carousel({ children }: PropsWithChildren) {
-  const {
-    carouselItems,
-    trackRef,
-    currentIndex,
-    isAnimating,
-    handleNextSlide,
-    handlePreviousSlide,
-  } = useCarousel({ children });
+  const { carouselItems, trackRef, currentIndex, isSliding, handleNextSlide, handlePreviousSlide } =
+    useCarousel({ children });
 
   return (
     <S.Container>
       <S.SlideWrapper>
-        <S.SlideTrack ref={trackRef} currentIndex={currentIndex} isAnimating={isAnimating}>
+        <S.SlideTrack ref={trackRef} currentIndex={currentIndex} isSliding={isSliding}>
           {carouselItems.map((item, index) => (
             <S.Slide key={`original-${index}`}>{item}</S.Slide>
           ))}
