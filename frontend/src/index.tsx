@@ -9,6 +9,7 @@ import MissionDetailPage from './pages/MissionDetailPage';
 import MissionListPage from './pages/MissionListPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
 import UserProfilePage from './pages/UserProfilePage';
+import TestPage from './pages/TestPage';
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,10 @@ const routes = [
         <UserProfilePage />
       </App>
     ),
+  },
+  {
+    path: '/test',
+    element: <TestPage />,
   },
 ];
 
