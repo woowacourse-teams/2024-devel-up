@@ -1,5 +1,5 @@
-import MyMissionInProgress from '@/components/MyMission/MyMissionInProgress/MyMissionInProgress';
-import MyMissionCompleted from '@/components/MyMission/MyMissionCompleted/MyMissionCompleted';
+import MyMissionInProgress from '@/components/myMission/myMissionInProgress/MyMissionInProgress';
+import MyMissionCompleted from '@/components/myMission/myMissionCompleted/MyMissionCompleted';
 import * as S from './MyMissionPage.styled';
 
 export default function MyMissionPage() {
