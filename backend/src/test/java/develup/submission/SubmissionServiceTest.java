@@ -60,7 +60,6 @@ class SubmissionServiceTest {
         void getMyMissions() {
             Member member = createMember();
 
-
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
             assertThat(myMissions).hasSize(3);
