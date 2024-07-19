@@ -58,6 +58,7 @@ export default class APIClient implements APIClientType {
     }
 
     const data = await response.json();
+
     return data;
   }
 }
