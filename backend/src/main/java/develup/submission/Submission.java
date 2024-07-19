@@ -1,5 +1,6 @@
 package develup.submission;
 
+import java.util.Objects;
 import develup.member.Member;
 import develup.mission.Mission;
 import jakarta.persistence.Column;
@@ -34,10 +35,19 @@ public class Submission {
     }
 
     public Submission(String url, String comment, Member member, Mission mission) {
+        this(null, url, comment, member, mission);
+    }
+
+    public Submission(Long id, String url, String comment, Member member, Mission mission) {
+        this.id = id;
         this.url = url;
         this.comment = comment;
         this.member = member;
         this.mission = mission;
+    }
+
+    public boolean isNotSameOwner(Submission other) {
+        return !this.member.equals(other.member);
     }
 
     public Long getId() {
@@ -66,5 +76,22 @@ public class Submission {
 
     public Long getMissionId() {
         return mission.getId();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Submission submission)) {
+            return false;
+        }
+
+        return this.getId() != null && Objects.equals(getId(), submission.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
