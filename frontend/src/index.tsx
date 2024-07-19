@@ -10,6 +10,7 @@ import MissionListPage from './pages/MissionListPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
 import MyMissionPage from './pages/MyMissionPage';
 import UserProfilePage from './pages/UserProfilePage';
+import GuidePage from './pages/GuidePage';
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,14 @@ const routes = [
     element: (
       <App>
         <UserProfilePage />
+      </App>
+    ),
+  },
+  {
+    path: ROUTES.guide,
+    element: (
+      <App>
+        <GuidePage />
       </App>
     ),
   },
