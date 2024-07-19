@@ -1,10 +1,15 @@
 import { useEffect } from 'react';
 
-export function useKeyDown(targetKey: string, callback: () => void) {
+interface ListenKeyDownProps {
+  targetKey: string;
+  onKeyDown: () => void;
+}
+
+export default function ListenKeyDown({ targetKey, onKeyDown }: ListenKeyDownProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === targetKey) {
-        callback();
+        onKeyDown();
       }
     };
 
@@ -14,4 +19,6 @@ export function useKeyDown(targetKey: string, callback: () => void) {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
+
+  return null;
 }

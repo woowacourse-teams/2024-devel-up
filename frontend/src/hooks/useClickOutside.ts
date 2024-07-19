@@ -1,7 +1,7 @@
 import { router } from '@/index';
 import { useEffect, useRef } from 'react';
 
-export const useClickOutside = <T extends Node = HTMLElement>(callback: () => void) => {
+const useClickOutside = <T extends Node = HTMLElement>(callback: () => void) => {
   const ref = useRef<T>(null);
 
   useEffect(() => {
@@ -27,3 +27,5 @@ export const useClickOutside = <T extends Node = HTMLElement>(callback: () => vo
 
   return { targetRef: ref };
 };
+
+export default useClickOutside;
