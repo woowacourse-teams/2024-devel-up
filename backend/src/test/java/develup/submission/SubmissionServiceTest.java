@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import develup.member.Member;
+import develup.member.MemberRepository;
+import develup.member.Provider;
 import develup.mission.Language;
 import develup.mission.Mission;
 import develup.mission.MissionRepository;
@@ -27,16 +29,25 @@ class SubmissionServiceTest {
     @Autowired
     private MissionRepository missionRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
     @Test
     @DisplayName("미션을 제출한다.")
     void createSubmission() {
-        Member member = new Member(1L);
+        Member member = createMember();
         Mission mission = missionRepository.save(new Mission("미션 1", Language.JAVA, "미션 설명", "미션 썸네일", "미션 url"));
         CreateSubmissionRequest request = new CreateSubmissionRequest(mission.getId(), "pr url", "코멘트");
 
         submissionService.submit(member, request);
 
         assertThat(submissionRepository.findAll()).hasSize(1);
+    }
+
+    private Member createMember() {
+        Member member = new Member("email", Provider.GITHUB, 1234L, "name", "image");
+
+        return memberRepository.save(member);
     }
 
     @Nested
@@ -47,7 +58,7 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("참여한 모든 미션을 조회한다.")
         void getMyMissions() {
-            Member member = new Member(1L);
+            Member member = createMember();
 
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
@@ -57,11 +68,15 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("매칭된 제출이 없는 경우 `매칭 대기` 상태로 설정된다.")
         void getMyMissionsWhenNoPair() {
-            Member member = new Member(1L);
+            Member member = createMember();
 
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
             assertThat(myMissions.getFirst().status()).isEqualTo("매칭 대기");
+        }
+
+        private Member createMember() {
+            return new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
         }
     }
 }

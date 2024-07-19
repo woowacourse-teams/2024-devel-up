@@ -1,5 +1,6 @@
-import { ChangeEvent, useState } from 'react';
-import { UserInfo } from '@/types';
+import { useState } from 'react';
+import type { ChangeEvent } from 'react';
+import type { UserInfo } from '@/types';
 import * as S from './UserProfile.styled';
 
 type UserProfileDescription = Pick<UserInfo, 'description'>;

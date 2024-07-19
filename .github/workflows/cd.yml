@@ -1,0 +1,67 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
+
+name: Gradle Package
+
+on:
+  pull_request:
+    types: [ closed ]
+    branches: [ 'main' ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
+      actions: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Early exit
+        if: ${{ !contains(github.event.pull_request.labels.*.name, '백엔드') }}
+        run: |
+          gh run cancel ${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      - name: Setup Gradle
+        run: chmod +x ./backend/gradlew
+
+      - name: Build with Gradle
+        continue-on-error: true
+        id: gradle_build
+        run: |
+          cd backend
+          ./gradlew build
+
+      - name: slack mention
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+                "text": "pr 머지",
+                "blocks": [
+                  {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "<@channel> pr이 main에 머지되었습니다. \n • PR 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                      }
+                  }
+                ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+
