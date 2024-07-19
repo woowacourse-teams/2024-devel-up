@@ -68,7 +68,7 @@ const routes = [
   },
 ];
 
-const router = createBrowserRouter(routes, {
+export const router = createBrowserRouter(routes, {
   basename: ROUTES.main,
 });
 
