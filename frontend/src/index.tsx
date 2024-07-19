@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
 import MissionListPage from './pages/MissionListPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
+import MyMissionPage from './pages/MyMissionPage';
 import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
 
@@ -54,6 +55,14 @@ const routes = [
     element: (
       <App>
         <GuidePage />
+      </App>
+    ),
+  },
+  {
+    path: ROUTES.myMission,
+    element: (
+      <App>
+        <MyMissionPage />
       </App>
     ),
   },
