@@ -80,9 +80,9 @@ class SubmissionServiceTest {
         void getMyMission() {
             Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
 
-            MyMissionResponse myMission = submissionService.getMyMission(member);
+            MyMissionResponse response = submissionService.getMyMission(member);
 
-            assertThat(myMission.status()).isEqualTo(PairStatus.WAITING.getDescription());
+            assertThat(response.status()).isEqualTo(PairStatus.WAITING.getDescription());
         }
 
         @Test
@@ -90,9 +90,9 @@ class SubmissionServiceTest {
         void getMyMissionWhenAllFinished() {
             Member member = new Member(3L, "email", Provider.GITHUB, 1234L, "name", "image");
 
-            MyMissionResponse myMission = submissionService.getMyMission(member);
+            MyMissionResponse response = submissionService.getMyMission(member);
 
-            assertThat(myMission).isNull();
+            assertThat(response).isNull();
         }
 
         private Member createMember() {
