@@ -1,5 +1,6 @@
 // TODO 안에 컨텐츠가 어떻게 들어갈지 몰라서 일단 목파일 넣어놓습니다. @버건디
 
+/* eslint-disable react/no-unescaped-entities */
 const HowToFork = () => {
   return (
     <div id="Inner">
