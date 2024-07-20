@@ -3,6 +3,8 @@
 
 import type { ReactNode } from 'react';
 
+type LanguageOption = 'JAVA' | 'JAVASCRIPT';
+
 export interface UserInfo {
   id: number;
   login: string;
@@ -15,4 +17,13 @@ export interface UserInfo {
 export interface TabInfo {
   name: string;
   content: ReactNode;
+}
+
+export interface Mission {
+  id: number;
+  title: string;
+  language: string;
+  description: string;
+  thumbnail: string;
+  url: string;
 }

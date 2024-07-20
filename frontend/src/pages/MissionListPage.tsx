@@ -1,9 +1,11 @@
 import MissionItem from '@/components/missionList/MissionItem';
 import * as S from '@/components/missionList/MissionList.styled';
-import { missionMocks } from '@/components/missionList/missionMocks';
 import Carousel from '@/components/carousel/Carousel';
+import useMissions from '@/hooks/useMissions';
 
 export default function MissionListPage() {
+  const { allMissions } = useMissions();
+
   return (
     <S.MissionListContainer>
       <S.MissionListTitle>미션 풀고 리뷰 받고, Devel Up!</S.MissionListTitle>
@@ -57,7 +59,7 @@ export default function MissionListPage() {
         </div>
       </Carousel>
       <S.MissionList>
-        {missionMocks.map((mission) => (
+        {allMissions.map((mission) => (
           <MissionItem key={mission.id} mission={mission} />
         ))}
       </S.MissionList>
