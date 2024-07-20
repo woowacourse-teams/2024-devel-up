@@ -16,6 +16,7 @@ export const Default: Story = {
   args: {
     children: [
       <div
+        key={'1'}
         style={{
           display: 'flex',
           justifyContent: 'center',
@@ -30,6 +31,7 @@ export const Default: Story = {
         />
       </div>,
       <div
+        key={'2'}
         style={{
           display: 'flex',
           justifyContent: 'center',
@@ -44,6 +46,7 @@ export const Default: Story = {
         />
       </div>,
       <div
+        key={'3'}
         style={{
           display: 'flex',
           justifyContent: 'center',

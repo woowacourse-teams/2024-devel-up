@@ -14,6 +14,7 @@ export default function MissionListPage() {
          * 캐러셀 테스트 용으로 만들어본 이미지들입니다. 추후 수정 예정
          */}
         <div
+          key={'1'}
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -28,6 +29,7 @@ export default function MissionListPage() {
           />
         </div>
         <div
+          key={'2'}
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -44,6 +46,7 @@ export default function MissionListPage() {
         </div>
 
         <div
+          key={'3'}
           style={{
             display: 'flex',
             justifyContent: 'center',
