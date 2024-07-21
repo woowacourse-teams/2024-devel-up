@@ -1,9 +1,9 @@
 import useUserInfo from '@/hooks/useUserInfo';
-import UserProfileImage from '@/components/userProfile/UserProfileImage';
-import * as S from '@/components/userProfile/UserProfile.styled';
-import UserProfileName from '@/components/userProfile/UserProfileName';
-import UserProfileEmail from '@/components/userProfile/UserProfileEmail';
-import UserProfileDescription from '@/components/userProfile/UserProfileDescription';
+import UserProfileImage from '@/components/UserProfile/UserProfileImage';
+import * as S from '@/components/UserProfile/UserProfile.styled';
+import UserProfileName from '@/components/UserProfile/UserProfileName';
+import UserProfileEmail from '@/components/UserProfile/UserProfileEmail';
+import UserProfileDescription from '@/components/UserProfile/UserProfileDescription';
 
 export default function UserProfilePage() {
   const { userInfo } = useUserInfo();

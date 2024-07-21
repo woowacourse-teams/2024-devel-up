@@ -1,11 +1,11 @@
 // import { useParams } from 'react-router-dom';
-import MissionImage from '@/components/missionSubmit/MissionThumbnail';
+import MissionImage from '@/components/MissionSubmit/MissionThumbnail';
 import * as S from './MissionSubmitPage.styled';
-import SubmitBanner from '@/components/missionSubmit/SubmitBanner';
-import PRLink from '@/components/missionSubmit/PRLink';
-import OneWord from '@/components/missionSubmit/OneWord';
-import SubmitButton from '@/components/missionSubmit/SubmitButton';
-import MissionSubmitForm from '@/components/missionSubmit/MissionSubmitForm';
+import SubmitBanner from '@/components/MissionSubmit/SubmitBanner';
+import PRLink from '@/components/MissionSubmit/PRLink';
+import OneWord from '@/components/MissionSubmit/OneWord';
+import SubmitButton from '@/components/MissionSubmit/SubmitButton';
+import MissionSubmitForm from '@/components/MissionSubmit/MissionSubmitForm';
 
 const MOCK_MISSION = {
   data: {

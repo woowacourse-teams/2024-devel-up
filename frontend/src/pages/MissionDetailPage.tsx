@@ -1,6 +1,6 @@
-import MissionDetailButtonGroup from '@/components/missionDetailButtonGroup';
-import MissionDetailContent from '@/components/missionDetailContent';
-import MissionDetailHeader from '@/components/missionDetailHeader';
+import MissionDetailButtonGroup from '@/components/MissionDetailButtonGroup';
+import MissionDetailContent from '@/components/MissionDetailContent';
+import MissionDetailHeader from '@/components/MissionDetailHeader';
 import { useParams } from 'react-router-dom';
 import * as S from './MissionDetailPage.styled';
 

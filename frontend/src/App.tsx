@@ -1,4 +1,4 @@
-import Header from './components/header';
+import Header from './components/Header';
 import { GlobalLayout } from './styles/GlobalLayout';
 import type { PropsWithChildren } from 'react';
 
