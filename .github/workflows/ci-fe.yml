@@ -1,0 +1,77 @@
+name: CI FE
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches: ['main']
+
+jobs:
+  FE_CI:
+    if: ${{ contains(github.event.pull_request.labels.*.name, '🎨 프론트엔드') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      actions: write
+
+    outputs:
+      lint: ${{ steps.npm_run_lint_result.outputs.result }}
+      build: ${{ steps.npm_run_build_result.outputs.result }}
+      test: ${{ steps.npm_run_test_result.outputs.result }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.1'
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run lint
+        continue-on-error: true
+        id: npm_run_lint
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Save Run lint result
+        continue-on-error: true
+        id: npm_run_lint_result
+        run: |
+          echo "result=${{steps.npm_run_lint.outcome}}" >> $GITHUB_OUTPUT
+
+      - name: Run build
+        continue-on-error: true
+        id: npm_run_build
+        run: |
+          pwd
+          cd frontend
+          npm run build
+
+      - name: Save Run build result
+        continue-on-error: true
+        id: npm_run_build_result
+        run: |
+          echo "result=${{steps.npm_run_build.outcome}}" >> $GITHUB_OUTPUT
+
+      - name: Run test
+        continue-on-error: true
+        id: npm_run_test
+        run: |
+          cd frontend
+          npm run test
+
+      - name: Save Run test result
+        continue-on-error: true
+        id: npm_run_test_result
+        run: |
+          echo "result=${{steps.npm_run_test.outcome}}" >> $GITHUB_OUTPUT

@@ -1,0 +1,38 @@
+name: CI BE
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches: ['main']
+
+jobs:
+  BE_CI:
+    if: ${{ contains(github.event.pull_request.labels.*.name, '🚛 백엔드') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      actions: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      - name: Setup Gradle
+        run: chmod +x ./backend/gradlew
+
+      - name: Build with Gradle
+        continue-on-error: true
+        id: gradle_build
+        run: |
+          cd backend
+          ./gradlew build
