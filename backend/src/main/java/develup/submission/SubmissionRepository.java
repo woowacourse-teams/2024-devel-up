@@ -26,4 +26,6 @@ public interface SubmissionRepository extends JpaRepository<Submission, Long> {
     List<Submission> findNonMatchedSubmissions(Mission mission);
 
     Optional<Submission> findFirstByMember_IdOrderByIdDesc(Long id);
+
+    Optional<Submission> findFirstByMember_IdAndMission_IdOrderByIdDesc(Long memberId, Long missionId);
 }
