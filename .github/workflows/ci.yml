@@ -5,15 +5,17 @@
 # This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
 
-name: Gradle Package
+name: CI
 
 on:
+  workflow_dispatch:
   pull_request:
     types: [ opened, reopened, synchronize ]
     branches: [ 'main' ]
 
 jobs:
-  build:
+  BE_CI:
+    if: ${{ contains(github.event.pull_request.labels.*.name, '백엔드') }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,12 +26,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-      - name: Early exit
-        if: ${{ !contains(github.event.pull_request.labels.*.name, '백엔드') }}
-        run: |
-          gh run cancel ${{ github.run_id }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
@@ -47,6 +44,16 @@ jobs:
           cd backend
           ./gradlew build
 
+  BE_SLACK_MESSAGE:
+    runs-on: ubuntu-latest
+    needs: BE_CI
+    if: ${{needs.BE_CI.result != 'skipped'}}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
       - name: Get teamMember List
         id: teamMembers
         uses: actions/github-script@v6
@@ -61,7 +68,7 @@ jobs:
             })
             return mention.join(', ');
 
-      - name: slack mention
+      - name: Call notify workflow
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
@@ -73,7 +80,120 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "pr 테스트 ${{ steps.gradle_build.outcome}} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: \${{ steps.teamMembers.outputs.result }}
+                        "text": "pr 테스트 ${{ needs.BE_CI.result }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: \${{ steps.teamMembers.outputs.result }}
+                      }
+                  }
+                ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+  FE_CI:
+    if: ${{ contains(github.event.pull_request.labels.*.name, '프론트엔드') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      actions: write
+
+    outputs:
+      lint: ${{ steps.npm_run_lint_result.outputs.result }}
+      build: ${{ steps.npm_run_build_result.outputs.result }}
+      test: ${{ steps.npm_run_test_result.outputs.result }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.1'
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run lint
+        continue-on-error: true
+        id: npm_run_lint
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Save Run lint result
+        continue-on-error: true
+        id: npm_run_lint_result
+        run: |
+          echo "result=${{steps.npm_run_lint.outcome}}" >> $GITHUB_OUTPUT
+
+      - name: Run build
+        continue-on-error: true
+        id: npm_run_build
+        run: |
+          pwd
+          cd frontend
+          npm run build
+
+      - name: Save Run build result
+        continue-on-error: true
+        id: npm_run_build_result
+        run: |
+          echo "result=${{steps.npm_run_build.outcome}}" >> $GITHUB_OUTPUT
+
+      - name: Run test
+        continue-on-error: true
+        id: npm_run_test
+        run: |
+          cd frontend
+          npm run test
+
+      - name: Save Run test result
+        continue-on-error: true
+        id: npm_run_test_result
+        run: |
+          echo "result=${{steps.npm_run_test.outcome}}" >> $GITHUB_OUTPUT
+
+  FE_SLACK_MESSAGE:
+    runs-on: ubuntu-latest
+    needs: [FE_CI]
+    if: ${{needs.FE_CI.result != 'skipped'}}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Get teamMember List
+        id: teamMembers
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const workers = JSON.parse(fs.readFileSync('.github/workflows/teamMember.json'));
+            const mention = context.payload.pull_request.assignees.map((user) => {
+            const login = user.login;
+            const mappedValue = workers[login];
+            return mappedValue ? `<@${mappedValue}>` : `No mapping found for ${login}`;
+            })
+            return mention.join(', ');
+
+      - name: Call notify workflow
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+                "text": "pr 테스트 결과",
+                "blocks": [
+                  {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "pr 테스트 결과\n lint : ${{ needs.FE_CI.outputs.lint }} \n build : ${{ needs.FE_CI.outputs.build }} \n test : ${{ needs.FE_CI.outputs.test }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: \${{ steps.teamMembers.outputs.result }}
                       }
                   }
                 ]
