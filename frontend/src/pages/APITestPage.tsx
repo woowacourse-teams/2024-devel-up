@@ -1,53 +1,79 @@
-import APIClient from '@/apis/clients/APIClient';
-import { PATH } from '@/apis/paths';
+import { getMissions, postSubmission } from '@/apis/mission';
 
 export default function APITestPage() {
-  const requestGet = async () => {
+  const testGetMissions = async () => {
     try {
-      const apiClient = new APIClient('http://localhost:8080');
-      const data = await apiClient.get(PATH.missionList, { page: '1' });
-      console.dir(data);
+      // ✅ getMissions 로직을 확인해주세요
+      const missions = await getMissions();
+
+      alert(`요청 성공! \n응답: ${JSON.stringify(missions)}`);
     } catch (err) {
+      alert('요청 실패. console을 확인하세요.');
       console.error(err);
     }
   };
 
-  const requestPost = async () => {
+  const testGetMissionsWithQueryParams = async () => {
     try {
-      const apiClient = new APIClient('http://localhost:8080');
-      const data = await apiClient.post(PATH.missionList);
-      console.dir(data);
+      // ✅ getMissions에 쿼리 파라미터를 넘기는 방식을 확인해주세요.
+      const missions = await getMissions({ page: '1' });
+
+      alert(`요청 성공! \n응답: ${JSON.stringify(missions)}`);
     } catch (err) {
+      alert('요청 실패. console을 확인하세요.');
       console.error(err);
     }
   };
 
-  const requestPatch = async () => {
+  const testPostMissionSubmission = async () => {
     try {
-      const apiClient = new APIClient('http://localhost:8080');
-      const data = await apiClient.patch(PATH.missionList, { page: '1' });
-      console.dir(data);
+      // ✅ postSubmission 로직을 확인해주세요
+      const createdSubmission = await postSubmission({
+        missionId: 999,
+        url: 'www.develup.com',
+        comment: '테스트용 데이터입니다 (언제든 지워도 됨)',
+      });
+      alert(`요청 성공! \n응답: ${JSON.stringify(createdSubmission)}`);
     } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const requestDelete = async () => {
-    try {
-      const apiClient = new APIClient('http://localhost:8080');
-      const data = await apiClient.delete(PATH.missionList);
-      console.dir(data);
-    } catch (err) {
+      alert('요청 실패. console을 확인하세요.');
       console.error(err);
     }
   };
 
   return (
     <div>
-      <button onClick={requestGet}>get test</button>;
-      <button onClick={requestPost}>post test</button>;
-      <button onClick={requestPatch}>patch test</button>;
-      <button onClick={requestDelete}>delete test</button>;
+      <button
+        style={{
+          background: 'lightblue',
+          fontSize: '5rem',
+          cursor: 'pointer',
+        }}
+        onClick={testGetMissions}
+      >
+        get 요청 test 🤖
+      </button>
+      <br />
+      <button
+        style={{
+          background: 'lightblue',
+          fontSize: '5rem',
+          cursor: 'pointer',
+        }}
+        onClick={testGetMissionsWithQueryParams}
+      >
+        쿼리파라미터가 담긴 get 요청 test 🤖
+      </button>
+      <br />
+      <button
+        style={{
+          background: 'pink',
+          fontSize: '5rem',
+          cursor: 'pointer',
+        }}
+        onClick={testPostMissionSubmission}
+      >
+        post 요청 test 🤖
+      </button>
     </div>
   );
 }
