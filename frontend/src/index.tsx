@@ -10,7 +10,7 @@ import MissionListPage from './pages/MissionListPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
 import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
-import TestPage from './pages/TestPage';
+import APITestPage from './pages/APITestPage';
 
 const queryClient = new QueryClient();
 
@@ -59,10 +59,10 @@ const routes = [
     ),
   },
   {
-    path: '/test',
+    path: '/api-test',
     element: (
       <App>
-        <TestPage />
+        <APITestPage />
       </App>
     ),
   },
