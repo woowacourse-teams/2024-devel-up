@@ -1,6 +1,8 @@
 package develup.mission;
 
 import java.util.List;
+import develup.member.Member;
+import develup.member.Provider;
 import develup.support.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,11 @@ class MissionApi {
 
     @GetMapping("/missions/{id}")
     public ResponseEntity<ApiResponse<MissionResponse>> getMission(@PathVariable Long id) {
-        return ResponseEntity.ok(new ApiResponse<>(missionService.getMissionById(id)));
+        Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
+        boolean guest = false;
+
+        MissionResponse missionResponse = missionService.getMissionById(id, member, guest);
+
+        return ResponseEntity.ok(new ApiResponse<>(missionResponse));
     }
 }
