@@ -15,7 +15,7 @@ on:
 
 jobs:
   BE_CI:
-    if: ${{ contains(github.event.pull_request.labels.*.name, '백엔드') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, '🚛 백엔드') }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -89,7 +89,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
   FE_CI:
-    if: ${{ contains(github.event.pull_request.labels.*.name, '프론트엔드') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, '🎨 프론트엔드') }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
