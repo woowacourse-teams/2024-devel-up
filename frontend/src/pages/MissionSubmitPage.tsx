@@ -11,9 +11,7 @@ import useMission from '@/hooks/useMission';
 
 export default function MissionSubmitPage() {
   const { id } = useParams();
-
   const { data: mission } = useMission(Number(id));
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleMissionSubmit = () => {
