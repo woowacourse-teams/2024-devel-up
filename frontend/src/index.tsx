@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -11,18 +10,27 @@ import MissionSubmitPage from './pages/MissionSubmitPage';
 import MyMissionPage from './pages/MyMissionPage';
 import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
+import React, { Suspense } from 'react';
+import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      throwOnError: true,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-//TODO 각자 맡은 페이지로 구현해서 채워놓아야합니다 @버건디
 const routes = [
   {
     path: ROUTES.main,
     element: (
       <App>
-        <MissionListPage />
+        <Suspense fallback={<div>로딩중입니다!</div>}>
+          <MissionListPage />
+        </Suspense>
       </App>
     ),
   },
@@ -30,7 +38,9 @@ const routes = [
     path: ROUTES.submit,
     element: (
       <App>
-        <MissionSubmitPage />
+        <Suspense fallback={<div>로딩중입니다!</div>}>
+          <MissionSubmitPage />
+        </Suspense>
       </App>
     ),
   },
@@ -75,8 +85,10 @@ export const router = createBrowserRouter(routes, {
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <GlobalStyle />
-      <RouterProvider router={router} />
+      <QueryErrorBoundary>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+      </QueryErrorBoundary>
     </QueryClientProvider>
   </React.StrictMode>,
 );
