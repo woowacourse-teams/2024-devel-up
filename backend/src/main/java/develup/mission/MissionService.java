@@ -32,7 +32,7 @@ class MissionService {
         }
 
         return submissionRepository.findFirstByMember_IdAndMission_IdOrderByIdDesc(member.getId(), missionId)
-                .map(submission -> MissionResponse.from(mission, true, submission.getUrl()))
+                .map(submission -> MissionResponse.of(mission, true, submission.getUrl()))
                 .orElseGet(() -> MissionResponse.from(mission));
     }
 }

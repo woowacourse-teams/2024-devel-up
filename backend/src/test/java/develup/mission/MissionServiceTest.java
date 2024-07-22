@@ -73,7 +73,7 @@ class MissionServiceTest {
 
         MissionResponse response = missionService.getMissionById(mission.getId(), member, false);
 
-        assertThat(response).isEqualTo(MissionResponse.from(mission, true, submittedPrUrl));
+        assertThat(response).isEqualTo(MissionResponse.of(mission, true, submittedPrUrl));
     }
 
     @Test
