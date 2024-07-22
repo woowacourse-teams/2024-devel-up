@@ -49,11 +49,12 @@ const typeStyles = {
 export const Input = styled.input<InputProps>`
   ${(props) => sizeStyles[props.Size]}
   ${(props) => borderRadiusStyles[props.Size]}
-  ${(props) => typeStyles[props.Type || 'Default']}
+  ${(props) => typeStyles[props.Type]}
   outline: none;
   padding: 2.3rem;
   border: none;
   border-bottom: 0.15rem solid transparent;
+  font-weight: bold;
   ${(props) =>
     props.Danger
       ? css`

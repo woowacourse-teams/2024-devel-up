@@ -1,6 +1,9 @@
 import type { InputHTMLAttributes } from 'react';
 import * as S from './Input.styled';
 
+// TODO 일단 Danger로 두긴 했는데,
+// isError와 ErrorMessage 네이밍은 어떠실지 여쭙습니다 @버건디
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   Size: 'Small' | 'Medium' | 'Large' | 'XLarge';
   Type?: 'Default';
