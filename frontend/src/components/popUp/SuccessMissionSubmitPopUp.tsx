@@ -1,8 +1,8 @@
-import Modal from '../common/modal/Modal';
+import Modal from '../common/Modal/Modal';
 import * as S from './SuccessMissionSubmitPopUp.styled';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { fadeIn, fadeOut } from '../common/modal/Modal.styled';
+import { fadeIn, fadeOut } from '../common/Modal/Modal.styled';
 
 interface SuccessMissionSubmitPopUpProps {
   isModalOpen: boolean;

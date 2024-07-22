@@ -5,7 +5,7 @@ import SubmitBanner from '@/components/missionSubmit/SubmitBanner';
 import PRLink from '@/components/missionSubmit/PRLink';
 import OneWord from '@/components/missionSubmit/OneWord';
 import SubmitButton from '@/components/missionSubmit/SubmitButton';
-import SuccessMissionSubmitPopUp from '@/components/popUp/SuccessMissionSubmitPopUp';
+import SuccessMissionSubmitPopUp from '@/components/PopUp/SuccessMissionSubmitPopUp';
 import { useState } from 'react';
 
 const MOCK_MISSION = {
