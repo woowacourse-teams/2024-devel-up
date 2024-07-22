@@ -1,5 +1,6 @@
 import { ModalContext } from '@/contexts/ModalContext';
-import { PropsWithChildren, useContext } from 'react';
+import { useContext } from 'react';
+import type { PropsWithChildren } from 'react';
 import * as S from './Modal.styled';
 
 const convertAnimationTime = (time: number) => {

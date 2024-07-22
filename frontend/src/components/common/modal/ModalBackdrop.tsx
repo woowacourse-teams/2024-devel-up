@@ -1,5 +1,5 @@
-import { KeyboardEvent, MouseEvent, useCallback, useContext } from 'react';
-import type { PropsWithChildren } from 'react';
+import { useCallback, useContext } from 'react';
+import type { PropsWithChildren, KeyboardEvent, MouseEvent } from 'react';
 import { ModalContext } from '@/contexts/ModalContext';
 import * as S from './Modal.styled';
 import ScrollPreventer from './ScrollPreventer';

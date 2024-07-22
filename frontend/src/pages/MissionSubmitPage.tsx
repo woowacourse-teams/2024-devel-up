@@ -20,10 +20,6 @@ const MOCK_MISSION = {
   },
 };
 
-const Content = () => {
-  return <div>컨텐츠입니다.</div>;
-};
-
 export default function MissionSubmitPage() {
   // const { id } = useParams();
   const { thumbnail, title, language } = MOCK_MISSION.data;

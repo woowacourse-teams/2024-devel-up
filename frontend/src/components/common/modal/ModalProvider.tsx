@@ -1,5 +1,6 @@
-import { PropsWithChildren } from 'react';
-import { ModalContext, ModalContextProps } from '@/contexts/ModalContext';
+import type { PropsWithChildren } from 'react';
+import { ModalContext } from '@/contexts/ModalContext';
+import type { ModalContextProps } from '@/contexts/ModalContext';
 
 export const ModalProvider = ({
   children,

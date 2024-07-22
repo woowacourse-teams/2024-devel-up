@@ -1,5 +1,5 @@
 import { styled, css, keyframes } from 'styled-components';
-import { Keyframes } from 'styled-components/dist/types';
+import type { Keyframes } from 'styled-components/dist/types';
 
 export const fadeIn = keyframes`
   0% {

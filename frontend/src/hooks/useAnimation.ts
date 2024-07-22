@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Keyframes } from 'styled-components/dist/types';
+import type { Keyframes } from 'styled-components/dist/types';
 
 type UseAnimationParams = {
   initialState: boolean;

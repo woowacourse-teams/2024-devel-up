@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { Keyframes } from 'styled-components/dist/types';
+import type { Keyframes } from 'styled-components/dist/types';
 
 export interface ModalContextProps {
   isOpen: boolean;
