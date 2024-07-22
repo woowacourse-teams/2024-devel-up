@@ -1,4 +1,35 @@
-import { styled, css } from 'styled-components';
+import { styled, css, keyframes } from 'styled-components';
+import { Keyframes } from 'styled-components/dist/types';
+
+export const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(400px) scale(0.75);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(-16px) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`;
+
+export const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(-16px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(400px) scale(0.75);
+  }
+`;
 
 export const Backdrop = styled.div`
   position: fixed;
@@ -9,23 +40,23 @@ export const Backdrop = styled.div`
 `;
 
 interface ModalContainerProps {
-  mountAnimation?: string;
-  unMountAnimation?: string;
-  animationTime?: string;
+  $mountAnimation?: string | Keyframes;
+  $unMountAnimation?: string | Keyframes;
+  $animationTime?: string;
   className?: string;
 }
 
 export const ModalContainer = styled.div<ModalContainerProps>`
   ${(props) =>
-    props.mountAnimation &&
+    props.$mountAnimation &&
     css`
-      animation: ${props.mountAnimation} ${props.animationTime} ease-in-out forwards;
+      animation: ${props.$mountAnimation} ${props.$animationTime} ease-in-out forwards;
     `}
   ${(props) =>
-    props.unMountAnimation &&
+    props.$unMountAnimation &&
     css`
       &.closing {
-        animation: ${props.unMountAnimation} ${props.animationTime} ease-in-out forwards;
+        animation: ${props.$unMountAnimation} ${props.$animationTime} ease-in-out forwards;
       }
     `}
 `;

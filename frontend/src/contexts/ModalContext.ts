@@ -4,10 +4,10 @@ import { Keyframes } from 'styled-components/dist/types';
 export interface ModalContextProps {
   isOpen: boolean;
   onClose: (event?: React.SyntheticEvent) => void;
-  mountAnimation: string;
-  unMountAnimation: string;
+  $mountAnimation: string | Keyframes;
+  $unMountAnimation: string | Keyframes;
   position: 'center' | 'bottom';
-  animationTime: number;
+  $animationTime: number;
   open: boolean;
   closing: boolean;
   size: 'small' | 'medium' | 'large' | 'custom';
@@ -21,10 +21,10 @@ const defaultContext: Partial<ModalContextProps> = {
       event.stopPropagation();
     }
   },
-  mountAnimation: '',
-  unMountAnimation: '',
+  $mountAnimation: '',
+  $unMountAnimation: '',
   position: 'center',
-  animationTime: 300,
+  $animationTime: 300,
   open: true,
   closing: true,
 };

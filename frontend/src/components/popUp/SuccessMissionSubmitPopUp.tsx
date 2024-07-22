@@ -2,29 +2,11 @@ import Modal from '../common/modal/Modal';
 import * as S from './SuccessMissionSubmitPopUp.styled';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { css, keyframes } from 'styled-components';
+import { fadeIn, fadeOut } from '../common/modal/Modal.styled';
 
 interface SuccessMissionSubmitPopUpProps {
   isModalOpen: boolean;
 }
-
-// const fadeIn = keyframes`
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// `;
-
-// const fadeOut = keyframes`
-//   from {
-//     opacity: 1;
-//   }
-//   to {
-//     opacity: 0;
-//   }
-// `;
 
 // TODO 컴포넌트명 너무 긴거 같은데 수정해야할 것 같아요.. 추천 부탁드립니다 @버건디
 
@@ -37,7 +19,12 @@ export default function SuccessMissionSubmitPopUp({ isModalOpen }: SuccessMissio
   };
 
   return (
-    <Modal isOpen={isModalOpen} animationTime={500}>
+    <Modal
+      isOpen={isModalOpen}
+      $mountAnimation={fadeIn}
+      $unMountAnimation={fadeOut}
+      $animationTime={300}
+    >
       <Modal.Portal id="modal">
         <Modal.Backdrop opacity="rgba(0, 0, 0, 0.3)">
           <Modal.Container>

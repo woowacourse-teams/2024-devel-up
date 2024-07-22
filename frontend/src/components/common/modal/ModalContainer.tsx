@@ -8,19 +8,19 @@ const convertAnimationTime = (time: number) => {
 
 export default function ModalContainer({ children }: PropsWithChildren) {
   const {
-    mountAnimation,
-    unMountAnimation,
-    animationTime = 500,
+    $mountAnimation,
+    $unMountAnimation,
+    $animationTime = 500,
     closing,
   } = useContext(ModalContext);
 
-  const convertedAnimationTime = convertAnimationTime(animationTime);
+  const convertedAnimationTime = convertAnimationTime($animationTime);
 
   return (
     <S.ModalContainer
-      //   mountAnimation={mountAnimation}
-      //   unMountAnimation={unMountAnimation}
-      animationTime={convertedAnimationTime}
+      $mountAnimation={$mountAnimation}
+      $unMountAnimation={$unMountAnimation}
+      $animationTime={convertedAnimationTime}
       className={closing ? 'closing' : ''}
     >
       {children}

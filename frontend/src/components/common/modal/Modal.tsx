@@ -15,26 +15,27 @@ export default function Modal({
       event.stopPropagation();
     }
   },
-  mountAnimation = '',
-  unMountAnimation = '',
+  $mountAnimation = '',
+  $unMountAnimation = '',
   position = 'center',
-  animationTime = 300,
+  $animationTime = 300,
   size = 'custom',
 }: PropsWithChildren<Partial<ModalContextProps>>) {
+  console.log('mountAnimation : ', $mountAnimation);
   const { open, closing } = useAnimation({
     unMountEvent: onClose,
-    unMountAnimation,
+    $unMountAnimation,
     initialState: isOpen,
-    animationTime,
+    $animationTime,
   });
 
   const modalProps: ModalContextProps = {
     isOpen,
     position,
     onClose,
-    mountAnimation,
-    unMountAnimation,
-    animationTime,
+    $mountAnimation,
+    $unMountAnimation,
+    $animationTime,
     closing,
     open,
     size,

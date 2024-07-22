@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
+import { Keyframes } from 'styled-components/dist/types';
 
 type UseAnimationParams = {
   initialState: boolean;
-  unMountAnimation: string;
-  animationTime: number;
+  $unMountAnimation: string | Keyframes;
+  $animationTime: number;
   unMountEvent: () => void;
 };
 
 const useAnimation = ({
   initialState,
-  unMountAnimation,
-  animationTime,
+  $unMountAnimation,
+  $animationTime,
   unMountEvent,
 }: UseAnimationParams) => {
   const [closing, setClosing] = useState(false);
@@ -26,12 +27,12 @@ const useAnimation = ({
 
   useEffect(() => {
     if (closing) {
-      if (unMountAnimation) {
+      if ($unMountAnimation) {
         const timer = setTimeout(() => {
           setClosing(false);
           setOpen(false);
           unMountEvent();
-        }, animationTime);
+        }, $animationTime);
 
         return () => clearTimeout(timer);
       } else {
@@ -40,7 +41,7 @@ const useAnimation = ({
         unMountEvent();
       }
     }
-  }, [closing, unMountAnimation]);
+  }, [closing, $unMountAnimation]);
 
   return { open, closing };
 };
