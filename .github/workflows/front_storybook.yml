@@ -23,7 +23,9 @@ jobs:
             npm install
           fi
           npm ci
+        working-directory: ./frontend
       - name: Run Chromatic
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        working-directory: ./frontend
