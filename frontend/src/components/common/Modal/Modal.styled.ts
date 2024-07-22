@@ -63,11 +63,12 @@ export const ModalContainer = styled.div<ModalContainerProps>`
 
 export const TitleText = styled.h1`
   font-weight: bold;
-  font-size: 2.4rem;
+  font-size: 1.6rem;
 `;
 
 export const SubTitleText = styled.p`
   font-size: 1.6rem;
+  margin-bottom: 1rem;
 `;
 
 export const CloseButtonContainer = styled.div`
