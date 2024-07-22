@@ -52,6 +52,14 @@ class SubmissionService {
                 .toList();
     }
 
+    public MyMissionResponse getMyMission(Member member) {
+        return submissionRepository.findFirstByMember_IdOrderByIdDesc(member.getId())
+                .map(this::findMyMission)
+                .filter(MyMission::isNotFinished)
+                .map(MyMissionResponse::from)
+                .orElse(null);
+    }
+
     private MyMission findMyMission(Submission submission) {
         return pairRepository.findMyMissionBySubmission(submission)
                 .orElseGet(() -> MyMission.waitPairMatching(submission));
