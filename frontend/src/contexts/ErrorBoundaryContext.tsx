@@ -1,5 +1,7 @@
 import { createContext } from 'react';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export type ErrorBoundaryContextType = {
   didCatch: boolean;
   error: any;

@@ -13,7 +13,7 @@ interface SuccessMissionSubmitPopUpProps {
 
 export default function SuccessMissionSubmitPopUp({
   isModalOpen,
-  thumbnail,
+  // thumbnail,
 }: SuccessMissionSubmitPopUpProps) {
   const navigate = useNavigate();
 

@@ -1,12 +1,14 @@
-import {
+import type {
   Component,
   ComponentType,
-  ErrorInfo,
   FunctionComponent,
   PropsWithChildren,
   ReactElement,
   ReactNode,
+  ErrorInfo,
 } from 'react';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 declare function FallbackRender(props: FallbackProps): ReactNode;
 

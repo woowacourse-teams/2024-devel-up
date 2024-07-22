@@ -1,9 +1,12 @@
-import { Component, createElement, ErrorInfo, isValidElement } from 'react';
+import { Component, createElement, isValidElement } from 'react';
+import type { ErrorInfo } from 'react';
 import { ErrorBoundaryContext } from '@/contexts/ErrorBoundaryContext';
-import { ErrorBoundaryProps, FallbackProps } from '@/types/errorBoundary';
+import type { ErrorBoundaryProps, FallbackProps } from '@/types/errorBoundary';
 
 //TODO 원래 react-error-boundary 패키지를 설치해서 사용했었는데
 // 일단 원본 소스 코드 가져와서 그대로 사용합니다! @버건디
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

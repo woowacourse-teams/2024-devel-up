@@ -1,5 +1,8 @@
 import { useContext, useMemo, useState } from 'react';
-import { ErrorBoundaryContext, ErrorBoundaryContextType } from '@/contexts/ErrorBoundaryContext';
+import { ErrorBoundaryContext } from '@/contexts/ErrorBoundaryContext';
+import type { ErrorBoundaryContextType } from '@/contexts/ErrorBoundaryContext';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export function assertErrorBoundaryContext(value: any): asserts value is ErrorBoundaryContextType {
   if (

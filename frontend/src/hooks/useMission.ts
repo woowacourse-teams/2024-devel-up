@@ -1,4 +1,4 @@
-import { Mission } from '@/types';
+import type { Mission } from '@/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { missionKeys } from './queries/keys';
 import { getMissionById } from '@/apis/missionAPI';
