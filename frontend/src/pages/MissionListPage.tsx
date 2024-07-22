@@ -1,6 +1,6 @@
-import MissionItem from '@/components/missionList/MissionItem';
-import * as S from '@/components/missionList/MissionList.styled';
-import Carousel from '@/components/carousel/Carousel';
+import MissionItem from '@/components/MissionList/MissionItem';
+import * as S from '@/components/MissionList/MissionList.styled';
+import Carousel from '@/components/Carousel/Carousel';
 import useMissions from '@/hooks/useMissions';
 
 export default function MissionListPage() {

@@ -1,5 +1,5 @@
-// import { missionMocks } from '../missionList/missionMocks';
-// import type { Mission } from '../missionList/missionMocks';
+// import { missionMocks } from '../MissionList/missionMocks';
+// import type { Mission } from '../MissionList/missionMocks';
 import * as S from './MissionDetailContent.styled';
 
 interface MissionDetailContentProps {

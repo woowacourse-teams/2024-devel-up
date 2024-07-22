@@ -1,5 +1,5 @@
-import Tabs from '@/components/tab/Tabs';
-import HowToFork from '@/components/guide/HowToFork';
+import Tabs from '@/components/Tab/Tabs';
+import HowToFork from '@/components/Guide/HowToFork';
 import type { TabInfo } from '@/types';
 
 //TODO 여기서만 쓰일 데이터 같아서 일단 위에 선언해놓습니다. @버건디

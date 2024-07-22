@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import * as S from './Header.styled';
 import { ROUTES } from '@/constants/routes';
-import NotiModal from './notiModal';
+import NotiModal from './NotiModal';
 import { useState } from 'react';
 
 export default function Header() {
