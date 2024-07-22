@@ -1,4 +1,4 @@
 export const BASE_URL = {
-  dev: 'http://localhost:8080',
+  dev: 'http://54.180.138.201',
   prod: '',
 } as const;

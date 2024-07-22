@@ -1,3 +1,4 @@
+import Bell from '@/assets/images/bell.svg';
 import styled from 'styled-components';
 
 export const Container = styled.nav`
@@ -13,8 +14,9 @@ export const Container = styled.nav`
     0 4px 12px rgba(0, 0, 0, 0.08);
 
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding-left: 20rem;
+  padding: 0 20rem;
 `;
 
 export const LogoImg = styled.img`
@@ -29,3 +31,12 @@ export const Logo = styled.h1`
 export const Spacer = styled.div`
   height: 6rem;
 `;
+
+export const BellIcon = styled(Bell)`
+  width: 2.8rem;
+  cursor: pointer;
+`;
+
+export const RightPart = styled.div``;
+
+export const LeftPart = styled.div``;

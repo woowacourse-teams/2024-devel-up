@@ -22,6 +22,10 @@ public class MyMission {
         return new MyMission(submission.getId(), submission.getMission(), submission.getUrl(), null, PairStatus.WAITING);
     }
 
+    public boolean isNotFinished() {
+        return status != PairStatus.ALL_FINISHED;
+    }
+
     public Long getId() {
         return id;
     }

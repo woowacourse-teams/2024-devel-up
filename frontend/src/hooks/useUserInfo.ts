@@ -15,8 +15,6 @@ const useUserInfo = () => {
     queryFn: () => getUserInfo(MOCK_ACCESS_TOKEN),
   });
 
-  console.log(data);
-
   return { userInfo: data, isLoading, isError };
 };
 
