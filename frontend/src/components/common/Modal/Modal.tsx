@@ -5,6 +5,9 @@ import useAnimation from '@/hooks/useAnimation';
 import ModalPortal from './ModalPortal';
 import ModalBackdrop from './ModalBackdrop';
 import ModalContainer from './ModalContainer';
+import ModalTitle from './ModalTitle';
+import ModalSubTitle from './ModalSubTitle';
+import ModalCloseButton from './ModalCloseButton';
 
 export default function Modal({
   children,
@@ -21,7 +24,6 @@ export default function Modal({
   $animationTime = 300,
   size = 'custom',
 }: PropsWithChildren<Partial<ModalContextProps>>) {
-  console.log('mountAnimation : ', $mountAnimation);
   const { open, closing } = useAnimation({
     unMountEvent: onClose,
     $unMountAnimation,
@@ -47,3 +49,6 @@ export default function Modal({
 Modal.Portal = ModalPortal;
 Modal.Backdrop = ModalBackdrop;
 Modal.Container = ModalContainer;
+Modal.Title = ModalTitle;
+Modal.SubTitle = ModalSubTitle;
+Modal.CloseButton = ModalCloseButton;
