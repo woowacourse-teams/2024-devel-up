@@ -4,11 +4,10 @@ import styled from 'styled-components';
 export const MyMissionInProgressContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: 2.2rem;
 `;
 
-export const MyMissionInProgressWrapper = styled.div`
-  background-color: var(--grey-50);
+export const MyMissionInProgressBannerContainer = styled.div`
   width: 100%;
   height: 24rem;
 
@@ -17,7 +16,9 @@ export const MyMissionInProgressWrapper = styled.div`
   gap: 2.7rem;
   padding: 3.2rem 4.1rem;
   box-sizing: border-box;
+
   border-radius: 0.8rem;
+  border: 0.1rem solid var(--grey-100);
 `;
 
 export const MissionContentWrapper = styled.div`
@@ -52,8 +53,8 @@ export const ThumbnailImg = styled.img`
   border-radius: 0.8rem;
 `;
 
-export const Title = styled.h2`
-  font-size: 3.2rem;
+export const InProgressTitle = styled.h2`
+  font-size: 2.6rem;
   font-weight: bold;
 `;
 
@@ -62,44 +63,6 @@ export const MissionTitle = styled.h3`
   font-weight: bold;
 `;
 
-export const MissionDate = styled.p`
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: var(--grey-400);
-`;
-
 export const GithubIcons = styled(GithubLogo)`
-  height: 100%;
-`;
-
-export const PrButton = styled.button`
-  background-color: var(--grey-200);
-  width: fit-content;
-  padding: 0.6rem 1.9rem;
-  border-radius: 0.4rem;
-
-  display: flex;
-  gap: 0.4rem;
-  justify-content: center;
-  align-items: center;
-
-  white-space: nowrap;
-  font-size: 1.4rem;
-  font-weight: bold;
-`;
-
-export const MissionCompleteButton = styled.button`
-  background-color: var(--primary-200);
-  width: fit-content;
-  padding: 0.6rem 1.9rem;
-  border-radius: 0.4rem;
-
-  display: flex;
-  gap: 0.4rem;
-  justify-content: center;
-  align-items: center;
-
-  white-space: nowrap;
-  font-size: 1.4rem;
-  font-weight: bold;
+  height: 2.2rem;
 `;
