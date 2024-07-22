@@ -1,7 +1,4 @@
 node_modules
 .env
 .DS_Store
-dist
-settings.json
-
-*storybook.log
+build-storybook.log

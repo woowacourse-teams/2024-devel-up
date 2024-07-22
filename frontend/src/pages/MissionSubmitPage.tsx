@@ -5,7 +5,8 @@ import SubmitBanner from '@/components/missionSubmit/SubmitBanner';
 import PRLink from '@/components/missionSubmit/PRLink';
 import OneWord from '@/components/missionSubmit/OneWord';
 import SubmitButton from '@/components/missionSubmit/SubmitButton';
-import MissionSubmitForm from '@/components/missionSubmit/MissionSubmitForm';
+import SuccessMissionSubmitPopUp from '@/components/PopUp/SuccessMissionSubmitPopUp';
+import { useState } from 'react';
 
 const MOCK_MISSION = {
   data: {
@@ -23,19 +24,21 @@ export default function MissionSubmitPage() {
   // const { id } = useParams();
   const { thumbnail, title, language } = MOCK_MISSION.data;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleMissionSubmit = () => {
-    alert('미션 제출에 성공하였어요! 페어가 매칭 되면 알려드릴게요!');
+    // TODO 미션 제출 post 요청 @버건디
+    setIsModalOpen(true);
   };
 
   return (
     <S.Container>
       <MissionImage thumbnail={thumbnail} title={title} language={language} />
       <SubmitBanner />
-      <MissionSubmitForm>
-        <PRLink />
-        <OneWord />
-        <SubmitButton onSubmit={handleMissionSubmit} />
-      </MissionSubmitForm>
+      <PRLink />
+      <OneWord />
+      <SubmitButton onSubmit={handleMissionSubmit} />
+      <SuccessMissionSubmitPopUp isModalOpen={isModalOpen} />
     </S.Container>
   );
 }

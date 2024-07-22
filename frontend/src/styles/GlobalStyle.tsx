@@ -172,16 +172,7 @@ html,
     text-decoration: none;
     color:black;
   }
-
-  /* Hide scrollbar */
-  ::-webkit-scrollbar {
-    display: none; /* webkit browsers */
-  }
-  * {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-  }
-  #root {
+  :root {
     --primary-50:#E7E9F8;
     --primary-100:#C4C9ED;
     --primary-200:#9CA6E1;
