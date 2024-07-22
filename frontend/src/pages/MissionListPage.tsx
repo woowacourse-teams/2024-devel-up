@@ -4,7 +4,7 @@ import Carousel from '@/components/Carousel/Carousel';
 import useMissions from '@/hooks/useMissions';
 
 export default function MissionListPage() {
-  const { allMissions } = useMissions();
+  const { data: allMissions } = useMissions();
 
   return (
     <S.MissionListContainer>

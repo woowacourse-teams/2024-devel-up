@@ -1,18 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import type { Mission } from '@/types';
 import { getAllMissions } from '@/apis/missionAPI';
-
-const MISSIONS_QUERY_KEYS = {
-  all: ['all'],
-};
+import { missionKeys } from './queries/keys';
 
 const useMissions = () => {
-  const { data, isLoading, isError, isSuccess } = useQuery<Mission[]>({
-    queryKey: MISSIONS_QUERY_KEYS.all,
+  return useSuspenseQuery<Mission[]>({
+    queryKey: missionKeys.all,
     queryFn: getAllMissions,
   });
-
-  return { allMissions: data ?? [], isLoading, isError, isSuccess };
 };
 
 export default useMissions;
