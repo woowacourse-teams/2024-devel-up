@@ -1,6 +1,6 @@
-import useCarousel from '@/hooks/useCarousel';
 import type { PropsWithChildren } from 'react';
 import * as S from './Carousel.styled';
+import useCarousel from '@/hooks/useCarousel';
 
 export default function Carousel({ children }: PropsWithChildren) {
   const { carouselItems, trackRef, currentIndex, isSliding, handleNextSlide, handlePreviousSlide } =

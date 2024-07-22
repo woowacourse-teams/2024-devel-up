@@ -1,9 +1,11 @@
 import MissionItem from '@/components/MissionList/MissionItem';
 import * as S from '@/components/MissionList/MissionList.styled';
-import { missionMocks } from '@/components/MissionList/missionMocks';
 import Carousel from '@/components/Carousel/Carousel';
+import useMissions from '@/hooks/useMissions';
 
 export default function MissionListPage() {
+  const { allMissions } = useMissions();
+
   return (
     <S.MissionListContainer>
       <S.MissionListTitle>미션 풀고 리뷰 받고, Devel Up!</S.MissionListTitle>
@@ -12,6 +14,7 @@ export default function MissionListPage() {
          * 캐러셀 테스트 용으로 만들어본 이미지들입니다. 추후 수정 예정
          */}
         <div
+          key={'1'}
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -26,6 +29,7 @@ export default function MissionListPage() {
           />
         </div>
         <div
+          key={'2'}
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -42,6 +46,7 @@ export default function MissionListPage() {
         </div>
 
         <div
+          key={'3'}
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -57,7 +62,7 @@ export default function MissionListPage() {
         </div>
       </Carousel>
       <S.MissionList>
-        {missionMocks.map((mission) => (
+        {allMissions.map((mission) => (
           <MissionItem key={mission.id} mission={mission} />
         ))}
       </S.MissionList>
