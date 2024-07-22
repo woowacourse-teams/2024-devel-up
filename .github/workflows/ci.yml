@@ -68,7 +68,7 @@ jobs:
             })
             return mention.join(', ');
 
-      - name: Call notify workflow
+      - name: Slack mention
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
@@ -181,7 +181,7 @@ jobs:
             })
             return mention.join(', ');
 
-      - name: Call notify workflow
+      - name: Slack mention
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
