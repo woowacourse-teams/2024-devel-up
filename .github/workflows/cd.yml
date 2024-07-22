@@ -5,7 +5,7 @@
 # This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
 
-name: Gradle Package
+name: CD
 
 on:
   pull_request:
@@ -13,21 +13,21 @@ on:
     branches: [ 'main' ]
 
 jobs:
-  build:
+  BE_CD:
+    if: ${{ contains(github.event.pull_request.labels.*.name, '백엔드') && github.event.pull_request.merged == true}}
     runs-on: self-hosted
     permissions:
       contents: read
       packages: write
       actions: write
 
+    outputs:
+      build: ${{ steps.build_result.outputs.result }}
+      deploy: ${{ steps.deploy_result.outputs.result }}
+
     steps:
       - uses: actions/checkout@v4
-      - name: Early exit
-        if: ${{ !contains(github.event.pull_request.labels.*.name, '백엔드') }}
-        run: |
-          gh run cancel ${{ github.run_id }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
@@ -40,12 +40,34 @@ jobs:
 
       - name: Build with Gradle
         continue-on-error: true
-        id: gradle_build
+        id: build
         run: |
           cd backend
           ./gradlew build
 
-      - name: slack mention
+      - name: Save Build Result
+        continue-on-error: true
+        id: build_result
+        run: |
+          echo "result=${{steps.build.outcome}}" >> $GITHUB_OUTPUT
+
+      - name: Deploy
+        continue-on-error: true
+        id: deploy
+        run: ls
+
+      - name: Save Deploy Result
+        continue-on-error: true
+        id: deploy_result
+        run: |
+          echo "result=${{steps.deploy.outcome}}" >> $GITHUB_OUTPUT
+
+  BE_SLACK_MESSAGE:
+    runs-on: ubuntu-latest
+    needs: [CD]
+    steps:
+      - name: Slack mention when build success
+        if: ${{needs.CD.outputs.build == 'success' && needs.CD.outputs.deploy == 'success'}}
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
@@ -57,7 +79,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "<@channel> pr이 main에 머지되었습니다. \n • PR 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                        "text": "<!channel>  pr이 main에 머지되었습니다. 배포가 성공했습니다! \n • PR 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
                       }
                   }
                 ]
@@ -65,3 +87,44 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
+      - name: Slack mention when build fail
+        if: ${{needs.CD.outputs.build == 'failure' && needs.CD.outputs.deploy == 'failure'}}
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+                "text": "pr 머지",
+                "blocks": [
+                  {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "<!channel>  pr이 main에 머지되었습니다. 🚨그러나 빌드가 실패합니다!!!🚨 \n • PR 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                      }
+                  }
+                ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+      - name: Slack mention when build fail
+        if: ${{needs.CD.outputs.build == 'success' && needs.CD.outputs.deploy == 'failure'}}
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+                "text": "pr 머지",
+                "blocks": [
+                  {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "<!channel> pr이 main에 머지되었습니다. ⚠️그러나 배포에 실패했습니다!⚠️ \n • PR 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                      }
+                  }
+                ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
