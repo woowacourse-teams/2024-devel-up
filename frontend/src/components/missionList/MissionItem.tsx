@@ -1,6 +1,6 @@
 import * as S from './MissionList.styled';
 import { Link } from 'react-router-dom';
-import type { Mission } from './missionMocks';
+import type { Mission } from '@/types';
 
 interface MissionItemProps {
   mission: Mission;
