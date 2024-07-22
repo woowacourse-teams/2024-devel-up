@@ -16,6 +16,16 @@ spring:
     hibernate:
       ddl-auto: create
 
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    path: /api-docs
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha
+    tags-sorter: alpha
+
 logging:
   level:
     org.springframework.orm.jpa: DEBUG
