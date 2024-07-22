@@ -11,6 +11,7 @@ import MissionSubmitPage from './pages/MissionSubmitPage';
 import MyMissionPage from './pages/MyMissionPage';
 import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
+import APITestPage from './pages/APITestPage';
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,14 @@ const routes = [
     element: (
       <App>
         <MyMissionPage />
+      </App>
+    ),
+  },
+  {
+    path: '/api-test',
+    element: (
+      <App>
+        <APITestPage />
       </App>
     ),
   },
