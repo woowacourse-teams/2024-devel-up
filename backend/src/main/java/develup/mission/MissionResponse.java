@@ -12,10 +12,10 @@ public record MissionResponse(
 ) {
 
     public static MissionResponse from(Mission mission) {
-        return from(mission, false, null);
+        return of(mission, false, null);
     }
 
-    public static MissionResponse from(Mission mission, boolean isSubmitted, String submittedPrUrl) {
+    public static MissionResponse of(Mission mission, boolean isSubmitted, String submittedPrUrl) {
         return new MissionResponse(
                 mission.getId(),
                 mission.getTitle(),
