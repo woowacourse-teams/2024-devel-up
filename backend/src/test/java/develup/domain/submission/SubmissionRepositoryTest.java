@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
-import develup.domain.member.Provider;
 import develup.domain.mission.Language;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
+import develup.support.MemberTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ class SubmissionRepositoryTest {
     }
 
     private Member createMember() {
-        Member member = new Member("email", Provider.GITHUB, 1234L, "name", "image");
+        Member member = MemberTestData.defaultMember().build();
 
         return memberRepository.save(member);
     }
