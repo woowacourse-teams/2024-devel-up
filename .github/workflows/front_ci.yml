@@ -85,7 +85,7 @@ jobs:
 
   FE_SLACK_MESSAGE:
     runs-on: ubuntu-latest
-    needs: [ FE_CI ]
+    needs: FE_CI
     if: ${{needs.FE_CI.result != 'skipped'}}
     steps:
       - name: Checkout repository
