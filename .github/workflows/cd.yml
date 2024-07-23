@@ -9,7 +9,7 @@ on:
       - backend/**
 
 env:
-  ARTIFACT_NAME: DEVEL_UP_SNAPSHOT
+  ARTIFACT_NAME: develup-0.0.1-SNAPSHOT
   ARTIFACT_DIRECTORY: ./backend/build/libs
 
 jobs:
@@ -33,10 +33,6 @@ jobs:
         run: |
           cd backend
           ./gradlew clean bootJar
-
-      - name: 🏷️ Rename Artifact File
-        run: |
-          mv ${{ env.ARTIFACT_DIRECTORY }}/*.jar ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar
 
       - name: 📤 Upload Artifact File
         uses: actions/upload-artifact@v4
