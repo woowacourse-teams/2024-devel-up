@@ -8,6 +8,7 @@
 name: CD
 
 on:
+  workflow_dispatch:
   pull_request:
     types: [ closed ]
     branches: [ 'main' ]
@@ -51,10 +52,30 @@ jobs:
         run: |
           echo "result=${{steps.build.outcome}}" >> $GITHUB_OUTPUT
 
+      - name: Stop server
+        continue-on-error: true
+        id: stop_server
+        run: |
+          PID=$(sudo lsof -t -i:http || true)
+          if [ -n "$PID" ]; then
+            sudo kill -15 "$PID"
+            echo "Server has been stopped. PID: $PID" >> $GITHUB_OUTPUT
+          else:
+            echo "No server is running."
+          fi
+
       - name: Deploy
         continue-on-error: true
         id: deploy
-        run: ls
+        run: |
+          JAR_NAME="develup-0.0.1-SNAPSHOT"
+          JAR_FILE=$(find -name "$JAR_NAME.jar" -print -quit)
+          if [ -n "$JAR_FILE" ]; then
+            sudo nohup java -jar "$JAR_NAME".jar --server.port=80 &
+            echo "Deployed $JAR_NAME"
+          else:
+            echo "No JAR file found to deploy."
+          fi
 
       - name: Save Deploy Result
         continue-on-error: true
@@ -64,7 +85,7 @@ jobs:
 
   BE_SLACK_MESSAGE:
     runs-on: ubuntu-latest
-    needs: [CD]
+    needs: [ BE_CD ]
     steps:
       - name: Slack mention when build success
         if: ${{needs.CD.outputs.build == 'success' && needs.CD.outputs.deploy == 'success'}}
