@@ -12,10 +12,12 @@ on:
   pull_request:
     types: [ closed ]
     branches: [ 'main' ]
+    paths:
+      - 'backend/**'
 
 jobs:
   BE_CD:
-    if: ${{ contains(github.event.pull_request.labels.*.name, '백엔드') && github.event.pull_request.merged == true}}
+    if: ${{ github.event.pull_request.merged == true }}
     runs-on: self-hosted
     permissions:
       contents: read
@@ -56,11 +58,11 @@ jobs:
         continue-on-error: true
         id: stop_server
         run: |
-          PID=$(sudo lsof -t -i:http || true)
+          PID=$(sudo lsof -t -i:80 || true)
           if [ -n "$PID" ]; then
             sudo kill -15 "$PID"
-            echo "Server has been stopped. PID: $PID" >> $GITHUB_OUTPUT
-          else:
+            echo "Server has been stopped. PID: $PID"
+          else
             echo "No server is running."
           fi
 
@@ -69,11 +71,11 @@ jobs:
         id: deploy
         run: |
           JAR_NAME="develup-0.0.1-SNAPSHOT"
-          JAR_FILE=$(find -name "$JAR_NAME.jar" -print -quit)
+          JAR_FILE=$(sudo find -name "$JAR_NAME.jar" -print -quit)
           if [ -n "$JAR_FILE" ]; then
-            sudo nohup java -jar "$JAR_NAME".jar --server.port=80 &
+            sudo nohup java -jar /home/ubuntu/"$JAR_NAME".jar --server.port=80 &
             echo "Deployed $JAR_NAME"
-          else:
+          else
             echo "No JAR file found to deploy."
           fi
 
@@ -88,7 +90,7 @@ jobs:
     needs: [ BE_CD ]
     steps:
       - name: Slack mention when build success
-        if: ${{needs.CD.outputs.build == 'success' && needs.CD.outputs.deploy == 'success'}}
+        if: ${{needs.BE_CD.outputs.build == 'success' && needs.BE_CD.outputs.deploy == 'success'}}
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
@@ -109,7 +111,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Slack mention when build fail
-        if: ${{needs.CD.outputs.build == 'failure' && needs.CD.outputs.deploy == 'failure'}}
+        if: ${{needs.BE_CD.outputs.build == 'failure' && needs.BE_CD.outputs.deploy == 'failure'}}
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
@@ -130,7 +132,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Slack mention when build fail
-        if: ${{needs.CD.outputs.build == 'success' && needs.CD.outputs.deploy == 'failure'}}
+        if: ${{needs.BE_CD.outputs.build == 'success' && needs.BE_CD.outputs.deploy == 'failure'}}
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
