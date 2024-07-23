@@ -3,8 +3,6 @@ import * as S from './MyMissionInProgress.styled';
 import useMissionInProgress from '@/hooks/useMissionInProgress';
 
 export default function MyMissionInProgressBanner() {
-  // 로컬로는 작동됩니다
-  // API가 아직 서버에 등록이 안되어있어용 @프룬
   const { missionInProgress } = useMissionInProgress();
 
   const handlePage = (link: string) => {
