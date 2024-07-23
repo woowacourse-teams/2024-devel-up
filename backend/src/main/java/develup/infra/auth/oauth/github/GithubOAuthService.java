@@ -1,4 +1,4 @@
-package develup.infra.auth.github;
+package develup.infra.auth.oauth.github;
 
 import develup.application.auth.OAuthUserInfo;
 import org.springframework.stereotype.Service;

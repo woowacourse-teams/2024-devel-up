@@ -1,4 +1,4 @@
-package develup.infra.auth.github;
+package develup.infra.auth.oauth.github;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;

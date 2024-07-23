@@ -6,7 +6,7 @@ import develup.application.auth.OAuthUserInfo;
 import develup.application.member.MemberResponse;
 import develup.application.member.MemberService;
 import develup.domain.member.Provider;
-import develup.infra.auth.github.GithubOAuthService;
+import develup.infra.auth.oauth.github.GithubOAuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
