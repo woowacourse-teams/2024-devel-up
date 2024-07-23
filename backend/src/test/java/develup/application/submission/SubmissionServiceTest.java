@@ -54,7 +54,9 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("참여한 모든 미션을 조회한다.")
         void getMyMissions() {
-            Member member = MemberTestData.defaultMember().withId(1L).build();
+            Member member = MemberTestData.defaultMember()
+                    .withId(1L)
+                    .build();
 
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
@@ -64,7 +66,9 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("매칭된 제출이 없는 경우 `매칭 대기` 상태로 설정된다.")
         void getMyMissionsWhenNoPair() {
-            Member member = MemberTestData.defaultMember().withId(1L).build();
+            Member member = MemberTestData.defaultMember()
+                    .withId(1L)
+                    .build();
 
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
@@ -74,7 +78,9 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("진행 중인 미션이 있는 경우 해당 미션 한 개를 반환한다.")
         void getMyMission() {
-            Member member = MemberTestData.defaultMember().withId(1L).build();
+            Member member = MemberTestData.defaultMember()
+                    .withId(1L)
+                    .build();
 
             MyMissionResponse response = submissionService.getMyMission(member);
 
@@ -84,7 +90,9 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("진행 중인 미션이 없는 경우 null을 반환한다.")
         void getMyMissionWhenAllFinished() {
-            Member member = MemberTestData.defaultMember().withId(3L).build();
+            Member member = MemberTestData.defaultMember()
+                    .withId(3L)
+                    .build();
 
             MyMissionResponse response = submissionService.getMyMission(member);
 

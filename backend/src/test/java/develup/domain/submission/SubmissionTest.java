@@ -6,6 +6,7 @@ import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import develup.support.MemberTestData;
 import develup.support.MissionTestData;
+import develup.support.SubmissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +15,9 @@ class SubmissionTest {
     @Test
     @DisplayName("같은 사용자의 제출이 아닌지 확인할 수 있다.")
     void isNotSameOwner() {
-        MemberTestData.MemberBuilder memberBuilder = MemberTestData.defaultMember();
-        Member member1 = memberBuilder.withId(1L).build();
-        Member member2 = memberBuilder.withId(2L).build();
         Mission mission = MissionTestData.defaultMission().build();
+        Member member1 = createMember(1L);
+        Member member2 = createMember(2L);
         Submission submission1 = createSubmission(member1, mission);
         Submission submission2 = createSubmission(member2, mission);
 
@@ -29,8 +29,8 @@ class SubmissionTest {
     @Test
     @DisplayName("같은 사용자의 제출인지 확인할 수 있다.")
     void isSameOwner() {
-        Member member = MemberTestData.defaultMember().withId(1L).build();
         Mission mission = MissionTestData.defaultMission().build();
+        Member member = createMember(1L);
         Submission submission2 = createSubmission(member, mission);
         Submission submission1 = createSubmission(member, mission);
 
@@ -39,7 +39,16 @@ class SubmissionTest {
         assertThat(result).isFalse();
     }
 
-    private Submission createSubmission(Member member1, Mission mission) {
-        return new Submission("url", "comment", member1, mission);
+    private Member createMember(Long id) {
+        return MemberTestData.defaultMember()
+                .withId(id)
+                .build();
+    }
+
+    private Submission createSubmission(Member member, Mission mission) {
+        return SubmissionTestData.defaultSubmission()
+                .withMember(member)
+                .withMission(mission)
+                .build();
     }
 }

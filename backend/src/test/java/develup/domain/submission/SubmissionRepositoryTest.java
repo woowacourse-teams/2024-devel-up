@@ -9,6 +9,7 @@ import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.support.MemberTestData;
 import develup.support.MissionTestData;
+import develup.support.SubmissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,21 +50,12 @@ class SubmissionRepositoryTest {
     }
 
     private Submission createSubmission(Mission mission) {
-        Member member = createMember();
-
-        Submission submission = new Submission(
-                "sample",
-                "comment",
-                member,
-                mission
-        );
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Submission submission = SubmissionTestData.defaultSubmission()
+                .withMember(member)
+                .withMission(mission)
+                .build();
 
         return submissionRepository.save(submission);
-    }
-
-    private Member createMember() {
-        Member member = MemberTestData.defaultMember().build();
-
-        return memberRepository.save(member);
     }
 }

@@ -14,6 +14,7 @@ import develup.domain.submission.Submission;
 import develup.domain.submission.SubmissionRepository;
 import develup.support.MemberTestData;
 import develup.support.MissionTestData;
+import develup.support.SubmissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,15 +131,9 @@ class PairServiceTest {
     @Test
     @DisplayName("존재하지 않는 제출은 매칭될 수 없다.")
     void notfoundSubmission() {
-        Mission mission = createMission();
-        Member member = createMember();
-        Submission submission = new Submission(
-                -1L,
-                "sample",
-                "comment",
-                member,
-                mission
-        );
+        Submission submission = SubmissionTestData.defaultSubmission()
+                .withId(-1L)
+                .build();
 
         assertThatThrownBy(() -> pairService.match(submission))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -151,20 +146,18 @@ class PairServiceTest {
         return missionRepository.save(mission);
     }
 
-    private Submission createSubmission(Mission mission, Member member) {
-        Submission submission = new Submission(
-                "sample",
-                "comment",
-                member,
-                mission
-        );
-
-        return submissionRepository.save(submission);
-    }
-
     private Member createMember() {
         Member member = MemberTestData.defaultMember().build();
 
         return memberRepository.save(member);
+    }
+
+    private Submission createSubmission(Mission mission, Member member) {
+        Submission submission = SubmissionTestData.defaultSubmission()
+                .withMission(mission)
+                .withMember(member)
+                .build();
+
+        return submissionRepository.save(submission);
     }
 }
