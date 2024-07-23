@@ -2,12 +2,10 @@ package develup.api;
 
 import java.io.IOException;
 import develup.application.auth.AuthService;
-import develup.application.auth.OAuthUserInfo;
-import develup.application.member.MemberResponse;
-import develup.application.member.MemberService;
-import develup.domain.member.Provider;
-import develup.infra.auth.oauth.github.GithubOAuthService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,13 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthApi {
 
-    private final GithubOAuthService githubOAuthService;
-    private final MemberService memberService;
+    private static final String TOKEN_COOKIE_NAME = "token";
+    private static final int COOKIE_MAX_AGE_ONE_DAY = 60 * 60 * 24;
+
     private final AuthService authService;
 
-    public AuthApi(GithubOAuthService githubOAuthService, MemberService memberService, AuthService authService) {
-        this.githubOAuthService = githubOAuthService;
-        this.memberService = memberService;
+    public AuthApi(AuthService authService) {
         this.authService = authService;
     }
 
@@ -30,7 +27,7 @@ public class AuthApi {
             @RequestParam(value = "next", defaultValue = "/") String next,
             HttpServletResponse response
     ) throws IOException {
-        String redirectUri = githubOAuthService.getLoginUrl(next);
+        String redirectUri = authService.getGithubOAuthLoginUrl(next);
         response.sendRedirect(redirectUri);
     }
 
@@ -40,13 +37,37 @@ public class AuthApi {
             @RequestParam(value = "next", defaultValue = "/") String next,
             HttpServletResponse response
     ) throws IOException {
-        String accessToken = githubOAuthService.getAccessToken(code);
-        OAuthUserInfo userInfo = githubOAuthService.getUserInfo(accessToken);
+        String token = authService.githubOAuthLogin(code);
 
-        MemberResponse memberResponse = memberService.findOrCreateMember(userInfo, Provider.GITHUB);
-        String token = authService.createToken(memberResponse.id());
+        setTokenCookie(response, token);
 
-        String redirectUri = githubOAuthService.getClientUri(next);
+        String redirectUri = authService.getClientRedirectUri(next);
         response.sendRedirect(redirectUri);
+    }
+
+    @DeleteMapping("/auth/logout")
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        clearTokenCookie(response);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    private void setTokenCookie(HttpServletResponse response, String token) {
+        Cookie cookie = new Cookie(TOKEN_COOKIE_NAME, token);
+        cookie.setMaxAge(COOKIE_MAX_AGE_ONE_DAY);
+        cookie.setHttpOnly(true);
+        // cookie.setSecure(true); // HTTPS를 사용할 때만 주석을 해제하세요.
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
+    }
+
+    private void clearTokenCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie(TOKEN_COOKIE_NAME, null);
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
     }
 }
