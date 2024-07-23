@@ -2,15 +2,15 @@ import type { InputHTMLAttributes } from 'react';
 import * as S from './Input.styled';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  width: 'Small' | 'Medium' | 'Large' | 'XLarge';
-  type?: 'Default';
+  width: 'small' | 'medium' | 'large' | 'xlarge';
+  type?: 'default';
   danger?: boolean;
   dangerMessage?: string;
 }
 
 export default function Input({
   width,
-  type = 'Default',
+  type = 'default',
   danger = false,
   dangerMessage = '',
   ...props

@@ -1,4 +1,4 @@
-import * as S from './SuccessMissionSubmitPopUp.styled';
+import * as S from './SubmitSuccessPopUp.styled';
 import Modal from '../common/Modal/Modal';
 
 interface PopUpContentProps {

@@ -4,7 +4,7 @@ import SubmitBanner from '@/components/MissionSubmit/SubmitBanner';
 import PRLink from '@/components/MissionSubmit/PRLink';
 import OneWord from '@/components/MissionSubmit/OneWord';
 import SubmitButton from '@/components/MissionSubmit/SubmitButton';
-import SuccessMissionSubmitPopUp from '@/components/PopUp/SuccessMissionSubmitPopUp';
+import SubmitSuccessPopUp from '@/components/PopUp/SubmitSuccessPopUp';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useMission from '@/hooks/useMission';
@@ -30,7 +30,7 @@ export default function MissionSubmitPage() {
       <PRLink />
       <OneWord />
       <SubmitButton onSubmit={handleMissionSubmit} />
-      <SuccessMissionSubmitPopUp isModalOpen={isModalOpen} thumbnail={mission.thumbnail} />
+      <SubmitSuccessPopUp isModalOpen={isModalOpen} thumbnail={mission.thumbnail} />
     </S.Container>
   );
 }

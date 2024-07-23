@@ -1,47 +1,47 @@
 import { styled, css } from 'styled-components';
 
 interface InputProps {
-  $width: 'Small' | 'Medium' | 'Large' | 'XLarge';
-  $type: 'Default';
+  $width: 'small' | 'medium' | 'large' | 'xlarge';
+  $type: 'default';
   $danger: boolean;
 }
 
 const sizeStyles = {
-  Small: css`
+  small: css`
     width: 40rem;
     height: 6.3rem;
   `,
-  Medium: css`
+  medium: css`
     width: 50rem;
     height: 6.3rem;
   `,
-  Large: css`
+  large: css`
     width: 73rem;
     height: 6.3rem;
   `,
-  XLarge: css`
+  xlarge: css`
     width: 100%;
     height: 6.3rem;
   `,
 };
 
 const borderRadiusStyles = {
-  Small: css`
+  small: css`
     border-radius: 0.8rem 0.8rem 0 0;
   `,
-  Medium: css`
+  medium: css`
     border-radius: 0.8rem 0.8rem 0 0;
   `,
-  Large: css`
-    border-radius: 8px;
+  large: css`
+    border-radius: 0.8rem;
   `,
-  XLarge: css`
-    border-radius: 8px;
+  xlarge: css`
+    border-radius: 0.8rem;
   `,
 };
 
 const typeStyles = {
-  Default: css`
+  default: css`
     background: var(--grey-100);
   `,
 };

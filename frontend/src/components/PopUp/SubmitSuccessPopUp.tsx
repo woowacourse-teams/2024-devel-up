@@ -9,15 +9,12 @@ interface SuccessMissionSubmitPopUpProps {
   thumbnail: string;
 }
 
-// TODO 컴포넌트명 너무 긴거 같은데 수정해야할 것 같아요.. 추천 부탁드립니다 @버건디
-
-export default function SuccessMissionSubmitPopUp({
+export default function SubmitSuccessPopUp({
   isModalOpen,
   // thumbnail,
 }: SuccessMissionSubmitPopUpProps) {
   const navigate = useNavigate();
 
-  // TODO 함수명
   const handleNavigateToHome = () => {
     navigate(ROUTES.main);
   };
