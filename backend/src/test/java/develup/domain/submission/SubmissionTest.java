@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
-import develup.support.MemberTestData;
-import develup.support.MissionTestData;
-import develup.support.SubmissionTestData;
+import develup.support.data.MemberTestData;
+import develup.support.data.MissionTestData;
+import develup.support.data.SubmissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

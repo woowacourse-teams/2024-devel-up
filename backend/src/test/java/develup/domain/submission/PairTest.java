@@ -2,7 +2,7 @@ package develup.domain.submission;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import develup.support.SubmissionTestData;
+import develup.support.data.SubmissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

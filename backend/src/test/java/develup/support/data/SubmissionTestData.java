@@ -1,4 +1,4 @@
-package develup.support;
+package develup.support.data;
 
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;

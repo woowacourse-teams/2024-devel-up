@@ -9,18 +9,16 @@ import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.domain.submission.PairStatus;
 import develup.domain.submission.SubmissionRepository;
-import develup.support.MemberTestData;
-import develup.support.MissionTestData;
+import develup.support.IntegrationTestSupport;
+import develup.support.data.MemberTestData;
+import develup.support.data.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-@SpringBootTest
-@Sql(value = {"classpath:clean_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class SubmissionServiceTest {
+class SubmissionServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private SubmissionService submissionService;
@@ -47,7 +45,7 @@ class SubmissionServiceTest {
     }
 
     @Nested
-    @Sql(value = {"classpath:mymissions.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = {"classpath:mymissions.sql"})
     @DisplayName("특정 유저 미션 현황 서비스 테스트")
     class MyMissionTest {
 

@@ -6,16 +6,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
-import develup.support.MissionTestData;
+import develup.support.IntegrationTestSupport;
+import develup.support.data.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 
-@SpringBootTest
-@Sql(value = {"classpath:clean_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class MissionServiceTest {
+class MissionServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private MissionService missionService;

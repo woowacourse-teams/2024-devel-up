@@ -1,4 +1,4 @@
-package develup.support;
+package develup.support.data;
 
 import develup.domain.mission.Language;
 import develup.domain.mission.Mission;
