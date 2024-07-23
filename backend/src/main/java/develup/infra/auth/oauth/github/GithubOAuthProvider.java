@@ -1,16 +1,16 @@
 package develup.infra.auth.oauth.github;
 
 import develup.application.auth.OAuthUserInfo;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Service
-public class GithubOAuthService {
+@Component
+public class GithubOAuthProvider {
 
     private final GithubOAuthClient githubOAuthClient;
     private final GithubOAuthProperties properties;
 
-    public GithubOAuthService(
+    public GithubOAuthProvider(
             GithubOAuthClient githubOAuthClient,
             GithubOAuthProperties properties
     ) {
@@ -44,7 +44,7 @@ public class GithubOAuthService {
         return githubUserInfo.toOAuthUserInfo();
     }
 
-    public String getClientUri(String next) {
+    public String getClientRedirectUri(String next) {
         return UriComponentsBuilder.fromHttpUrl(properties.clientUri())
                 .path(next)
                 .build()
