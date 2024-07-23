@@ -2,11 +2,11 @@ package develup.api;
 
 import java.io.IOException;
 import develup.application.auth.AuthService;
+import develup.application.auth.OAuthUserInfo;
 import develup.application.member.MemberResponse;
 import develup.application.member.MemberService;
 import develup.domain.member.Provider;
-import develup.infra.auth.GithubOAuthService;
-import develup.infra.auth.SocialProfile;
+import develup.infra.auth.github.GithubOAuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,12 +41,12 @@ public class AuthApi {
             HttpServletResponse response
     ) throws IOException {
         String accessToken = githubOAuthService.getAccessToken(code);
-        SocialProfile socialProfile = githubOAuthService.getUserInfo(accessToken);
+        OAuthUserInfo userInfo = githubOAuthService.getUserInfo(accessToken);
 
-        MemberResponse memberResponse = memberService.findOrCreateMember(socialProfile, Provider.GITHUB);
+        MemberResponse memberResponse = memberService.findOrCreateMember(userInfo, Provider.GITHUB);
         String token = authService.createToken(memberResponse.id());
 
-        String redirectUri = githubOAuthService.getClientUri(next, token);
+        String redirectUri = githubOAuthService.getClientUri(next);
         response.sendRedirect(redirectUri);
     }
 }

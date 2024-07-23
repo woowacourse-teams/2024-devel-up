@@ -1,5 +1,6 @@
-package develup.infra.auth;
+package develup.infra.auth.github;
 
+import develup.application.auth.OAuthUserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -32,34 +33,20 @@ public class GithubOAuthService {
     }
 
     public String getAccessToken(String code) {
-        GithubAccessTokenRequest request = new GithubAccessTokenRequest(
-                code,
-                properties.clientId(),
-                properties.clientSecret()
-        );
-        GithubAccessTokenResponse response = githubOAuthClient.getAccessToken(request);
-
-        if (response == null) {
-            throw new IllegalArgumentException("액세스 토큰을 가져오는데 실패했습니다.");
-        }
+        GithubAccessTokenResponse response = githubOAuthClient.getAccessToken(code);
 
         return response.accessToken();
     }
 
-    public SocialProfile getUserInfo(String accessToken) {
-        SocialProfile socialProfile = githubOAuthClient.getUserInfo(accessToken);
+    public OAuthUserInfo getUserInfo(String accessToken) {
+        GithubUserInfo githubUserInfo = githubOAuthClient.getUserInfo(accessToken);
 
-        if (socialProfile == null) {
-            throw new IllegalArgumentException("사용자 정보를 가져오는데 실패했습니다.");
-        }
-
-        return socialProfile;
+        return githubUserInfo.toOAuthUserInfo();
     }
 
-    public String getClientUri(String next, String token) {
+    public String getClientUri(String next) {
         return UriComponentsBuilder.fromHttpUrl(properties.clientUri())
                 .path(next)
-                .queryParam("token", token)
                 .build()
                 .toUriString();
     }
