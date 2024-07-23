@@ -1,9 +1,9 @@
 import { styled, css } from 'styled-components';
 
 interface InputProps {
-  Size: 'Small' | 'Medium' | 'Large' | 'XLarge';
-  Type: 'Default';
-  Danger: boolean;
+  $width: 'Small' | 'Medium' | 'Large' | 'XLarge';
+  $type: 'Default';
+  $danger: boolean;
 }
 
 const sizeStyles = {
@@ -47,16 +47,16 @@ const typeStyles = {
 };
 
 export const Input = styled.input<InputProps>`
-  ${(props) => sizeStyles[props.Size]}
-  ${(props) => borderRadiusStyles[props.Size]}
-  ${(props) => typeStyles[props.Type]}
+  ${(props) => sizeStyles[props.$width]}
+  ${(props) => borderRadiusStyles[props.$width]}
+  ${(props) => typeStyles[props.$type]}
   outline: none;
   padding: 2.3rem;
   border: none;
   border-bottom: 0.15rem solid transparent;
   font-weight: bold;
   ${(props) =>
-    props.Danger
+    props.$danger
       ? css`
           border-bottom-color: var(--danger-600);
         `

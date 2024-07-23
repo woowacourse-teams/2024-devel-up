@@ -2,23 +2,23 @@ import type { TextareaHTMLAttributes } from 'react';
 import * as S from './TextArea.styled';
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  Type?: 'Default';
-  Size?: 'Default';
-  Danger?: boolean;
-  DangerMessage?: string;
+  type?: 'Default';
+  size?: 'Default';
+  danger?: boolean;
+  dangerMessage?: string;
 }
 
 export default function TextArea({
-  Type = 'Default',
-  Size = 'Default',
-  Danger = false,
-  DangerMessage = '',
+  type = 'Default',
+  size = 'Default',
+  danger = false,
+  dangerMessage = '',
   ...props
 }: TextAreaProps) {
   return (
     <>
-      <S.TextArea Type={Type} Size={Size} Danger={Danger} {...props} />
-      {Danger && DangerMessage && <S.DangerText>{DangerMessage}</S.DangerText>}
+      <S.TextArea $type={type} $size={size} $danger={danger} {...props} />
+      {danger && dangerMessage && <S.DangerText>{dangerMessage}</S.DangerText>}
     </>
   );
 }

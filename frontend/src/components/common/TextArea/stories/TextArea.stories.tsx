@@ -20,16 +20,16 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
-    Size: {
+    size: {
       control: { type: 'select' },
       options: ['Default'],
     },
-    Type: {
+    type: {
       control: { type: 'select' },
       options: ['Default'],
     },
-    Danger: { control: 'boolean' },
-    DangerMessage: { control: 'text' },
+    danger: { control: 'boolean' },
+    dangerMessage: { control: 'text' },
   },
 } satisfies Meta<typeof TextArea>;
 
@@ -39,18 +39,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    Size: 'Default',
-    Type: 'Default',
-    Danger: false,
-    DangerMessage: '',
+    size: 'Default',
+    type: 'Default',
+    danger: false,
+    dangerMessage: '',
   },
 };
 
 export const WithError: Story = {
   args: {
-    Size: 'Default',
-    Type: 'Default',
-    Danger: true,
-    DangerMessage: '에러 메세지입니다.',
+    size: 'Default',
+    type: 'Default',
+    danger: true,
+    dangerMessage: '에러 메세지입니다.',
   },
 };

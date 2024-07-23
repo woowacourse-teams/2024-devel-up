@@ -20,16 +20,16 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
-    Size: {
+    width: {
       control: { type: 'select' },
       options: ['Small', 'Medium', 'Large', 'XLarge'],
     },
-    Type: {
+    type: {
       control: { type: 'select' },
       options: ['Default'],
     },
-    Danger: { control: 'boolean' },
-    DangerMessage: { control: 'text' },
+    danger: { control: 'boolean' },
+    dangerMessage: { control: 'text' },
   },
 } satisfies Meta<typeof Input>;
 
@@ -39,45 +39,45 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    Size: 'Medium',
-    Type: 'Default',
-    Danger: false,
-    DangerMessage: '',
+    width: 'Medium',
+    type: 'Default',
+    danger: false,
+    dangerMessage: '',
   },
 };
 
 export const Small: Story = {
   args: {
-    Size: 'Small',
-    Type: 'Default',
-    Danger: false,
-    DangerMessage: '',
+    width: 'Small',
+    type: 'Default',
+    danger: false,
+    dangerMessage: '',
   },
 };
 
 export const Large: Story = {
   args: {
-    Size: 'Large',
-    Type: 'Default',
-    Danger: false,
-    DangerMessage: '',
+    width: 'Large',
+    type: 'Default',
+    danger: false,
+    dangerMessage: '',
   },
 };
 
 export const XLarge: Story = {
   args: {
-    Size: 'XLarge',
-    Type: 'Default',
-    Danger: false,
-    DangerMessage: '',
+    width: 'XLarge',
+    type: 'Default',
+    danger: false,
+    dangerMessage: '',
   },
 };
 
 export const WithError: Story = {
   args: {
-    Size: 'Medium',
-    Type: 'Default',
-    Danger: true,
-    DangerMessage: '에러 메세지입니다.',
+    width: 'Medium',
+    type: 'Default',
+    danger: true,
+    dangerMessage: '에러 메세지입니다.',
   },
 };

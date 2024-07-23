@@ -1,9 +1,9 @@
 import { styled, css } from 'styled-components';
 
 interface TextAreaProps {
-  Type: 'Default';
-  Size: 'Default';
-  Danger: boolean;
+  $type: 'Default';
+  $size: 'Default';
+  $danger: boolean;
 }
 
 const sizeStyles = {
@@ -20,8 +20,8 @@ const typeStyles = {
 };
 
 export const TextArea = styled.textarea<TextAreaProps>`
-  ${(props) => sizeStyles[props.Size]}
-  ${(props) => typeStyles[props.Type]}
+  ${(props) => sizeStyles[props.$size]}
+  ${(props) => typeStyles[props.$type]}
   outline: none;
   font-weight: bold;
   padding: 1.5rem;
@@ -30,7 +30,7 @@ export const TextArea = styled.textarea<TextAreaProps>`
   border: 1px solid transparent;
   border-bottom: 0.15rem solid transparent;
   ${(props) =>
-    props.Danger
+    props.$danger
       ? css`
           border-color: var(--danger-600);
         `
