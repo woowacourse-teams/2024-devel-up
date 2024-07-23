@@ -5,91 +5,17 @@
 # This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
 
-name: CI
+name: FRONT_CI
 
 on:
-  workflow_dispatch:
   pull_request:
     types: [ opened, reopened, synchronize ]
     branches: [ 'main' ]
+    paths:
+      - 'frontend/**'
 
 jobs:
-  BE_CI:
-    if: ${{ contains(github.event.pull_request.labels.*.name, '🚛 백엔드') }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      actions: write
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'corretto'
-          java-version: '21'
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
-
-      - name: Setup Gradle
-        run: chmod +x ./backend/gradlew
-
-      - name: Build with Gradle
-        continue-on-error: true
-        id: gradle_build
-        run: |
-          cd backend
-          ./gradlew build
-
-  BE_SLACK_MESSAGE:
-    runs-on: ubuntu-latest
-    needs: BE_CI
-    if: ${{needs.BE_CI.result != 'skipped'}}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: Get teamMember List
-        id: teamMembers
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const fs = require('fs');
-            const workers = JSON.parse(fs.readFileSync('.github/workflows/teamMember.json'));
-            const mention = context.payload.pull_request.assignees.map((user) => {
-            const login = user.login;
-            const mappedValue = workers[login];
-            return mappedValue ? `<@${mappedValue}>` : `No mapping found for ${login}`;
-            })
-            return mention.join(', ');
-
-      - name: Slack mention
-        uses: slackapi/slack-github-action@v1.24.0
-        with:
-          channel-id: ${{ secrets.ISSUE_CHANNEL }}
-          payload: |
-            {
-                "text": "pr 테스트 결과",
-                "blocks": [
-                  {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "pr 테스트 ${{ needs.BE_CI.result }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: \${{ steps.teamMembers.outputs.result }}
-                      }
-                  }
-                ]
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-
   FE_CI:
-    if: ${{ contains(github.event.pull_request.labels.*.name, '🎨 프론트엔드') }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -159,7 +85,7 @@ jobs:
 
   FE_SLACK_MESSAGE:
     runs-on: ubuntu-latest
-    needs: [FE_CI]
+    needs: [ FE_CI ]
     if: ${{needs.FE_CI.result != 'skipped'}}
     steps:
       - name: Checkout repository
