@@ -4,8 +4,8 @@ export const CardContainer = styled.div`
   width: 30rem;
   margin: 10rem;
   width: fit-content;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
-  border-radius: 0 0 8px 8px;
+  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.12);
+  border-radius: 0 0 0.8rem 0.8rem;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
 
@@ -18,7 +18,7 @@ export const Thumbnail = styled.img`
   width: 30rem;
   height: 21.9rem;
   object-fit: cover;
-  border-radius: 8px 8px 0 0;
+  border-radius: 0.8rem 0.8rem 0 0;
 `;
 
 export const Content = styled.div`
