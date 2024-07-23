@@ -1,5 +1,6 @@
 package develup.api.exception;
 
+import static develup.api.exception.GlobalExceptionHandlerTest.TestController;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -8,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import develup.application.auth.AuthService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,14 +27,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@WebMvcTest(GlobalExceptionHandlerTest.TestHandler.class)
+@WebMvcTest(
+        controllers = TestController.class,
+        useDefaultFilters = false,
+        includeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = GlobalExceptionHandler.class
+        )
+)
 class GlobalExceptionHandlerTest {
 
     @MockBean
-    TestHandler target;
-
-    @MockBean
-    AuthService authService;
+    TestController target;
 
     @Autowired
     MockMvc mockMvc;
@@ -46,7 +52,7 @@ class GlobalExceptionHandlerTest {
         mockMvc.perform(
                         post("/")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(new TestHandler.TestRequest("", "")))
+                                .content(objectMapper.writeValueAsString(new TestController.TestRequest("", "")))
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("올바른 값을 입력해주세요."))
@@ -106,7 +112,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Controller
-    static class TestHandler {
+    static class TestController {
 
         @GetMapping
         ResponseEntity<String> get() {
