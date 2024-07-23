@@ -1,15 +1,14 @@
 import Button from '@/components/common/Button/Button';
 import * as S from './MyMissionInProgress.styled';
+import useMissionInProgress from '@/hooks/useMissionInProgress';
 
 export default function MyMissionInProgressBanner() {
-  const imgLink =
-    'https://dszw1qtcnsa5e.cloudfront.net/community/20231115/ccefd368-2687-4d26-954d-712315f38fea/2232611625864AF59FF189AB61A75869.jpeg';
-  const missionTitle = '숫자 야구 게임 미션';
-  const myPrLink = 'naver.com';
-  const pairPrLink = 'naver.com';
+  // 로컬로는 작동됩니다
+  // API가 아직 서버에 등록이 안되어있어용 @프룬
+  const { missionInProgress } = useMissionInProgress();
 
   const handlePage = (link: string) => {
-    window.open(`https://${link}`, '_blank');
+    window.open(link, '_blank');
   };
 
   // 리뷰 완료 기능 API 연결 예정입니다 @프룬
@@ -17,39 +16,47 @@ export default function MyMissionInProgressBanner() {
 
   return (
     <S.MyMissionInProgressBannerContainer>
-      <S.ThumbnailImg src={imgLink} />
+      <S.ThumbnailContentWrapper>
+        <S.ThumbnailImg src={missionInProgress.mission.thumbnail} />
 
-      <S.MissionContentWrapper>
-        <S.MissionTitle>{missionTitle}</S.MissionTitle>
-      </S.MissionContentWrapper>
-
-      <S.MissionButtonWrapper>
-        <S.PrButtonWrapper>
-          <Button
-            type="icon"
-            content="페어 PR 이동"
-            $bgColor="--grey-100"
-            $hoverColor="--grey-200"
-            $fontColor="--black-color"
-            onHandleClick={() => handlePage(pairPrLink)}
-          >
-            <S.GithubIcons />
-          </Button>
-          <Button
-            type="icon"
-            content="내 PR 이동"
-            $bgColor="--grey-100"
-            $hoverColor="--grey-200"
-            $fontColor="--black-color"
-            onHandleClick={() => handlePage(myPrLink)}
-          >
-            <S.GithubIcons />
-          </Button>
-        </S.PrButtonWrapper>
-        <S.MissionCompleteWrapper>
-          <Button content="리뷰 완료" onHandleClick={handleReviewCompleted} />
-        </S.MissionCompleteWrapper>
-      </S.MissionButtonWrapper>
+        <S.MissionContentWrapper>
+          <S.MissionTitle>{missionInProgress.mission.title}</S.MissionTitle>
+        </S.MissionContentWrapper>
+      </S.ThumbnailContentWrapper>
+      {missionInProgress.status !== '매칭 대기' ? (
+        <S.PairNotMatchedWrapper>
+          페어를 매칭하고 있어요! 조금만 기다려주세요
+          <S.Loader />
+        </S.PairNotMatchedWrapper>
+      ) : (
+        <S.MissionButtonWrapper>
+          <S.PrButtonWrapper>
+            <Button
+              type="icon"
+              content="페어 PR 이동"
+              $bgColor="--grey-100"
+              $hoverColor="--grey-200"
+              $fontColor="--black-color"
+              onHandleClick={() => handlePage(missionInProgress.pairPrLink)}
+            >
+              <S.GithubIcons />
+            </Button>
+            <Button
+              type="icon"
+              content="내 PR 이동"
+              $bgColor="--grey-100"
+              $hoverColor="--grey-200"
+              $fontColor="--black-color"
+              onHandleClick={() => handlePage(missionInProgress.myPrLink)}
+            >
+              <S.GithubIcons />
+            </Button>
+          </S.PrButtonWrapper>
+          <S.MissionCompleteWrapper>
+            <Button content="리뷰 완료" onHandleClick={handleReviewCompleted} />
+          </S.MissionCompleteWrapper>
+        </S.MissionButtonWrapper>
+      )}
     </S.MyMissionInProgressBannerContainer>
   );
 }
