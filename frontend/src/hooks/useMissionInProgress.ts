@@ -5,7 +5,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 const useMissionInProgress = () => {
   const { data, isLoading, isError, isSuccess } = useSuspenseQuery<MissionInProgress>({
     queryKey: ['inProgress'],
-    queryFn: getMissionInProgress,
+    queryFn: () => getMissionInProgress(),
   });
 
   return { missionInProgress: data ?? [], isLoading, isError, isSuccess };
