@@ -2,88 +2,81 @@ name: Backend CD
 
 on:
   workflow_dispatch:
-  pull_request:
-#    types: [ closed ]
-    types: [ opened, reopened, synchronize ]
-    branches: [ 'main' ]
-#    paths:
-#      - 'backend/**'
+  push:
+    branches:
+      - main
+    paths:
+      - backend/**
+
+env:
+  ARTIFACT_NAME: DEVEL_UP_SNAPSHOT
+  ARTIFACT_DIRECTORY: ./backend/build/libs
 
 jobs:
-  BE_CD:
-    # if: ${{ github.event.pull_request.merged == true }}
-    runs-on: self-hosted
-    permissions:
-      contents: read
-      packages: write
-      actions: write
-
-    outputs:
-      build: ${{ steps.build_result.outputs.result }}
-      deploy: ${{ steps.deploy_result.outputs.result }}
+  build:
+    name: 🏗️ Build Jar and Upload Artifact
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-java@v4
+      - name: 🏗️ Set up JDK 21
+        uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
-          java-version: '21'
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          java-version: 21
+          cache: 'gradle'
 
-      - name: Setup Gradle
-        run: chmod +x ./backend/gradlew
+      - name: 🏗️ Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Build with Gradle
-        continue-on-error: true
-        id: build
+      - name: 🏗️ Build with Gradle
         run: |
           cd backend
-          ./gradlew build
+          ./gradlew clean bootJar
 
-      - name: Save Build Result
-        continue-on-error: true
-        id: build_result
+      - name: 🏷️ Rename Artifact File
         run: |
-          echo "result=${{steps.build.outcome}}" >> $GITHUB_OUTPUT
+          mv ${{ env.ARTIFACT_DIRECTORY }}/*.jar ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar
 
-      - name: Stop server
-        continue-on-error: true
-        id: stop_server
+      - name: 📤 Upload Artifact File
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar
+
+  deploy:
+    name: 🚀 Server Deployment
+    needs: build
+    runs-on: self-hosted
+
+    steps:
+      - name: 📥 Download Artifact File
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_DIRECTORY }}
+
+      - name: 🔴 Stop Server
         run: |
           PID=$(sudo lsof -t -i:80 || true)
           if [ -n "$PID" ]; then
-            sudo kill -15 "$PID"
+            sudo kill -15 $PID
+            tail --pid=$PID -f /dev/null
             echo "Server has been stopped. PID: $PID"
           else
             echo "No server is running."
           fi
 
-      - name: Deploy
-        continue-on-error: true
-        id: deploy
+      - name: 🟢 Start Server
         run: |
-          JAR_NAME="develup-0.0.1-SNAPSHOT"
-          JAR_FILE=$(sudo find -name "$JAR_NAME.jar" -print -quit)
-          if [ -n "$JAR_FILE" ]; then
-            sudo nohup java -jar /home/ubuntu/"$JAR_NAME".jar --server.port=80 &
-            echo "Deployed $JAR_NAME"
-          else
-            echo "No JAR file found to deploy."
-          fi
+          sudo nohup java -jar ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar --server.port=80 &
 
-      - name: Save Deploy Result
-        continue-on-error: true
-        id: deploy_result
-        run: |
-          echo "result=${{steps.deploy.outcome}}" >> $GITHUB_OUTPUT
-
-  slack-notify:
+  slack-notify_success:
     runs-on: ubuntu-latest
     needs:
-      - BE_CD
-    if: always()
+      - build
+      - deploy
+    if: success()
     steps:
       - name: Build and Deploy Success
         uses: slackapi/slack-github-action@v1.24.0
@@ -97,52 +90,62 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> 죄송😭테스트 중 \n ✨PR Merge 완료(Main 브랜치)✨ \n - 🚀Build Success \n - 🟢Deploy Success \n - 🏷️PR로 이동하기:"
+                    "text": "<!channel> \n ✨ PR Merge 완료(Main 브랜치) ✨ \n\t • 🚀 Build Success \n\t •  🟢 Deploy Success \n\t • 🏷️ PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
                   }
                 }
               ]
             }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-#
-#      - name: Slack mention when build fail
-#        if: ${{needs.BE_CD.outputs.build == 'failure' && needs.BE_CD.outputs.deploy == 'failure'}}
-#        uses: slackapi/slack-github-action@v1.24.0
-#        with:
-#          channel-id: ${{ secrets.ISSUE_CHANNEL }}
-#          payload: |
-#            {
-#                "text": "pr 머지",
-#                "blocks": [
-#                  {
-#                      "type": "section",
-#                      "text": {
-#                        "type": "mrkdwn",
-#                        "text": "<!channel>  pr이 main에 머지되었습니다. 🚨그러나 빌드가 실패합니다!!!🚨 \n • PR 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
-#                      }
-#                  }
-#                ]
-#            }
-#        env:
-#          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-#
-#      - name: Slack mention when build fail
-#        if: ${{needs.BE_CD.outputs.build == 'success' && needs.BE_CD.outputs.deploy == 'failure'}}
-#        uses: slackapi/slack-github-action@v1.24.0
-#        with:
-#          channel-id: ${{ secrets.ISSUE_CHANNEL }}
-#          payload: |
-#            {
-#                "text": "pr 머지",
-#                "blocks": [
-#                  {
-#                      "type": "section",
-#                      "text": {
-#                        "type": "mrkdwn",
-#                        "text": "<!channel> pr이 main에 머지되었습니다. ⚠️그러나 배포에 실패했습니다!⚠️ \n • PR 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
-#                      }
-#                  }
-#                ]
-#            }
-#        env:
-#          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+  slack-notify_build-fail:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    if: failure()
+    steps:
+      - name: Build Fail
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+              "text": "PR Merge",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "<!channel> \n ✨ PR Merge 완료(Main 브랜치) ✨ \n\t • 🔴 Build Fail \n\t • 🏷️ PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+  slack-notify_deploy-fail:
+    runs-on: ubuntu-latest
+    needs:
+      - deploy
+    if: failure()
+    steps:
+      - name: Deploy Fail
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+              "text": "PR Merge",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "<!channel> \n ✨PR Merge 완료(Main 브랜치)✨ \n\t • 🚀Build Success \n\t • 🔴Deploy Fail \n - 🏷️PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
