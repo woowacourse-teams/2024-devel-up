@@ -3,7 +3,7 @@ import * as S from './MyMissionInProgress.styled';
 import useMissionInProgress from '@/hooks/useMissionInProgress';
 
 export default function MyMissionInProgressBanner() {
-  const { missionInProgress } = useMissionInProgress();
+  const { data: missionInProgress } = useMissionInProgress();
 
   const handlePage = (link: string) => {
     window.open(link, '_blank');
