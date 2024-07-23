@@ -1,4 +1,4 @@
-package develup.api;
+package develup.api.auth;
 
 import static java.util.Objects.requireNonNull;
 

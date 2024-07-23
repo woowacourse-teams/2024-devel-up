@@ -1,5 +1,6 @@
 package develup.api;
 
+import develup.api.auth.Auth;
 import develup.application.auth.Accessor;
 import develup.application.member.MemberResponse;
 import develup.application.member.MemberService;
