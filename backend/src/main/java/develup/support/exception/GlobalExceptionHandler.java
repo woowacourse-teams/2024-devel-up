@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
         log.warn("[HttpRequestMethodNotSupportedException] {}", e.getMessage(), e);
 
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
-                .body(new ExceptionResponse("지원하지 않는 HTTP 메소드입니다."));
+                .body(new ExceptionResponse("지원하지 않는 HTTP 메서드입니다."));
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
