@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
-import develup.domain.mission.Language;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.domain.submission.Pair;
@@ -14,6 +13,7 @@ import develup.domain.submission.PairRepository;
 import develup.domain.submission.Submission;
 import develup.domain.submission.SubmissionRepository;
 import develup.support.MemberTestData;
+import develup.support.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,16 +146,9 @@ class PairServiceTest {
     }
 
     private Mission createMission() {
-        Mission mission = new Mission(
-                "sample",
-                Language.JAVA,
-                "description",
-                "thumbnail",
-                "url"
-        );
-        missionRepository.save(mission);
+        Mission mission = MissionTestData.defaultMission().build();
 
-        return mission;
+        return missionRepository.save(mission);
     }
 
     private Submission createSubmission(Mission mission, Member member) {

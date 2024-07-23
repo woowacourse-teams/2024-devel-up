@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
-import develup.domain.mission.Language;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
+import develup.support.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,9 @@ class MissionServiceTest {
     @Test
     @DisplayName("모든 미션을 조회한다.")
     void getMissions() {
-        missionRepository.save(new Mission("미션 1", Language.JAVA, "미션 설명", "미션 썸네일", "미션 url"));
-        missionRepository.save(new Mission("미션 2", Language.JAVA, "미션 설명", "미션 썸네일", "미션 url"));
+        MissionTestData.MissionBuilder missionBuilder = MissionTestData.defaultMission();
+        missionRepository.save(missionBuilder.build());
+        missionRepository.save(missionBuilder.build());
 
         List<MissionResponse> missions = missionService.getMissions();
 
@@ -37,7 +38,7 @@ class MissionServiceTest {
     @Test
     @DisplayName("미션 식별자로 미션 단건을 조회한다.")
     void getMissionById() {
-        Mission mission = missionRepository.save(new Mission("미션 1", Language.JAVA, "미션 설명", "미션 썸네일", "미션 url"));
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
 
         MissionResponse response = missionService.getMissionById(mission.getId());
 

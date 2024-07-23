@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
-import develup.domain.mission.Language;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.domain.submission.PairStatus;
 import develup.domain.submission.SubmissionRepository;
 import develup.support.MemberTestData;
+import develup.support.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class SubmissionServiceTest {
     @DisplayName("미션을 제출한다.")
     void createSubmission() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
-        Mission mission = missionRepository.save(new Mission("미션 1", Language.JAVA, "미션 설명", "미션 썸네일", "미션 url"));
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         CreateSubmissionRequest request = new CreateSubmissionRequest(mission.getId(), "pr url", "코멘트");
 
         submissionService.submit(member, request);
@@ -54,9 +54,8 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("참여한 모든 미션을 조회한다.")
         void getMyMissions() {
-            Member member = MemberTestData.defaultMember()
-                    .withId(1L)
-                    .build();
+            Member member = MemberTestData.defaultMember().withId(1L).build();
+
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
             assertThat(myMissions).hasSize(3);
@@ -65,9 +64,8 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("매칭된 제출이 없는 경우 `매칭 대기` 상태로 설정된다.")
         void getMyMissionsWhenNoPair() {
-            Member member = MemberTestData.defaultMember()
-                    .withId(1L)
-                    .build();
+            Member member = MemberTestData.defaultMember().withId(1L).build();
+
             List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
 
             assertThat(myMissions.getFirst().status()).isEqualTo("매칭 대기");
@@ -76,9 +74,8 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("진행 중인 미션이 있는 경우 해당 미션 한 개를 반환한다.")
         void getMyMission() {
-            Member member = MemberTestData.defaultMember()
-                    .withId(1L)
-                    .build();
+            Member member = MemberTestData.defaultMember().withId(1L).build();
+
             MyMissionResponse response = submissionService.getMyMission(member);
 
             assertThat(response.status()).isEqualTo(PairStatus.WAITING.getDescription());
@@ -87,9 +84,8 @@ class SubmissionServiceTest {
         @Test
         @DisplayName("진행 중인 미션이 없는 경우 null을 반환한다.")
         void getMyMissionWhenAllFinished() {
-            Member member = MemberTestData.defaultMember()
-                    .withId(3L)
-                    .build();
+            Member member = MemberTestData.defaultMember().withId(3L).build();
+
             MyMissionResponse response = submissionService.getMyMission(member);
 
             assertThat(response).isNull();
