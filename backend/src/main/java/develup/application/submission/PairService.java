@@ -2,6 +2,8 @@ package develup.application.submission;
 
 import java.util.List;
 import java.util.Optional;
+import develup.api.exception.DevelupException;
+import develup.api.exception.ExceptionType;
 import develup.domain.submission.Pair;
 import develup.domain.submission.PairRepository;
 import develup.domain.submission.PairStatus;
@@ -36,7 +38,7 @@ public class PairService {
         boolean isSubmitted = submissionRepository.existsById(submission.getId());
 
         if (!isSubmitted) {
-            throw new IllegalArgumentException("아직 제출되지 않아 매칭이 불가능합니다.");
+            throw new DevelupException(ExceptionType.SUBMISSION_NOT_SUBMITTED);
         }
     }
 
@@ -45,13 +47,13 @@ public class PairService {
                 .findNonMatchedSubmissions(submission.getMission());
 
         if (!nonMatchedSubmissions.contains(submission)) {
-            throw new IllegalStateException("이미 매칭된 제출입니다.");
+            throw new DevelupException(ExceptionType.ALREADY_MATCHED_SUBMISSION);
         }
     }
 
     private void matchWithOtherSubmission(Submission submission) {
         Submission other = findCanMatchSubmission(submission)
-                .orElseThrow(() -> new IllegalStateException("매칭할 제출이 존재하지 않습니다."));
+                .orElseThrow(() -> new DevelupException(ExceptionType.MATCH_SUBMISSION_NOT_FOUND));
         Pair mainPair = new Pair(submission, other, PairStatus.IN_PROGRESS);
         Pair otherPair = new Pair(other, submission, PairStatus.IN_PROGRESS);
 

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import develup.api.exception.DevelupException;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.support.IntegrationTestSupport;
@@ -46,6 +47,6 @@ class MissionServiceTest extends IntegrationTestSupport {
     @DisplayName("존재하지 않는 미션 식별자로 미션 조회시 예외가 발생한다.")
     void getMissionByUndefinedId() {
         assertThatThrownBy(() -> missionService.getMissionById(-1L))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(DevelupException.class);
     }
 }

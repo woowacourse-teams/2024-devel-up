@@ -1,6 +1,8 @@
 package develup.application.mission;
 
 import java.util.List;
+import develup.api.exception.DevelupException;
+import develup.api.exception.ExceptionType;
 import develup.domain.mission.MissionRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,6 @@ public class MissionService {
     public MissionResponse getMissionById(Long id) {
         return missionRepository.findById(id)
                 .map(MissionResponse::from)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 미션입니다."));
+                .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
     }
 }

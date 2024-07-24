@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
@@ -97,7 +98,7 @@ class PairServiceTest extends IntegrationTestSupport {
         pairService.match(mySubmission);
 
         assertThatThrownBy(() -> pairService.match(mySubmission))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(DevelupException.class)
                 .hasMessage("이미 매칭된 제출입니다.");
     }
 
@@ -108,7 +109,7 @@ class PairServiceTest extends IntegrationTestSupport {
         Submission mySubmission = createSubmission(mission, createMember());
 
         assertThatThrownBy(() -> pairService.match(mySubmission))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(DevelupException.class)
                 .hasMessage("매칭할 제출이 존재하지 않습니다.");
     }
 
@@ -121,7 +122,7 @@ class PairServiceTest extends IntegrationTestSupport {
         Submission mySubmission = createSubmission(mission, sameMember);
 
         assertThatThrownBy(() -> pairService.match(mySubmission))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(DevelupException.class)
                 .hasMessage("매칭할 제출이 존재하지 않습니다.");
     }
 
@@ -133,7 +134,7 @@ class PairServiceTest extends IntegrationTestSupport {
                 .build();
 
         assertThatThrownBy(() -> pairService.match(submission))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DevelupException.class)
                 .hasMessage("아직 제출되지 않아 매칭이 불가능합니다.");
     }
 

@@ -1,8 +1,10 @@
 package develup.application.submission;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
@@ -42,6 +44,16 @@ class SubmissionServiceTest extends IntegrationTestSupport {
         submissionService.submit(member, request);
 
         assertThat(submissionRepository.findAll()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 미션을 제출할 수 없다.")
+    void notFoundMission() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        CreateSubmissionRequest request = new CreateSubmissionRequest(-1L, "pr url", "코멘트");
+
+        assertThatThrownBy(() -> submissionService.submit(member, request))
+                .isInstanceOf(DevelupException.class);
     }
 
     @Nested

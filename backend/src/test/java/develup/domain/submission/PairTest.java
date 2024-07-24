@@ -2,6 +2,7 @@ package develup.domain.submission;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import develup.api.exception.DevelupException;
 import develup.support.data.SubmissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class PairTest {
                 .build();
 
         assertThatThrownBy(() -> new Pair(submission, submission, PairStatus.IN_PROGRESS))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DevelupException.class)
                 .hasMessage("같은 제출끼리 페어가 될 수 없습니다.");
     }
 }
