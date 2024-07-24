@@ -19,16 +19,16 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+    public MemberResponse getMemberById(Long id) {
+        return memberRepository.findById(id)
+                .map(MemberResponse::from)
+                .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
+    }
+
     public MemberResponse findOrCreateMember(OAuthUserInfo userInfo, Provider provider) {
         Member member = memberRepository.findBySocialIdAndProvider(userInfo.id(), provider)
                 .orElseGet(() -> memberRepository.save(userInfo.toMember(provider)));
 
         return MemberResponse.from(member);
-    }
-
-    public MemberResponse getMemberById(Long id) {
-        return memberRepository.findById(id)
-                .map(MemberResponse::from)
-                .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
     }
 }
