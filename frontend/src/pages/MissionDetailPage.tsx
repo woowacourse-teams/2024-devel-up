@@ -1,4 +1,4 @@
-import MissionDetailButtonGroup from '@/components/MissionDetail/MissionDetailButtons';
+import MissionDetailButtons from '@/components/MissionDetail/MissionDetailButtons';
 import MissionDetailContent from '@/components/MissionDetail/MissionDetailContent';
 import MissionDetailHeader from '@/components/MissionDetail/MissionDetailHeader';
 import { useParams } from 'react-router-dom';
@@ -16,7 +16,7 @@ export default function MissionDetailPage() {
         thumbnail={missionData.thumbnail}
         language={missionData.language}
       />
-      <MissionDetailButtonGroup id={Number(missionData.id)} missionUrl={missionData.url} />
+      <MissionDetailButtons id={Number(missionData.id)} missionUrl={missionData.url} />
       <MissionDetailContent descriptionUrl={missionData.description} />
     </S.MissionDetailPageContainer>
   );
