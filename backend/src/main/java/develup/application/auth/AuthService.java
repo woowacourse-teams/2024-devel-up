@@ -5,8 +5,10 @@ import develup.application.member.MemberService;
 import develup.domain.member.Provider;
 import develup.infra.auth.oauth.github.GithubOAuthProvider;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class AuthService {
 
     private final MemberService memberService;
