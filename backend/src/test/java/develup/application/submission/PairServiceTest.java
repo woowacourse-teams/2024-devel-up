@@ -135,7 +135,7 @@ class PairServiceTest extends IntegrationTestSupport {
 
         assertThatThrownBy(() -> pairService.match(submission))
                 .isInstanceOf(DevelupException.class)
-                .hasMessage("아직 제출되지 않아 매칭이 불가능합니다.");
+                .hasMessage("존재하지 않는 제출입니다.");
     }
 
     private Mission createMission() {

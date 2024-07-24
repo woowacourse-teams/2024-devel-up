@@ -38,7 +38,7 @@ public class PairService {
         boolean isSubmitted = submissionRepository.existsById(submission.getId());
 
         if (!isSubmitted) {
-            throw new DevelupException(ExceptionType.SUBMISSION_NOT_SUBMITTED);
+            throw new DevelupException(ExceptionType.SUBMISSION_NOT_FOUND);
         }
     }
 
