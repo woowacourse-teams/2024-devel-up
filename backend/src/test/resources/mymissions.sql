@@ -44,7 +44,7 @@ INSERT INTO pair (main_submission, pair_submission, status)
 VALUES (2, 1, 'ALL_FINISHED');
 
 INSERT INTO pair (main_submission, pair_submission, status)
-VALUES (3, 4, 'REVIEW_FINISHED');
+VALUES (3, 4, 'MY_REVIEW_COMPLETE');
 
 INSERT INTO pair (main_submission, pair_submission, status)
-VALUES (4, 3, 'IN_PROGRESS');
+VALUES (4, 3, 'PARTNER_REVIEW_COMPLETE');

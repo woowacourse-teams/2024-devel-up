@@ -54,8 +54,8 @@ public class PairService {
     private void matchWithOtherSubmission(Submission submission) {
         Submission other = findCanMatchSubmission(submission)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MATCH_SUBMISSION_NOT_FOUND));
-        Pair mainPair = new Pair(submission, other, PairStatus.IN_PROGRESS);
-        Pair otherPair = new Pair(other, submission, PairStatus.IN_PROGRESS);
+        Pair mainPair = new Pair(submission, other, PairStatus.MATCHED);
+        Pair otherPair = new Pair(other, submission, PairStatus.MATCHED);
 
         pairRepository.save(mainPair);
         pairRepository.save(otherPair);
