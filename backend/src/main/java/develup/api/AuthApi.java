@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthApi {
 
-    //
     private final GithubOAuthService githubOAuthService;
     private final MemberService memberService;
     private final AuthService authService;
