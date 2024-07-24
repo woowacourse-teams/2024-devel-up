@@ -82,10 +82,16 @@ export const InfoMsgWrapper = styled.div`
   display: flex;
   gap: 0.4rem;
   align-items: center;
+  border-radius: 0.8rem;
+  padding: 0.3rem;
 
   color: var(--grey-500);
   font-size: 1.4rem;
   font-weight: 500;
+
+  &:hover {
+    background-color: var(--grey-50);
+  }
 `;
 
 export const InfoIcon = styled(infoIcon)`

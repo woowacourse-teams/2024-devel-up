@@ -21,9 +21,13 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
     window.open(missionUrl, '_blank');
   };
 
+  const handleNavigateToMethod = () => {
+    window.open('https://github.com/develup-mission/docs/blob/main/mission-guide.md', '_blank');
+  };
+
   return (
     <S.MissionDetailButtonsContainer>
-      <S.InfoMsgWrapper>
+      <S.InfoMsgWrapper onClick={handleNavigateToMethod}>
         <S.InfoIcon />
         어떻게 참여하나요?
       </S.InfoMsgWrapper>
