@@ -9,15 +9,13 @@ import develup.application.auth.OAuthUserInfo;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.member.Provider;
+import develup.support.IntegrationTestSupport;
+import develup.support.data.MemberTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 
-@SpringBootTest
-@Sql(value = {"classpath:clean_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class MemberServiceTest {
+class MemberServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private MemberService memberService;
@@ -28,7 +26,7 @@ class MemberServiceTest {
     @Test
     @DisplayName("멤버 식별자로 멤버를 조회한다.")
     void getMemberById() {
-        Member member = memberRepository.save(createMember());
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
 
         MemberResponse response = memberService.getMemberById(member.getId());
 
@@ -46,7 +44,7 @@ class MemberServiceTest {
     @Test
     @DisplayName("이미 존재하는 소셜 로그인 회원일 경우 회원을 찾는다.")
     void findOAuthMember() {
-        Member member = createMember();
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
         OAuthUserInfo userInfo = new OAuthUserInfo(
                 member.getSocialId(),
                 "alstn113",
@@ -70,14 +68,8 @@ class MemberServiceTest {
                 "alstn113@gmail.com",
                 "name"
         );
-         memberService.findOrCreateMember(userInfo, Provider.GITHUB);
+        memberService.findOrCreateMember(userInfo, Provider.GITHUB);
 
         assertThat(memberRepository.findAll()).hasSize(1);
-    }
-
-    private Member createMember() {
-        Member member = new Member("email", Provider.GITHUB, 1234L, "name", "image");
-
-        return memberRepository.save(member);
     }
 }
