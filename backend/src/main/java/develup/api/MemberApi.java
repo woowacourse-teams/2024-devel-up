@@ -1,9 +1,11 @@
 package develup.api;
 
 import develup.api.auth.Auth;
+import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
 import develup.application.member.MemberResponse;
 import develup.application.member.MemberService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +19,9 @@ public class MemberApi {
     }
 
     @GetMapping("/member/mine")
-    public MemberResponse getMyInfo(@Auth Accessor accessor) {
-        return memberService.getMemberById(accessor.id());
+    public ResponseEntity<ApiResponse<MemberResponse>> getMyInfo(@Auth Accessor accessor) {
+        MemberResponse response = memberService.getMemberById(accessor.id());
+
+        return ResponseEntity.ok(new ApiResponse<>(response));
     }
 }
