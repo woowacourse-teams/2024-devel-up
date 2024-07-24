@@ -16,7 +16,13 @@ on:
 
 env:
   lilychoibb: "U07AQJWU8S3"
-  U07AQJWU8S3: "릴리(최윤서)"
+  robinjoon: "U07BU02FQFJ"
+  brgndyy: "U07B53DM02W"
+  chosim-dvlpr: "U07BHP5UTLH"
+  Minjoo522: "U07B4V80WLT"
+  alstn113: "U07AQK2KBLP"
+  le2sky: "U07B26581CM"
+  Parkhanyoung: "U07BTSGKCC8"
 
 jobs:
   BE_CI:
@@ -56,7 +62,7 @@ jobs:
       - name: Get teamMember
         id: teamMember
         run: |
-          echo "ASSIGNEE_SLACK_ID=${{ env[github.event.pull_request.login] }}" >> $GITHUB_ENV
+          echo "SENDER_SLACK_ID=${{ env[github.event.sender.login] }}" >> $GITHUB_ENV
 
 #      - name: Get teamMember List
 #        id: teamMembers
@@ -84,7 +90,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "pr 테스트 ${{ needs.BE_CI.result }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: <@${{ env.ASSIGNEE_SLACK_ID }}>"
+                        "text": "pr 테스트 ${{ needs.BE_CI.result }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: <@${{ env.SENDER_SLACK_ID }}>"
                       }
                   }
                 ]
