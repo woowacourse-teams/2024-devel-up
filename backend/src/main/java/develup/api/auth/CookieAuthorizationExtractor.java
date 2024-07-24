@@ -1,17 +1,15 @@
-package develup.infra.auth;
+package develup.api.auth;
 
 import java.util.Arrays;
-import develup.application.auth.AuthorizationExtractor;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CookieAuthorizationExtractor implements AuthorizationExtractor<String> {
+public class CookieAuthorizationExtractor {
 
     private static final String TOKEN_COOKIE_NAME = "token";
 
-    @Override
     public String extract(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
 

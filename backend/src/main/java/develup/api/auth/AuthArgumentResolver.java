@@ -6,10 +6,10 @@ import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.application.auth.Accessor;
 import develup.application.auth.AuthService;
-import develup.application.auth.AuthorizationExtractor;
 import develup.application.member.MemberResponse;
 import develup.application.member.MemberService;
 import jakarta.annotation.Nonnull;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -21,12 +21,12 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final AuthorizationExtractor<String> authorizationExtractor;
+    private final CookieAuthorizationExtractor authorizationExtractor;
     private final AuthService authService;
     private final MemberService memberService;
 
     public AuthArgumentResolver(
-            AuthorizationExtractor<String> authorizationExtractor,
+            CookieAuthorizationExtractor authorizationExtractor,
             AuthService authService,
             MemberService memberService
     ) {
@@ -52,12 +52,21 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
     ) {
         Auth auth = requireNonNull(parameter.getParameterAnnotation(Auth.class));
 
-        String token = authorizationExtractor.extract(webRequest);
+        String token = extractTokenFromCookie(webRequest);
         if (token == null) {
             return handleNoToken(auth);
         }
 
         return handleToken(token);
+    }
+
+    private String extractTokenFromCookie(NativeWebRequest webRequest) {
+        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+        if (request == null) {
+            return null;
+        }
+
+        return authorizationExtractor.extract(request);
     }
 
     private Accessor handleNoToken(Auth auth) {
