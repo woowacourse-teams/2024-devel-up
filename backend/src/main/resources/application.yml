@@ -34,7 +34,7 @@ logging:
     org.hibernate.orm.jdbc.bind: trace
 
 api-host: http://localhost:8080
-client-host: http://localhost:8080
+client-host: http://localhost:3000
 
 auth:
   github:
