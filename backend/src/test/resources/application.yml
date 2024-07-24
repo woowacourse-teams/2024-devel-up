@@ -19,16 +19,6 @@ spring:
     init:
       data-locations:
 
-springdoc:
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
-  swagger-ui:
-    path: /api-docs
-    disable-swagger-default-url: true
-    display-request-duration: true
-    operations-sorter: alpha
-    tags-sorter: alpha
-
 logging:
   level:
     org.springframework.orm.jpa: DEBUG
@@ -41,12 +31,12 @@ client-host: http://localhost:8080
 
 auth:
   github:
-    client-id: develup-test-develup-test-develup-test-develup-test-develup-test
-    client-secret: develup-test-develup-test-develup-test-develup-test-develup-test
-    redirect-uri: ${api-host}/auth/social/callback/github
-    client-uri: ${client-host}
+    client-id: testtesttesttesttesttesttesttesttesttesttesttesttesttest
+    client-secret: testtesttesttesttesttesttesttesttesttesttesttesttesttest
+    redirect-uri: testtesttesttesttesttesttesttesttesttesttesttesttesttest
+    client-uri: testtesttesttesttesttesttesttesttesttesttesttesttesttest
 
 security:
   jwt:
-    secret-key: 7b3dc341c033816045cc11c6f9fba3187f4dbdb7
+    secret-key: testtesttesttesttesttesttesttesttesttesttesttesttesttest
     expiration-time: 3600000 # 1 hour
