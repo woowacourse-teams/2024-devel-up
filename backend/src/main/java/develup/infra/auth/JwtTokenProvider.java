@@ -3,6 +3,8 @@ package develup.infra.auth;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import develup.api.exception.DevelupException;
+import develup.api.exception.ExceptionType;
 import develup.application.auth.TokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -46,7 +48,7 @@ public class JwtTokenProvider implements TokenProvider {
 
     private Claims toClaims(String token) {
         if (token == null || token.isBlank()) {
-            throw new IllegalArgumentException("토큰이 비어있습니다.");
+            throw new DevelupException(ExceptionType.TOKEN_NOT_FOUND);
         }
 
         try {
@@ -54,9 +56,9 @@ public class JwtTokenProvider implements TokenProvider {
 
             return claimsJws.getPayload();
         } catch (ExpiredJwtException e) {
-            throw new IllegalStateException("만료된 토큰입니다.");
+            throw new DevelupException(ExceptionType.TOKEN_EXPIRED);
         } catch (JwtException e) {
-            throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
+            throw new DevelupException(ExceptionType.INVALID_TOKEN);
         }
     }
 
