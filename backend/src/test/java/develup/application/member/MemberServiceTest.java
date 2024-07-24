@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import develup.api.exception.DevelupException;
-import develup.api.exception.ExceptionType;
 import develup.application.auth.OAuthUserInfo;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
@@ -26,7 +25,7 @@ class MemberServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("멤버 식별자로 멤버를 조회한다.")
     void getMemberById() {
-        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Member member = createMember();
 
         MemberResponse response = memberService.getMemberById(member.getId());
 
@@ -38,13 +37,13 @@ class MemberServiceTest extends IntegrationTestSupport {
     void getMemberByUndefinedId() {
         assertThatThrownBy(() -> memberService.getMemberById(-1L))
                 .isInstanceOf(DevelupException.class)
-                .hasMessage(ExceptionType.MEMBER_NOT_FOUND.getMessage());
+                .hasMessage("존재하지 않은 회원입니다.");
     }
 
     @Test
     @DisplayName("이미 존재하는 소셜 로그인 회원일 경우 회원을 찾는다.")
     void findOAuthMember() {
-        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Member member = createMember();
         OAuthUserInfo userInfo = new OAuthUserInfo(
                 member.getSocialId(),
                 "alstn113",
@@ -71,5 +70,11 @@ class MemberServiceTest extends IntegrationTestSupport {
         memberService.findOrCreateMember(userInfo, Provider.GITHUB);
 
         assertThat(memberRepository.findAll()).hasSize(1);
+    }
+
+    private Member createMember() {
+        Member member = MemberTestData.defaultMember().build();
+
+        return memberRepository.save(member);
     }
 }
