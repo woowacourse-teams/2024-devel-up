@@ -2,7 +2,7 @@
 name: IMPROVEMENT
 about: 이전보다 더 낫게 만드는 경우 사용합니다.
 title: ''
-labels: 개선
+labels: 🚀 개선
 assignees: ''
 
 ---

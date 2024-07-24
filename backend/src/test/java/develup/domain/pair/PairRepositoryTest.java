@@ -7,15 +7,13 @@ import develup.domain.submission.MyMission;
 import develup.domain.submission.PairRepository;
 import develup.domain.submission.Submission;
 import develup.domain.submission.SubmissionRepository;
+import develup.support.IntegrationTestSupport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-@SpringBootTest
-@Sql(value = {"classpath:clean_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class PairRepositoryTest {
+class PairRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private PairRepository pairRepository;

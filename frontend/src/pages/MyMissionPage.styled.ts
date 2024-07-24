@@ -6,5 +6,5 @@ export const MyMissionPageContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 7rem;
+  gap: 3.5rem;
 `;

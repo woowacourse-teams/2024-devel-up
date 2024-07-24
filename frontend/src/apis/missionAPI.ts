@@ -1,6 +1,11 @@
 import { BASE_URL } from './baseUrl';
+import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
-import type { Mission } from '@/types';
+import type { Mission, MissionInProgress } from '@/types';
+
+interface getMissionInProgressResponse {
+  data: MissionInProgress;
+}
 
 export const getAllMissions = async (): Promise<Mission[]> => {
   try {
@@ -38,4 +43,10 @@ export const getMissionById = async (id: number): Promise<Mission> => {
     console.error(err);
     throw new Error('');
   }
+};
+
+export const getMissionInProgress = async (): Promise<MissionInProgress> => {
+  const { data } = await develupAPIClient.get<getMissionInProgressResponse>(PATH.missionInProgress);
+
+  return data;
 };

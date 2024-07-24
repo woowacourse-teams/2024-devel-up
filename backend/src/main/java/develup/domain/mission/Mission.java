@@ -35,6 +35,10 @@ public class Mission {
     }
 
     public Mission(String title, Language language, String description, String thumbnail, String url) {
+        this(null, title, language, description, thumbnail, url);
+    }
+
+    public Mission(Long id, String title, Language language, String description, String thumbnail, String url) {
         this.title = title;
         this.language = language;
         this.description = description;
