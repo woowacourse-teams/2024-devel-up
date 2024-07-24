@@ -55,7 +55,7 @@ jobs:
       - name: Get teamMember
         id: teamMember
         run: |
-            echo "ASSIGNEE_SLACK_ID=${{ env[github.event.pull_request.assignees.login] }}" >> $GITHUB_ENV
+          echo "ASSIGNEE_SLACK_ID=${{ env[github.event.pull_request.login] }}" >> $GITHUB_ENV
 
 #      - name: Get teamMember List
 #        id: teamMembers
