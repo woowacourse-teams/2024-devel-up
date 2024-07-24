@@ -79,13 +79,13 @@ jobs:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
           payload: |
             {
-              "text": "PR Merge",
+              "text": "Build and Deploy Status",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n ✨ PR Merge 완료(Main 브랜치) ✨ \n\t • 🚀 Build Success \n\t • 🟢 Deploy Success \n\t • 🏷️ PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀 Build Success \n\t • 🟢 Deploy Success \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
                   }
                 }
               ]
@@ -105,13 +105,13 @@ jobs:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
           payload: |
             {
-              "text": "PR Merge",
+              "text": "Build and Deploy Status",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n ✨ PR Merge 완료(Main 브랜치) ✨ \n\t • 🔴 Build Fail \n\t • 🏷️ PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🔴 Build Fail \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
                   }
                 }
               ]
@@ -131,13 +131,13 @@ jobs:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
           payload: |
             {
-              "text": "PR Merge",
+              "text": "Build and Deploy Status",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n ✨PR Merge 완료(Main 브랜치)✨ \n\t • 🚀Build Success \n\t • 🔴Deploy Fail \n\t • 🏷️PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀Build Success \n\t • 🔴Deploy Fail \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
                   }
                 }
               ]
