@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import develup.api.exception.DevelupException;
-import develup.api.exception.ExceptionType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,9 +40,8 @@ class JwtTokenProviderTest {
     void getMemberIdWhenTokenIsEmpty(String token) {
         assertThatThrownBy(() -> jwtTokenProvider.getMemberId(token))
                 .isInstanceOf(DevelupException.class)
-                .hasMessage(ExceptionType.TOKEN_NOT_FOUND.getMessage());
+                .hasMessage("토큰이 존재하지 않습니다.");
     }
-
 
     @Test
     @DisplayName("토큰에서 멤버 아이디를 가져올 때, 토큰이 만료되었으면 예외를 발생시킨다.")
@@ -53,7 +51,7 @@ class JwtTokenProviderTest {
 
         assertThatThrownBy(() -> expiredJwtTokenProvider.getMemberId(token))
                 .isInstanceOf(DevelupException.class)
-                .hasMessage(ExceptionType.TOKEN_EXPIRED.getMessage());
+                .hasMessage("토큰이 만료되었습니다.");
     }
 
     @Test
@@ -63,6 +61,6 @@ class JwtTokenProviderTest {
 
         assertThatThrownBy(() -> jwtTokenProvider.getMemberId(invalidToken))
                 .isInstanceOf(DevelupException.class)
-                .hasMessage(ExceptionType.INVALID_TOKEN.getMessage());
+                .hasMessage("유효하지 않은 토큰입니다.");
     }
 }
