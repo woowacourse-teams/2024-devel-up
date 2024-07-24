@@ -56,7 +56,7 @@ public class AuthApi {
         Cookie cookie = new Cookie(TOKEN_COOKIE_NAME, token);
         cookie.setMaxAge(COOKIE_MAX_AGE_ONE_DAY);
         cookie.setHttpOnly(true);
-        // cookie.setSecure(true); // HTTPS를 사용할 때만 주석을 해제하세요.
+        // cookie.setSecure(true); // HTTPS를 사용할 때
         cookie.setPath("/");
 
         response.addCookie(cookie);
