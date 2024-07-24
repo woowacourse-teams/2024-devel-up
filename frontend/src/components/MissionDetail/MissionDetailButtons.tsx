@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import * as S from './MissionDetail.styled';
 import Button from '../common/Button/Button';
+import { ROUTES } from '@/constants/routes';
 
 interface MissionDetailButtonsProps {
   id: number;
@@ -10,11 +11,11 @@ interface MissionDetailButtonsProps {
 export default function MissionDetailButtons({ id, missionUrl }: MissionDetailButtonsProps) {
   const navigate = useNavigate();
   const handleNavigateToSubmit = () => {
-    navigate(`${id}`);
+    navigate(`${ROUTES.submit}/${id}`);
   };
 
   const handleNavigateToMyPr = () => {
-    window.open('', '_blank');
+    window.open('', '_blank'); // 추후 구현 예정입니다 @프룬
   };
 
   const handleNavigateToMission = () => {
