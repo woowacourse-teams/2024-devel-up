@@ -37,8 +37,8 @@ class SubmissionServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("미션을 제출한다.")
     void createSubmission() {
-        Member member = memberRepository.save(MemberTestData.defaultMember().build());
-        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Member member = createMember();
+        Mission mission = createMission();
         CreateSubmissionRequest request = new CreateSubmissionRequest(mission.getId(), "pr url", "코멘트");
 
         submissionService.submit(member, request);
@@ -49,11 +49,23 @@ class SubmissionServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("존재하지 않는 미션을 제출할 수 없다.")
     void notFoundMission() {
-        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Member member = createMember();
         CreateSubmissionRequest request = new CreateSubmissionRequest(-1L, "pr url", "코멘트");
 
         assertThatThrownBy(() -> submissionService.submit(member, request))
                 .isInstanceOf(DevelupException.class);
+    }
+
+    private Mission createMission() {
+        Mission mission = MissionTestData.defaultMission().build();
+
+        return missionRepository.save(mission);
+    }
+
+    private Member createMember() {
+        Member member = MemberTestData.defaultMember().build();
+
+        return memberRepository.save(member);
     }
 
     @Nested

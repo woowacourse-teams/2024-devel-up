@@ -24,9 +24,8 @@ class MissionServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("모든 미션을 조회한다.")
     void getMissions() {
-        MissionTestData.MissionBuilder missionBuilder = MissionTestData.defaultMission();
-        missionRepository.save(missionBuilder.build());
-        missionRepository.save(missionBuilder.build());
+        createMission();
+        createMission();
 
         List<MissionResponse> missions = missionService.getMissions();
 
@@ -36,7 +35,7 @@ class MissionServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("미션 식별자로 미션 단건을 조회한다.")
     void getMissionById() {
-        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Mission mission = createMission();
 
         MissionResponse response = missionService.getMissionById(mission.getId());
 
@@ -48,5 +47,11 @@ class MissionServiceTest extends IntegrationTestSupport {
     void getMissionByUndefinedId() {
         assertThatThrownBy(() -> missionService.getMissionById(-1L))
                 .isInstanceOf(DevelupException.class);
+    }
+
+    private Mission createMission() {
+        Mission mission = MissionTestData.defaultMission().build();
+
+        return missionRepository.save(mission);
     }
 }
