@@ -62,21 +62,7 @@ jobs:
       - name: Get teamMember
         id: teamMember
         run: |
-          echo "ASSIGNEE_SLACK_ID=${{ env[github.event.pull_request.login] }}" >> $GITHUB_ENV
-
-#      - name: Get teamMember List
-#        id: teamMembers
-#        uses: actions/github-script@v6
-#        with:
-#          script: |
-#            const fs = require('fs');
-#            const workers = JSON.parse(fs.readFileSync('.github/workflows/teamMember.json'));
-#            const mention = context.payload.pull_request.assignees.map((user) => {
-#            const login = user.login;
-#            const mappedValue = workers[login];
-#            return mappedValue ? `<@${mappedValue}>` : `No mapping found for ${login}`;
-#            })
-#            return mention.join(', ');
+          echo "SENDER_SLACK_ID=${{ env[github.event.sender.login] }}" >> $GITHUB_ENV
 
       - name: Slack mention
         uses: slackapi/slack-github-action@v1.24.0
@@ -90,7 +76,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "pr 테스트 ${{ needs.BE_CI.result }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: <@${{ env.ASSIGNEE_SLACK_ID }}>"
+                        "text": "pr 테스트 ${{ needs.BE_CI.result }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: <@${{ env.SENDER_SLACK_ID }}>"
                       }
                   }
                 ]
