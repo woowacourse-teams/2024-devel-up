@@ -26,3 +26,11 @@ export interface Mission {
   thumbnail: string;
   url: string;
 }
+
+export interface MissionInProgress {
+  id: number;
+  mission: Mission;
+  myPrLink: string;
+  pairPrLink: string;
+  status: string;
+}
