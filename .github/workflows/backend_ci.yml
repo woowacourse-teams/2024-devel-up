@@ -16,6 +16,7 @@ on:
 
 env:
   lilychoibb: "U07AQJWU8S3"
+  U07AQJWU8S3: "릴리(최윤서)"
 
 jobs:
   BE_CI:
