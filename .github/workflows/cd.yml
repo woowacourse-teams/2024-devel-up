@@ -85,7 +85,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n ✨ PR Merge 완료(Main 브랜치) ✨ \n\t • 🚀 Build Success \n\t •  🟢 Deploy Success \n\t • 🏷️ PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                    "text": "<!channel> \n ✨ PR Merge 완료(Main 브랜치) ✨ \n\t • 🚀 Build Success \n\t • 🟢 Deploy Success \n\t • 🏷️ PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
                   }
                 }
               ]
@@ -137,7 +137,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n ✨PR Merge 완료(Main 브랜치)✨ \n\t • 🚀Build Success \n\t • 🔴Deploy Fail \n - 🏷️PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                    "text": "<!channel> \n ✨PR Merge 완료(Main 브랜치)✨ \n\t • 🚀Build Success \n\t • 🔴Deploy Fail \n\t • 🏷️PR로 이동하기: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
                   }
                 }
               ]
