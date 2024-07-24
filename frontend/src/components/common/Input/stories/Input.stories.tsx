@@ -39,8 +39,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    width: 'Medium',
-    type: 'Default',
+    width: 'medium',
+    type: 'default',
     danger: false,
     dangerMessage: '',
   },
@@ -48,8 +48,8 @@ export const Default: Story = {
 
 export const Small: Story = {
   args: {
-    width: 'Small',
-    type: 'Default',
+    width: 'small',
+    type: 'default',
     danger: false,
     dangerMessage: '',
   },
@@ -57,8 +57,8 @@ export const Small: Story = {
 
 export const Large: Story = {
   args: {
-    width: 'Large',
-    type: 'Default',
+    width: 'large',
+    type: 'default',
     danger: false,
     dangerMessage: '',
   },
@@ -66,8 +66,8 @@ export const Large: Story = {
 
 export const XLarge: Story = {
   args: {
-    width: 'XLarge',
-    type: 'Default',
+    width: 'xlarge',
+    type: 'default',
     danger: false,
     dangerMessage: '',
   },
@@ -75,8 +75,8 @@ export const XLarge: Story = {
 
 export const WithError: Story = {
   args: {
-    width: 'Medium',
-    type: 'Default',
+    width: 'medium',
+    type: 'default',
     danger: true,
     dangerMessage: '에러 메세지입니다.',
   },
