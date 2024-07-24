@@ -2,7 +2,7 @@
 name: BUG
 about: 공습경보
 title: ''
-labels: 버그
+labels: 🐛 버그
 assignees: ''
 
 ---
