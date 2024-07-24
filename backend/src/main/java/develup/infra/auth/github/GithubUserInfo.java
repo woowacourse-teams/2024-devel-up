@@ -1,4 +1,4 @@
-package develup.infra.auth.oauth.github;
+package develup.infra.auth.github;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

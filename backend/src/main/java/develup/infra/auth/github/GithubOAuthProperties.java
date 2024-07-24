@@ -1,4 +1,4 @@
-package develup.infra.auth.oauth.github;
+package develup.infra.auth.github;
 
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;

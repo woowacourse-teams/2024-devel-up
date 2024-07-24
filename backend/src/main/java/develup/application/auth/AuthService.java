@@ -3,7 +3,7 @@ package develup.application.auth;
 import develup.application.member.MemberResponse;
 import develup.application.member.MemberService;
 import develup.domain.member.Provider;
-import develup.infra.auth.oauth.github.GithubOAuthProvider;
+import develup.infra.auth.github.GithubOAuthProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
