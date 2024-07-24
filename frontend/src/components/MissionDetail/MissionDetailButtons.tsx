@@ -1,32 +1,53 @@
-import { Link } from 'react-router-dom';
-import { missionMocks } from '../MissionList/missionMocks';
-import type { Mission } from '../MissionList/missionMocks';
+import { useNavigate } from 'react-router-dom';
 import * as S from './MissionDetail.styled';
+import Button from '../common/Button/Button';
 
 interface MissionDetailButtonsProps {
   id: number;
+  missionUrl: string;
 }
 
-export default function MissionDetailButtons({ id }: MissionDetailButtonsProps) {
-  const url = missionMocks.find((mission: Mission) => mission.id === id)?.url ?? '';
+export default function MissionDetailButtons({ id, missionUrl }: MissionDetailButtonsProps) {
+  const navigate = useNavigate();
+  const handleNavigateToSubmit = () => {
+    navigate(`${id}`);
+  };
+
+  const handleNavigateToMyPr = () => {
+    window.open('', '_blank');
+  };
+
+  const handleNavigateToMission = () => {
+    window.open(missionUrl, '_blank');
+  };
 
   return (
     <S.MissionDetailButtonsContainer>
-      <Link to={url} target="_blank">
-        <S.Button
-          style={{
-            background: 'var(--primary-200)',
-          }}
+      <S.InfoMsgWrapper>
+        <S.InfoIcon />
+        어떻게 참여하나요?
+      </S.InfoMsgWrapper>
+
+      <S.ButtonWrapper>
+        <Button content="제출하기" onHandleClick={handleNavigateToSubmit} />
+        <Button
+          content="내 PR 보러 가기"
+          $bgColor="--grey-200"
+          $hoverColor="--grey-300"
+          $fontColor="--black-color"
+          onHandleClick={handleNavigateToMyPr}
+        />
+        <Button
+          content="미션 코드 보러 가기"
+          $bgColor="--grey-200"
+          $hoverColor="--grey-300"
+          $fontColor="--black-color"
+          type="icon"
+          onHandleClick={handleNavigateToMission}
         >
-          미션 참여하기
-        </S.Button>
-      </Link>
-      <Link to="https://github.com/develup-mission/docs/blob/main/mission-guide.md" target="_blank">
-        <S.Button>미션 제출 방법</S.Button>
-      </Link>
-      <Link to={`/submit/${id}`}>
-        <S.Button>미션 제출하기</S.Button>
-      </Link>
+          <S.GithubIcon />
+        </Button>
+      </S.ButtonWrapper>
     </S.MissionDetailButtonsContainer>
   );
 }

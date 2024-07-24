@@ -1,14 +1,11 @@
-// import { missionMocks } from '../MissionList/missionMocks';
-// import type { Mission } from '../MissionList/missionMocks';
 import * as S from './MissionDetail.styled';
 
 interface MissionDetailContentProps {
-  id: number;
+  descriptionUrl: string;
 }
 
-export default function MissionDetailContent({ id }: MissionDetailContentProps) {
-  // const description = missionMocks.find((mission: Mission) => mission.id === id)?.description; // TODO: 추후 추가할 것 @프룬
-
+export default function MissionDetailContent({ descriptionUrl }: MissionDetailContentProps) {
+  descriptionUrl; // 추후 markdown 구현 @프룬
   return (
     <S.MissionDescription>
       <p>
@@ -69,7 +66,6 @@ export default function MissionDetailContent({ id }: MissionDetailContentProps) 
         <br />
         프로그램을 종료합니다.
       </p>
-      {id}
     </S.MissionDescription>
   );
 }

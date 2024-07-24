@@ -1,19 +1,24 @@
 import * as S from './MissionDetail.styled';
-import { missionMocks } from '../MissionList/missionMocks';
-import type { Mission } from '../MissionList/missionMocks';
 
 interface MissionDetailHeaderProps {
-  id: number;
+  title: string;
+  thumbnail: string;
+  language: string;
 }
 
-export default function MissionDetailHeader({ id }: MissionDetailHeaderProps) {
-  const thumbnailUrl = missionMocks.find((mission: Mission) => mission.id === id)?.thumbnail;
-  const title = missionMocks.find((mission: Mission) => mission.id === id)?.title;
-
+export default function MissionDetailHeader({
+  title,
+  thumbnail,
+  language,
+}: MissionDetailHeaderProps) {
   return (
     <S.MissionDetailHeaderContainer>
-      <S.ThumbnailImg src={thumbnailUrl} alt="미션 썸네일 이미지" />
-      <S.Title>{title}</S.Title>
+      <S.ThumbnailWrapper>
+        <S.ThumbnailImg src={thumbnail} alt="미션 썸네일 이미지" />
+        <S.GradientOverlay />
+        <S.Title>{title}</S.Title>
+        <S.LangBadgeWrapper>{language === 'JAVA' ? <S.JavaIcon /> : null}</S.LangBadgeWrapper>
+      </S.ThumbnailWrapper>
     </S.MissionDetailHeaderContainer>
   );
 }

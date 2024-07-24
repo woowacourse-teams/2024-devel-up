@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import infoIcon from '@/assets/images/InfoIcon.svg';
+import githubLogo from '@/assets/images/githubLogo.svg';
+import javaIcon from '@/assets/images/java.svg';
 
 // MissionDetailHeader
 
@@ -11,52 +14,101 @@ export const MissionDetailHeaderContainer = styled.div`
   position: relative;
 `;
 
+export const ThumbnailWrapper = styled.div`
+  position: relative;
+  height: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+`;
+
 export const ThumbnailImg = styled.img`
-  border: 1px solid var(--grey-200);
+  width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 1rem;
+`;
 
-  background-size: cover;
-  background-position: center;
-
-  display: block;
+export const GradientOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0), var(--black-color));
+  pointer-events: none; // 그라데이션이 클릭 이벤트를 방지하지 않도록 설정
 `;
 
 export const Title = styled.h1`
   position: absolute;
-  left: 2.4rem;
-  bottom: 0;
+  left: 2.1rem;
+  bottom: 2.4rem;
 
-  font-size: 4.8rem;
+  font-size: 2.8rem;
   font-weight: bold;
   color: var(--white-color);
-  background-color: rgba(0, 0, 0, 0.3);
 `;
+
+export const LangBadgeWrapper = styled.div`
+  width: 5rem;
+  height: 5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.4rem;
+  box-sizing: border-box;
+  border-radius: 10rem;
+  overflow: hidden;
+
+  position: absolute;
+  right: 2.1rem;
+  bottom: 2.4rem;
+
+  background-color: var(--white-color);
+`;
+
+export const JavaIcon = styled(javaIcon)``;
 
 // MissionDetailButtons
 
 export const MissionDetailButtonsContainer = styled.div`
   display: flex;
   gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const InfoMsgWrapper = styled.div`
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+
+  color: var(--grey-500);
+  font-size: 1.4rem;
+  font-weight: 500;
+`;
+
+export const InfoIcon = styled(infoIcon)`
+  height: 100%;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 0.8rem;
   justify-content: flex-end;
 `;
 
-export const Button = styled.button`
-  background-color: var(--grey-300);
-  font-size: 1.5rem;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  color: var(--black-color);
+export const GithubIcon = styled(githubLogo)`
+  width: 2.2rem;
+  height: 2.2rem;
 `;
 
 // MissionDetailContent
 
 export const MissionDescription = styled.div`
-  padding: 0 2.4rem;
-  font-size: 1.8rem;
+  width: 100%;
+  padding: 2rem;
 
   background-color: var(--grey-50);
-  border-radius: 1rem;
-  padding: 2rem;
+  border-radius: 0.8rem;
 `;

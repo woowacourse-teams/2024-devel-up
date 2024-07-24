@@ -7,6 +7,10 @@ interface getMissionInProgressResponse {
   data: MissionInProgress;
 }
 
+interface getMissionByIdResponse {
+  data: Mission;
+}
+
 export const getAllMissions = async (): Promise<Mission[]> => {
   try {
     const response = await fetch(`${BASE_URL.dev}${PATH.missionList}`);
@@ -27,22 +31,9 @@ export const getAllMissions = async (): Promise<Mission[]> => {
 };
 
 export const getMissionById = async (id: number): Promise<Mission> => {
-  try {
-    const response = await fetch(`${BASE_URL.dev}${PATH.missionList}/${id}`);
+  const { data } = await develupAPIClient.get<getMissionByIdResponse>(`${PATH.missionList}/${id}`);
 
-    if (!response.ok) {
-      throw new Error('에러가 발생했어요!');
-    }
-
-    const jsonData = await response.json();
-
-    const { data } = jsonData;
-
-    return data;
-  } catch (err) {
-    console.error(err);
-    throw new Error('');
-  }
+  return data;
 };
 
 export const getMissionInProgress = async (): Promise<MissionInProgress> => {
