@@ -1,6 +1,6 @@
 // import { missionMocks } from '../MissionList/missionMocks';
 // import type { Mission } from '../MissionList/missionMocks';
-import * as S from './MissionDetailContent.styled';
+import * as S from './MissionDetail.styled';
 
 interface MissionDetailContentProps {
   id: number;

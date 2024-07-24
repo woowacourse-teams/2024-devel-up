@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom';
 import { missionMocks } from '../MissionList/missionMocks';
 import type { Mission } from '../MissionList/missionMocks';
-import * as S from './MissionDetailButtonGroup.styled';
+import * as S from './MissionDetail.styled';
 
-interface MissionDetailButtonGroupProps {
+interface MissionDetailButtonsProps {
   id: number;
 }
 
-export default function MissionDetailButtonGroup({ id }: MissionDetailButtonGroupProps) {
+export default function MissionDetailButtons({ id }: MissionDetailButtonsProps) {
   const url = missionMocks.find((mission: Mission) => mission.id === id)?.url ?? '';
 
   return (
-    <S.MissionDetailButtonGroupContainer>
+    <S.MissionDetailButtonsContainer>
       <Link to={url} target="_blank">
         <S.Button
           style={{
@@ -27,6 +27,6 @@ export default function MissionDetailButtonGroup({ id }: MissionDetailButtonGrou
       <Link to={`/submit/${id}`}>
         <S.Button>미션 제출하기</S.Button>
       </Link>
-    </S.MissionDetailButtonGroupContainer>
+    </S.MissionDetailButtonsContainer>
   );
 }

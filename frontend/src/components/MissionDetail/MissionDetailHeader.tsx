@@ -1,4 +1,4 @@
-import * as S from './missionDetailHeader.styled';
+import * as S from './MissionDetail.styled';
 import { missionMocks } from '../MissionList/missionMocks';
 import type { Mission } from '../MissionList/missionMocks';
 
