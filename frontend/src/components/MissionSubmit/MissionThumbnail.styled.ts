@@ -1,6 +1,9 @@
 import { styled } from 'styled-components';
 
-export const MissionImageContainer = styled.div``;
+//TODO shadow에 대한 스타일 변수 적용해야합니다. @버건디
+export const MissionImageContainer = styled.div`
+  box-shadow: var(--shadow-20);
+`;
 
 export const MissionImageWrapper = styled.div`
   display: flex;
@@ -24,7 +27,7 @@ export const MissionSummaryWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  background: var(--primary-100);
+  background: var(--grey-50);
   border-radius: 0 0 1rem 1rem;
 `;
 

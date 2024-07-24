@@ -13,6 +13,7 @@ export default function MissionImage({ thumbnail, title, language }: MissionImag
         <S.MissionImg src={thumbnail} alt="미션 이미지" />
         <S.MissionSummaryWrapper>
           <S.MissionSummaryText>{title}</S.MissionSummaryText>
+          {/* TODO language 부분은 뱃지 컴포넌트로 변경해야함 @버건디 */}
           <S.MissionSummaryText>{language}</S.MissionSummaryText>
         </S.MissionSummaryWrapper>
       </S.MissionImageWrapper>

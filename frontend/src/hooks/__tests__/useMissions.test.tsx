@@ -11,11 +11,11 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 describe('useMissions', () => {
-  it('미션 목록을 가져올 수 있다.', async () => {
+  it('전체 미션 목록을 가져올 수 있다.', async () => {
     const { result } = renderHook(() => useMissions(), { wrapper });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
-    expect(result.current.allMissions).toEqual<Mission[]>(missions);
+    expect(result.current.data).toEqual<Mission[]>(missions);
   });
 });
