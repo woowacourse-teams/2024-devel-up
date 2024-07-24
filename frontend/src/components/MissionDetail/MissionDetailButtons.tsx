@@ -14,9 +14,9 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
     navigate(`${ROUTES.submit}/${id}`);
   };
 
-  const handleNavigateToMyPr = () => {
-    window.open('', '_blank'); // 추후 구현 예정입니다 @프룬
-  };
+  // const handleNavigateToMyPr = () => {
+  //   window.open('', '_blank'); // 추후 구현 예정입니다 @프룬
+  // };
 
   const handleNavigateToMission = () => {
     window.open(missionUrl, '_blank');
@@ -35,13 +35,13 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
 
       <S.ButtonWrapper>
         <Button content="제출하기" onHandleClick={handleNavigateToSubmit} />
-        <Button
+        {/* <Button
           content="내 PR 보러 가기"
           $bgColor="--grey-200"
           $hoverColor="--grey-300"
           $fontColor="--black-color"
           onHandleClick={handleNavigateToMyPr}
-        />
+        /> */}
         <Button
           content="미션 코드 보러 가기"
           $bgColor="--grey-200"
