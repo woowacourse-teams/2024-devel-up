@@ -2,7 +2,7 @@
 name: FEATURE
 about: 신규 기능 구현 이슈를 발행합니다.
 title: ''
-labels: 기능
+labels: ⚒️ 기능
 assignees: ''
 
 ---

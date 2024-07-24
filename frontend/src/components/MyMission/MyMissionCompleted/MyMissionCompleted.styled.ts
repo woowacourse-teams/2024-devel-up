@@ -42,11 +42,6 @@ export const MissionCardContentWrapper = styled.div`
   padding: 0.8rem 1.7rem;
 `;
 
-export const Title = styled.h2`
-  font-size: 3.2rem;
-  font-weight: bold;
-`;
-
 export const MissionLanguageBox = styled.div`
   background-color: var(--primary-300);
   position: absolute;
@@ -70,6 +65,11 @@ export const ThumbnailImg = styled.img`
 
   object-fit: cover;
   border-radius: 0.8rem 0.8rem 0 0;
+`;
+
+export const CompletedTitle = styled.h2`
+  font-size: 2.6rem;
+  font-weight: bold;
 `;
 
 export const MissionTitle = styled.h3`

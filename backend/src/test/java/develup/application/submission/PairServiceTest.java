@@ -4,25 +4,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
-import develup.domain.member.Provider;
-import develup.domain.mission.Language;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.domain.submission.Pair;
 import develup.domain.submission.PairRepository;
 import develup.domain.submission.Submission;
 import develup.domain.submission.SubmissionRepository;
+import develup.support.IntegrationTestSupport;
+import develup.support.data.MemberTestData;
+import develup.support.data.MissionTestData;
+import develup.support.data.SubmissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 
-@SpringBootTest
-@Sql(value = {"classpath:clean_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class PairServiceTest {
+class PairServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private PairService pairService;
@@ -99,7 +98,7 @@ class PairServiceTest {
         pairService.match(mySubmission);
 
         assertThatThrownBy(() -> pairService.match(mySubmission))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(DevelupException.class)
                 .hasMessage("이미 매칭된 제출입니다.");
     }
 
@@ -110,7 +109,7 @@ class PairServiceTest {
         Submission mySubmission = createSubmission(mission, createMember());
 
         assertThatThrownBy(() -> pairService.match(mySubmission))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(DevelupException.class)
                 .hasMessage("매칭할 제출이 존재하지 않습니다.");
     }
 
@@ -123,55 +122,40 @@ class PairServiceTest {
         Submission mySubmission = createSubmission(mission, sameMember);
 
         assertThatThrownBy(() -> pairService.match(mySubmission))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(DevelupException.class)
                 .hasMessage("매칭할 제출이 존재하지 않습니다.");
     }
 
     @Test
     @DisplayName("존재하지 않는 제출은 매칭될 수 없다.")
     void notfoundSubmission() {
-        Mission mission = createMission();
-        Member member = createMember();
-        Submission submission = new Submission(
-                -1L,
-                "sample",
-                "comment",
-                member,
-                mission
-        );
+        Submission submission = SubmissionTestData.defaultSubmission()
+                .withId(-1L)
+                .build();
 
         assertThatThrownBy(() -> pairService.match(submission))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("아직 제출되지 않아 매칭이 불가능합니다.");
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("존재하지 않는 제출입니다.");
     }
 
     private Mission createMission() {
-        Mission mission = new Mission(
-                "sample",
-                Language.JAVA,
-                "description",
-                "thumbnail",
-                "url"
-        );
-        missionRepository.save(mission);
+        Mission mission = MissionTestData.defaultMission().build();
 
-        return mission;
-    }
-
-    private Submission createSubmission(Mission mission, Member member) {
-        Submission submission = new Submission(
-                "sample",
-                "comment",
-                member,
-                mission
-        );
-
-        return submissionRepository.save(submission);
+        return missionRepository.save(mission);
     }
 
     private Member createMember() {
-        Member member = new Member("email", Provider.GITHUB, 1234L, "name", "image");
+        Member member = MemberTestData.defaultMember().build();
 
         return memberRepository.save(member);
+    }
+
+    private Submission createSubmission(Mission mission, Member member) {
+        Submission submission = SubmissionTestData.defaultSubmission()
+                .withMission(mission)
+                .withMember(member)
+                .build();
+
+        return submissionRepository.save(submission);
     }
 }

@@ -1,6 +1,8 @@
 package develup.application.submission;
 
 import java.util.List;
+import develup.api.exception.DevelupException;
+import develup.api.exception.ExceptionType;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
@@ -34,7 +36,7 @@ public class SubmissionService {
 
     public SubmissionResponse submit(Member member, CreateSubmissionRequest request) {
         Mission mission = missionRepository.findById(request.missionId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 미션입니다."));
+                .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
         Submission newSubmission = submissionRepository.save(request.toSubmission(member, mission));
         tryMatch(newSubmission);
 
