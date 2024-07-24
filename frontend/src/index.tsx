@@ -35,7 +35,7 @@ const routes = [
     ),
   },
   {
-    path: ROUTES.submit,
+    path: `${ROUTES.submit}/:id`,
     element: (
       <App>
         <Suspense fallback={<div>로딩중입니다!</div>}>
@@ -45,10 +45,12 @@ const routes = [
     ),
   },
   {
-    path: ROUTES.missionDetail,
+    path: `${ROUTES.missionDetail}/:id`,
     element: (
       <App>
-        <MissionDetailPage />
+        <Suspense fallback={<div>로딩중입니다!</div>}>
+          <MissionDetailPage />
+        </Suspense>
       </App>
     ),
   },
