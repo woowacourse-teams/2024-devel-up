@@ -1,0 +1,10 @@
+//TODO 쿼리키 팩토리(https://tanstack.com/query/v4/docs/framework/react/community/lukemorales-query-key-factory)
+// 와 이런 저런 블로그글 을 참조해서 만들어보았습니다.
+// 지금 현재 고민 되는 부분은 폴더 구조입니다. 이 구조가 맞는 구조인지 확신이 안서네요 🥲
+// 블로그 글 링크(https://yogjin.tistory.com/121)
+// @버건디
+
+export const missionKeys = {
+  all: ['missions'],
+  detail: (id: number) => [...missionKeys.all, id],
+} as const;
