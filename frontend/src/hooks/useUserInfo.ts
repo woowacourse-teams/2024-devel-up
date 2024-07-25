@@ -1,21 +1,33 @@
-import { useQuery } from '@tanstack/react-query';
-import { getUserInfo } from '@/apis/authAPI';
-import type { UserInfo } from '@/types';
+import { useEffect, useState } from 'react';
 
-const useUserInfo = () => {
-  //TODO 아직 토큰 로직에 관한 부분이 미정이라서
-  // 일단 목 토큰을 내부에 만들어놓습니다. @버건디
+const useUserInfo = (onUnauthenticated: () => void) => {
+  const [userInfo, setUserInfo] = useState(null);
 
-  const MOCK_ACCESS_TOKEN = 'abcd';
+  // TODO(@라이언): 토큰 가져오는 로직 추가
+  const token = '';
 
-  //TODO useQuery와 useSuspenseQuery 선택중에 일단 useQuery로 구현합니다.
-  // 추후에 논의해야합니다 @버건디
-  const { data, isLoading, isError } = useQuery<UserInfo>({
-    queryKey: [MOCK_ACCESS_TOKEN],
-    queryFn: () => getUserInfo(MOCK_ACCESS_TOKEN),
-  });
+  // TODO(@라이언): cookie 지우는 로직 추가
+  const removeCookie = () => {};
 
-  return { userInfo: data, isLoading, isError };
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (!token) {
+        setUserInfo(null);
+      }
+
+      try {
+        const data = await getUserInfo();
+        setUserInfo(data);
+      } catch {
+        removeCookie();
+        onUnauthenticated();
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
+  return { userInfo };
 };
 
 export default useUserInfo;
