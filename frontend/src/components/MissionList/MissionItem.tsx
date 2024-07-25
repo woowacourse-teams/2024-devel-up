@@ -1,8 +1,8 @@
 import * as S from './MissionList.styled';
 import { Link } from 'react-router-dom';
 import type { Mission } from '@/types';
-import Card from '../common/Card';
-import Badge from '../common/Badge';
+import Card from '@/components/common/Card';
+import Badge from '@/components/common/Badge';
 
 interface MissionItemProps {
   mission: Mission;
