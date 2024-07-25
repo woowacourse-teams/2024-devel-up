@@ -25,10 +25,14 @@ export const TextArea = styled.textarea<TextAreaProps>`
   outline: none;
   font-weight: bold;
   padding: 1.5rem;
-  min-height: 15rem;
+  min-height: 15rem;ㅁ
   border-radius: 0.8rem;
   border: 1px solid transparent;
   border-bottom: 0.15rem solid transparent;
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+  }
+
   ${(props) =>
     props.$danger
       ? css`

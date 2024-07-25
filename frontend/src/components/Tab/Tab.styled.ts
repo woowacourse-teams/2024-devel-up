@@ -1,7 +1,7 @@
 import { keyframes, styled } from 'styled-components';
 
 export const TabPageContainer = styled.div`
-  width: 70rem;
+  width: 100rem;
   height: 100%;
   margin: 0 auto;
   padding-top: 3rem;
@@ -23,18 +23,19 @@ const fadeIn = keyframes`
 
 export const CurrentContentContainer = styled.div`
   word-break: break-all;
-  margin-top: 2rem;
   animation: ${fadeIn} 0.3s ease-out;
+  background: var(--grey-50);
+  font-size: 2rem;
 `;
 
 export const TabContainer = styled.div<{ $isSelected: boolean }>`
-  padding: 10px 20px;
+  padding: 1rem 2rem;
   cursor: pointer;
-  background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-700)' : 'var(--grey-700)')};
+  background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-200)' : 'var(--grey-50)')};
   font-size: 1.5rem;
-  color: white;
-  border-radius: 1rem 1rem 0 0;
-  margin: 0 5px;
+  color: var(--black-color);
+  border-radius: 3rem 3rem 0 0;
+  flex: 1;
   transition:
     background 0.3s,
     box-shadow 0.3s;
@@ -47,7 +48,7 @@ export const TabContainer = styled.div<{ $isSelected: boolean }>`
   `}
 
   &:hover {
-    background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-500)' : 'var(--grey-500)')};
+    background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-300)' : 'var(--grey-100)')};
   }
 
   @keyframes tabSelected {

@@ -18,4 +18,8 @@ export const Input = styled.input`
   border-radius: 0.5rem;
   background: var(--grey-100);
   padding: 1rem;
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
 `;
