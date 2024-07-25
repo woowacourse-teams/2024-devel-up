@@ -2,13 +2,13 @@ package develup.api;
 
 import java.net.URI;
 import java.util.List;
+import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
+import develup.application.auth.Accessor;
 import develup.application.submission.CreateSubmissionRequest;
 import develup.application.submission.MyMissionResponse;
 import develup.application.submission.SubmissionResponse;
 import develup.application.submission.SubmissionService;
-import develup.domain.member.Member;
-import develup.domain.member.Provider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,25 +25,23 @@ class SubmissionApi {
     }
 
     @GetMapping("/submissions")
-    public ResponseEntity<ApiResponse<List<MyMissionResponse>>> getMyMissions() {
-        Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
-
-        return ResponseEntity.ok(new ApiResponse<>(submissionService.getMyMissions(member)));
+    public ResponseEntity<ApiResponse<List<MyMissionResponse>>> getMyMissions(@Auth Accessor accessor) {
+        return ResponseEntity.ok(new ApiResponse<>(submissionService.getMyMissions(accessor.id())));
     }
 
     @PostMapping("/submissions")
-    public ResponseEntity<ApiResponse<SubmissionResponse>> postSubmission(@RequestBody CreateSubmissionRequest request) {
-        Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
-        SubmissionResponse response = submissionService.submit(member, request);
+    public ResponseEntity<ApiResponse<SubmissionResponse>> postSubmission(
+            @Auth Accessor accessor,
+            @RequestBody CreateSubmissionRequest request
+    ) {
+        SubmissionResponse response = submissionService.submit(accessor.id(), request);
 
         return ResponseEntity.created(URI.create("/submissions/" + response.id()))
                 .body(new ApiResponse<>(response));
     }
 
     @GetMapping("/submissions/now")
-    public ResponseEntity<ApiResponse<MyMissionResponse>> getMyMission() {
-        Member member = new Member(1L, "email", Provider.GITHUB, 1234L, "name", "image");
-
-        return ResponseEntity.ok(new ApiResponse<>(submissionService.getMyMission(member)));
+    public ResponseEntity<ApiResponse<MyMissionResponse>> getMyMission(@Auth Accessor accessor) {
+        return ResponseEntity.ok(new ApiResponse<>(submissionService.getMyMission(accessor.id())));
     }
 }
