@@ -1,12 +1,8 @@
-package develup.domain.pair;
+package develup.domain.submission;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import develup.domain.submission.MyMission;
-import develup.domain.submission.PairRepository;
-import develup.domain.submission.Submission;
-import develup.domain.submission.SubmissionRepository;
 import develup.support.IntegrationTestSupport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

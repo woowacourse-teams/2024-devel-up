@@ -1,15 +1,12 @@
-package develup.domain.pair;
+package develup.domain.submission;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.stream.Stream;
 import develup.api.exception.DevelupException;
-import develup.domain.submission.Pair;
-import develup.domain.submission.PairStatus;
-import develup.domain.submission.Submission;
 import develup.support.data.PairTestData;
 import develup.support.data.SubmissionTestData;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +17,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PairTest {
 
     public static Stream<Arguments> reviewCompleteFailWhenAlreadyReviewParameter() {
-        return Stream.of(Arguments.of(PairStatus.WAITING, PairStatus.ALL_FINISHED, PairStatus.MY_REVIEW_COMPLETE));
+        return Stream.of(Arguments.of(PairStatus.WAITING, PairStatus.ALL_FINISHED, PairStatus.MY_REVIEW_COMPLETED));
     }
 
     @Test
@@ -62,8 +59,8 @@ class PairTest {
 
         pair.reviewComplete(other);
         Assertions.assertAll(
-                () -> assertThat(pair.getStatus()).isEqualTo(PairStatus.MY_REVIEW_COMPLETE),
-                () -> assertThat(other.getStatus()).isEqualTo(PairStatus.PARTNER_REVIEW_COMPLETE)
+                () -> assertThat(pair.getStatus()).isEqualTo(PairStatus.MY_REVIEW_COMPLETED),
+                () -> assertThat(other.getStatus()).isEqualTo(PairStatus.PARTNER_REVIEW_COMPLETED)
         );
     }
 
@@ -71,7 +68,7 @@ class PairTest {
     @DisplayName("상대 리뷰 완료 상태에서 리뷰 완료를 한 경우 확인.")
     void reviewCompleteSuccessWhenPartnerReviewComplete() {
         Pair pair = PairTestData.defaultPair()
-                .withStatus(PairStatus.PARTNER_REVIEW_COMPLETE)
+                .withStatus(PairStatus.PARTNER_REVIEW_COMPLETED)
                 .build();
 
         Pair other = PairTestData.otherPair(pair)
