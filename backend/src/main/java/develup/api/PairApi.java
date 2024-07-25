@@ -1,6 +1,8 @@
 package develup.api;
 
+import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
+import develup.application.auth.Accessor;
 import develup.application.submission.MyMissionResponse;
 import develup.application.submission.PairService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +24,10 @@ public class PairApi {
 
     @PostMapping("/pair-review/{submissionId}")
     @Operation(summary = "코드 리뷰 완료 API", description = "코드 리뷰를 완료한 뒤 변경된 페어 매칭 정보를 반환한다.")
-    public ResponseEntity<ApiResponse<MyMissionResponse>> review(@PathVariable Long submissionId) {
-        return ResponseEntity.ok(new ApiResponse<>(pairService.reviewComplete(submissionId)));
+    public ResponseEntity<ApiResponse<MyMissionResponse>> completeReview(
+            @Auth Accessor accessor,
+            @PathVariable Long submissionId
+    ) {
+        return ResponseEntity.ok(new ApiResponse<>(pairService.completeReview(accessor.id(), submissionId)));
     }
 }
