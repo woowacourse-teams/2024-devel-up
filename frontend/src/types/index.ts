@@ -34,3 +34,18 @@ export interface MissionInProgress {
   pairPrLink: string;
   status: string;
 }
+
+// postSubmission에 관련된 타입 선언
+export interface SubmissionPayload {
+  missionId: number;
+  url: string;
+  comment: string | null;
+}
+
+export interface Submission {
+  id: number;
+  memberId: number;
+  missionId: number;
+  url: string;
+  comment: string;
+}
