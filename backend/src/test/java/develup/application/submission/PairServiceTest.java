@@ -158,4 +158,12 @@ class PairServiceTest extends IntegrationTestSupport {
 
         return submissionRepository.save(submission);
     }
+
+    @Test
+    @DisplayName("존재하지 않는 제출은 리뷰를 완료할 수 없다.")
+    void reviewComplete() {
+        assertThatThrownBy(() -> pairService.reviewComplete(-1L))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("존재하지 않는 제출입니다.");
+    }
 }

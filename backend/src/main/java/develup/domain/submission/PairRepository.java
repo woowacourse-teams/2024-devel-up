@@ -19,4 +19,6 @@ public interface PairRepository extends JpaRepository<Pair, Long> {
                 p.main = :submission
             """)
     Optional<MyMission> findMyMissionBySubmission(Submission submission);
+
+    Optional<Pair> findByMain_Id(Long mainId);
 }
