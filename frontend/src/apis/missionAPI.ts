@@ -55,12 +55,8 @@ export interface PostSubmissionResponse {
   data: Submission;
 }
 
-export const postSubmission = async ({ missionId, url, comment }: SubmissionPayload) => {
-  const data = await develupAPIClient.post<PostSubmissionResponse>(PATH.submissions, {
-    missionId,
-    url,
-    comment,
-  });
+export const postSubmission = async (payload: SubmissionPayload) => {
+  const data = await develupAPIClient.post<PostSubmissionResponse>(PATH.submissions, payload);
 
   return data;
 };

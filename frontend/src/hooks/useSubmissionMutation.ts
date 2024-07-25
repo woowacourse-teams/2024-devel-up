@@ -13,10 +13,8 @@ const useSubmissionMutation = ({ onSuccessCallback }: UseSubmissionMutationParam
     Error,
     SubmissionPayload
   >({
-    mutationFn: ({ missionId, url, comment }) => postSubmission({ missionId, url, comment }),
-    onSuccess: () => {
-      onSuccessCallback();
-    },
+    mutationFn: postSubmission,
+    onSuccess: onSuccessCallback,
     onError: (error: Error) => {
       console.error(error.message);
     },
