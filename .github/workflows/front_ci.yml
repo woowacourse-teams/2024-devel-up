@@ -1,10 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
-
 name: FRONT_CI
 
 on:
@@ -13,6 +6,16 @@ on:
     branches: [ 'main' ]
     paths:
       - frontend/**
+
+env:
+  lilychoibb: "U07AQJWU8S3"
+  robinjoon: "U07BU02FQFJ"
+  brgndyy: "U07B53DM02W"
+  chosim-dvlpr: "U07BHP5UTLH"
+  Minjoo522: "U07B4V80WLT"
+  alstn113: "U07AQK2KBLP"
+  le2sky: "U07B26581CM"
+  Parkhanyoung: "U07BTSGKCC8"
 
 jobs:
   FE_CI:
@@ -93,19 +96,10 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Get teamMember List
-        id: teamMembers
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const fs = require('fs');
-            const workers = JSON.parse(fs.readFileSync('.github/workflows/teamMember.json'));
-            const mention = context.payload.pull_request.assignees.map((user) => {
-            const login = user.login;
-            const mappedValue = workers[login];
-            return mappedValue ? `<@${mappedValue}>` : `No mapping found for ${login}`;
-            })
-            return mention.join(', ');
+      - name: Get teamMember
+        id: teamMember
+        run: |
+          echo "SENDER_SLACK_ID=${{ env[github.event.sender.login] }}" >> $GITHUB_ENV
 
       - name: Slack mention
         uses: slackapi/slack-github-action@v1.24.0
@@ -119,7 +113,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "pr 테스트 결과\n lint : ${{ needs.FE_CI.outputs.lint }} \n build : ${{ needs.FE_CI.outputs.build }} \n test : ${{ needs.FE_CI.outputs.test }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: \${{ steps.teamMembers.outputs.result }}
+                        "text": "pr 테스트 결과\n lint : ${{ needs.FE_CI.outputs.lint }} \n build : ${{ needs.FE_CI.outputs.build }} \n test : ${{ needs.FE_CI.outputs.test }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: <@${{ env.SENDER_SLACK_ID }}>"
                       }
                   }
                 ]
