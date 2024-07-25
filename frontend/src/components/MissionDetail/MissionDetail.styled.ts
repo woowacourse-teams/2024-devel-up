@@ -29,10 +29,7 @@ export const ThumbnailImg = styled.img`
 
 export const GradientOverlay = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(rgba(0, 0, 0, 0), var(--black-color));
   pointer-events: none; // 그라데이션이 클릭 이벤트를 방지하지 않도록 설정
 `;
