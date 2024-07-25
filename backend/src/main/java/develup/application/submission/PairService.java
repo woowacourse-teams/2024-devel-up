@@ -30,7 +30,7 @@ public class PairService {
     public MyMissionResponse reviewComplete(Long submissionId) {
         Pair main = pairRepository.findByMain_Id(submissionId)
                 .orElseThrow(() -> new DevelupException(SUBMISSION_NOT_FOUND));
-        Pair other = pairRepository.findByMain_Id(main.getOther().getId())
+        Pair other = pairRepository.findByMain_Id(main.getOtherId())
                 .orElseThrow(() -> new DevelupException(SUBMISSION_NOT_FOUND));
 
         main.reviewComplete(other);
