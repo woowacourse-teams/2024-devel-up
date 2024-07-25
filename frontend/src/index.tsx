@@ -39,7 +39,9 @@ const routes = [
     path: ROUTES.submit,
     element: (
       <App>
-        <MissionSubmitPage />
+        <Suspense fallback={<LoadingSpinner />}>
+          <MissionSubmitPage />
+        </Suspense>
       </App>
     ),
   },
