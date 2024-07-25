@@ -10,7 +10,7 @@ export default function MissionListPage() {
 
   return (
     <S.MissionListContainer>
-      <Carousel>
+      <Carousel autoPlay={true} autoSpeed={5000}>
         <img src={getPlaceholderImg(1000, 425, 'devel-up banner 1')} />
         <img src={getPlaceholderImg(1000, 425, 'devel-up banner 2')} />
         <img src={getPlaceholderImg(1000, 425, 'devel-up banner 3')} />
