@@ -7,4 +7,6 @@
 export const missionKeys = {
   all: ['missions'],
   detail: (id: number) => [...missionKeys.all, id],
+  inProgress: ['inProgress'],
+  
 } as const;
