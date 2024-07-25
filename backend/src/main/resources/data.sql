@@ -19,6 +19,9 @@ VALUES ('test1@gmail.com', 'GITHUB', '1234', '구름', 'www.naver.com');
 INSERT INTO member (email, provider, social_id, name, image_url)
 VALUES ('test1@gmail.com', 'GITHUB', '1234', '리브', 'www.naver.com');
 
+INSERT INTO member (id, email, provider, social_id, name, image_url)
+VALUES (3, 'test1@gmail.com', 'GITHUB', '1234', '아톰', 'www.naver.com');
+
 INSERT INTO submission (member_id, mission_id, url, comment)
 VALUES (1, 1, 'https://github.com/develup-mission/java-smoking/pull/1', '코멘트 1');
 
@@ -41,7 +44,7 @@ INSERT INTO pair (main_submission, pair_submission, status)
 VALUES (2, 1, 'ALL_FINISHED');
 
 INSERT INTO pair (main_submission, pair_submission, status)
-VALUES (3, 4, 'REVIEW_FINISHED');
+VALUES (3, 4, 'MY_REVIEW_COMPLETED');
 
 INSERT INTO pair (main_submission, pair_submission, status)
-VALUES (4, 3, 'IN_PROGRESS');
+VALUES (4, 3, 'PARTNER_REVIEW_COMPLETED');
