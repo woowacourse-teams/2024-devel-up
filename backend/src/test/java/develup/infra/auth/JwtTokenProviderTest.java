@@ -61,6 +61,6 @@ class JwtTokenProviderTest {
 
         assertThatThrownBy(() -> jwtTokenProvider.getMemberId(invalidToken))
                 .isInstanceOf(DevelupException.class)
-                .hasMessage("유효하지 않은 토큰입니다.");
+                .hasMessage("유효하지 않는 토큰입니다.");
     }
 }

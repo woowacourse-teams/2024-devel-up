@@ -1,7 +1,7 @@
 import { BASE_URL } from './baseUrl';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
-import type { Mission, MissionSubmission } from '@/types';
+import type { Mission, MissionInProgress, SubmissionPayload, Submission } from '@/types';
 
 interface getMissionInProgressResponse {
   data: MissionSubmission;
@@ -61,6 +61,16 @@ export const postCompleteReview = async (submissionId: number): Promise<MissionS
     `${PATH.pairReview}/${submissionId}`,
   );
   console.log(data);
+
+  return data;
+};
+
+export interface PostSubmissionResponse {
+  data: Submission;
+}
+
+export const postSubmission = async (payload: SubmissionPayload) => {
+  const data = await develupAPIClient.post<PostSubmissionResponse>(PATH.submissions, payload);
 
   return data;
 };

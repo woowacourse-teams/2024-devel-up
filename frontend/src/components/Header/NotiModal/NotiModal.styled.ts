@@ -5,28 +5,31 @@ export const NotiModalContainer = styled.div`
   position: fixed;
   top: 5.5rem;
   right: 17rem;
-  width: 30rem;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 0.6rem 0.9rem rgba(0, 0, 0, 0.12),
+    0 1.2rem 1.8rem rgba(0, 0, 0, 0.08);
 
   border-radius: 1rem;
-  padding: 2rem;
-  background-color: var(--grey-100);
+  padding: 2.5rem 3.4rem;
+  background-color: white;
 `;
 
 export const NotiItem = styled.div`
+  width: 28rem;
   position: relative;
   font-size: 1.1rem;
   margin-bottom: 1rem;
-  padding: 1rem;
-  border-radius: 1rem;
+  padding: 2.3rem 0;
+  border-bottom: 0.1rem solid var(--grey-100);
   background-color: white;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 `;
 
-export const NotiTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
+export const NotiModalTitle = styled.h2`
+  color: var(--grey-600);
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+  font-weight: 500;
 `;
 
 export const NotiReadBtn = styled.button`
@@ -36,4 +39,22 @@ export const NotiReadBtn = styled.button`
   position: absolute;
   right: 0;
   bottom: 0;
+`;
+
+export const NotiTitle = styled.div`
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 0.6rem;
+`;
+
+export const NotiMessage = styled.div`
+  color: var(--grey-500);
+  font-size: 1.4rem;
+  font-weight: 500;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 `;

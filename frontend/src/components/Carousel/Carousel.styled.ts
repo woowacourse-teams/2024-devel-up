@@ -8,6 +8,7 @@ export const Container = styled.div`
   position: relative;
   width: 100rem;
   margin: 0 auto;
+  height: 42.5rem;
 `;
 
 export const SlideWrapper = styled.div`
@@ -17,8 +18,8 @@ export const SlideWrapper = styled.div`
 `;
 
 interface SlideTrackProps {
-  currentIndex: number;
-  isSliding: boolean;
+  $currentIndex: number;
+  $isSliding: boolean;
 }
 
 export const SlideTrack = styled.ul<SlideTrackProps>`
@@ -26,11 +27,12 @@ export const SlideTrack = styled.ul<SlideTrackProps>`
   flex-direction: row;
   position: relative;
   transform-style: preserve-3d;
-  transition: ${({ isSliding }) => (isSliding ? 'transform 400ms ease-in-out' : 'none')};
-  transform: ${({ currentIndex }) => `translateX(-${currentIndex * 100}%)`};
+  transition: ${({ $isSliding }) => ($isSliding ? 'transform 400ms ease-in-out' : 'none')};
+  transform: ${({ $currentIndex }) => `translateX(-${$currentIndex * 100}%)`};
   padding: 0;
   margin: 0;
   list-style: none;
+  height: 100%;
 `;
 
 export const Slide = styled.li`
@@ -44,14 +46,16 @@ export const Button = styled.button`
   margin: 5px;
   padding: 10px;
   border: none;
-  background-color: var(--primary-400);
+  width: 4.7rem;
+  height: 10rem;
+  background: rgba(0, 0, 0, 0.1);
   color: white;
   cursor: pointer;
   position: absolute;
-  border-radius: 0.5rem;
-  bottom: 50%;
+  border-radius: 0.8rem;
+  bottom: 43%;
   &:hover {
-    background-color: var(--primary-300);
+    background: rgba(0, 0, 0, 0.2);
   }
 `;
 
