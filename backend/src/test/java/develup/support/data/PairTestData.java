@@ -5,6 +5,7 @@ import develup.domain.submission.PairStatus;
 import develup.domain.submission.Submission;
 
 public class PairTestData {
+
     public static PairBuilder defaultPair() {
         return new PairBuilder()
                 .withMain(SubmissionTestData.defaultSubmission().withId(Long.MAX_VALUE - 1).build())
@@ -20,6 +21,7 @@ public class PairTestData {
     }
 
     public static final class PairBuilder {
+
         private Long id;
         private Submission main;
         private Submission other;

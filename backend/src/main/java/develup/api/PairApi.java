@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PairApi {
+
     private final PairService pairService;
 
     public PairApi(PairService pairService) {
