@@ -9,7 +9,7 @@ export default function MissionListPage() {
   return (
     <S.MissionListContainer>
       <S.MissionListTitle>미션 풀고 리뷰 받고, Devel Up!</S.MissionListTitle>
-      <Carousel>
+      <Carousel autoPlay={true} autoSpeed={5000}>
         {/**
          * 캐러셀 테스트 용으로 만들어본 이미지들입니다. 추후 수정 예정
          */}

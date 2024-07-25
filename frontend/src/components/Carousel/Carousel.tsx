@@ -1,15 +1,22 @@
 import type { PropsWithChildren } from 'react';
 import * as S from './Carousel.styled';
 import useCarousel from '@/hooks/useCarousel';
+import LeftArrow from '@/assets/images/leftArrow.svg';
+import RightArrow from '@/assets/images/rightArrow.svg';
 
-export default function Carousel({ children }: PropsWithChildren) {
+interface CarouselProps extends PropsWithChildren {
+  autoPlay?: boolean;
+  autoSpeed?: number;
+}
+
+export default function Carousel({ autoPlay = false, autoSpeed = 3000, children }: CarouselProps) {
   const { carouselItems, trackRef, currentIndex, isSliding, handleNextSlide, handlePreviousSlide } =
-    useCarousel({ children });
+    useCarousel({ autoPlay, autoSpeed, children });
 
   return (
     <S.Container>
       <S.SlideWrapper>
-        <S.SlideTrack ref={trackRef} currentIndex={currentIndex} isSliding={isSliding}>
+        <S.SlideTrack ref={trackRef} $currentIndex={currentIndex} $isSliding={isSliding}>
           {carouselItems.map((item, index) => (
             <S.Slide key={`original-${index}`}>{item}</S.Slide>
           ))}
@@ -18,8 +25,12 @@ export default function Carousel({ children }: PropsWithChildren) {
           ))}
         </S.SlideTrack>
       </S.SlideWrapper>
-      <S.PreviousButton onClick={handlePreviousSlide}>이전</S.PreviousButton>
-      <S.NextButton onClick={handleNextSlide}>다음</S.NextButton>
+      <S.PreviousButton onClick={handlePreviousSlide}>
+        <LeftArrow width={30} height={30} />
+      </S.PreviousButton>
+      <S.NextButton onClick={handleNextSlide}>
+        <RightArrow width={30} height={30} />
+      </S.NextButton>
     </S.Container>
   );
 }
