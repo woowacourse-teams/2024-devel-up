@@ -57,31 +57,33 @@ public class Pair {
     }
 
     private void validatePairStatus() {
-        if (status != PairStatus.MATCHED && status != PairStatus.PARTNER_REVIEW_COMPLETE) {
-            throw new DevelupException(ExceptionType.ALREADY_REVIEW);
+        if (status != PairStatus.MATCHED && status != PairStatus.PARTNER_REVIEW_COMPLETED) {
+            throw new DevelupException(ExceptionType.ALREADY_REVIEWED);
         }
     }
 
     private void validateOtherPairStatus(Pair other) {
-        if (other.status != PairStatus.MATCHED && other.status != PairStatus.MY_REVIEW_COMPLETE) {
-            throw new DevelupException(ExceptionType.ALREADY_REVIEW);
+        if (other.status != PairStatus.MATCHED && other.status != PairStatus.MY_REVIEW_COMPLETED) {
+            throw new DevelupException(ExceptionType.ALREADY_REVIEWED);
         }
     }
 
     private void changePairStatus() {
         if (status == PairStatus.MATCHED) {
-            status = PairStatus.MY_REVIEW_COMPLETE;
+            status = PairStatus.MY_REVIEW_COMPLETED;
+            return;
         }
-        if (status == PairStatus.PARTNER_REVIEW_COMPLETE) {
+        if (status == PairStatus.PARTNER_REVIEW_COMPLETED) {
             status = PairStatus.ALL_FINISHED;
         }
     }
 
     private void changeOtherPairStatus(Pair other) {
         if (other.status == PairStatus.MATCHED) {
-            other.status = PairStatus.PARTNER_REVIEW_COMPLETE;
+            other.status = PairStatus.PARTNER_REVIEW_COMPLETED;
+            return;
         }
-        if (other.status == PairStatus.MY_REVIEW_COMPLETE) {
+        if (other.status == PairStatus.MY_REVIEW_COMPLETED) {
             other.status = PairStatus.ALL_FINISHED;
         }
     }
@@ -96,6 +98,10 @@ public class Pair {
 
     public Submission getOther() {
         return other;
+    }
+
+    public Long getOtherId() {
+        return other.getId();
     }
 
     public PairStatus getStatus() {
