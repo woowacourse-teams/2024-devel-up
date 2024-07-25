@@ -34,7 +34,7 @@ export const MissionContentWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const MissionButtonWrapper = styled.div`
+export const BannerRightWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -83,6 +83,50 @@ export const SubmissionTitle = styled.h3`
 export const GithubIcons = styled(GithubLogo)`
   width: 2.2rem;
   height: 2.2rem;
+`;
+
+export const BannerReviewStatusWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ToolTipWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  position: relative;
+  padding-bottom: 1.2rem;
+  filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.12));
+`;
+
+export const ToolTipRectangle = styled.div`
+  width: fit-content;
+  padding: 1.4rem 1.6rem;
+  box-sizing: border-box;
+  border-radius: 1.2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  background-color: var(--white-color);
+`;
+
+export const ToolTipTail = styled.div`
+  display: inline-block;
+  margin-right: 0.9rem;
+  border-bottom: 0.6rem solid transparent;
+  border-top: 0.6rem solid var(--white-color);
+  border-left: 1.2rem solid transparent;
+  border-right: 1.2rem solid var(--white-color);
+  border-radius: 0.3rem;
+
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.3rem;
 `;
 
 // Loader
