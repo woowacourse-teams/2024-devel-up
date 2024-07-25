@@ -18,7 +18,7 @@ export default function SubmissionInProgressBanner() {
         <S.InProgressThumbnailImg src={missionInProgress.mission.thumbnail} />
 
         <S.MissionContentWrapper>
-          <S.MissionTitle>{missionInProgress.mission.title}</S.MissionTitle>
+          <S.SubmissionTitle>{missionInProgress.mission.title}</S.SubmissionTitle>
         </S.MissionContentWrapper>
       </S.ThumbnailContentWrapper>
       {missionInProgress.status !== '매칭 대기' ? (

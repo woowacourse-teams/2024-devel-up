@@ -7,6 +7,10 @@ interface getMissionInProgressResponse {
   data: MissionSubmission;
 }
 
+interface getMissionCompletedResponse {
+  data: MissionSubmission[];
+}
+
 interface getMissionByIdResponse {
   data: Mission;
 }
@@ -40,6 +44,12 @@ export const getMissionInProgress = async (): Promise<MissionSubmission> => {
   const { data } = await develupAPIClient.get<getMissionInProgressResponse>(
     PATH.submissionsInProgress,
   );
+
+  return data;
+};
+
+export const getMissionCompleted = async (): Promise<MissionSubmission[]> => {
+  const { data } = await develupAPIClient.get<getMissionCompletedResponse>(PATH.submissions);
 
   return data;
 };

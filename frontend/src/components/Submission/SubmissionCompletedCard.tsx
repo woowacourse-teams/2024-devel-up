@@ -1,99 +1,64 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as S from './Submission.styled';
+import Button from '../common/Button/Button';
+import type { MissionSubmission } from '@/types';
 
-const mocks = [
-  {
-    id: 1,
-    mission: {
-      id: 1,
-      title: '루터회관 흡연 단속',
-      language: 'JAVA',
-      description: '루터회관 흡연 벌칙 프로그램을 구현한다.',
-      thumbnail:
-        'https://dszw1qtcnsa5e.cloudfront.net/community/20231115/ccefd368-2687-4d26-954d-712315f38fea/2232611625864AF59FF189AB61A75869.jpeg',
-      url: 'https://github.com/develup-mission/java-smoking',
-    },
-    myPrLink: 'https://github.com/develup-mission/java-smoking/pull/1',
-    pairPrLink: 'https://github.com/develup-mission/java-smoking/pull/2',
-    status: '리뷰 완료',
-  },
-  {
-    id: 2,
-    mission: {
-      id: 2,
-      title: '루터회관 흡연 단속 2',
-      language: 'JAVA',
-      description: '루터회관 흡연 벌칙 프로그램을 구현한다.',
-      thumbnail:
-        'https://dszw1qtcnsa5e.cloudfront.net/community/20231115/ccefd368-2687-4d26-954d-712315f38fea/2232611625864AF59FF189AB61A75869.jpeg',
-      url: 'https://github.com/develup-mission/java-smoking',
-    },
-    myPrLink: 'https://github.com/develup-mission/java-smoking/pull/1',
-    pairPrLink: 'https://github.com/develup-mission/java-smoking/pull/2',
-    status: '리뷰 완료',
-  },
-  {
-    id: 3,
-    mission: {
-      id: 2,
-      title: '루터회관 흡연 단속 3',
-      language: 'JAVA',
-      description: '루터회관 흡연 벌칙 프로그램을 구현한다.',
-      thumbnail:
-        'https://dszw1qtcnsa5e.cloudfront.net/community/20231115/ccefd368-2687-4d26-954d-712315f38fea/2232611625864AF59FF189AB61A75869.jpeg',
-      url: 'https://github.com/develup-mission/java-smoking',
-    },
-    myPrLink: 'https://github.com/develup-mission/java-smoking/pull/1',
-    pairPrLink: 'https://github.com/develup-mission/java-smoking/pull/2',
-    status: '리뷰 완료',
-  },
-  {
-    id: 4,
-    mission: {
-      id: 2,
-      title: '루터회관 흡연 단속 4',
-      language: 'JAVA',
-      description: '루터회관 흡연 벌칙 프로그램을 구현한다.',
-      thumbnail:
-        'https://dszw1qtcnsa5e.cloudfront.net/community/20231115/ccefd368-2687-4d26-954d-712315f38fea/2232611625864AF59FF189AB61A75869.jpeg',
-      url: 'https://github.com/develup-mission/java-smoking',
-    },
-    myPrLink: 'https://github.com/develup-mission/java-smoking/pull/1',
-    pairPrLink: 'https://github.com/develup-mission/java-smoking/pull/2',
-    status: '리뷰 완료',
-  },
-];
+interface SubmissionCompletedCardProps {
+  completedMission: MissionSubmission;
+}
 
-export default function SubmissionCompletedCard() {
+export default function SubmissionCompletedCard({
+  completedMission,
+}: SubmissionCompletedCardProps) {
   const navigate = useNavigate();
 
   const handleMissionClick = (id: number) => {
     navigate(`/missions/${id}`);
   };
 
+  const handlePairPrLink = (e: React.MouseEvent<HTMLButtonElement>, pairPrLink: string) => {
+    e.stopPropagation();
+    window.open(pairPrLink, '_blank');
+  };
+
+  const handleMyPrLink = (e: React.MouseEvent<HTMLButtonElement>, MyPrLink: string) => {
+    e.stopPropagation();
+    window.open(MyPrLink, '_blank');
+  };
+
   return (
-    <S.MissionCardListWrapper>
-      {mocks.map(({ id, mission, pairPrLink, myPrLink }) => (
-        <S.MissionCardWrapper key={id} onClick={() => handleMissionClick(id)}>
-          <S.MissionCardHeaderWrapper>
-            <S.CompletedThumbnailImg src={mission.thumbnail} />
-            <S.MissionLanguageBox>{mission.language}</S.MissionLanguageBox>
-          </S.MissionCardHeaderWrapper>
+    <S.MissionCardWrapper
+      key={completedMission.id}
+      onClick={() => handleMissionClick(completedMission.id)}
+    >
+      <S.CompletedTitle>{completedMission.mission.title}</S.CompletedTitle>
 
-          <S.MissionCardContentWrapper>
-            <S.MissionTitle>{mission.title}</S.MissionTitle>
-
-            <S.CompletedPrButtonWrapper>
-              <Link to={pairPrLink} target="_blank" onClick={(e) => e.stopPropagation()}>
-                <S.PrButton>페어 PR 이동</S.PrButton>
-              </Link>
-              <Link to={myPrLink} target="_blank" onClick={(e) => e.stopPropagation()}>
-                <S.PrButton>내 PR 이동</S.PrButton>
-              </Link>
-            </S.CompletedPrButtonWrapper>
-          </S.MissionCardContentWrapper>
-        </S.MissionCardWrapper>
-      ))}
-    </S.MissionCardListWrapper>
+      <S.CompletedPrButtonWrapper>
+        <Button
+          type="icon"
+          content="페어 PR 이동"
+          $bgColor="--grey-100"
+          $hoverColor="--grey-200"
+          $fontColor="--black-color"
+          onHandleClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+            handlePairPrLink(e, completedMission.pairPrLink)
+          }
+        >
+          <S.GithubIcons />
+        </Button>
+        <Button
+          type="icon"
+          content="내 PR 이동"
+          $bgColor="--grey-100"
+          $hoverColor="--grey-200"
+          $fontColor="--black-color"
+          onHandleClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+            handleMyPrLink(e, completedMission.myPrLink)
+          }
+        >
+          <S.GithubIcons />
+        </Button>
+      </S.CompletedPrButtonWrapper>
+    </S.MissionCardWrapper>
   );
 }
