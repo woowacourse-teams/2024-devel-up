@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import infoIcon from '@/assets/images/InfoIcon.svg';
+import infoIcon from '@/assets/images/infoIcon.svg';
 import githubLogo from '@/assets/images/githubLogo.svg';
 import javaIcon from '@/assets/images/java.svg';
 
