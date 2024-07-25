@@ -64,7 +64,11 @@ jobs:
 
       - name: 🟢 Start Server
         run: |
-          sudo nohup java -jar ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar --server.port=80 &
+          sudo nohup java \ 
+          -Dauth.github.client-id=${{ secrets.CLIENT_ID_GITHUB }} \
+          -Dauth.github.client-secret=${{ secrets.CLIENT_SECRET_GITHUB }} \
+          -jar ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar \ 
+          --server.port=80 &
 
   slack-notify_success:
     runs-on: ubuntu-latest
