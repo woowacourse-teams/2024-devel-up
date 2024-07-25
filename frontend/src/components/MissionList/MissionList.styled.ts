@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 
 export const MissionListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
   margin: 0 auto;
+  margin-bottom: 10rem;
   width: fit-content;
-  padding-top: 3rem;
 `;
 
 export const MissionListTitle = styled.h2`
@@ -35,51 +38,15 @@ export const MissionThumbnailImg = styled.img`
 `;
 
 export const MissionDescription = styled.div`
-  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 `;
 
 export const MissionTitle = styled.p`
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 1.6rem;
+  font-weight: bold;
   color: black;
   margin-bottom: 1.7rem;
-`;
-
-export const TagWrapper = styled.div`
-  display: flex;
-  gap: 0.7rem;
-`;
-
-const BaseTag = styled.div`
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: 600;
-  padding: 0.3rem 1rem;
-  border-radius: 0.5rem;
-`;
-
-export const PopularTag = styled(BaseTag)`
-  color: #ff850a;
-  background-color: #fff7de;
-`;
-
-export const BackendTag = styled(BaseTag)`
-  font-weight: 700;
-  color: #b07219;
-  background-color: #faf5f2;
-`;
-
-export const InsuranceTag = styled(BaseTag)`
-  color: var(--primary-600);
-  background-color: var(--primary-50);
-`;
-
-export const HorizontalLine = styled.div`
-  border-top: 1px solid var(--grey-200);
-  margin: 2.2rem 0;
-`;
-
-export const MissionPrice = styled.div`
-  font-size: 1.6rem;
-  font-weight: 700;
 `;

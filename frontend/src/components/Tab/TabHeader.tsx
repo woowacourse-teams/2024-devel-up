@@ -9,7 +9,10 @@ interface TabProps extends PropsWithChildren {
 export default function TabHeader({ index, children }: TabProps) {
   const { selectedIndex, handleSelectedIndex } = useTabs();
   return (
-    <S.TabContainer isSelected={selectedIndex === index} onClick={() => handleSelectedIndex(index)}>
+    <S.TabContainer
+      $isSelected={selectedIndex === index}
+      onClick={() => handleSelectedIndex(index)}
+    >
       {children}
     </S.TabContainer>
   );

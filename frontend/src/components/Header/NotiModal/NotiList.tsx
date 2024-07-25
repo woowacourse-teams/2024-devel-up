@@ -14,10 +14,10 @@ export default function NotiList() {
   return isEmpty ? (
     <div>알림이 없습니다.</div>
   ) : (
-    notifications.map(({ id, message }) => (
-      <S.NotiItem key={id}>
-        {message}
-        <S.NotiReadBtn onClick={handleRead}>✅</S.NotiReadBtn>
+    notifications.map(({ id, title, message }) => (
+      <S.NotiItem key={id} onClick={handleRead}>
+        <S.NotiTitle>{title}</S.NotiTitle>
+        <S.NotiMessage>{message}</S.NotiMessage>
       </S.NotiItem>
     ))
   );
