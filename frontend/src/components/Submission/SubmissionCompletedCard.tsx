@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import * as S from './MyMissionCompleted.styled';
+import * as S from './Submission.styled';
 
 const mocks = [
   {
@@ -64,7 +64,7 @@ const mocks = [
   },
 ];
 
-export default function MyMissionCompletedCard() {
+export default function SubmissionCompletedCard() {
   const navigate = useNavigate();
 
   const handleMissionClick = (id: number) => {
@@ -76,24 +76,21 @@ export default function MyMissionCompletedCard() {
       {mocks.map(({ id, mission, pairPrLink, myPrLink }) => (
         <S.MissionCardWrapper key={id} onClick={() => handleMissionClick(id)}>
           <S.MissionCardHeaderWrapper>
-            <S.ThumbnailImg src={mission.thumbnail} />
+            <S.CompletedThumbnailImg src={mission.thumbnail} />
             <S.MissionLanguageBox>{mission.language}</S.MissionLanguageBox>
           </S.MissionCardHeaderWrapper>
 
           <S.MissionCardContentWrapper>
-            <div>
-              <S.MissionTitle>{mission.title}</S.MissionTitle>
-              <S.MissionDate>2024.07.17 ~ 2024.07.24</S.MissionDate>
-            </div>
+            <S.MissionTitle>{mission.title}</S.MissionTitle>
 
-            <S.PrButtonWrapper>
+            <S.CompletedPrButtonWrapper>
               <Link to={pairPrLink} target="_blank" onClick={(e) => e.stopPropagation()}>
                 <S.PrButton>페어 PR 이동</S.PrButton>
               </Link>
               <Link to={myPrLink} target="_blank" onClick={(e) => e.stopPropagation()}>
                 <S.PrButton>내 PR 이동</S.PrButton>
               </Link>
-            </S.PrButtonWrapper>
+            </S.CompletedPrButtonWrapper>
           </S.MissionCardContentWrapper>
         </S.MissionCardWrapper>
       ))}

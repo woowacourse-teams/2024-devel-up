@@ -1,10 +1,10 @@
 import { BASE_URL } from './baseUrl';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
-import type { Mission, MissionInProgress } from '@/types';
+import type { Mission, MissionSubmission } from '@/types';
 
 interface getMissionInProgressResponse {
-  data: MissionInProgress;
+  data: MissionSubmission;
 }
 
 interface getMissionByIdResponse {
@@ -36,8 +36,10 @@ export const getMissionById = async (id: number): Promise<Mission> => {
   return data;
 };
 
-export const getMissionInProgress = async (): Promise<MissionInProgress> => {
-  const { data } = await develupAPIClient.get<getMissionInProgressResponse>(PATH.missionInProgress);
+export const getMissionInProgress = async (): Promise<MissionSubmission> => {
+  const { data } = await develupAPIClient.get<getMissionInProgressResponse>(
+    PATH.submissionsInProgress,
+  );
 
   return data;
 };

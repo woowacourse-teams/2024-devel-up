@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MyMissionPageContainer = styled.div`
+export const SubmissionPageContainer = styled.div`
   width: 100rem;
   margin: 4rem auto;
 

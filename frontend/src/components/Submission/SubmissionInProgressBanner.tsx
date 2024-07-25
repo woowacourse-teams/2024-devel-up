@@ -1,8 +1,8 @@
 import Button from '@/components/common/Button/Button';
-import * as S from './MyMissionInProgress.styled';
+import * as S from './Submission.styled';
 import useMissionInProgress from '@/hooks/useMissionInProgress';
 
-export default function MyMissionInProgressBanner() {
+export default function SubmissionInProgressBanner() {
   const { data: missionInProgress } = useMissionInProgress();
 
   const handlePage = (link: string) => {
@@ -13,9 +13,9 @@ export default function MyMissionInProgressBanner() {
   const handleReviewCompleted = () => {};
 
   return (
-    <S.MyMissionInProgressBannerContainer>
+    <S.SubmissionInProgressBannerContainer>
       <S.ThumbnailContentWrapper>
-        <S.ThumbnailImg src={missionInProgress.mission.thumbnail} />
+        <S.InProgressThumbnailImg src={missionInProgress.mission.thumbnail} />
 
         <S.MissionContentWrapper>
           <S.MissionTitle>{missionInProgress.mission.title}</S.MissionTitle>
@@ -28,7 +28,7 @@ export default function MyMissionInProgressBanner() {
         </S.PairNotMatchedWrapper>
       ) : (
         <S.MissionButtonWrapper>
-          <S.PrButtonWrapper>
+          <S.InProgressPrButtonWrapper>
             <Button
               type="icon"
               content="페어 PR 이동"
@@ -49,12 +49,12 @@ export default function MyMissionInProgressBanner() {
             >
               <S.GithubIcons />
             </Button>
-          </S.PrButtonWrapper>
+          </S.InProgressPrButtonWrapper>
           <S.MissionCompleteWrapper>
             <Button content="리뷰 완료" onHandleClick={handleReviewCompleted} />
           </S.MissionCompleteWrapper>
         </S.MissionButtonWrapper>
       )}
-    </S.MyMissionInProgressBannerContainer>
+    </S.SubmissionInProgressBannerContainer>
   );
 }
