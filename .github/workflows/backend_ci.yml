@@ -1,0 +1,78 @@
+name: BACKEND_CI
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches: [ 'main' ]
+    paths:
+      - backend/**
+
+env:
+  lilychoibb: "U07AQJWU8S3"
+  robinjoon: "U07BU02FQFJ"
+  brgndyy: "U07B53DM02W"
+  chosim-dvlpr: "U07BHP5UTLH"
+  Minjoo522: "U07B4V80WLT"
+  alstn113: "U07AQK2KBLP"
+  le2sky: "U07B26581CM"
+  Parkhanyoung: "U07BTSGKCC8"
+
+jobs:
+  BE_CI:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Test with Gradle
+        continue-on-error: true
+        id: gradle_test
+        run: |
+          cd backend
+          ./gradlew test
+
+  BE_SLACK_MESSAGE:
+    runs-on: ubuntu-latest
+    needs: BE_CI
+    if: ${{needs.BE_CI.result != 'skipped'}}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Get teamMember
+        id: teamMember
+        run: |
+          echo "SENDER_SLACK_ID=${{ env[github.event.sender.login] }}" >> $GITHUB_ENV
+
+      - name: Slack mention
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+                "text": "pr 테스트 결과",
+                "blocks": [
+                  {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "pr 테스트 ${{ needs.BE_CI.result }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: <@${{ env.SENDER_SLACK_ID }}>"
+                      }
+                  }
+                ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
