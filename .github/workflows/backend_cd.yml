@@ -73,6 +73,11 @@ jobs:
       - deploy
     if: success()
     steps:
+      - name: Extract Commit Title
+        run: |
+          COMMIT_TITLE=$(echo "${{ github.event.head_commit.message }}" | head -n 1)
+          echo "COMMIT_TITLE=$COMMIT_TITLE" >> $GITHUB_ENV   
+
       - name: Build and Deploy Success
         uses: slackapi/slack-github-action@v1.24.0
         with:
@@ -85,7 +90,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀 Build Success \n\t • 🟢 Deploy Success \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
+                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀 Build Success \n\t • 🟢 Deploy Success \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ env.COMMIT_TITLE }}>"
                   }
                 }
               ]
@@ -99,6 +104,11 @@ jobs:
       - build
     if: failure()
     steps:
+      - name: Extract Commit Title
+        run: |
+          COMMIT_TITLE=$(echo "${{ github.event.head_commit.message }}" | head -n 1)
+          echo "COMMIT_TITLE=$COMMIT_TITLE" >> $GITHUB_ENV   
+
       - name: Build Fail
         uses: slackapi/slack-github-action@v1.24.0
         with:
@@ -111,7 +121,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🔴 Build Fail \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
+                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🔴 Build Fail \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ env.COMMIT_TITLE }}>"
                   }
                 }
               ]
@@ -125,6 +135,11 @@ jobs:
       - deploy
     if: failure()
     steps:
+      - name: Extract Commit Title
+        run: |
+          COMMIT_TITLE=$(echo "${{ github.event.head_commit.message }}" | head -n 1)
+          echo "COMMIT_TITLE=$COMMIT_TITLE" >> $GITHUB_ENV   
+
       - name: Deploy Fail
         uses: slackapi/slack-github-action@v1.24.0
         with:
@@ -137,7 +152,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀Build Success \n\t • 🔴Deploy Fail \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
+                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀Build Success \n\t • 🔴Deploy Fail \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ env.COMMIT_TITLE }}>"
                   }
                 }
               ]
