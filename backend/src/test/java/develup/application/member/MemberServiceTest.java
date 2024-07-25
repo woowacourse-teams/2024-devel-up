@@ -37,7 +37,7 @@ class MemberServiceTest extends IntegrationTestSupport {
     void getMemberByUndefinedId() {
         assertThatThrownBy(() -> memberService.getMemberById(-1L))
                 .isInstanceOf(DevelupException.class)
-                .hasMessage("존재하지 않은 회원입니다.");
+                .hasMessage("존재하지 않는 회원입니다.");
     }
 
     @Test
