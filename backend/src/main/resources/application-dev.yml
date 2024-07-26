@@ -1,5 +1,5 @@
 api-host: https://develup.robinjoon.xyz
-client-host: http://3.38.11.109
+client-host: https://www.develup.robinjoon.xyz
 
 auth:
   github:
