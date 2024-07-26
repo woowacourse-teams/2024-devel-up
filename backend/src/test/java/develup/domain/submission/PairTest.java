@@ -42,14 +42,14 @@ class PairTest {
 
         Pair other = PairTestData.otherPair(pair).build();
 
-        assertThatThrownBy(() -> pair.reviewComplete(other))
+        assertThatThrownBy(() -> pair.completeReview(other))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("이미 리뷰를 완료했습니다.");
     }
 
     @Test
     @DisplayName("매칭 상태에서 리뷰 완료를 한 경우 확인.")
-    void reviewCompleteSuccessWhenMatched() {
+    void completeReviewSuccessWhenMatched() {
         Pair pair = PairTestData.defaultPair()
                 .withStatus(PairStatus.MATCHED)
                 .build();
@@ -57,7 +57,7 @@ class PairTest {
         Pair other = PairTestData.otherPair(pair)
                 .build();
 
-        pair.reviewComplete(other);
+        pair.completeReview(other);
         Assertions.assertAll(
                 () -> assertThat(pair.getStatus()).isEqualTo(PairStatus.MY_REVIEW_COMPLETED),
                 () -> assertThat(other.getStatus()).isEqualTo(PairStatus.PARTNER_REVIEW_COMPLETED)
@@ -66,7 +66,7 @@ class PairTest {
 
     @Test
     @DisplayName("상대 리뷰 완료 상태에서 리뷰 완료를 한 경우 확인.")
-    void reviewCompleteSuccessWhenPartnerReviewComplete() {
+    void reviewCompleteSuccessWhenPartnerCompleteReview() {
         Pair pair = PairTestData.defaultPair()
                 .withStatus(PairStatus.PARTNER_REVIEW_COMPLETED)
                 .build();
@@ -74,7 +74,7 @@ class PairTest {
         Pair other = PairTestData.otherPair(pair)
                 .build();
 
-        pair.reviewComplete(other);
+        pair.completeReview(other);
         Assertions.assertAll(
                 () -> assertThat(pair.getStatus()).isEqualTo(PairStatus.ALL_FINISHED),
                 () -> assertThat(other.getStatus()).isEqualTo(PairStatus.ALL_FINISHED)

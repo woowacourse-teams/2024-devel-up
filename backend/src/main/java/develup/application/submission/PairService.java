@@ -1,7 +1,5 @@
 package develup.application.submission;
 
-import static develup.api.exception.ExceptionType.SUBMISSION_NOT_FOUND;
-
 import java.util.List;
 import java.util.Optional;
 import develup.api.exception.DevelupException;
@@ -27,28 +25,38 @@ public class PairService {
         this.pairRepository = pairRepository;
     }
 
-    public MyMissionResponse reviewComplete(Long submissionId) {
+    public MyMissionResponse completeReview(Long memberId, Long submissionId) {
         Pair main = pairRepository.findByMain_Id(submissionId)
-                .orElseThrow(() -> new DevelupException(SUBMISSION_NOT_FOUND));
+                .orElseThrow(() -> new DevelupException(ExceptionType.SUBMISSION_NOT_FOUND));
         Pair other = pairRepository.findByMain_Id(main.getOtherId())
-                .orElseThrow(() -> new DevelupException(SUBMISSION_NOT_FOUND));
+                .orElseThrow(() -> new DevelupException(ExceptionType.SUBMISSION_NOT_FOUND));
 
-        main.reviewComplete(other);
+        validateSubmissionOwner(memberId, main);
+        main.completeReview(other);
 
         pairRepository.save(main);
         pairRepository.save(other);
 
+        MyMission myMission = createMyMission(main);
+        return MyMissionResponse.from(myMission);
+    }
+
+    private void validateSubmissionOwner(Long memberId, Pair main) {
+        if (!main.isMainOwnerId(memberId)) {
+            throw new DevelupException(ExceptionType.FORBIDDEN);
+        }
+    }
+
+    private MyMission createMyMission(Pair main) {
         Submission mainSubmission = main.getMain();
         Submission otherSubMission = main.getOther();
-
-        MyMission myMission = new MyMission(
-                submissionId,
+        return new MyMission(
+                mainSubmission.getId(),
                 mainSubmission.getMission(),
                 mainSubmission.getUrl(),
                 otherSubMission.getUrl(),
                 main.getStatus()
         );
-        return MyMissionResponse.from(myMission);
     }
 
     public boolean canMatch(Submission submission) {
@@ -65,7 +73,7 @@ public class PairService {
         boolean isSubmitted = submissionRepository.existsById(submission.getId());
 
         if (!isSubmitted) {
-            throw new DevelupException(SUBMISSION_NOT_FOUND);
+            throw new DevelupException(ExceptionType.SUBMISSION_NOT_FOUND);
         }
     }
 

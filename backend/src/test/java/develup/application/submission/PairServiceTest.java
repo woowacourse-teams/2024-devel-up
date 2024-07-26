@@ -11,11 +11,13 @@ import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.domain.submission.Pair;
 import develup.domain.submission.PairRepository;
+import develup.domain.submission.PairStatus;
 import develup.domain.submission.Submission;
 import develup.domain.submission.SubmissionRepository;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
+import develup.support.data.PairTestData;
 import develup.support.data.SubmissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -161,9 +163,37 @@ class PairServiceTest extends IntegrationTestSupport {
 
     @Test
     @DisplayName("존재하지 않는 제출은 리뷰를 완료할 수 없다.")
-    void reviewComplete() {
-        assertThatThrownBy(() -> pairService.reviewComplete(-1L))
+    void completeReview() {
+        Member member = createMember();
+        assertThatThrownBy(() -> pairService.completeReview(member.getId(), -1L))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 제출입니다.");
+    }
+
+    @Test
+    @DisplayName("자신의 제출이 아닌 경우 리뷰를 완료할 수 없다.")
+    void completeReviewFailWhenNotOwner() {
+        Member member = createMember();
+        Member other = createMember();
+        Mission mission = createMission();
+        Submission mainSubmission = createSubmission(mission, member);
+        Submission otherSubmission = createSubmission(mission, other);
+
+        createPair(mainSubmission, otherSubmission, PairStatus.MATCHED);
+        createPair(otherSubmission, mainSubmission, PairStatus.MATCHED);
+
+        assertThatThrownBy(() -> pairService.completeReview(other.getId(), mainSubmission.getId()))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("권한이 없는 요청입니다.");
+    }
+
+    private Pair createPair(Submission main, Submission other, PairStatus pairStatus) {
+        Pair pair = PairTestData.defaultPair()
+                .withMain(main)
+                .withOther(other)
+                .withStatus(pairStatus)
+                .build();
+
+        return pairRepository.save(pair);
     }
 }

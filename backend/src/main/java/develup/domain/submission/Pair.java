@@ -1,5 +1,6 @@
 package develup.domain.submission;
 
+import java.util.Objects;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import jakarta.persistence.Column;
@@ -49,7 +50,7 @@ public class Pair {
         this.status = status;
     }
 
-    public void reviewComplete(Pair other) {
+    public void completeReview(Pair other) {
         validatePairStatus();
         validateOtherPairStatus(other);
         changePairStatus();
@@ -86,6 +87,10 @@ public class Pair {
         if (other.status == PairStatus.MY_REVIEW_COMPLETED) {
             other.status = PairStatus.ALL_FINISHED;
         }
+    }
+
+    public boolean isMainOwnerId(Long expectedOwnerId) {
+        return Objects.equals(main.getMember().getId(), expectedOwnerId);
     }
 
     public Long getId() {
