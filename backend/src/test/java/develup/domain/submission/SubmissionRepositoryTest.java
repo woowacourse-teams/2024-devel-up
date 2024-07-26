@@ -3,6 +3,7 @@ package develup.domain.submission;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Optional;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
@@ -30,8 +31,8 @@ class SubmissionRepositoryTest extends IntegrationTestSupport {
     @DisplayName("아직 매칭되지 않은 제출을 불러온다.")
     void findNonMatchedSubmission() {
         Mission mission = createMission();
-        Submission submission1 = createSubmission(mission);
-        Submission submission2 = createSubmission(mission);
+        Submission submission1 = createSubmission(mission, createMember());
+        Submission submission2 = createSubmission(mission, createMember());
 
         List<Submission> result = submissionRepository.findNonMatchedSubmissions(mission);
 
@@ -40,19 +41,39 @@ class SubmissionRepositoryTest extends IntegrationTestSupport {
                 .contains(submission1.getId(), submission2.getId());
     }
 
+    @Test
+    @DisplayName("멤버 식별자와 미션 식별자로 제일 최근 제출을 불러온다.")
+    void findFirstByMember_IdOrderByIdDesc() {
+        Member member = createMember();
+        Mission mission = createMission();
+        createSubmission(mission, member);
+        Submission lateSubmission = createSubmission(mission, member);
+
+        Optional<Submission> result = submissionRepository
+                .findFirstByMember_IdAndMission_IdOrderByIdDesc(member.getId(), mission.getId());
+
+        assertThat(result).isPresent();
+        assertThat(result.get().getId()).isEqualTo(lateSubmission.getId());
+    }
+
     private Mission createMission() {
         Mission mission = MissionTestData.defaultMission().build();
 
         return missionRepository.save(mission);
     }
 
-    private Submission createSubmission(Mission mission) {
-        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+    private Submission createSubmission(Mission mission, Member member) {
         Submission submission = SubmissionTestData.defaultSubmission()
                 .withMember(member)
                 .withMission(mission)
                 .build();
 
         return submissionRepository.save(submission);
+    }
+
+    private Member createMember() {
+        Member member = MemberTestData.defaultMember().build();
+
+        return memberRepository.save(member);
     }
 }
