@@ -11,7 +11,7 @@ interface MissionDetailButtonsProps {
 export default function MissionDetailButtons({ id, missionUrl }: MissionDetailButtonsProps) {
   const navigate = useNavigate();
   const handleNavigateToSubmit = () => {
-    navigate(`${ROUTES.submit}/${id}`);
+    navigate(`${ROUTES.submission}/${id}`);
   };
 
   // const handleNavigateToMyPr = () => {
