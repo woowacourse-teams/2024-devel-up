@@ -1,6 +1,6 @@
 import * as S from './OneWord.styled';
 import TextArea from '../common/TextArea/TextArea';
-import { TextareaHTMLAttributes } from 'react';
+import type { TextareaHTMLAttributes } from 'react';
 
 interface OneWordProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   danger: boolean;
