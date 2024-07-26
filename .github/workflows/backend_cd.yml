@@ -67,6 +67,7 @@ jobs:
           sudo nohup java \
           -Dauth.github.client-id=${{ secrets.CLIENT_ID_GITHUB }} \
           -Dauth.github.client-secret=${{ secrets.CLIENT_SECRET_GITHUB }} \
+          --spring.profiles.active=dev \
           -jar ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar \
           --server.port=80 &
 
