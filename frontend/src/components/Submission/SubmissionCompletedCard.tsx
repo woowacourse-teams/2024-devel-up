@@ -16,14 +16,9 @@ export default function SubmissionCompletedCard({
     navigate(`/missions/${id}`);
   };
 
-  const handlePairPrLink = (e: React.MouseEvent<HTMLButtonElement>, pairPrLink: string) => {
+  const handlePrLink = (e: React.MouseEvent<HTMLButtonElement>, link: string) => {
     e.stopPropagation();
-    window.open(pairPrLink, '_blank');
-  };
-
-  const handleMyPrLink = (e: React.MouseEvent<HTMLButtonElement>, MyPrLink: string) => {
-    e.stopPropagation();
-    window.open(MyPrLink, '_blank');
+    window.open(link, '_blank');
   };
 
   return (
@@ -41,7 +36,7 @@ export default function SubmissionCompletedCard({
           $hoverColor="--grey-200"
           $fontColor="--black-color"
           onHandleClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-            handlePairPrLink(e, completedMission.pairPrLink)
+            handlePrLink(e, completedMission.pairPrLink)
           }
         >
           <S.GithubIcons />
@@ -53,7 +48,7 @@ export default function SubmissionCompletedCard({
           $hoverColor="--grey-200"
           $fontColor="--black-color"
           onHandleClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-            handleMyPrLink(e, completedMission.myPrLink)
+            handlePrLink(e, completedMission.myPrLink)
           }
         >
           <S.GithubIcons />
