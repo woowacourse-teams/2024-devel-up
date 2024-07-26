@@ -27,10 +27,10 @@ export const CurrentContentContainer = styled.div`
   animation: ${fadeIn} 0.3s ease-out;
 `;
 
-export const TabContainer = styled.div<{ isSelected: boolean }>`
+export const TabContainer = styled.div<{ $isSelected: boolean }>`
   padding: 10px 20px;
   cursor: pointer;
-  background: ${({ isSelected }) => (isSelected ? 'var(--primary-700)' : 'var(--grey-700)')};
+  background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-700)' : 'var(--grey-700)')};
   font-size: 1.5rem;
   color: white;
   border-radius: 1rem 1rem 0 0;
@@ -39,15 +39,15 @@ export const TabContainer = styled.div<{ isSelected: boolean }>`
     background 0.3s,
     box-shadow 0.3s;
 
-  ${({ isSelected }) =>
-    isSelected &&
+  ${({ $isSelected }) =>
+    $isSelected &&
     `
     box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
     animation: tabSelected 0.3s ease-out;
   `}
 
   &:hover {
-    background: ${({ isSelected }) => (isSelected ? 'var(--primary-500)' : 'var(--grey-500)')};
+    background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-500)' : 'var(--grey-500)')};
   }
 
   @keyframes tabSelected {

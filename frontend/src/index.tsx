@@ -12,6 +12,7 @@ import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
 import React, { Suspense } from 'react';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
+import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +29,7 @@ const routes = [
     path: ROUTES.main,
     element: (
       <App>
-        <Suspense fallback={<div>로딩중입니다!</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <MissionListPage />
         </Suspense>
       </App>
@@ -38,7 +39,7 @@ const routes = [
     path: `${ROUTES.submit}/:id`,
     element: (
       <App>
-        <Suspense fallback={<div>로딩중입니다!</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <MissionSubmitPage />
         </Suspense>
       </App>
