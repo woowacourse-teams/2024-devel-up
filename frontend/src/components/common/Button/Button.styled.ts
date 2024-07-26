@@ -22,6 +22,7 @@ export const CommonButton = styled.button<CommonButtonProps>`
   white-space: nowrap;
   font-size: 1.4rem;
   font-weight: 500;
+  font-family: inherit;
 
   &:hover {
     background-color: var(${(props) => props.$hoverColor});

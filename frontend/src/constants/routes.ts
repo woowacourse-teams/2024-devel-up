@@ -4,5 +4,5 @@ export const ROUTES = {
   missionDetail: '/missions',
   profile: '/profile',
   guide: '/guide',
-  myMission: '/my-mission',
+  submissions: '/submissions',
 } as const;
