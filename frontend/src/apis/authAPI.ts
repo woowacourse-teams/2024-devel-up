@@ -12,5 +12,3 @@ export const getUserInfo = async (): Promise<UserInfo> => {
   // TODO(@ryan): 시연을 위해 description 임시 추가
   return { ...data, description: '안녕하세요, 다같이 화이팅해봅시다!' };
 };
-
-export const testAuth = async () => {};

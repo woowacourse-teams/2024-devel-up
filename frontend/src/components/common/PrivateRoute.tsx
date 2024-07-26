@@ -1,3 +1,4 @@
+import useUserInfo from '@/hooks/useUserInfo';
 import type { PropsWithChildren } from 'react';
 import { Navigate } from 'react-router-dom';
 
@@ -6,7 +7,7 @@ interface PrivateRouteProps extends PropsWithChildren {
 }
 
 export default function PrivateRoute({ redirectTo, children }: PrivateRouteProps) {
-  const token = '';
+  const { data: userInfo } = useUserInfo();
 
-  return token ? children : <Navigate to={redirectTo} />;
+  return userInfo ? children : <Navigate to={redirectTo} />;
 }
