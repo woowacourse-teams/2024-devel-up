@@ -25,7 +25,7 @@ export const TextArea = styled.textarea<TextAreaProps>`
   outline: none;
   font-weight: bold;
   padding: 1.5rem;
-  min-height: 15rem;ㅁ
+  min-height: 15rem;
   border-radius: 0.8rem;
   border: 1px solid transparent;
   border-bottom: 0.15rem solid transparent;
