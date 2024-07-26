@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthApi {
-//
+
     private final AuthService authService;
 
     public AuthApi(AuthService authService) {
