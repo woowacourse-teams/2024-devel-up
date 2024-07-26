@@ -1,4 +1,4 @@
 export const BASE_URL = {
-  dev: 'http://3.38.80.28',
-  prod: 'http://3.38.80.28',
+  dev: 'https://develup.robinjoon.xyz',
+  prod: 'https://develup.robinjoon.xyz',
 } as const;

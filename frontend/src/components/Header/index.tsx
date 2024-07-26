@@ -31,8 +31,18 @@ export default function Header() {
             <S.Logo>🚀 Devel Up</S.Logo>
           </Link>
         </S.LeftPart>
+        <S.MenuWrapper>
+          {userInfo && (
+            <Link to={ROUTES.submissions}>
+              <S.MenuText>미션 현황</S.MenuText>
+            </Link>
+          )}
+          <Link to={ROUTES.guide}>
+            <S.MenuText>미션 안내</S.MenuText>
+          </Link>
+        </S.MenuWrapper>
         <S.RightPart>
-          <S.BellIcon onClick={handleBellClick} />
+          {userInfo && <S.BellIcon onClick={handleBellClick} />}
           {!userInfo && (
             <a href={`${BASE_URL.dev}${PATH.githubLogin}?next=${pathname}`}>
               <S.LoginButton>로그인</S.LoginButton>

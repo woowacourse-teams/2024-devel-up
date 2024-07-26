@@ -1,6 +1,6 @@
 export const ROUTES = {
   main: '/',
-  submit: '/submit',
+  submission: '/submission',
   missionDetail: '/missions',
   profile: '/profile',
   guide: '/guide',

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './MissionDetail.styled';
 import Button from '../common/Button/Button';
 import { ROUTES } from '@/constants/routes';
+import useUserInfo from '@/hooks/useUserInfo';
 
 interface MissionDetailButtonsProps {
   id: number;
@@ -11,8 +12,9 @@ interface MissionDetailButtonsProps {
 export default function MissionDetailButtons({ id, missionUrl }: MissionDetailButtonsProps) {
   const navigate = useNavigate();
   const handleNavigateToSubmit = () => {
-    navigate(`${ROUTES.submit}/${id}`);
+    navigate(`${ROUTES.submission}/${id}`);
   };
+  const { data: userInfo } = useUserInfo();
 
   // const handleNavigateToMyPr = () => {
   //   window.open('', '_blank'); // 추후 구현 예정입니다 @프룬
@@ -34,7 +36,8 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
       </S.InfoMsgWrapper>
 
       <S.ButtonWrapper>
-        <Button content="제출하기" onHandleClick={handleNavigateToSubmit} />
+        {userInfo && <Button content="제출하기" onHandleClick={handleNavigateToSubmit} />}
+
         {/* <Button
           content="내 PR 보러 가기"
           $bgColor="--grey-200"
