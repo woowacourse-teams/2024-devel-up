@@ -86,6 +86,8 @@ export const InfoMsgWrapper = styled.div`
   font-size: 1.4rem;
   font-weight: 500;
 
+  cursor: pointer;
+
   &:hover {
     background-color: var(--grey-50);
   }
@@ -114,4 +116,8 @@ export const MissionDescription = styled.div`
 
   background-color: var(--grey-50);
   border-radius: 0.8rem;
+`;
+
+export const MissionDescriptionText = styled.p`
+  font-size: 2rem;
 `;

@@ -45,21 +45,24 @@ export default class APIClient implements APIClientType {
     body?: Record<string, any>;
     queryParams?: Record<string, string>;
   }): Promise<T> {
-    const url = buildURL({ baseURL: this.baseURL, path, queryParams });
+    try {
+      const url = buildURL({ baseURL: this.baseURL, path, queryParams });
 
-    const response = await fetch(url, {
-      method,
-      headers: this.header,
-      body: JSON.stringify(body),
-      credentials: 'include',
-    });
+      const response = await fetch(url, {
+        method,
+        headers: this.header,
+        body: JSON.stringify(body),
+      });
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+
+      return data;
+    } catch (err) {
+      throw new Error('');
     }
-
-    const data = await response.json();
-
-    return data;
   }
 }
