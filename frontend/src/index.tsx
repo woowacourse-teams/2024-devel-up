@@ -13,7 +13,7 @@ import GuidePage from './pages/GuidePage';
 import React, { Suspense } from 'react';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       throwOnError: true,

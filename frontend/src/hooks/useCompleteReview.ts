@@ -1,10 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { missionKeys } from './queries/keys';
 import { postCompleteReview } from '@/apis/missionAPI';
+import { queryClient } from '..';
 
 const useCompleteReview = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: postCompleteReview,
     onSuccess() {
