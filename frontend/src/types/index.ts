@@ -26,7 +26,7 @@ export interface Mission {
   url: string;
 }
 
-export interface MissionInProgress {
+export interface MissionSubmission {
   id: number;
   mission: Mission;
   myPrLink: string;

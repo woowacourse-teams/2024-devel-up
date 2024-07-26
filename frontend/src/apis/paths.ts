@@ -4,4 +4,6 @@ export const PATH = {
   missionInProgress: '/submissions/now',
   githubLogin: '/auth/social/redirect/github',
   userInfo: '/member/mine',
+  submissionsInProgress: '/submissions/now',
+  pairReview: '/pair-review',
 };
