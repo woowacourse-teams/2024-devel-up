@@ -53,7 +53,7 @@ jobs:
 
       - name: 🔴 Stop Server
         run: |
-          PID=$(sudo lsof -t -i:80 || true)
+          PID=$(sudo lsof -t -i:8080 || true)
           if [ -n "$PID" ]; then
             sudo kill -15 $PID
             tail --pid=$PID -f /dev/null
@@ -67,8 +67,8 @@ jobs:
           sudo nohup java \
           -Dauth.github.client-id=${{ secrets.CLIENT_ID_GITHUB }} \
           -Dauth.github.client-secret=${{ secrets.CLIENT_SECRET_GITHUB }} \
-          -jar ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar \
-          --server.port=80 &
+          -Dspring.profiles.active=dev \
+          -jar ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar &
 
   slack-notify_success:
     runs-on: ubuntu-latest

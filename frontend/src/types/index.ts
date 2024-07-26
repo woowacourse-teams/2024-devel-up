@@ -5,11 +5,10 @@ import type { ReactNode } from 'react';
 
 export interface UserInfo {
   id: number;
-  login: string;
-  avatar_url: string;
   email: string;
   name: string;
-  description?: string;
+  imageUrl: string;
+  description: string;
 }
 
 export interface TabInfo {
@@ -27,7 +26,7 @@ export interface Mission {
   url: string;
 }
 
-export interface MissionInProgress {
+export interface MissionSubmission {
   id: number;
   mission: Mission;
   myPrLink: string;

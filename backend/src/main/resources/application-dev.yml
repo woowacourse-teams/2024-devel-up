@@ -1,0 +1,9 @@
+api-host: https://develup.robinjoon.xyz
+client-host: https://www.develup.robinjoon.xyz
+
+auth:
+  github:
+    client-id: develup-test-develup-test-develup-test-develup-test-develup-test
+    client-secret: develup-test-develup-test-develup-test-develup-test-develup-test
+    redirect-uri: ${api-host}/auth/social/callback/github
+    client-uri: ${client-host}
