@@ -13,7 +13,7 @@ export default function NotiModal({ closeModal }: NotiModalProps) {
   return (
     <S.NotiModalContainer ref={targetRef}>
       <ListenKeyDown targetKey="Escape" onKeyDown={closeModal} />
-      <S.NotiTitle>🔔 알림</S.NotiTitle>
+      <S.NotiModalTitle>알림</S.NotiModalTitle>
       <NotiList />
     </S.NotiModalContainer>
   );

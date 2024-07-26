@@ -1,7 +1,12 @@
 import type { PropsWithChildren } from 'react';
 import React, { useState, useRef, useEffect } from 'react';
 
-const useCarousel = ({ children }: PropsWithChildren) => {
+interface UseCarouselParams extends PropsWithChildren {
+  autoPlay: boolean;
+  autoSpeed: number;
+}
+
+const useCarousel = ({ autoPlay, autoSpeed, children }: UseCarouselParams) => {
   const carouselItems = React.Children.toArray(children);
   const carouselItemLength = carouselItems.length;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -40,6 +45,21 @@ const useCarousel = ({ children }: PropsWithChildren) => {
       setCurrentIndex((prevIndex) => prevIndex - 1);
     }
   };
+
+  useEffect(() => {
+    const initializeAutoPlay = () => {
+      if (autoPlay && !isSliding) {
+        const autoPlayInterval = setInterval(() => {
+          handleNextSlide();
+        }, autoSpeed);
+
+        return () => clearInterval(autoPlayInterval);
+      }
+    };
+
+    const autoPlayCleanup = initializeAutoPlay();
+    return () => autoPlayCleanup && autoPlayCleanup();
+  }, [autoPlay, autoSpeed, handleNextSlide, isSliding]);
 
   return {
     carouselItems,

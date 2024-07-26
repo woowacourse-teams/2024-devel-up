@@ -27,10 +27,25 @@ export interface Mission {
   url: string;
 }
 
-export interface MissionInProgress {
+export interface MissionSubmission {
   id: number;
   mission: Mission;
   myPrLink: string;
   pairPrLink: string;
   status: string;
+}
+
+// postSubmission에 관련된 타입 선언
+export interface SubmissionPayload {
+  missionId: number;
+  url: string;
+  comment: string | null;
+}
+
+export interface Submission {
+  id: number;
+  memberId: number;
+  missionId: number;
+  url: string;
+  comment: string;
 }

@@ -8,7 +8,7 @@ interface ButtonProps {
   $hoverColor?: string;
   $fontColor?: string;
   disabled?: boolean;
-  onHandleClick?: () => void;
+  onHandleClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function Button({
@@ -30,7 +30,7 @@ export default function Button({
       $hoverColor={disabled ? '--grey-100' : $hoverColor}
       $fontColor={disabled ? '--black-color' : $fontColor}
       onClick={onHandleClick}
-      disabled={disabled}
+      disabled={disabled}  
     >
       {type === 'icon' && children}
       {content}

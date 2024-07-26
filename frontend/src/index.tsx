@@ -7,13 +7,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
 import MissionListPage from './pages/MissionListPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
-import MyMissionPage from './pages/MyMissionPage';
+import SubmissionPage from './pages/SubmissionPage';
 import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
 import React, { Suspense } from 'react';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
+import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       throwOnError: true,
@@ -28,7 +29,7 @@ const routes = [
     path: ROUTES.main,
     element: (
       <App>
-        <Suspense fallback={<div>로딩중입니다!</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <MissionListPage />
         </Suspense>
       </App>
@@ -38,7 +39,7 @@ const routes = [
     path: `${ROUTES.submit}/:id`,
     element: (
       <App>
-        <Suspense fallback={<div>로딩중입니다!</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <MissionSubmitPage />
         </Suspense>
       </App>
@@ -71,10 +72,10 @@ const routes = [
     ),
   },
   {
-    path: ROUTES.myMission,
+    path: ROUTES.submissions,
     element: (
       <App>
-        <MyMissionPage />
+        <SubmissionPage />
       </App>
     ),
   },

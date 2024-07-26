@@ -41,9 +41,20 @@ class SubmissionServiceTest extends IntegrationTestSupport {
         Mission mission = createMission();
         CreateSubmissionRequest request = new CreateSubmissionRequest(mission.getId(), "pr url", "코멘트");
 
-        submissionService.submit(member, request);
+        submissionService.submit(member.getId(), request);
 
         assertThat(submissionRepository.findAll()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 멤버는 제출할 수 없다.")
+    void notFoundMember() {
+        Mission mission = createMission();
+        CreateSubmissionRequest request = new CreateSubmissionRequest(mission.getId(), "pr url", "코멘트");
+
+        assertThatThrownBy(() -> submissionService.submit(-1L, request))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("존재하지 않는 회원입니다.");
     }
 
     @Test
@@ -52,8 +63,9 @@ class SubmissionServiceTest extends IntegrationTestSupport {
         Member member = createMember();
         CreateSubmissionRequest request = new CreateSubmissionRequest(-1L, "pr url", "코멘트");
 
-        assertThatThrownBy(() -> submissionService.submit(member, request))
-                .isInstanceOf(DevelupException.class);
+        assertThatThrownBy(() -> submissionService.submit(member.getId(), request))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("존재하지 않는 미션입니다.");
     }
 
     private Mission createMission() {
@@ -76,11 +88,7 @@ class SubmissionServiceTest extends IntegrationTestSupport {
         @Test
         @DisplayName("참여한 모든 미션을 조회한다.")
         void getMyMissions() {
-            Member member = MemberTestData.defaultMember()
-                    .withId(1L)
-                    .build();
-
-            List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
+            List<MyMissionResponse> myMissions = submissionService.getMyMissions(1L);
 
             assertThat(myMissions).hasSize(3);
         }
@@ -88,11 +96,7 @@ class SubmissionServiceTest extends IntegrationTestSupport {
         @Test
         @DisplayName("매칭된 제출이 없는 경우 `매칭 대기` 상태로 설정된다.")
         void getMyMissionsWhenNoPair() {
-            Member member = MemberTestData.defaultMember()
-                    .withId(1L)
-                    .build();
-
-            List<MyMissionResponse> myMissions = submissionService.getMyMissions(member);
+            List<MyMissionResponse> myMissions = submissionService.getMyMissions(1L);
 
             assertThat(myMissions.getFirst().status()).isEqualTo("매칭 대기");
         }
@@ -100,11 +104,7 @@ class SubmissionServiceTest extends IntegrationTestSupport {
         @Test
         @DisplayName("진행 중인 미션이 있는 경우 해당 미션 한 개를 반환한다.")
         void getMyMission() {
-            Member member = MemberTestData.defaultMember()
-                    .withId(1L)
-                    .build();
-
-            MyMissionResponse response = submissionService.getMyMission(member);
+            MyMissionResponse response = submissionService.getMyMission(1L);
 
             assertThat(response.status()).isEqualTo(PairStatus.WAITING.getDescription());
         }
@@ -112,11 +112,7 @@ class SubmissionServiceTest extends IntegrationTestSupport {
         @Test
         @DisplayName("진행 중인 미션이 없는 경우 null을 반환한다.")
         void getMyMissionWhenAllFinished() {
-            Member member = MemberTestData.defaultMember()
-                    .withId(3L)
-                    .build();
-
-            MyMissionResponse response = submissionService.getMyMission(member);
+            MyMissionResponse response = submissionService.getMyMission(3L);
 
             assertThat(response).isNull();
         }
