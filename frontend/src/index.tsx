@@ -11,8 +11,9 @@ import SubmissionPage from './pages/SubmissionPage';
 import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
 import React, { Suspense } from 'react';
-import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
+import { ErrorBoundary } from './components/common/Error/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
+import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,7 +37,7 @@ const routes = [
     ),
   },
   {
-    path: `${ROUTES.submit}/:id`,
+    path: `${ROUTES.submission}/:id`,
     element: (
       <App>
         <Suspense fallback={<LoadingSpinner />}>
@@ -91,8 +92,10 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <QueryErrorBoundary>
-        <GlobalStyle />
-        <RouterProvider router={router} />
+        <ErrorBoundary fallback={<div>에러에요!</div>}>
+          <GlobalStyle />
+          <RouterProvider router={router} />
+        </ErrorBoundary>
       </QueryErrorBoundary>
     </QueryClientProvider>
   </React.StrictMode>,

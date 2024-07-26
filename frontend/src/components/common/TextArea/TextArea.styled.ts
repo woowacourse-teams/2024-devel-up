@@ -29,6 +29,10 @@ export const TextArea = styled.textarea<TextAreaProps>`
   border-radius: 0.8rem;
   border: 1px solid transparent;
   border-bottom: 0.15rem solid transparent;
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+  }
+
   ${(props) =>
     props.$danger
       ? css`

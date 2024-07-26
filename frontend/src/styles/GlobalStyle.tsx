@@ -161,8 +161,21 @@ html,
     font-size: 62.5%;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   }
-  body {
+
+  //TODO 이렇게 부드럽게 렌더링 되는거에 대해서 이야기 필요성 @버건디
+  @keyframes fadeIn {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
+
+body {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
   li {
     list-style: none;
   }

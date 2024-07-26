@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import javaIcon from '@/assets/images/java.svg';
 
 //TODO shadow에 대한 스타일 변수 적용해야합니다. @버건디
 export const MissionImageContainer = styled.div`
@@ -25,6 +26,7 @@ export const MissionImg = styled.img`
 export const MissionSummaryWrapper = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
   background: var(--grey-50);
@@ -35,3 +37,5 @@ export const MissionSummaryText = styled.span`
   font-weight: 700;
   font-size: 1.7rem;
 `;
+
+export const JavaIcon = styled(javaIcon)``;

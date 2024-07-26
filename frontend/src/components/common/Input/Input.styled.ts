@@ -55,6 +55,9 @@ export const Input = styled.input<InputProps>`
   border: none;
   border-bottom: 0.15rem solid transparent;
   font-weight: bold;
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+  }
   ${(props) =>
     props.$danger
       ? css`
