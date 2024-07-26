@@ -1,33 +1,14 @@
-import { useEffect, useState } from 'react';
+import { getUserInfo } from '@/apis/authAPI';
+import type { UserInfo } from '@/types';
+import { useQuery } from '@tanstack/react-query';
 
-const useUserInfo = (onUnauthenticated: () => void) => {
-  const [userInfo, setUserInfo] = useState(null);
-
-  // TODO(@라이언): 토큰 가져오는 로직 추가
-  const token = '';
-
-  // TODO(@라이언): cookie 지우는 로직 추가
-  const removeCookie = () => {};
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      if (!token) {
-        setUserInfo(null);
-      }
-
-      try {
-        const data = await getUserInfo();
-        setUserInfo(data);
-      } catch {
-        removeCookie();
-        onUnauthenticated();
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
-
-  return { userInfo };
+const useUserInfo = () => {
+  return useQuery<UserInfo>({
+    queryKey: ['userInfo'],
+    queryFn: getUserInfo,
+    retry: false,
+    throwOnError: false,
+  });
 };
 
 export default useUserInfo;

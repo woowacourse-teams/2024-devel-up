@@ -1,19 +1,16 @@
 import type { UserInfo } from '@/types';
+import { develupAPIClient } from './clients/develupClient';
+import { PATH } from './paths';
 
-//TODO 일단 관심사 별로 API.ts 로 나누어 놓은 것인데,
-// 이 또한 추후에 논의해보아야 할듯 해요 ~ @버건디
+interface GetUserInfoResponse {
+  data: UserInfo;
+}
 
-export const getUserInfo = async (accessToken: string) => {
-  // TODO 린트에러로 인하여 선언만 해놓습니다.
-  accessToken;
+export const getUserInfo = async (): Promise<UserInfo> => {
+  const { data } = await develupAPIClient.get<GetUserInfoResponse>(PATH.userInfo);
 
-  const MOCK_USER_INFO: UserInfo = {
-    login: 'brgndyy',
-    id: 5643534,
-    avatar_url: 'https://avatars.githubusercontent.com/u/75781414?v=4',
-    email: 'brgndyy@gmail.com',
-    name: 'Taeheon Jeon',
-  };
-
-  return MOCK_USER_INFO;
+  // TODO(@ryan): 시연을 위해 description 임시 추가
+  return { ...data, description: '안녕하세요, 다같이 화이팅해봅시다!' };
 };
+
+export const testAuth = async () => {};

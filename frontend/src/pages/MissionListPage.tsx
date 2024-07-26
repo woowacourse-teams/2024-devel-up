@@ -4,9 +4,11 @@ import Carousel from '@/components/Carousel/Carousel';
 import useMissions from '@/hooks/useMissions';
 import MyMissionInProgress from '@/components/MyMission/MyMissionInProgress/MyMissionInProgress';
 import getPlaceholderImg from '@/components/common/Card/getPlaceholderImg';
+import useUserInfo from '@/hooks/useUserInfo';
 
 export default function MissionListPage() {
   const { data: allMissions } = useMissions();
+  const { data: userInfo } = useUserInfo();
 
   return (
     <S.MissionListContainer>
@@ -15,7 +17,7 @@ export default function MissionListPage() {
         <img src={getPlaceholderImg(1000, 425, 'devel-up banner 2')} />
         <img src={getPlaceholderImg(1000, 425, 'devel-up banner 3')} />
       </Carousel>
-      <MyMissionInProgress />
+      {userInfo && <MyMissionInProgress />}
       <div>
         <S.MissionListTitle>새로운 미션에 참여해 보세요!</S.MissionListTitle>
         <S.MissionList>
