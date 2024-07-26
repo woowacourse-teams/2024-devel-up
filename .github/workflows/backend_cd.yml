@@ -53,7 +53,7 @@ jobs:
 
       - name: 🔴 Stop Server
         run: |
-          PID=$(sudo lsof -t -i:80 || true)
+          PID=$(sudo lsof -t -i:8080 || true)
           if [ -n "$PID" ]; then
             sudo kill -15 $PID
             tail --pid=$PID -f /dev/null
