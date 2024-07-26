@@ -4,8 +4,6 @@ on:
   pull_request:
     types: [ opened, reopened, synchronize ]
     branches: [ 'main' ]
-    paths:
-      - frontend/**
 
 env:
   lilychoibb: "U07AQJWU8S3"
@@ -18,8 +16,25 @@ env:
   Parkhanyoung: "U07BTSGKCC8"
 
 jobs:
+  PATH_CHANGES:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      frontend: ${{ steps.changes.outputs.frontend }}
+
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+
   FE_CI:
     runs-on: ubuntu-latest
+    needs: PATH_CHANGES
+    if: ${{ needs.PATH_CHANGES.outputs.frontend == 'true' }}
     permissions:
       contents: read
       packages: write
