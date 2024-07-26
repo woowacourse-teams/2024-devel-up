@@ -48,3 +48,13 @@ export const LeftPart = styled.div``;
 export const LoginButton = styled.button`
   font-size: 1.3rem;
 `;
+
+export const MenuWrapper = styled.div`
+  display: flex;
+  gap: 8rem;
+`;
+
+export const MenuText = styled.p`
+  font-size: 1.6rem;
+  color: var(--grey-400);
+`;

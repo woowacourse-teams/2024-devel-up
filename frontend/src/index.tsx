@@ -49,7 +49,7 @@ const routes = [
     path: `${ROUTES.missionDetail}/:id`,
     element: (
       <App>
-        <Suspense fallback={<div>로딩중입니다!</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <MissionDetailPage />
         </Suspense>
       </App>
@@ -75,7 +75,9 @@ const routes = [
     path: ROUTES.submissions,
     element: (
       <App>
-        <SubmissionPage />
+        <Suspense fallback={<LoadingSpinner />}>
+          <SubmissionPage />
+        </Suspense>
       </App>
     ),
   },
