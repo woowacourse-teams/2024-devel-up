@@ -9,7 +9,7 @@ type UserProfileNameProps = Pick<UserInfo, 'name'>;
 export default function UserProfileName({ name }: UserProfileNameProps) {
   return (
     <S.InfoContainer>
-      <S.ProfileInfoText>{name}</S.ProfileInfoText>
+      <S.ProfileNameText>{name}</S.ProfileNameText>
     </S.InfoContainer>
   );
 }

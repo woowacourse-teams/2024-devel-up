@@ -15,10 +15,15 @@ export default function UserProfilePage() {
 
   return (
     <S.PageContainer>
-      <UserProfileImage avatar_url={userInfo.avatar_url} />
-      <UserProfileName name={userInfo.name} />
-      <UserProfileEmail email={userInfo.email} />
-      <UserProfileDescription description={userInfo.description} />
+      <S.UserProfileWrapper>
+        <UserProfileImage image={userInfo.image} />
+        <UserProfileName name={userInfo.name} />
+        <UserProfileEmail email={userInfo.email} />
+        <UserProfileDescription description={userInfo.description} />
+      </S.UserProfileWrapper>
+      <S.CommentWrapper>
+        <div>코멘트</div>
+      </S.CommentWrapper>
     </S.PageContainer>
   );
 }

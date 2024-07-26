@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 export interface UserInfo {
   id: number;
   login: string;
-  avatar_url: string;
+  image: string;
   email: string;
   name: string;
   description?: string;

@@ -1,16 +1,25 @@
 import { styled } from 'styled-components';
 
 export const PageContainer = styled.div`
-  width: 50rem;
-  height: 50rem;
+  width: 100rem;
   margin: 0 auto;
+  display: flex;
+  margin-top: 5.8rem;
 `;
+
+export const UserProfileWrapper = styled.div`
+  background: var(--grey-50);
+  width: 37rem;
+  height: 53rem;
+`;
+
+export const CommentWrapper = styled.div``;
 
 export const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5.8rem 0;
+  margin-bottom: 1rem;
 `;
 
 // 사용자 이미지
@@ -25,16 +34,19 @@ export const InfoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 4rem;
+  margin-bottom: 0.3rem;
 `;
 
 // 사용자 이름
 export const ProfileInfoText = styled.p`
-  font-weight: bold;
-  font-size: 3rem;
   word-break: break-all;
   min-width: 100%;
   text-align: center;
+`;
+
+export const ProfileNameText = styled(ProfileInfoText)`
+  font-weight: bold;
+  font-size: 2rem;
 `;
 
 // 사용자 한줄 소개

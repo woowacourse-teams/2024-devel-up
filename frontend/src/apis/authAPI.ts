@@ -10,7 +10,7 @@ export const getUserInfo = async (accessToken: string) => {
   const MOCK_USER_INFO: UserInfo = {
     login: 'brgndyy',
     id: 5643534,
-    avatar_url: 'https://avatars.githubusercontent.com/u/75781414?v=4',
+    image: 'https://avatars.githubusercontent.com/u/75781414?v=4',
     email: 'brgndyy@gmail.com',
     name: 'Taeheon Jeon',
   };
