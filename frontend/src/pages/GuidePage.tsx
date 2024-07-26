@@ -1,6 +1,8 @@
 import Tabs from '@/components/Tab/Tabs';
-import HowToFork from '@/components/Guide/HowToFork';
 import type { TabInfo } from '@/types';
+import HowToFork from '@/components/Guide/HowToFork';
+import HowToReview from '@/components/Guide/HowToReview';
+import HowToPR from '@/components/Guide/HowToPr';
 
 //TODO 여기서만 쓰일 데이터 같아서 일단 위에 선언해놓습니다. @버건디
 
@@ -11,11 +13,11 @@ const TAB_LIST: TabInfo[] = [
   },
   {
     name: 'step2(PR 보내기 / 제출)',
-    content: <div>step2(PR 보내기 / 제출)</div>,
+    content: <HowToPR />,
   },
   {
     name: 'step3(리뷰 방법)',
-    content: <div>step3(리뷰방법)</div>,
+    content: <HowToReview />,
   },
 ];
 
