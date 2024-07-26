@@ -20,7 +20,7 @@ export default function MissionItem({ mission }: MissionItemProps) {
         contentElement={
           <S.MissionDescription>
             <S.MissionTitle>{title}</S.MissionTitle>
-            <Badge text="백엔드" />
+            <Badge text="JAVA ☕️" />
           </S.MissionDescription>
         }
       />

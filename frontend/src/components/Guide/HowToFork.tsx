@@ -1,141 +1,49 @@
-// TODO 안에 컨텐츠가 어떻게 들어갈지 몰라서 일단 목파일 넣어놓습니다. @버건디
-
 /* eslint-disable react/no-unescaped-entities */
 const HowToFork = () => {
   return (
-    <div id="Inner">
-      <div id="Languages">
-        <a href="http://hy.lipsum.com/">Հայերեն</a>
-        <a href="http://sq.lipsum.com/">Shqip</a>
-        <span className="ltr" dir="ltr">
-          <a href="http://ar.lipsum.com/">‫العربية</a>
-        </span>
-        <a href="http://bg.lipsum.com/">Български</a>
-        <a href="http://ca.lipsum.com/">Català</a>
-        <a href="http://cn.lipsum.com/">中文简体</a>
-        <a href="http://hr.lipsum.com/">Hrvatski</a>
-        <a href="http://cs.lipsum.com/">Česky</a>
-        <a href="http://da.lipsum.com/">Dansk</a>
-        <a href="http://nl.lipsum.com/">Nederlands</a>
-        <a className="zz" href="http://www.lipsum.com/">
-          English
-        </a>
-        <a href="http://et.lipsum.com/">Eesti</a>
-        <a href="http://ph.lipsum.com/">Filipino</a>
-        <a href="http://fi.lipsum.com/">Suomi</a>
-        <a href="http://fr.lipsum.com/">Français</a>
-        <a href="http://ka.lipsum.com/">ქართული</a>
-        <a href="http://de.lipsum.com/">Deutsch</a>
-        <a href="http://el.lipsum.com/">Ελληνικά</a>
-        <span className="ltr" dir="ltr">
-          <a href="http://he.lipsum.com/">‫עברית</a>
-        </span>
-        <a href="http://hi.lipsum.com/">हिन्दी</a>
-        <a href="http://hu.lipsum.com/">Magyar</a>
-        <a href="http://id.lipsum.com/">Indonesia</a>
-        <a href="http://it.lipsum.com/">Italiano</a>
-        <a href="http://lv.lipsum.com/">Latviski</a>
-        <a href="http://lt.lipsum.com/">Lietuviškai</a>
-        <a href="http://mk.lipsum.com/">македонски</a>
-        <a href="http://ms.lipsum.com/">Melayu</a>
-        <a href="http://no.lipsum.com/">Norsk</a>
-        <a href="http://pl.lipsum.com/">Polski</a>
-        <a href="http://pt.lipsum.com/">Português</a>
-        <a href="http://ro.lipsum.com/">Româna</a>
-        <a href="http://ru.lipsum.com/">Pyccкий</a>
-        <a href="http://sr.lipsum.com/">Српски</a>
-        <a href="http://sk.lipsum.com/">Slovenčina</a>
-        <a href="http://sl.lipsum.com/">Slovenščina</a>
-        <a href="http://es.lipsum.com/">Español</a>
-        <a href="http://sv.lipsum.com/">Svenska</a>
-        <a href="http://th.lipsum.com/">ไทย</a>
-        <a href="http://tr.lipsum.com/">Türkçe</a>
-        <a href="http://uk.lipsum.com/">Українська</a>
-        <a href="http://vi.lipsum.com/">Tiếng Việt</a>
-      </div>
+    <div style={{ whiteSpace: 'pre-wrap' }}>
+      <h1>미션 가이드</h1>
 
-      <h1>Lorem Ipsum</h1>
-      <h4>
-        "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-        velit..."
-      </h4>
-      <h5>
-        "There is no one who loves pain itself, who seeks after it and wants to have it, simply
-        because it is pain..."
-      </h5>
+      <h2>1. 미션을 자신의 계정으로 fork</h2>
+      <p>develup-mission의 repository에 저장되어 있는 미션을 자신의 계정으로 가져옵니다.</p>
+      <img
+        src="https://github.com/user-attachments/assets/2c835367-78ee-4ac9-8f63-b54ac5b064f1"
+        alt="미션을 자신의 계정으로 fork"
+        width={200}
+        height={100}
+      />
 
-      <hr />
+      <h2>2. fork한 저장소를 자신의 컴퓨터로 clone</h2>
+      <p>자신의 계정으로 가져온 미션을 로컬 컴퓨터에 저장합니다.</p>
 
-      <div id="Content">
-        <div className="boxed">
-          <div id="lipsum">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis enim elementum
-              nulla posuere eleifend. Vestibulum sit amet venenatis libero. Suspendisse porttitor
-              sit amet ligula et placerat. Pellentesque habitant morbi tristique senectus et netus
-              et malesuada fames ac turpis egestas. Cras dignissim non urna in fermentum. Vivamus
-              egestas odio et rutrum ultricies. Aliquam gravida, lectus non tristique commodo,
-              ligula eros ultrices turpis, quis malesuada quam lectus nec metus. Pellentesque
-              habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-            </p>
-            <p>
-              Nullam viverra eu augue id aliquet. Nulla sit amet lobortis ipsum. Suspendisse
-              suscipit viverra ante vitae semper. Aliquam enim felis, iaculis a posuere pharetra,
-              lacinia eu tortor. Aliquam posuere suscipit cursus. Vivamus semper volutpat urna, eu
-              dignissim lectus ullamcorper eget. Duis placerat molestie sapien, nec commodo felis
-              vulputate at.
-            </p>
-            <p>
-              Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-              himenaeos. In vehicula, est id efficitur porta, orci velit ultrices enim, a dignissim
-              augue ligula at felis. Phasellus elementum nibh felis, ac viverra nunc elementum at.
-              Phasellus eu pellentesque libero. In convallis erat diam, vitae hendrerit ante posuere
-              a. In hac habitasse platea dictumst. Pellentesque at lectus eu nulla ullamcorper
-              ornare ut et urna.
-            </p>
-            <p>
-              Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-              curae; Nullam vulputate et nisi et iaculis. Donec iaculis ut nibh venenatis efficitur.
-              Nunc lorem justo, sagittis vitae lacus eu, tincidunt placerat justo. Aenean semper
-              nibh at sodales convallis. Duis ut iaculis arcu. Proin commodo rutrum nisl eget
-              venenatis. Quisque sodales magna sit amet turpis tristique faucibus. Aenean a porta
-              ex, at feugiat risus. Nulla tincidunt consectetur pellentesque. Integer semper, diam
-              quis porttitor porttitor, elit nunc ullamcorper dui, quis consectetur metus enim ac
-              nunc. Nulla egestas justo at auctor fringilla.
-            </p>
-            <p>
-              Mauris pharetra ut eros quis euismod. Sed efficitur erat id dui mollis venenatis. Duis
-              blandit, nisl vel venenatis fermentum, justo purus consectetur nibh, quis rutrum mi
-              eros id est. Sed mattis commodo leo. Donec lacinia mi sed laoreet imperdiet. Mauris ac
-              ex congue, consequat arcu eu, egestas metus. Duis imperdiet diam quis tellus pretium
-              ultricies. Quisque sagittis sit amet nisi id vulputate. Interdum et malesuada fames ac
-              ante ipsum primis in faucibus. Maecenas sagittis enim id porta fringilla. Nunc vel
-              faucibus massa. Nam rhoncus ex quis augue viverra, non aliquet mauris imperdiet. Donec
-              tincidunt enim sed justo posuere tempus. Suspendisse justo velit, vehicula id tellus
-              eu, condimentum posuere nibh.
-            </p>
-          </div>
-          <div id="generated">
-            Generated 5 paragraphs, 397 words, 2706 bytes of{' '}
-            <a href="https://www.lipsum.com/" title="Lorem Ipsum">
-              Lorem Ipsum
-            </a>
-          </div>
-        </div>
-      </div>
+      <h2>3. 기능 구현</h2>
+      <p>
+        <code>README.md</code> 파일을 참고하여 미션을 진행합니다.
+      </p>
 
-      <hr />
+      <h2>4. 기능 구현 후 add, commit</h2>
+      <p>기능 구현 후 변경된 코드를 저장소에 반영하기 위해 add, commit 명령을 사용합니다.</p>
+      <pre>
+        <code>
+          git status // 변경된 파일 확인 git add 파일명 또는 git add . // 변경된 단일 파일 또는 전체
+          파일 반영 git commit -m '메세지' // 작업한 내용을 메시지에 기록
+        </code>
+      </pre>
 
-      <div className="boxed">
-        <a style={{ textDecoration: 'none' }} href="mailto:help@lipsum.com">
-          help@lipsum.com
-        </a>
-        <br />
-        <a style={{ textDecoration: 'none' }} rel="nofollow" href="/privacy">
-          Privacy Policy
-        </a>
-        ·<button id="pmLink">Privacy Manager</button>
-      </div>
+      <h2>5. 본인 원격 저장소에 업로드</h2>
+      <p>
+        로컬에서 commit 명령을 실행하면 로컬 저장소에만 반영되고, 원격 github.com의 저장소에는
+        반영되지 않습니다. github.com의 저장소에도 동일하게 반영하기 위해 push 명령어를 사용합니다.
+      </p>
+      <pre>
+        <code>git push origin 브랜치이름 ex) git push origin develup</code>
+      </pre>
+
+      <h2>6. github 서비스에서 Pull Request 제출</h2>
+      <p>
+        Pull Request는 github에서 제공하는 기능으로 코드리뷰 요청을 보낼 때 사용합니다. Pull
+        Request는 original 저장소의 main 브랜치와 앞 단계에서 생성한 브랜치 이름을 기준으로 합니다.
+      </p>
     </div>
   );
 };

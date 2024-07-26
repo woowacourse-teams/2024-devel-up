@@ -42,7 +42,7 @@ export default function Header() {
           </Link>
         </S.MenuWrapper>
         <S.RightPart>
-          <S.BellIcon onClick={handleBellClick} />
+          {userInfo && <S.BellIcon onClick={handleBellClick} />}
           {!userInfo && (
             <a href={`${BASE_URL.dev}${PATH.githubLogin}?next=${pathname}`}>
               <S.LoginButton>로그인</S.LoginButton>

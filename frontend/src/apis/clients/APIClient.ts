@@ -52,6 +52,7 @@ export default class APIClient implements APIClientType {
         method,
         headers: this.header,
         body: JSON.stringify(body),
+        credentials: 'include',
       });
 
       if (!response.ok) {
