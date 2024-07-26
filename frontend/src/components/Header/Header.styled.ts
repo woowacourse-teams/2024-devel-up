@@ -37,6 +37,14 @@ export const BellIcon = styled(Bell)`
   cursor: pointer;
 `;
 
-export const RightPart = styled.div``;
+export const RightPart = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2.3rem;
+`;
 
 export const LeftPart = styled.div``;
+
+export const LoginButton = styled.button`
+  font-size: 1.3rem;
+`;
