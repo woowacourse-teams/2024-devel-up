@@ -1,0 +1,9 @@
+api-host: http://3.38.80.28
+client-host: http://3.38.11.109
+
+auth:
+  github:
+    client-id: develup-test-develup-test-develup-test-develup-test-develup-test
+    client-secret: develup-test-develup-test-develup-test-develup-test-develup-test
+    redirect-uri: ${api-host}/auth/social/callback/github
+    client-uri: ${client-host}
