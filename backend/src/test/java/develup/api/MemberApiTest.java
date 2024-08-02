@@ -39,7 +39,7 @@ class MemberApiTest extends IntegrationTestSupport {
                 .willReturn(response);
 
         mockMvc.perform(
-                        get("/member/mine")
+                        get("/members/mine")
                                 .cookie(new Cookie("token", "mock_token"))
                 )
                 .andDo(print())
