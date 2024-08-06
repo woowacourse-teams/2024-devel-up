@@ -1,3 +1,8 @@
+server:
+  tomcat:
+    mbeanregistry: # JMX 의 mbean 활성화
+      enabled: true
+
 spring:
   h2:
     console:
