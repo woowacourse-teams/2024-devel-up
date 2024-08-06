@@ -9,6 +9,9 @@ import jakarta.persistence.Id;
 @Entity
 public class Mission {
 
+    private static final String DESCRIPTION_BASE_URL_PREFIX = "https://raw.githubusercontent.com/develup-mission/";
+    private static final String DESCRIPTION_BASE_URL_SUFFIX = "/main/README.md";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,5 +53,11 @@ public class Mission {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getDescriptionUrl() {
+        String[] split = url.split("/");
+
+        return DESCRIPTION_BASE_URL_PREFIX + split[split.length - 1] + DESCRIPTION_BASE_URL_SUFFIX;
     }
 }
