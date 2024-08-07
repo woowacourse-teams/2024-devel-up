@@ -24,7 +24,7 @@ class SolutionApi {
 
     @GetMapping("/solutions")
     public ResponseEntity<ApiResponse<List<SolutionSummary>>> getSolutions() {
-        List<SolutionSummary> summaries = solutionRepository.findSummary();
+        List<SolutionSummary> summaries = solutionRepository.findCompletedSummaries();
 
         return ResponseEntity.ok(new ApiResponse<>(summaries));
     }

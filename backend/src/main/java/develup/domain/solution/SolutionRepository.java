@@ -14,5 +14,5 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
             JOIN s.mission m
             WHERE s.status = 'COMPLETED'
             """)
-    List<SolutionSummary> findSummary();
+    List<SolutionSummary> findCompletedSummaries();
 }
