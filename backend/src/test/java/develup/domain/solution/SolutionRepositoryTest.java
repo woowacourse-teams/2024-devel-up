@@ -3,7 +3,6 @@ package develup.domain.solution;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.ArrayList;
 import java.util.List;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
@@ -63,30 +62,25 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
     @Test
     @DisplayName("완료된 솔루션 요약 데이터를 조회할 수 있다.")
     void findCompletedSummaries() {
-        int expectedSize = 10;
-        saveRepeatedly(SolutionStatus.COMPLETED, expectedSize);
-        saveRepeatedly(SolutionStatus.IN_PROGRESS, 2);
+        createSolution(SolutionStatus.COMPLETED);
+        createSolution(SolutionStatus.COMPLETED);
+        createSolution(SolutionStatus.IN_PROGRESS);
 
         List<SolutionSummary> actual = solutionRepository.findCompletedSummaries();
 
-        assertThat(actual).hasSize(expectedSize);
+        assertThat(actual).hasSize(2);
     }
 
-    private void saveRepeatedly(SolutionStatus expectedStatus, int count) {
+    private void createSolution(SolutionStatus expectedStatus) {
         Member expectedMember = memberRepository.save(MemberTestData.defaultMember().build());
         Mission expectedMission = missionRepository.save(MissionTestData.defaultMission().build());
 
-        List<Solution> solutions = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            Solution solution = SolutionTestData.defaultSolution()
-                    .withMember(expectedMember)
-                    .withMission(expectedMission)
-                    .withStatus(expectedStatus)
-                    .build();
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(expectedMember)
+                .withMission(expectedMission)
+                .withStatus(expectedStatus)
+                .build();
 
-            solutions.add(solution);
-        }
-
-        solutionRepository.saveAll(solutions);
+        solutionRepository.save(solution);
     }
 }
