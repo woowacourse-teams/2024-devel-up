@@ -29,34 +29,34 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
     private MissionRepository missionRepository;
 
     @Test
-    @DisplayName("주어진 사용자 ID와 미션 ID와 상태에 해당하는 데이터가 존재하는지 확인한다. ")
+    @DisplayName("멤버 식별자와 미션 식별자와 특정 상태에 해당하는 솔루션이 존재하는지 확인한다. ")
     void exists() {
-        Member expectedMember = memberRepository.save(MemberTestData.defaultMember().build());
-        Mission expectedMission = missionRepository.save(MissionTestData.defaultMission().build());
-        SolutionStatus expectedStatus = SolutionStatus.IN_PROGRESS;
-        SolutionStatus unexpectedStatus = SolutionStatus.COMPLETED;
-        Solution solution = SolutionTestData.defaultSolution()
-                .withMember(expectedMember)
-                .withMission(expectedMission)
-                .withStatus(expectedStatus)
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        SolutionStatus inProgress = SolutionStatus.IN_PROGRESS;
+        SolutionStatus completed = SolutionStatus.COMPLETED;
+        Solution inProgressSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(inProgress)
                 .build();
-        solutionRepository.save(solution);
+        solutionRepository.save(inProgressSolution);
 
-        boolean actual = solutionRepository.existsByMember_IdAndMission_IdAndStatus(
-                expectedMember.getId(),
-                expectedMission.getId(),
-                expectedStatus
+        boolean exists = solutionRepository.existsByMember_IdAndMission_IdAndStatus(
+                member.getId(),
+                mission.getId(),
+                inProgress
         );
 
-        boolean unexpectedActual = solutionRepository.existsByMember_IdAndMission_IdAndStatus(
-                expectedMember.getId(),
-                expectedMission.getId(),
-                unexpectedStatus
+        boolean notExists = solutionRepository.existsByMember_IdAndMission_IdAndStatus(
+                member.getId(),
+                mission.getId(),
+                completed
         );
 
         assertAll(
-                () -> assertThat(actual).isTrue(),
-                () -> assertThat(unexpectedActual).isFalse()
+                () -> assertThat(exists).isTrue(),
+                () -> assertThat(notExists).isFalse()
         );
     }
 
