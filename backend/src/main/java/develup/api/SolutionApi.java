@@ -24,11 +24,15 @@ class SolutionApi {
 
     @GetMapping("/solutions")
     public ResponseEntity<ApiResponse<List<SolutionSummary>>> getSolutions() {
-        return ResponseEntity.ok(new ApiResponse<>(solutionRepository.findSummary()));
+        List<SolutionSummary> summaries = solutionRepository.findSummary();
+
+        return ResponseEntity.ok(new ApiResponse<>(summaries));
     }
 
     @GetMapping("/solutions/{id}")
     public ResponseEntity<ApiResponse<Solution>> getSolution(@PathVariable Long id) {
-        return ResponseEntity.ok(new ApiResponse<>(solutionService.getById(id)));
+        Solution solution = solutionService.getById(id);
+
+        return ResponseEntity.ok(new ApiResponse<>(solution));
     }
 }
