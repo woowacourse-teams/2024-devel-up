@@ -1,6 +1,7 @@
-package develup.api;
+package develup.domain.solution;
 
-public record SolutionSummaryResponse(
+public record SolutionSummary(
+        Long id,
         String thumbnail,
         String title,
         String description
