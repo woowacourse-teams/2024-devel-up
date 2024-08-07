@@ -1,4 +1,4 @@
 export const BASE_URL = {
-  dev: 'https://develup.robinjoon.xyz',
-  prod: 'https://develup.robinjoon.xyz',
+  dev: 'https://api.devel-up.co.kr',
+  prod: 'https://api.devel-up.co.kr',
 } as const;
