@@ -2,6 +2,16 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <springProperty scope="context" name="appName" source="spring.application.name"/>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} | %t | %highlight(%-5p) | %cyan(%logger{36}) | %m%n
+            </pattern>
+        </encoder>
+    </appender>
+
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
             <url>http://10.0.0.35:3100/loki/api/v1/push</url>
@@ -16,7 +26,22 @@
             <sortByTime>true</sortByTime>
         </format>
     </appender>
-    <root level="INFO">
-        <appender-ref ref="LOKI"/>
-    </root>
+
+    <springProfile name="local">
+        <root level="INFO">
+            <appender-ref ref="Console"/>
+        </root>
+
+        <logger name="com.sb" level="DEBUG"/>
+        <logger name="org.springframework.orm.jpa" level="DEBUG"/>
+        <logger name="org.springframework.orm.transaction" level="DEBUG"/>
+        <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
+    </springProfile>
+
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="LOKI"/>
+        </root>
+    </springProfile>
+
 </configuration>
