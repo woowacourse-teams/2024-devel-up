@@ -6,6 +6,7 @@ import develup.application.solution.SolutionService;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionSummary;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ class SolutionApi {
     }
 
     @GetMapping("/solutions")
+    @Operation(summary = "제출 조회 목록 API", description = "제출 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<SolutionSummary>>> getSolutions() {
         List<SolutionSummary> summaries = solutionRepository.findCompletedSummaries();
 
@@ -30,6 +32,7 @@ class SolutionApi {
     }
 
     @GetMapping("/solutions/{id}")
+    @Operation(summary = "제출 조회 API", description = "제출을 조회합니다.")
     public ResponseEntity<ApiResponse<Solution>> getSolution(@PathVariable Long id) {
         Solution solution = solutionService.getById(id);
 
