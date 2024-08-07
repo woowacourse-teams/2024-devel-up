@@ -16,3 +16,26 @@
 어려워진 취업 시장에서 홀로 고민하고 헤매느라 고생 많으셨습니다. 이제는 혼자 걱정하지 마세요.
 함께 도전하고, 함께 성장하며, 더 큰 목표를 향해 나아가세요. 여러분의 성장 여정을 돕기 위해 데벨업이 있습니다.
 데벨업과 함께라면 가능합니다. 데벨업에서 레벨업하세요!
+
+## 👤 멤버들
+
+### 프론트엔드
+
+| <img src="https://avatars.githubusercontent.com/u/109535991?v=4" width="130" height="130"> | <img src ="https://avatars.githubusercontent.com/u/80797824?v=4" width="130" height="130"> | <img src ="https://avatars.githubusercontent.com/u/121149171?v=4" width="130" height="130"> |
+| :-: | :-: | :-: |
+| [버건디][버건디 깃허브] | [라이언][라이언 깃허브] | [프룬][프룬 깃허브] |
+
+### 백엔드
+
+| <img src="https://avatars.githubusercontent.com/u/131349867?v=4" width="130" height="130"> | <img src="https://avatars.githubusercontent.com/u/140090179?v=4" width="130" height="130"> | <img src="https://avatars.githubusercontent.com/u/45223837?v=4" width="130" height="130"> | <img src="https://avatars.githubusercontent.com/u/39932141?v=4" width="130" height="130"> | <img src="https://avatars.githubusercontent.com/u/75781414?v=4" width="130" height="130"> |
+| :-: | :-: | :-: | :-: | :-: |
+| [리브][리브 깃허브] | [릴리][릴리 깃허브] | [로빈][로빈 깃허브] | [아톰][아톰 깃허브] | [구름][구름 깃허브] |
+
+[버건디 깃허브]: https://github.com/brgndyy
+[라이언 깃허브]: https://github.com/Parkhanyoung
+[프룬 깃허브]: https://github.com/chosim-dvlpr
+[리브 깃허브]: https://github.com/Minjoo522
+[릴리 깃허브]: https://github.com/lilychoibb
+[로빈 깃허브]: https://github.com/robinjoon
+[아톰 깃허브]: https://github.com/le2sky
+[구름 깃허브]: https://github.com/alstn113
