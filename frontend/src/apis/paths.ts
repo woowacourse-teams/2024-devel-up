@@ -6,4 +6,5 @@ export const PATH = {
   userInfo: '/member/mine',
   submissionsInProgress: '/submissions/now',
   pairReview: '/pair-review',
+  solutions: "/solutions"
 };

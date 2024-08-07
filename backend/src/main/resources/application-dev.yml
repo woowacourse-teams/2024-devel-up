@@ -1,5 +1,5 @@
-api-host: https://develup.robinjoon.xyz
-client-host: https://www.develup.robinjoon.xyz
+api-host: https://api.devel-up.co.kr
+client-host: https://www.devel-up.co.kr
 
 auth:
   github:

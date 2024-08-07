@@ -16,6 +16,7 @@ import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
 import ErrorPage from './pages/ErrorPage';
+import SolutionListPage from './pages/SolutionListPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -100,6 +101,14 @@ const routes = [
         <Suspense fallback={<LoadingSpinner />}>
           <ErrorPage />
         </Suspense>
+      </App>
+    ),
+  },
+  {
+    path: ROUTES.solutions,
+    element: (
+      <App>
+        <SolutionListPage />
       </App>
     ),
   },

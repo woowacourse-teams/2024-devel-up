@@ -68,6 +68,7 @@ jobs:
           -Dauth.github.client-id=${{ secrets.CLIENT_ID_GITHUB }} \
           -Dauth.github.client-secret=${{ secrets.CLIENT_SECRET_GITHUB }} \
           -Dspring.profiles.active=dev \
+          -Dserver.port=8080 \
           -jar ${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}.jar &
 
   slack-notify_success:

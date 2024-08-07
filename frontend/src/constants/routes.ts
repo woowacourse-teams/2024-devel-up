@@ -6,4 +6,5 @@ export const ROUTES = {
   guide: '/guide',
   submissions: '/submissions',
   error: '/error',
+  solutions: '/solutions',
 } as const;
