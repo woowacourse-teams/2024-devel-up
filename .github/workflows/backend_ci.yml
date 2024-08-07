@@ -6,14 +6,14 @@ on:
     branches: [ 'main' ]
 
 env:
-  lilychoibb: ${{secret.LILYCHOIBB_SLACK_ID}}
-  robinjoon: ${{secret.ROBINJOON_SLACK_ID}}
-  brgndyy: ${{secret.BRGNDYY_SLACK_ID}}
-  chosim-dvlpr: ${{secret.CHOSIM_DVLPR_SLACK_ID}}
-  Minjoo522: ${{secret.MINJOO522_SLACK_ID}}
-  alstn113: ${{secret.ALSTN113_SLACK_ID}}
-  le2sky: ${{secret.LE2SKY_SLACK_ID}}
-  Parkhanyoung: ${{secret.PARKHANYOUNG_SLACK_ID}}
+  lilychoibb: ${{secrets.LILYCHOIBB_SLACK_ID}}
+  robinjoon: ${{secrets.ROBINJOON_SLACK_ID}}
+  brgndyy: ${{secrets.BRGNDYY_SLACK_ID}}
+  chosim-dvlpr: ${{secrets.CHOSIM_DVLPR_SLACK_ID}}
+  Minjoo522: ${{secrets.MINJOO522_SLACK_ID}}
+  alstn113: ${{secrets.ALSTN113_SLACK_ID}}
+  le2sky: ${{secrets.LE2SKY_SLACK_ID}}
+  Parkhanyoung: ${{secrets.PARKHANYOUNG_SLACK_ID}}
 
 jobs:
   PATH_CHANGES:
