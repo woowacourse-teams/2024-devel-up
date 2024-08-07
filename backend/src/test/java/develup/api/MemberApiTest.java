@@ -1,9 +1,11 @@
 package develup.api;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import develup.application.member.MemberResponse;
@@ -43,6 +45,10 @@ class MemberApiTest extends IntegrationTestSupport {
                                 .cookie(new Cookie("token", "mock_token"))
                 )
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.email", equalTo("example@gmail.com")))
+                .andExpect(jsonPath("$.data.name", equalTo("example")))
+                .andExpect(jsonPath("$.data.imageUrl", equalTo("https://example.com/image.png")));
     }
 }
