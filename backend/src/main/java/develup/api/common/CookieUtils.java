@@ -15,7 +15,8 @@ public class CookieUtils {
         Cookie cookie = new Cookie(TOKEN_COOKIE_NAME, token);
         cookie.setMaxAge(COOKIE_MAX_AGE_ONE_DAY);
         cookie.setHttpOnly(true);
-        // cookie.setSecure(true); // HTTPS를 사용할 때
+        cookie.setSecure(true); // HTTPS를 사용할 때
+        cookie.setDomain(".devel-up.co.kr");
         cookie.setPath("/");
 
         response.addCookie(cookie);
