@@ -2,7 +2,6 @@ package develup.api.common;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.ResponseCookie;
 
 public class CookieUtils {
 
@@ -13,15 +12,13 @@ public class CookieUtils {
     }
 
     public static void setTokenCookie(HttpServletResponse response, String token) {
-        ResponseCookie responseCookie = ResponseCookie.from(TOKEN_COOKIE_NAME, token)
-                .path("/")
-                .sameSite("None")
-                .httpOnly(true)
-                .secure(true)
-                .maxAge(COOKIE_MAX_AGE_ONE_DAY)
-                .build();
+        Cookie cookie = new Cookie(TOKEN_COOKIE_NAME, token);
+        cookie.setMaxAge(COOKIE_MAX_AGE_ONE_DAY);
+        cookie.setHttpOnly(true);
+        // cookie.setSecure(true); // HTTPS를 사용할 때
+        cookie.setPath("/");
 
-        response.addHeader("Set-Cookie", responseCookie.toString());
+        response.addCookie(cookie);
     }
 
     public static void clearTokenCookie(HttpServletResponse response) {
