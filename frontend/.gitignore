@@ -3,3 +3,5 @@ node_modules
 .DS_Store
 build-storybook.log
 /dist
+# Sentry Config File
+.env.sentry-build-plugin
