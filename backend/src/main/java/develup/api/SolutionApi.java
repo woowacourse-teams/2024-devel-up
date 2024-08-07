@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class SolutionApi {
+public class SolutionApi {
 
     private final SolutionService solutionService;
     private final SolutionRepository solutionRepository;
