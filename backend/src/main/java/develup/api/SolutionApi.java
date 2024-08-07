@@ -24,7 +24,7 @@ public class SolutionApi {
     }
 
     @GetMapping("/solutions")
-    @Operation(summary = "제출 조회 목록 API", description = "제출 목록을 조회합니다.")
+    @Operation(summary = "솔루션 조회 목록 API", description = "솔루션 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<SolutionSummary>>> getSolutions() {
         List<SolutionSummary> summaries = solutionRepository.findCompletedSummaries();
 
@@ -32,7 +32,7 @@ public class SolutionApi {
     }
 
     @GetMapping("/solutions/{id}")
-    @Operation(summary = "제출 조회 API", description = "제출을 조회합니다.")
+    @Operation(summary = "솔루션 조회 API", description = "솔루션을 조회합니다.")
     public ResponseEntity<ApiResponse<Solution>> getSolution(@PathVariable Long id) {
         Solution solution = solutionService.getById(id);
 
