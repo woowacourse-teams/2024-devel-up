@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import buildURL from './buildURL';
 import HTTP_METHOD from './httpMethod';
+import * as Sentry from '@sentry/react';
 
 interface APIClientType {
   get<T>(path: string, queryParams?: Record<string, string>): Promise<T>;
@@ -63,7 +64,12 @@ export default class APIClient implements APIClientType {
 
       return data;
     } catch (err) {
-      throw new Error('');
+      Sentry.withScope((scope: Sentry.Scope) => {
+        scope.setLevel('error');
+        scope.setTag('url', window.location.href);
+        Sentry.captureException(err);
+      });
+      throw err;
     }
   }
 }

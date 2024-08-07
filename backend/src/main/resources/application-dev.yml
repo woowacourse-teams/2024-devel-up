@@ -1,5 +1,5 @@
-api-host: http://3.38.80.28
-client-host: http://3.38.11.109
+api-host: https://api.devel-up.co.kr
+client-host: https://www.devel-up.co.kr
 
 auth:
   github:
