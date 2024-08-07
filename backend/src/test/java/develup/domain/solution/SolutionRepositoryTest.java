@@ -71,14 +71,14 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
         assertThat(actual).hasSize(2);
     }
 
-    private void createSolution(SolutionStatus expectedStatus) {
-        Member expectedMember = memberRepository.save(MemberTestData.defaultMember().build());
-        Mission expectedMission = missionRepository.save(MissionTestData.defaultMission().build());
+    private void createSolution(SolutionStatus status) {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
 
         Solution solution = SolutionTestData.defaultSolution()
-                .withMember(expectedMember)
-                .withMission(expectedMission)
-                .withStatus(expectedStatus)
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(status)
                 .build();
 
         solutionRepository.save(solution);
