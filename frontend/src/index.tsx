@@ -14,6 +14,7 @@ import React, { Suspense } from 'react';
 import { ErrorBoundary } from './components/common/Error/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
+import SolutionListPage from "@/pages/SolutionListPage";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -82,6 +83,14 @@ const routes = [
       </App>
     ),
   },
+  {
+    path: ROUTES.solutions,
+    element: (
+        <App>
+          <SolutionListPage />
+        </App>
+    )
+  }
 ];
 
 export const router = createBrowserRouter(routes, {
