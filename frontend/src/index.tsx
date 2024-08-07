@@ -15,6 +15,7 @@ import { ErrorBoundary } from './components/common/Error/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
+import ErrorPage from './pages/ErrorPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +29,7 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN,
   integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
   tracesSampleRate: 1.0,
-  tracePropagationTargets: [/^https:\/\/develup\.robinjoon\.xyz\/?$/],
+  tracePropagationTargets: [/^https:\/\/api\.devel-up\.co\.kr\/?$/],
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 });
@@ -88,6 +89,16 @@ const routes = [
       <App>
         <Suspense fallback={<LoadingSpinner />}>
           <SubmissionPage />
+        </Suspense>
+      </App>
+    ),
+  },
+  {
+    path: ROUTES.error,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <ErrorPage />
         </Suspense>
       </App>
     ),

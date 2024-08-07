@@ -5,4 +5,5 @@ export const ROUTES = {
   profile: '/profile',
   guide: '/guide',
   submissions: '/submissions',
+  error: '/error',
 } as const;
