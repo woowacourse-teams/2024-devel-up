@@ -6,7 +6,7 @@ import ContentImage from '@/assets/images/contentImage.svg';
 import Button from '@/components/common/Button/Button';
 import { GithubIcon } from '@/components/MissionSubmit/SubmitBanner.styled';
 
-const CONTENT_LIST = [
+const MOCK_CONTENT_LIST = [
   {
     id: 1,
     image: '',
@@ -19,15 +19,16 @@ const CONTENT_LIST = [
 
 interface MissionProcessProps {
   handleModalClose: () => void;
+  onClick: () => void;
 }
 
-export default function MissionProcess({ handleModalClose }: MissionProcessProps) {
+export default function MissionProcess({ handleModalClose, onClick }: MissionProcessProps) {
   const [contentId, setContentId] = useState(1);
-  const currentContent = CONTENT_LIST.find((content) => content.id === contentId);
-  const isEndContent = contentId === CONTENT_LIST.length;
+  const currentContent = MOCK_CONTENT_LIST.find((content) => content.id === contentId);
+  const isEndContent = contentId === MOCK_CONTENT_LIST.length;
 
   const handleNextMissionProcess = () => {
-    setContentId((prev) => Math.min(prev + 1, CONTENT_LIST.length));
+    setContentId((prev) => Math.min(prev + 1, MOCK_CONTENT_LIST.length));
   };
 
   const handlePreviousMissionProcess = () => {
@@ -46,7 +47,7 @@ export default function MissionProcess({ handleModalClose }: MissionProcessProps
       <S.ButtonWrapper>
         {isEndContent ? (
           <>
-            <Button type="icon" content="미션 코드 보러 가기">
+            <Button type="icon" content="미션 코드 보러 가기" onHandleClick={onClick}>
               <GithubIcon />
             </Button>
           </>

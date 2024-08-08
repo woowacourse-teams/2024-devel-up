@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import * as S from './MissionDetail.styled';
-import Button from '../common/Button/Button';
 import { ROUTES } from '@/constants/routes';
 import useUserInfo from '@/hooks/useUserInfo';
 import useModal from '@/hooks/useModal';
 import Modal from '../common/Modal/Modal';
-import MissionProcess from '../ModalContent/MissionProccess';
+import MissionProcess from '../ModalContent/MissionProcess';
+import useMissionStartMutation from '@/hooks/useMissionStartMutation';
 
 interface MissionDetailButtonsProps {
   id: number;
@@ -19,13 +19,14 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
   };
   const { data: userInfo } = useUserInfo();
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
+  const { startMissionMutation } = useMissionStartMutation({ onSuccessCallback: handleModalOpen });
 
   // const handleNavigateToMyPr = () => {
   //   window.open('', '_blank'); // 추후 구현 예정입니다 @프룬
   // };
 
   const handleMissionStart = () => {
-    handleModalOpen();
+    startMissionMutation({ missionId: id });
   };
 
   const handleNavigateToMission = () => {
@@ -39,7 +40,7 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
   return (
     <S.MissionDetailButtonsContainer>
       <S.ButtonWrapper>
-        {!userInfo && (
+        {!userInfo && !isModalOpen && (
           <S.MissionButton
             $bgColor="--primary-500"
             $fontColor="--white-color"
@@ -49,7 +50,7 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
             미션 시작하기
           </S.MissionButton>
         )}
-        {userInfo && (
+        {!userInfo && isModalOpen && (
           <S.MissionButton
             $bgColor="--primary-500"
             $fontColor="--white-color"
@@ -61,7 +62,7 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
         )}
 
         <Modal isModalOpen={isModalOpen}>
-          <MissionProcess handleModalClose={handleModalClose} />
+          <MissionProcess handleModalClose={handleModalClose} onClick={handleNavigateToMission} />
         </Modal>
 
         {/* <Button
