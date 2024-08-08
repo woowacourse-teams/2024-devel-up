@@ -33,10 +33,6 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
     window.open(missionUrl, '_blank');
   };
 
-  const handleNavigateToMethod = () => {
-    window.open('https://github.com/develup-mission/docs/blob/main/mission-guide.md', '_blank');
-  };
-
   return (
     <S.MissionDetailButtonsContainer>
       <S.ButtonWrapper>
@@ -74,7 +70,7 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
         /> */}
       </S.ButtonWrapper>
 
-      <S.InfoMsgWrapper onClick={handleNavigateToMethod}>
+      <S.InfoMsgWrapper onClick={handleModalOpen}>
         <S.InfoIcon />
         <S.Text>어떻게 참여하나요?</S.Text>
       </S.InfoMsgWrapper>
