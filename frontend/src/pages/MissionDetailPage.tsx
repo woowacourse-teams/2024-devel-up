@@ -16,7 +16,11 @@ export default function MissionDetailPage() {
         thumbnail={missionData.thumbnail}
         language={missionData.language}
       />
-      <MissionDetailButtons id={Number(missionData.id)} missionUrl={missionData.url} />
+      <MissionDetailButtons
+        id={Number(missionData.id)}
+        missionUrl={missionData.url}
+        isStarted={missionData.isStarted}
+      />
       <MissionDetailContent descriptionUrl={missionData.description} />
     </S.MissionDetailPageContainer>
   );

@@ -8,7 +8,7 @@ import SubmitSuccessPopUp from '@/components/PopUp/SubmitSuccessPopUp';
 import { useParams } from 'react-router-dom';
 import useMission from '@/hooks/useMission';
 import { PROGRESS_MESSAGE } from '@/constants/messages';
-import useSubmission from '@/hooks/useSubmission';
+import useSubmitSolution from '@/hooks/useSubmitSolution';
 import LoadingSpinner from '@/components/common/LoadingSpinner/LoadingSpinner';
 import MissionTitle from '@/components/MissionSubmit/MissionTitle';
 
@@ -29,7 +29,7 @@ export default function MissionSubmitPage() {
     isUrlError,
     isDescriptionError,
     isSolutionTitleError,
-  } = useSubmission({ missionId, title: mission.title });
+  } = useSubmitSolution({ missionId, title: mission.title });
 
   return (
     <S.Container>

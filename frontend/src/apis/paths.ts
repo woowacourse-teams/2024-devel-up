@@ -9,4 +9,5 @@ export const PATH = {
   solutionSummaries: '/solutions',
   submitSolution: '/solutions/submit',
   startSolution: '/solutions/start',
+  logout: '/auth/logout',
 };
