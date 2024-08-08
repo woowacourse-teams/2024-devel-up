@@ -4,9 +4,9 @@ import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
+import develup.application.solution.SolutionRequest;
+import develup.application.solution.SolutionResponse;
 import develup.application.solution.SolutionService;
-import develup.domain.solution.Solution;
-import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionSummary;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,37 +22,46 @@ import org.springframework.web.bind.annotation.RestController;
 public class SolutionApi {
 
     private final SolutionService solutionService;
-    private final SolutionRepository solutionRepository;
 
-    public SolutionApi(SolutionService solutionService, SolutionRepository solutionRepository) {
+    public SolutionApi(SolutionService solutionService) {
         this.solutionService = solutionService;
-        this.solutionRepository = solutionRepository;
     }
 
     @PostMapping("/solutions/start")
     @Operation(summary = "미션 시작 API", description = "미션을 시작합니다.")
-    public ResponseEntity<ApiResponse<Solution>> startSolution(
+    public ResponseEntity<ApiResponse<SolutionResponse>> startSolution(
             @RequestBody StartSolutionRequest request,
             @Auth Accessor accessor
     ) {
-        Solution solution = solutionService.startMission(accessor.id(), request.missionId());
+        SolutionResponse response = solutionService.startMission(accessor.id(), request.missionId());
 
-        return ResponseEntity.ok(new ApiResponse<>(solution));
+        return ResponseEntity.ok(new ApiResponse<>(response));
+    }
+
+    @PostMapping("/solutions/submit")
+    @Operation(summary = "솔루션 제출 API", description = "솔루션을 제출합니다.")
+    public ResponseEntity<ApiResponse<SolutionResponse>> createSolution(
+            @Auth Accessor accessor, //TODO: Accessor 지우기
+            @RequestBody SolutionRequest request
+    ) {
+        SolutionResponse response = solutionService.create(accessor, request);
+
+        return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
     @GetMapping("/solutions")
     @Operation(summary = "솔루션 조회 목록 API", description = "솔루션 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<SolutionSummary>>> getSolutions() {
-        List<SolutionSummary> summaries = solutionRepository.findCompletedSummaries();
+        List<SolutionSummary> summaries = solutionService.getCompletedSummaries();
 
         return ResponseEntity.ok(new ApiResponse<>(summaries));
     }
 
     @GetMapping("/solutions/{id}")
     @Operation(summary = "솔루션 조회 API", description = "솔루션을 조회합니다.")
-    public ResponseEntity<ApiResponse<Solution>> getSolution(@PathVariable Long id) {
-        Solution solution = solutionService.getById(id);
+    public ResponseEntity<ApiResponse<SolutionResponse>> getSolution(@PathVariable Long id) {
+        SolutionResponse solutionResponse = solutionService.getById(id);
 
-        return ResponseEntity.ok(new ApiResponse<>(solution));
+        return ResponseEntity.ok(new ApiResponse<>(solutionResponse));
     }
 }

@@ -4,6 +4,7 @@ import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionStatus;
+import develup.domain.solution.Title;
 
 public class SolutionTestData {
 
@@ -22,7 +23,7 @@ public class SolutionTestData {
         private Long id;
         private Mission mission;
         private Member member;
-        private String title;
+        private Title title;
         private String description;
         private String url;
         private SolutionStatus status;
@@ -43,7 +44,7 @@ public class SolutionTestData {
         }
 
         public SolutionBuilder withTitle(String title) {
-            this.title = title;
+            this.title = new Title(title);
             return this;
         }
 
