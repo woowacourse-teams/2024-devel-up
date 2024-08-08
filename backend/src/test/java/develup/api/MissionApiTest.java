@@ -9,13 +9,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
 import develup.application.mission.MissionResponse;
 import develup.application.mission.MissionService;
 import develup.application.mission.MissionWithStartedResponse;
 import develup.domain.mission.Mission;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.MissionTestData;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;

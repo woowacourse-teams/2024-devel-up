@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Optional;
 import develup.api.exception.DevelupException;
 import develup.application.auth.Accessor;
 import develup.domain.member.Member;
@@ -18,7 +19,6 @@ import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

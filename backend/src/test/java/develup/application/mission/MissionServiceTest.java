@@ -4,6 +4,7 @@ import static develup.domain.solution.SolutionStatus.IN_PROGRESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.application.auth.Accessor;
 import develup.domain.member.Member;
@@ -15,7 +16,6 @@ import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

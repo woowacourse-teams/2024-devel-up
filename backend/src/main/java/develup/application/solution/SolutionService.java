@@ -1,5 +1,8 @@
 package develup.application.solution;
 
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.application.auth.Accessor;
@@ -13,9 +16,6 @@ import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
 import develup.domain.solution.SolutionSummary;
 import develup.domain.solution.Title;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
 
 @Service

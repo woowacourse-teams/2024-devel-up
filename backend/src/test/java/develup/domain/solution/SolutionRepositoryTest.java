@@ -3,6 +3,7 @@ package develup.domain.solution;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.List;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
@@ -11,7 +12,6 @@ import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

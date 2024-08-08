@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import develup.api.auth.AuthArgumentResolver;
 import develup.application.auth.Accessor;
@@ -22,7 +23,6 @@ import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
