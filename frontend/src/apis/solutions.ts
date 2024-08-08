@@ -1,19 +1,24 @@
-import {develupAPIClient} from "@/apis/clients/develupClient";
-import {PATH} from "@/apis/paths";
+import { develupAPIClient } from './clients/develupClient';
+import { PATH } from './paths';
+import type { Solution } from '@/types/solution';
 
-export interface SolutionSummary {
-    id: string;
-    thumbnail: string;
-    description: string;
-    title: string;
+export interface PostSolutionResponse {
+  data: Solution;
 }
 
-interface GetSolutionSummaryResponse {
-    data: SolutionSummary[];
-}
+export const postSolutionStart = async (payload: { missionId: number }): Promise<Solution> => {
+  const { data } = await develupAPIClient.post<PostSolutionResponse>(PATH.startSolution, payload);
 
-export const getSolutionSummaries = async (): Promise<SolutionSummary[]> => {
-    const {data} = await develupAPIClient.get<GetSolutionSummaryResponse>(PATH.solutions);
+  return data;
+};
 
-    return data;
+export const postSolutionSubmit = async (payload: {
+  missionId: number;
+  title: string;
+  description: string;
+  url: string;
+}): Promise<Solution> => {
+  const { data } = await develupAPIClient.post<PostSolutionResponse>(PATH.submitSolution, payload);
+
+  return data;
 };

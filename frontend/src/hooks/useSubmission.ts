@@ -1,17 +1,31 @@
 import useUrl from './useUrl';
-import useComment from './useComment';
+import useDescription from './useDescription';
 import useSubmissionMutation from './useSubmissionMutation';
 import useModal from './useModal';
 import type { FormEvent } from 'react';
+import useSolutionTitle from './useSolutionTitle';
 
 interface UseSubmissionParams {
   missionId: number;
+  title: string;
 }
 
 const useSubmission = ({ missionId }: UseSubmissionParams) => {
   const { url, handleUrl, isValidUrl, isUrlError, setIsUrlError } = useUrl();
-  const { comment, handleComment, isValidComment, isCommentError, setIsCommentError } =
-    useComment();
+  const {
+    description,
+    handleDescription,
+    isValidDescription,
+    isDescriptionError,
+    setIsDescriptionError,
+  } = useDescription();
+  const {
+    solutionTitle,
+    isSolutionTitleError,
+    setIsSolutionTitleError,
+    handleSolutionTitle,
+    isValidSolutionTitle,
+  } = useSolutionTitle();
   const { handleModalOpen, isModalOpen } = useModal();
   const { submissionMutation, isPending } = useSubmissionMutation({
     onSuccessCallback: handleModalOpen,
@@ -19,27 +33,37 @@ const useSubmission = ({ missionId }: UseSubmissionParams) => {
 
   const handleSubmission = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isValidSolutionTitle) {
+      setIsSolutionTitleError(true);
+      return;
+    }
+
     if (!isValidUrl) {
       setIsUrlError(true);
       return;
     }
-    if (!isValidComment) {
-      setIsCommentError(true);
+    if (!isValidDescription) {
+      setIsDescriptionError(true);
       return;
     }
-    submissionMutation({ missionId, url, comment });
+
+    submissionMutation({ missionId, title: solutionTitle, url, description });
   };
 
   return {
     url,
-    comment,
-    handleComment,
+    description,
+    solutionTitle,
+    handleDescription,
     handleUrl,
     handleSubmission,
+    handleSolutionTitle,
     isPending,
     isModalOpen,
     isUrlError,
-    isCommentError,
+    isDescriptionError,
+    isSolutionTitleError,
   };
 };
 
