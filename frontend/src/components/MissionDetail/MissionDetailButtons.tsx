@@ -6,13 +6,27 @@ import useModal from '@/hooks/useModal';
 import Modal from '../common/Modal/Modal';
 import MissionProcess from '../ModalContent/MissionProcess';
 import useMissionStartMutation from '@/hooks/useMissionStartMutation';
+import Button from '../common/Button/Button';
+import { GithubIcon } from './MissionDetail.styled';
 
 interface MissionDetailButtonsProps {
   id: number;
   missionUrl: string;
+  isStarted?: boolean;
 }
 
-export default function MissionDetailButtons({ id, missionUrl }: MissionDetailButtonsProps) {
+const MOCK_USER = {
+  id: 1,
+  email: 'brgndy@gmail.com',
+  name: 'taeheon',
+  imageUrl: '',
+};
+
+export default function MissionDetailButtons({
+  id,
+  missionUrl,
+  isStarted = false,
+}: MissionDetailButtonsProps) {
   const navigate = useNavigate();
   const handleNavigateToSubmit = () => {
     navigate(`${ROUTES.submission}/${id}`);
@@ -35,8 +49,11 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
 
   return (
     <S.MissionDetailButtonsContainer>
+      <Button type="icon" content="미션 코드 보러 가기" onHandleClick={handleNavigateToMission}>
+        <GithubIcon />
+      </Button>
       <S.ButtonWrapper>
-        {userInfo && !isModalOpen && (
+        {userInfo && !isStarted && (
           <S.MissionButton
             $bgColor="--primary-500"
             $fontColor="--white-color"
@@ -46,7 +63,7 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
             미션 시작하기
           </S.MissionButton>
         )}
-        {userInfo && isModalOpen && (
+        {userInfo && isStarted && (
           <S.MissionButton
             $bgColor="--primary-500"
             $fontColor="--white-color"

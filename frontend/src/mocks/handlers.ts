@@ -14,7 +14,7 @@ export const handlers = [
     const mission = missions.find((mission) => mission.id === id);
     return HttpResponse.json({ data: mission });
   }),
-  http.post(`${BASE_URL.dev}${PATH.submissions}`, () => {
+  http.post(`${BASE_URL.dev}${PATH.submitSolution}`, () => {
     return HttpResponse.json({ data: submission });
   }),
 ];

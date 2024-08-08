@@ -7,6 +7,7 @@ import { BASE_URL } from '@/apis/baseUrl';
 import { PATH } from '@/apis/paths';
 import useUserInfo from '@/hooks/useUserInfo';
 import HeaderMenu from './HeaderMenu';
+import { deleteLogout } from '@/apis/authAPI';
 
 export default function Header() {
   const { pathname } = useLocation();
@@ -24,6 +25,10 @@ export default function Header() {
     }
   };
 
+  const handleUserLogout = async () => {
+    await deleteLogout();
+  };
+
   return (
     <>
       <S.Container>
@@ -38,10 +43,12 @@ export default function Header() {
         </S.MenuWrapper>
         <S.RightPart>
           {userInfo && <S.BellIcon onClick={handleBellClick} />}
-          {!userInfo && (
+          {!userInfo ? (
             <a href={`${BASE_URL.dev}${PATH.githubLogin}?next=${pathname}`}>
               <S.LoginButton>로그인</S.LoginButton>
             </a>
+          ) : (
+            <S.LoginButton onClick={handleUserLogout}>로그아웃</S.LoginButton>
           )}
         </S.RightPart>
       </S.Container>

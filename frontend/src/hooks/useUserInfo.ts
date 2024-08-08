@@ -1,6 +1,6 @@
 import { getUserInfo } from '@/apis/authAPI';
-import type { UserInfo } from '@/types';
 import { useQuery } from '@tanstack/react-query';
+import { UserInfo } from '../types/user';
 
 const useUserInfo = () => {
   return useQuery<UserInfo>({

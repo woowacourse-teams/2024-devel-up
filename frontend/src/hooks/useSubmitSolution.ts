@@ -1,16 +1,16 @@
 import useUrl from './useUrl';
 import useDescription from './useDescription';
-import useSubmissionMutation from './useSubmissionMutation';
+import useSubmitSolutionMutation from './useSubmitSolutionMutation';
 import useModal from './useModal';
 import type { FormEvent } from 'react';
 import useSolutionTitle from './useSolutionTitle';
 
-interface UseSubmissionParams {
+interface UseSubmitSolutionParams {
   missionId: number;
   title: string;
 }
 
-const useSubmission = ({ missionId }: UseSubmissionParams) => {
+const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
   const { url, handleUrl, isValidUrl, isUrlError, setIsUrlError } = useUrl();
   const {
     description,
@@ -27,8 +27,9 @@ const useSubmission = ({ missionId }: UseSubmissionParams) => {
     isValidSolutionTitle,
   } = useSolutionTitle();
   const { handleModalOpen, isModalOpen } = useModal();
-  const { submissionMutation, isPending } = useSubmissionMutation({
+  const { submitSolutionMutation, isPending } = useSubmitSolutionMutation({
     onSuccessCallback: handleModalOpen,
+    missionId,
   });
 
   const handleSubmission = (e: FormEvent<HTMLFormElement>) => {
@@ -48,7 +49,7 @@ const useSubmission = ({ missionId }: UseSubmissionParams) => {
       return;
     }
 
-    submissionMutation({ missionId, title: solutionTitle, url, description });
+    submitSolutionMutation({ missionId, title: solutionTitle, url, description });
   };
 
   return {
@@ -67,4 +68,4 @@ const useSubmission = ({ missionId }: UseSubmissionParams) => {
   };
 };
 
-export default useSubmission;
+export default useSubmitSolution;

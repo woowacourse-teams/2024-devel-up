@@ -3,14 +3,6 @@
 
 import type { ReactNode } from 'react';
 
-export interface UserInfo {
-  id: number;
-  email: string;
-  name: string;
-  imageUrl: string;
-  description: string;
-}
-
 export interface TabInfo {
   name: string;
   content: ReactNode;
@@ -24,6 +16,7 @@ export interface Mission {
   description: string;
   thumbnail: string;
   url: string;
+  isStarted?: boolean;
 }
 
 export interface MissionSubmission {

@@ -33,7 +33,7 @@ export const postSolutionStart = async (payload: { missionId: number }): Promise
 export const postSolutionSubmit = async (payload: {
   missionId: number;
   title: string;
-  description: string;
+  description: string | null;
   url: string;
 }): Promise<Solution> => {
   const { data } = await develupAPIClient.post<PostSolutionResponse>(PATH.submitSolution, payload);

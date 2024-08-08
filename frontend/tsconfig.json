@@ -25,5 +25,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "src/hooks/__tests__/.tsx"]
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { ChangeEvent } from 'react';
-import type { UserInfo } from '@/types';
+import type { UserInfo } from '@/types/user';
 import * as S from './UserProfile.styled';
 
 type UserProfileDescription = Pick<UserInfo, 'description'>;

@@ -17,7 +17,7 @@ export default function MissionDetailHeader({
         <S.ThumbnailImg src={thumbnail} alt="미션 썸네일 이미지" />
         <S.GradientOverlay />
         <S.Title>{title}</S.Title>
-        <S.LangBadgeWrapper>{language === 'JAVA' ? <S.JavaIcon /> : null}</S.LangBadgeWrapper>
+        {/* <S.LangBadgeWrapper>{language === 'JAVA' ? <S.JavaIcon /> : null}</S.LangBadgeWrapper> */}
       </S.ThumbnailWrapper>
     </S.MissionDetailHeaderContainer>
   );

@@ -50,7 +50,6 @@ export const postCompleteReview = async (submissionId: number): Promise<MissionS
   const { data } = await develupAPIClient.post<getMissionInProgressResponse>(
     `${PATH.pairReview}/${submissionId}`,
   );
-  console.log(data);
 
   return data;
 };

@@ -5,6 +5,7 @@ export const ROUTES = {
   missionList: '/missions',
   profile: '/profile',
   guide: '/guide',
+  submitSolution: '/submit/solution',
   submissions: '/submissions',
   error: '/error',
   solutions: '/solutions',
