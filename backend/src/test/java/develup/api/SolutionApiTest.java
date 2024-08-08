@@ -4,11 +4,14 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+import develup.api.auth.AuthArgumentResolver;
+import develup.application.auth.Accessor;
 import develup.application.solution.SolutionService;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
@@ -29,6 +32,9 @@ class SolutionApiTest extends IntegrationTestSupport {
 
     @MockBean
     private SolutionService solutionService;
+
+    @MockBean
+    private AuthArgumentResolver argumentResolver;
 
     @Test
     @DisplayName("솔루션 목록을 조회한다.")
@@ -66,6 +72,40 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .willReturn(solution);
 
         mockMvc.perform(get("/solutions/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.title", equalTo("루터회관 흡연단속 제출합니다.")))
+                .andExpect(jsonPath("$.data.description", equalTo("안녕하세요. 피드백 잘 부탁 드려요.")))
+                .andExpect(jsonPath("$.data.url", equalTo("https://github.com/develup/mission/pull/1")))
+                .andExpect(jsonPath("$.data.status", equalTo("COMPLETED")))
+                .andExpect(jsonPath("$.data.member.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.member.email", equalTo("email@email.com")))
+                .andExpect(jsonPath("$.data.member.provider", equalTo("GITHUB")))
+                .andExpect(jsonPath("$.data.member.socialId", equalTo(1234)))
+                .andExpect(jsonPath("$.data.member.name", equalTo("tester")))
+                .andExpect(jsonPath("$.data.member.imageUrl", equalTo("image.com/1.jpg")))
+                .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+    }
+
+    @Test
+    @DisplayName("솔루션을 시작한다.")
+    void startSolution() throws Exception {
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMission(MissionTestData.defaultMission().withId(1L).build())
+                .withMember(MemberTestData.defaultMember().withId(1L).build())
+                .withId(1L)
+                .build();
+
+        BDDMockito.given(argumentResolver.resolveArgument(any(), any(), any(), any()))
+                .willReturn(new Accessor(1L));
+        BDDMockito.given(solutionService.startMission(any(), any()))
+                .willReturn(solution);
+
+        mockMvc.perform(post("/solutions/1/start"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id", equalTo(1)))
