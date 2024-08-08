@@ -10,21 +10,25 @@ import useMission from '@/hooks/useMission';
 import { PROGRESS_MESSAGE } from '@/constants/messages';
 import useSubmission from '@/hooks/useSubmission';
 import LoadingSpinner from '@/components/common/LoadingSpinner/LoadingSpinner';
+import MissionTitle from '@/components/MissionSubmit/MissionTitle';
 
 export default function MissionSubmitPage() {
   const { id } = useParams();
   const missionId = Number(id) || 0;
   const { data: mission } = useMission(missionId);
   const {
+    solutionTitle,
     url,
     description,
     handleDescription,
     handleUrl,
     handleSubmission,
+    handleSolutionTitle,
     isPending,
     isModalOpen,
     isUrlError,
     isDescriptionError,
+    isSolutionTitleError,
   } = useSubmission({ missionId, title: mission.title });
 
   return (
@@ -37,12 +41,17 @@ export default function MissionSubmitPage() {
         language={mission.language}
       />
       <form onSubmit={handleSubmission}>
+        <MissionTitle
+          value={solutionTitle}
+          onChange={handleSolutionTitle}
+          danger={isSolutionTitleError}
+        />
         <PRLink value={url} onChange={handleUrl} missionId={missionId} danger={isUrlError} />
         <OneWord
           danger={isDescriptionError}
           value={description ?? ''}
           onChange={handleDescription}
-          placeholder={PROGRESS_MESSAGE.review_one_word}
+          placeholder={PROGRESS_MESSAGE.solution_description}
         />
         <SubmitButton />
       </form>

@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { postMissionStart } from '@/apis/mission';
+import { postSolutionStart } from '@/apis/solutions';
 
 interface UserStartMissionMutationParams {
   onSuccessCallback: () => void;
@@ -7,7 +7,7 @@ interface UserStartMissionMutationParams {
 
 const useMissionStartMutation = ({ onSuccessCallback }: UserStartMissionMutationParams) => {
   const { mutate: startMissionMutation } = useMutation({
-    mutationFn: postMissionStart,
+    mutationFn: postSolutionStart,
     onSuccess: onSuccessCallback,
     onError: (error: Error) => {
       console.error(error.message);
