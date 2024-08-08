@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren, ReactNode } from 'react';
 import * as S from './Carousel.styled';
 import useCarousel from '@/hooks/useCarousel';
 import LeftArrow from '@/assets/images/leftArrow.svg';
@@ -7,11 +7,17 @@ import RightArrow from '@/assets/images/rightArrow.svg';
 interface CarouselProps extends PropsWithChildren {
   autoPlay?: boolean;
   autoSpeed?: number;
+  infinite?: boolean;
 }
 
-export default function Carousel({ autoPlay = false, autoSpeed = 3000, children }: CarouselProps) {
+export default function Carousel({
+  autoPlay = false,
+  autoSpeed = 3000,
+  infinite = true,
+  children,
+}: CarouselProps) {
   const { carouselItems, trackRef, currentIndex, isSliding, handleNextSlide, handlePreviousSlide } =
-    useCarousel({ autoPlay, autoSpeed, children });
+    useCarousel({ autoPlay, autoSpeed, infinite, children });
 
   return (
     <S.Container>

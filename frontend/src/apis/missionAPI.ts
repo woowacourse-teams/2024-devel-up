@@ -2,6 +2,7 @@ import { BASE_URL } from './baseUrl';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
 import type { Mission, MissionSubmission, SubmissionPayload, Submission } from '@/types';
+import MOCK_MISSIONS from '@/mocks/missions.json';
 
 interface getMissionInProgressResponse {
   data: MissionSubmission;
@@ -17,17 +18,19 @@ interface getMissionByIdResponse {
 
 export const getAllMissions = async (): Promise<Mission[]> => {
   try {
-    const response = await fetch(`${BASE_URL.dev}${PATH.missionList}`);
+    // const response = await fetch(`${BASE_URL.dev}${PATH.missionList}`);
 
-    if (!response.ok) {
-      throw new Error('에러가 발생했어요! ');
-    }
+    // if (!response.ok) {
+    //   throw new Error('에러가 발생했어요! ');
+    // }
 
-    const jsonData = await response.json();
+    // const jsonData = await response.json();
 
-    const { data } = jsonData;
+    // const { data } = jsonData;
 
-    return data;
+    // return data;
+
+    return MOCK_MISSIONS;
   } catch (err) {
     console.error(err);
     throw new Error('');

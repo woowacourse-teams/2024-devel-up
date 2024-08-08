@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import infoIcon from '@/assets/images/infoIcon.svg';
 import githubLogo from '@/assets/images/githubLogo.svg';
 import javaIcon from '@/assets/images/java.svg';
+import { CommonButton } from '../common/Button/Button.styled';
 
 // MissionDetailHeader
 
@@ -100,12 +101,21 @@ export const InfoIcon = styled(infoIcon)`
 export const ButtonWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
-  justify-content: flex-end;
+  width: 100%;
+  justify-content: center;
 `;
 
 export const GithubIcon = styled(githubLogo)`
   width: 2.2rem;
   height: 2.2rem;
+`;
+
+export const MissionButton = styled(CommonButton)`
+  width: 27rem;
+`;
+
+export const Text = styled.div`
+  width: 11rem;
 `;
 
 // MissionDetailContent
