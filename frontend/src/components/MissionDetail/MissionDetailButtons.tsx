@@ -29,7 +29,7 @@ export default function MissionDetailButtons({
 }: MissionDetailButtonsProps) {
   const navigate = useNavigate();
   const handleNavigateToSubmit = () => {
-    navigate(`${ROUTES.submission}/${id}`);
+    navigate(`${ROUTES.submitSolution}/${id}`);
   };
   const { data: userInfo } = useUserInfo();
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
