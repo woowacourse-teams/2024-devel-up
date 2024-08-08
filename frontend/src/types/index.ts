@@ -38,13 +38,13 @@ export interface MissionSubmission {
 export interface SubmissionPayload {
   missionId: number;
   url: string;
-  comment: string | null;
+  title: string;
+  description: string | null;
 }
 
 export interface Submission {
-  id: number;
-  memberId: number;
   missionId: number;
+  title: string;
+  description: string;
   url: string;
-  comment: string;
 }

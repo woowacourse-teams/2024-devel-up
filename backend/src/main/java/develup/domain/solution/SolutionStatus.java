@@ -6,4 +6,8 @@ public enum SolutionStatus {
     COMPLETED,
 
     ;
+
+    public boolean isInProgress() {
+        return this == IN_PROGRESS;
+    }
 }

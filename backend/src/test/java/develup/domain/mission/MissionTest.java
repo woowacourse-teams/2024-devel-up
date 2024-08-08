@@ -15,10 +15,10 @@ class MissionTest {
         Mission mission = MissionTestData.defaultMission()
                 .withUrl("https://github.com/develup-mission/" + repoName)
                 .build();
-        String actual = "https://raw.githubusercontent.com/develup-mission/" + repoName + "/main/README.md";
+        String expected = "https://raw.githubusercontent.com/develup-mission/" + repoName + "/main/README.md";
 
-        String expected = mission.getDescriptionUrl();
+        String actual = mission.getDescriptionUrl();
 
-        assertThat(expected).isEqualTo(actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }
