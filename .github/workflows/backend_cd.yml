@@ -42,7 +42,7 @@ jobs:
   deploy:
     name: 🚀 Server Deployment
     needs: build
-    runs-on: self-hosted
+    runs-on: [ self-hosted,develup ]
 
     steps:
       - name: 📥 Download Artifact File
