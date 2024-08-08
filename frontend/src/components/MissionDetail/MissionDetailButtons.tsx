@@ -41,6 +41,7 @@ export default function MissionDetailButtons({
 
   const handleMissionStart = () => {
     startMissionMutation({ missionId: id });
+    window.location.reload();
   };
 
   const handleNavigateToMission = () => {
