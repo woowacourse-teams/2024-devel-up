@@ -36,7 +36,7 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
   return (
     <S.MissionDetailButtonsContainer>
       <S.ButtonWrapper>
-        {!userInfo && !isModalOpen && (
+        {userInfo && !isModalOpen && (
           <S.MissionButton
             $bgColor="--primary-500"
             $fontColor="--white-color"
@@ -46,7 +46,7 @@ export default function MissionDetailButtons({ id, missionUrl }: MissionDetailBu
             미션 시작하기
           </S.MissionButton>
         )}
-        {!userInfo && isModalOpen && (
+        {userInfo && isModalOpen && (
           <S.MissionButton
             $bgColor="--primary-500"
             $fontColor="--white-color"
