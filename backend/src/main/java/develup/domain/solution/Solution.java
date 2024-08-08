@@ -69,6 +69,14 @@ public class Solution {
         this.status = status;
     }
 
+    public static Solution start(Mission mission, Member member) {
+        return new Solution(mission, member, null, null, null, SolutionStatus.IN_PROGRESS);
+    }
+
+    public boolean isInProgress() {
+        return status.isInProgress();
+    }
+
     public Long getId() {
         return id;
     }
