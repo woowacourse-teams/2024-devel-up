@@ -50,7 +50,7 @@ jobs:
   deploy:
     name: 🚀 Web Deployment
     needs: build
-    runs-on: [self-hosted, develup-fe-test]
+    runs-on: [self-hosted, develup-front]
 
     steps:
       - name: 📥 Download Artifact File
