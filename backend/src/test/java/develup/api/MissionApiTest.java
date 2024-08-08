@@ -9,13 +9,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
 import develup.application.mission.MissionResponse;
 import develup.application.mission.MissionService;
 import develup.application.mission.MissionWithStartedResponse;
 import develup.domain.mission.Mission;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.MissionTestData;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -42,11 +42,13 @@ class MissionApiTest extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data[0].thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data[0].url", equalTo("https://github.com/develup/mission")))
-                .andExpect(jsonPath("$.data[0].descriptionUrl", equalTo("https://raw.githubusercontent.com/develup-mission/mission/main/README.md")))
+                .andExpect(jsonPath("$.data[0].descriptionUrl",
+                        equalTo("https://raw.githubusercontent.com/develup-mission/mission/main/README.md")))
                 .andExpect(jsonPath("$.data[1].title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data[1].thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data[1].url", equalTo("https://github.com/develup/mission")))
-                .andExpect(jsonPath("$.data[1].descriptionUrl", equalTo("https://raw.githubusercontent.com/develup-mission/mission/main/README.md")))
+                .andExpect(jsonPath("$.data[1].descriptionUrl",
+                        equalTo("https://raw.githubusercontent.com/develup-mission/mission/main/README.md")))
                 .andExpect(jsonPath("$.data.length()", is(2)));
     }
 
@@ -65,7 +67,8 @@ class MissionApiTest extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.data.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data.url", equalTo("https://github.com/develup/mission")))
-                .andExpect(jsonPath("$.data.descriptionUrl", equalTo("https://raw.githubusercontent.com/develup-mission/mission/main/README.md")))
+                .andExpect(jsonPath("$.data.descriptionUrl",
+                        equalTo("https://raw.githubusercontent.com/develup-mission/mission/main/README.md")))
                 .andExpect(jsonPath("$.data.isStarted", is(false)));
     }
 }

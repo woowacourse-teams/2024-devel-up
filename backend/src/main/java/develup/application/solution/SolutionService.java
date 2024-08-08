@@ -11,7 +11,9 @@ import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
 import develup.application.auth.Accessor;
 import develup.domain.mission.MissionRepositoryName;
+import develup.domain.solution.SolutionSummary;
 import develup.domain.solution.Title;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
@@ -59,9 +61,13 @@ public class SolutionService {
         return solutionRepository.save(solution);
     }
 
-    public Solution getById(Long id) {
-        return solutionRepository.findById(id)
-                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+    public SolutionResponse getById(Long id) {
+        return SolutionResponse.from(solutionRepository.findById(id)
+                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND)));
+    }
+
+    public List<SolutionSummary> getCompletedSummaries() {
+        return solutionRepository.findCompletedSummaries();
     }
 
     public SolutionResponse create(Accessor accessor, SolutionRequest solutionRequest) {
@@ -88,9 +94,12 @@ public class SolutionService {
 
     private void validatePullRequestUrl(String url) {
         Matcher matcher = URL_PATTERN.matcher(url);
-        String repositoryName = matcher.group(1);
+        if (!matcher.matches()) {
+            throw new DevelupException(ExceptionType.INVALID_URL);
+        }
 
-        if (!matcher.matches() || !MissionRepositoryName.contains(repositoryName)) {
+        String repositoryName = matcher.group(1);
+        if (!MissionRepositoryName.contains(repositoryName)) {
             throw new DevelupException(ExceptionType.INVALID_URL);
         }
     }

@@ -3,7 +3,6 @@ package develup.domain.solution;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.List;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
@@ -12,6 +11,7 @@ import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +69,44 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
         List<SolutionSummary> actual = solutionRepository.findCompletedSummaries();
 
         assertThat(actual).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("멤버 식별자와 미션 식별자와 특정 상태에 해당하는 솔루션을 조회한다.")
+    void findByMember_IdAndMission_IdAndStatus() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        SolutionStatus inProgress = SolutionStatus.IN_PROGRESS;
+        SolutionStatus completed = SolutionStatus.COMPLETED;
+        Solution inProgressSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(inProgress)
+                .build();
+        Solution completeSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(completed)
+                .build();
+        Solution saveInProgress = solutionRepository.save(inProgressSolution);
+        Solution saveComplete = solutionRepository.save(completeSolution);
+
+        Solution solutionInProgress = solutionRepository.findByMember_IdAndMission_IdAndStatus(
+                member.getId(),
+                mission.getId(),
+                inProgress
+        );
+
+        Solution solutionCompleted = solutionRepository.findByMember_IdAndMission_IdAndStatus(
+                member.getId(),
+                mission.getId(),
+                completed
+        );
+
+        assertAll(
+                () -> assertThat(solutionInProgress.getId()).isEqualTo(saveInProgress.getId()),
+                () -> assertThat(solutionCompleted.getId()).isEqualTo(saveComplete.getId())
+        );
     }
 
     private void createSolution(SolutionStatus status) {

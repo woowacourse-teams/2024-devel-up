@@ -15,6 +15,10 @@ public enum MissionRepositoryName {
     }
 
     public static boolean contains(String name) {
-        return Arrays.stream(values()).anyMatch(repositoryName -> repositoryName.name().equals(name));
+        return Arrays.stream(values()).anyMatch(repositoryName -> repositoryName.getName().equals(name));
+    }
+
+    public String getName() {
+        return name;
     }
 }

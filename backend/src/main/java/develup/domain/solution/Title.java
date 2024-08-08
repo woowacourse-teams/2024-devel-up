@@ -1,6 +1,9 @@
 package develup.domain.solution;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 
-public record Title(@NotBlank String title) {
+@Embeddable
+public record Title(@NotBlank @Column(name = "title") String value) {
 }
