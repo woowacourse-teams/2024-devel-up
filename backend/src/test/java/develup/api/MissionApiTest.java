@@ -14,22 +14,17 @@ import develup.application.mission.MissionResponse;
 import develup.application.mission.MissionService;
 import develup.application.mission.MissionWithStartedResponse;
 import develup.domain.mission.Mission;
-import develup.domain.mission.MissionRepository;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 class MissionApiTest extends IntegrationTestSupport {
 
     @MockBean
     private MissionService missionService;
-
-    @Autowired
-    private MissionRepository missionRepository;
 
     @Test
     @DisplayName("미션 목록을 조회한다.")
@@ -58,7 +53,7 @@ class MissionApiTest extends IntegrationTestSupport {
     @Test
     @DisplayName("미션을 조회한다.")
     void getMission() throws Exception {
-        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Mission mission = MissionTestData.defaultMission().withId(1L).build();
         MissionWithStartedResponse response = MissionWithStartedResponse.of(mission, false);
         BDDMockito.given(missionService.getMission(any(), anyLong()))
                 .willReturn(response);
