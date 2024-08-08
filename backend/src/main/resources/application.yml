@@ -1,5 +1,6 @@
 spring:
   profiles:
+    active: local
     group:
       local: local, common
       dev: dev, common

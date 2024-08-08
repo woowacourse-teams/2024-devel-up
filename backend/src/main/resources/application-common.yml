@@ -1,3 +1,8 @@
+server:
+  tomcat:
+    mbeanregistry: # JMX 의 mbean 활성화
+      enabled: true
+
 spring:
   h2:
     console:
@@ -37,3 +42,11 @@ security:
   jwt:
     secret-key: 7b3dc341c033816045cc11c6f9fba3187f4dbdb7
     expiration-time: 3600000 # 1 hour
+
+management:
+  server:
+    port: 8082
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus,health"
