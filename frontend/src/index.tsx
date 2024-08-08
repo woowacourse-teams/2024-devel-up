@@ -14,6 +14,9 @@ import React, { Suspense } from 'react';
 import { ErrorBoundary } from './components/common/Error/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
+import * as Sentry from '@sentry/react';
+import ErrorPage from './pages/ErrorPage';
+import SolutionListPage from './pages/SolutionListPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,6 +24,15 @@ export const queryClient = new QueryClient({
       throwOnError: true,
     },
   },
+});
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
+  tracesSampleRate: 1.0,
+  tracePropagationTargets: [/^https:\/\/api\.devel-up\.co\.kr\/?$/],
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -79,6 +91,24 @@ const routes = [
         <Suspense fallback={<LoadingSpinner />}>
           <SubmissionPage />
         </Suspense>
+      </App>
+    ),
+  },
+  {
+    path: ROUTES.error,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <ErrorPage />
+        </Suspense>
+      </App>
+    ),
+  },
+  {
+    path: ROUTES.solutions,
+    element: (
+      <App>
+        <SolutionListPage />
       </App>
     ),
   },
