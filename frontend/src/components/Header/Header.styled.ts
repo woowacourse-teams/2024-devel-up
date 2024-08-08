@@ -54,7 +54,7 @@ export const MenuWrapper = styled.div`
   gap: 8rem;
 `;
 
-export const MenuText = styled.p`
+export const MenuText = styled.p<{ $isActive?: boolean }>`
   font-size: 1.6rem;
-  color: var(--grey-400);
+  color: ${({ $isActive }) => ($isActive ? '' : 'var(--grey-400)')};
 `;

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { BASE_URL } from '@/apis/baseUrl';
 import { PATH } from '@/apis/paths';
 import useUserInfo from '@/hooks/useUserInfo';
+import HeaderMenu from './HeaderMenu';
 
 export default function Header() {
   const { pathname } = useLocation();
@@ -32,14 +33,8 @@ export default function Header() {
           </Link>
         </S.LeftPart>
         <S.MenuWrapper>
-          {userInfo && (
-            <Link to={ROUTES.submissions}>
-              <S.MenuText>미션 현황</S.MenuText>
-            </Link>
-          )}
-          <Link to={ROUTES.guide}>
-            <S.MenuText>미션 안내</S.MenuText>
-          </Link>
+          <HeaderMenu name="미션" path={ROUTES.missionList} currentPath={pathname} />
+          <HeaderMenu name="솔루션" path={ROUTES.solutions} currentPath={pathname} />
         </S.MenuWrapper>
         <S.RightPart>
           {userInfo && <S.BellIcon onClick={handleBellClick} />}

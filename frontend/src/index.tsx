@@ -5,7 +5,7 @@ import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
-import MissionListPage from './pages/MissionListPage';
+import MainPage from './pages/MainPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
 import SubmissionPage from './pages/SubmissionPage';
 import UserProfilePage from './pages/UserProfilePage';
@@ -17,6 +17,7 @@ import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
 import ErrorPage from './pages/ErrorPage';
 import SolutionListPage from './pages/SolutionListPage';
+import MissionListPage from './pages/MissionListPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,7 +44,7 @@ const routes = [
     element: (
       <App>
         <Suspense fallback={<LoadingSpinner />}>
-          <MissionListPage />
+          <MainPage />
         </Suspense>
       </App>
     ),
@@ -85,6 +86,16 @@ const routes = [
     ),
   },
   {
+    path: ROUTES.missionList,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <MissionListPage />
+        </Suspense>
+      </App>
+    ),
+  },
+  {
     path: ROUTES.submissions,
     element: (
       <App>
@@ -108,7 +119,9 @@ const routes = [
     path: ROUTES.solutions,
     element: (
       <App>
-        <SolutionListPage />
+        <Suspense fallback={<LoadingSpinner />}>
+          <SolutionListPage />
+        </Suspense>
       </App>
     ),
   },
