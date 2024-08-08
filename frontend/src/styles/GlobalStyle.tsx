@@ -162,6 +162,7 @@ html,
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   }
 
+
   //TODO 이렇게 부드럽게 렌더링 되는거에 대해서 이야기 필요성 @버건디
   @keyframes fadeIn {
   from {
@@ -174,6 +175,12 @@ html,
 
 body {
   animation: fadeIn 0.2s ease-in-out;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
 }
 
   li {

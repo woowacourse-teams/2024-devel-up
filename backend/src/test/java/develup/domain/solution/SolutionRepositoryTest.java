@@ -71,6 +71,44 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
         assertThat(actual).hasSize(2);
     }
 
+    @Test
+    @DisplayName("멤버 식별자와 미션 식별자와 특정 상태에 해당하는 솔루션을 조회한다.")
+    void findByMember_IdAndMission_IdAndStatus() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        SolutionStatus inProgress = SolutionStatus.IN_PROGRESS;
+        SolutionStatus completed = SolutionStatus.COMPLETED;
+        Solution inProgressSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(inProgress)
+                .build();
+        Solution completeSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(completed)
+                .build();
+        Solution saveInProgress = solutionRepository.save(inProgressSolution);
+        Solution saveComplete = solutionRepository.save(completeSolution);
+
+        Solution solutionInProgress = solutionRepository.findByMember_IdAndMission_IdAndStatus(
+                member.getId(),
+                mission.getId(),
+                inProgress
+        );
+
+        Solution solutionCompleted = solutionRepository.findByMember_IdAndMission_IdAndStatus(
+                member.getId(),
+                mission.getId(),
+                completed
+        );
+
+        assertAll(
+                () -> assertThat(solutionInProgress.getId()).isEqualTo(saveInProgress.getId()),
+                () -> assertThat(solutionCompleted.getId()).isEqualTo(saveComplete.getId())
+        );
+    }
+
     private void createSolution(SolutionStatus status) {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());

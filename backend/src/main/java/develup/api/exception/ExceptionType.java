@@ -11,8 +11,9 @@ public enum ExceptionType {
     TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "유효하지 않는 토큰입니다."),
     MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 미션입니다."),
-    SOLUTION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 솔루션입니다.")
-
+    SOLUTION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 솔루션입니다."),
+    SOLUTION_ALREADY_STARTED(HttpStatus.BAD_REQUEST, "이미 진행 중인 미션입니다."),
+    INVALID_URL(HttpStatus.BAD_REQUEST, "올바르지 않은 주소입니다."),
     ;
 
     private final HttpStatus status;

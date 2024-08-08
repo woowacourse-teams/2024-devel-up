@@ -1,11 +1,11 @@
-import {useSuspenseQuery} from "@tanstack/react-query";
-import {getSolutionSummaries, type SolutionSummary} from "@/apis/solutions";
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { getSolutionSummaries, type SolutionSummary } from '@/apis/solutions';
 
-const useSolutions = () => {
-    return useSuspenseQuery<SolutionSummary[]>({
-        queryKey: ["solutions"],
-        queryFn: getSolutionSummaries,
-    });
+const useSolutionSummaries = () => {
+  return useSuspenseQuery<SolutionSummary[]>({
+    queryKey: ['solutionSummaries'],
+    queryFn: getSolutionSummaries,
+  });
 };
 
-export default useSolutions;
+export default useSolutionSummaries;

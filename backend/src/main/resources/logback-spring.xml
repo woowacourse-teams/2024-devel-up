@@ -32,7 +32,7 @@
             <appender-ref ref="Console"/>
         </root>
 
-        <logger name="com.sb" level="DEBUG"/>
+        <logger name="develup" level="DEBUG"/>
         <logger name="org.springframework.orm.jpa" level="DEBUG"/>
         <logger name="org.springframework.orm.transaction" level="DEBUG"/>
         <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>

@@ -30,7 +30,7 @@ export default function Button({
       $hoverColor={disabled ? '--grey-100' : $hoverColor}
       $fontColor={disabled ? '--black-color' : $fontColor}
       onClick={onHandleClick}
-      disabled={disabled}  
+      disabled={disabled}
     >
       {type === 'icon' && children}
       {content}

@@ -1,8 +1,10 @@
 package develup.domain.solution;
 
+import develup.application.solution.SolutionSubmit;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,8 +26,8 @@ public class Solution {
     @ManyToOne
     private Member member;
 
-    @Column
-    private String title;
+    @Embedded
+    private Title title;
 
     @Column
     private String description;
@@ -43,7 +45,7 @@ public class Solution {
     public Solution(
             Mission mission,
             Member member,
-            String title,
+            Title title,
             String description,
             String url,
             SolutionStatus status
@@ -55,7 +57,7 @@ public class Solution {
             Long id,
             Mission mission,
             Member member,
-            String title,
+            Title title,
             String description,
             String url,
             SolutionStatus status
@@ -67,6 +69,21 @@ public class Solution {
         this.description = description;
         this.url = url;
         this.status = status;
+    }
+
+    public static Solution start(Mission mission, Member member) {
+        return new Solution(mission, member, null, null, null, SolutionStatus.IN_PROGRESS);
+    }
+
+    public void submit(SolutionSubmit solutionSubmit) {
+        this.title = solutionSubmit.title();
+        this.description = solutionSubmit.description();
+        this.url = solutionSubmit.url();
+        this.status = SolutionStatus.COMPLETED;
+    }
+
+    public boolean isInProgress() {
+        return status.isInProgress();
     }
 
     public Long getId() {
@@ -81,7 +98,7 @@ public class Solution {
         return member;
     }
 
-    public String getTitle() {
+    public Title getTitle() {
         return title;
     }
 
