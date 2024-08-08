@@ -1,19 +1,20 @@
-import {develupAPIClient} from "@/apis/clients/develupClient";
-import {PATH} from "@/apis/paths";
+import { develupAPIClient } from '@/apis/clients/develupClient';
+import { PATH } from '@/apis/paths';
 
 export interface SolutionSummary {
-    id: string;
-    thumbnail: string;
-    description: string;
-    title: string;
+  // solution 리스트에 필요한 필드만 포함한 데이터 (solution 원본 데이터와는 다름)
+  id: string;
+  thumbnail: string;
+  description: string;
+  title: string;
 }
 
-interface GetSolutionSummaryResponse {
-    data: SolutionSummary[];
+interface GetSolutionSummariesResponse {
+  data: SolutionSummary[];
 }
 
 export const getSolutionSummaries = async (): Promise<SolutionSummary[]> => {
-    const {data} = await develupAPIClient.get<GetSolutionSummaryResponse>(PATH.solutions);
+  const { data } = await develupAPIClient.get<GetSolutionSummariesResponse>(PATH.solutionSummaries);
 
-    return data;
+  return data;
 };

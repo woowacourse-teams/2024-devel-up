@@ -3,8 +3,8 @@ export const PATH = {
   submissions: '/submissions',
   missionInProgress: '/submissions/now',
   githubLogin: '/auth/social/redirect/github',
-  userInfo: '/member/mine',
+  userInfo: '/members/mine',
   submissionsInProgress: '/submissions/now',
   pairReview: '/pair-review',
-  solutions: "/solutions"
+  solutionSummaries: '/solutions',
 };
