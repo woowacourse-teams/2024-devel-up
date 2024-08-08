@@ -1,17 +1,23 @@
 import useUrl from './useUrl';
-import useComment from './useComment';
+import useDescription from './useDescription';
 import useSubmissionMutation from './useSubmissionMutation';
 import useModal from './useModal';
 import type { FormEvent } from 'react';
 
 interface UseSubmissionParams {
   missionId: number;
+  title: string;
 }
 
-const useSubmission = ({ missionId }: UseSubmissionParams) => {
+const useSubmission = ({ missionId, title }: UseSubmissionParams) => {
   const { url, handleUrl, isValidUrl, isUrlError, setIsUrlError } = useUrl();
-  const { comment, handleComment, isValidComment, isCommentError, setIsCommentError } =
-    useComment();
+  const {
+    description,
+    handleDescription,
+    isValidDescription,
+    isDescriptionError,
+    setIsDescriptionError,
+  } = useDescription();
   const { handleModalOpen, isModalOpen } = useModal();
   const { submissionMutation, isPending } = useSubmissionMutation({
     onSuccessCallback: handleModalOpen,
@@ -23,23 +29,23 @@ const useSubmission = ({ missionId }: UseSubmissionParams) => {
       setIsUrlError(true);
       return;
     }
-    if (!isValidComment) {
-      setIsCommentError(true);
+    if (!isValidDescription) {
+      setIsDescriptionError(true);
       return;
     }
-    submissionMutation({ missionId, url, comment });
+    submissionMutation({ missionId, title, url, description });
   };
 
   return {
     url,
-    comment,
-    handleComment,
+    description,
+    handleDescription,
     handleUrl,
     handleSubmission,
     isPending,
     isModalOpen,
     isUrlError,
-    isCommentError,
+    isDescriptionError,
   };
 };
 

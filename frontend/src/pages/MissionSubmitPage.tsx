@@ -17,15 +17,15 @@ export default function MissionSubmitPage() {
   const { data: mission } = useMission(missionId);
   const {
     url,
-    comment,
-    handleComment,
+    description,
+    handleDescription,
     handleUrl,
     handleSubmission,
     isPending,
     isModalOpen,
     isUrlError,
-    isCommentError,
-  } = useSubmission({ missionId });
+    isDescriptionError,
+  } = useSubmission({ missionId, title: mission.title });
 
   return (
     <S.Container>
@@ -39,9 +39,9 @@ export default function MissionSubmitPage() {
       <form onSubmit={handleSubmission}>
         <PRLink value={url} onChange={handleUrl} missionId={missionId} danger={isUrlError} />
         <OneWord
-          danger={isCommentError}
-          value={comment ?? ''}
-          onChange={handleComment}
+          danger={isDescriptionError}
+          value={description ?? ''}
+          onChange={handleDescription}
           placeholder={PROGRESS_MESSAGE.review_one_word}
         />
         <SubmitButton />
