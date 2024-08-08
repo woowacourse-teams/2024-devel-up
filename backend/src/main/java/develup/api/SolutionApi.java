@@ -1,15 +1,18 @@
 package develup.api;
 
-import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
+import develup.application.solution.SolutionRequest;
+import develup.application.solution.SolutionResponse;
 import develup.application.solution.SolutionService;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionSummary;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.net.URI;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "솔루션 API")
 public class SolutionApi {
 
-    private final SolutionService solutionService;
     private final SolutionRepository solutionRepository;
+    private final SolutionService solutionService;
 
-    public SolutionApi(SolutionService solutionService, SolutionRepository solutionRepository) {
-        this.solutionService = solutionService;
+    public SolutionApi(SolutionRepository solutionRepository, SolutionService solutionService) {
         this.solutionRepository = solutionRepository;
+        this.solutionService = solutionService;
     }
 
     @PostMapping("/solutions/start")
@@ -54,5 +57,15 @@ public class SolutionApi {
         Solution solution = solutionService.getById(id);
 
         return ResponseEntity.ok(new ApiResponse<>(solution));
+    }
+
+    @PostMapping("/solutions")
+    public ResponseEntity<ApiResponse<SolutionResponse>> createSolution(
+            @Auth(required = false) Accessor accessor,
+            @RequestBody SolutionRequest request
+    ) {
+        SolutionResponse response = solutionService.create(accessor, request);
+        return ResponseEntity.created(URI.create("/solutions/" + response.id()))
+                .body(new ApiResponse<>(response));
     }
 }

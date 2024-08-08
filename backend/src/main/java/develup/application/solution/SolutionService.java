@@ -9,10 +9,18 @@ import develup.domain.mission.MissionRepository;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
+import develup.application.auth.Accessor;
+import develup.domain.mission.MissionRepositoryName;
+import develup.domain.solution.Title;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SolutionService {
+
+    private static final String URL_REGEX = "https://github\\.com/develup-mission/([^/]+)/pull/([0-9]+)";
+    private static final Pattern URL_PATTERN = Pattern.compile(URL_REGEX);
 
     private final SolutionRepository solutionRepository;
     private final MissionRepository missionRepository;
@@ -54,5 +62,36 @@ public class SolutionService {
     public Solution getById(Long id) {
         return solutionRepository.findById(id)
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+    }
+
+    public SolutionResponse create(Accessor accessor, SolutionRequest solutionRequest) {
+        if (accessor.isGuest()) {
+            throw new DevelupException(ExceptionType.FORBIDDEN);
+        }
+
+        Solution solution = solutionRepository
+                .findByMember_IdAndMission_IdAndStatus(
+                        accessor.id(),
+                        solutionRequest.missionId(),
+                        SolutionStatus.IN_PROGRESS
+                );
+
+        validatePullRequestUrl(solutionRequest.url());
+        SolutionSubmit solutionSubmit = new SolutionSubmit(
+                new Title(solutionRequest.title()),
+                solutionRequest.description(),
+                solutionRequest.url()
+        );
+        solution.submit(solutionSubmit);
+        return SolutionResponse.from(solution);
+    }
+
+    private void validatePullRequestUrl(String url) {
+        Matcher matcher = URL_PATTERN.matcher(url);
+        String repositoryName = matcher.group(1);
+
+        if (!matcher.matches() || !MissionRepositoryName.contains(repositoryName)) {
+            throw new DevelupException(ExceptionType.INVALID_URL);
+        }
     }
 }
