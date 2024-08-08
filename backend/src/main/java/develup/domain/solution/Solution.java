@@ -74,7 +74,7 @@ public class Solution {
     }
 
     public boolean isInProgress() {
-        return this.status == SolutionStatus.IN_PROGRESS;
+        return status.isInProgress();
     }
 
     public Long getId() {
