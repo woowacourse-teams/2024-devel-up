@@ -1,4 +1,4 @@
 package develup.api;
 
-record StartSolutionRequest(Long missionId) {
+public record StartSolutionRequest(Long missionId) {
 }
