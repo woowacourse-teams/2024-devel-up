@@ -9,10 +9,12 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
     boolean existsByMember_IdAndMission_IdAndStatus(Long memberId, Long missionId, SolutionStatus status);
 
     @Query("""
-            SELECT new develup.domain.solution.SolutionSummary(s.id, m.thumbnail, s.title, s.description)
+            SELECT new develup.domain.solution.SolutionSummary(s.id, m.thumbnail, s.title.value, s.description)
             FROM Solution s
             JOIN s.mission m
             WHERE s.status = 'COMPLETED'
             """)
     List<SolutionSummary> findCompletedSummaries();
+
+    Solution findByMember_IdAndMission_IdAndStatus(Long memberId, Long missionId, SolutionStatus status);
 }

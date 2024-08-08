@@ -13,7 +13,8 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 class JwtTokenProviderTest {
 
     private final String testSecretKey = "test-secret-test-secret-test-secret-test-secret";
-    private final JwtTokenProvider jwtTokenProvider = new JwtTokenProvider(new JwtTokenProperties(testSecretKey, 3600000L));
+    private final JwtTokenProvider jwtTokenProvider = new JwtTokenProvider(
+            new JwtTokenProperties(testSecretKey, 3600000L));
 
     @Test
     @DisplayName("토큰을 생성한다.")
