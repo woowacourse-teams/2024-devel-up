@@ -1,7 +1,5 @@
 import { styled } from 'styled-components';
 
-//TODO OneWord 컴포넌트와 스타일링이 매우 유사합니다.
-// common으로 뺄지 생각해보아야할거 같아요 @버건디
 export const Container = styled.div`
   width: 100%;
   display: flex;

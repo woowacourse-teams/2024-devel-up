@@ -6,6 +6,7 @@ export const MissionListContainer = styled.div`
   gap: 5rem;
   margin: 0 auto;
   margin-bottom: 10rem;
+  padding-top: 6rem;
   width: fit-content;
 `;
 
@@ -17,8 +18,9 @@ export const MissionListTitle = styled.h2`
 
 export const MissionList = styled.div`
   display: flex;
-  gap: 4rem;
-  width: fit-content;
+  width: 100rem;
+  column-gap: 5rem;
+  row-gap: 3.6rem;
 `;
 
 export const MissionItemContainer = styled.article`

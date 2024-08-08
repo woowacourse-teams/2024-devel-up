@@ -4,9 +4,10 @@ import React, { useState, useRef, useEffect } from 'react';
 interface UseCarouselParams extends PropsWithChildren {
   autoPlay: boolean;
   autoSpeed: number;
+  infinite: boolean;
 }
 
-const useCarousel = ({ autoPlay, autoSpeed, children }: UseCarouselParams) => {
+const useCarousel = ({ autoPlay, autoSpeed, infinite, children }: UseCarouselParams) => {
   const carouselItems = React.Children.toArray(children);
   const carouselItemLength = carouselItems.length;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -14,10 +15,12 @@ const useCarousel = ({ autoPlay, autoSpeed, children }: UseCarouselParams) => {
   const trackRef = useRef<HTMLUListElement>(null);
 
   const handleTransitionEnd = () => {
-    if (currentIndex === carouselItemLength + 1) {
-      setCurrentIndex(1);
-    } else if (currentIndex === 0) {
-      setCurrentIndex(carouselItemLength);
+    if (infinite) {
+      if (currentIndex === carouselItemLength + 1) {
+        setCurrentIndex(1);
+      } else if (currentIndex === 0) {
+        setCurrentIndex(carouselItemLength);
+      }
     }
     setIsSliding(false);
   };
@@ -30,19 +33,31 @@ const useCarousel = ({ autoPlay, autoSpeed, children }: UseCarouselParams) => {
         track.removeEventListener('transitionend', handleTransitionEnd);
       };
     }
-  }, [currentIndex, carouselItemLength]);
+  }, [currentIndex, carouselItemLength, infinite]);
 
   const handleNextSlide = () => {
     if (!isSliding) {
       setIsSliding(true);
-      setCurrentIndex((prevIndex) => prevIndex + 1);
+      setCurrentIndex((prevIndex) => {
+        if (!infinite && prevIndex === carouselItemLength - 1) {
+          setIsSliding(false);
+          return prevIndex;
+        }
+        return prevIndex + 1;
+      });
     }
   };
 
   const handlePreviousSlide = () => {
     if (!isSliding) {
       setIsSliding(true);
-      setCurrentIndex((prevIndex) => prevIndex - 1);
+      setCurrentIndex((prevIndex) => {
+        if (!infinite && prevIndex === 0) {
+          setIsSliding(false);
+          return prevIndex;
+        }
+        return prevIndex - 1;
+      });
     }
   };
 

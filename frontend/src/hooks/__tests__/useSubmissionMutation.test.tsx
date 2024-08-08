@@ -22,8 +22,9 @@ describe('useSubmissionMutation에 관한 테스트 코드를 작성한다.', ()
 
     const payload: SubmissionPayload = {
       missionId: 1,
+      title: '자바 숫자 야구',
       url: 'https://github.com/woowacourse-teams/2024-devel-up/pull/150',
-      comment: '만나서 반갑습니다.',
+      description: '만나서 반갑습니다.',
     };
 
     act(() => {

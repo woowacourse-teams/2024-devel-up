@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Modal from '../Modal';
+import ModalWrapper from '../ModalWrapper';
 import PopUpContent from '@/components/PopUp/PopUpContent';
 
 const meta = {
-  title: 'Common/Modal',
-  component: Modal,
+  title: 'Common/ModalWrapper',
+  component: ModalWrapper,
   tags: ['autodocs'],
   argTypes: {
     isOpen: { control: 'boolean' },
   },
-} satisfies Meta<typeof Modal>;
+} satisfies Meta<typeof ModalWrapper>;
 
 export default meta;
 
@@ -24,11 +24,11 @@ export const Default: Story = {
     isOpen: true,
     children: [
       <>
-        <Modal.Backdrop opacity="rgba(0, 0, 0, 0.3)">
-          <Modal.Container>
+        <ModalWrapper.Backdrop opacity="rgba(0, 0, 0, 0.3)">
+          <ModalWrapper.Container>
             <PopUpContent onClick={handleClick} />
-          </Modal.Container>
-        </Modal.Backdrop>
+          </ModalWrapper.Container>
+        </ModalWrapper.Backdrop>
       </>,
     ],
   },
