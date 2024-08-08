@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
+import type { ChangeEvent } from 'react';
 
 // TODO 피그마 시안대로 일단 최대 50글자로 둡니다 @버건디
 const MAX_SOLUTION_TITLE_LENGTH = 50;

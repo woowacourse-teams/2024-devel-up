@@ -1,7 +1,6 @@
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
 import type { Mission, MissionSubmission, SubmissionPayload, Submission } from '@/types';
-import { BASE_URL } from './baseUrl';
 
 interface getMissionInProgressResponse {
   data: MissionSubmission;

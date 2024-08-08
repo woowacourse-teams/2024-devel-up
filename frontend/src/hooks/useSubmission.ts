@@ -10,7 +10,7 @@ interface UseSubmissionParams {
   title: string;
 }
 
-const useSubmission = ({ missionId, title }: UseSubmissionParams) => {
+const useSubmission = ({ missionId }: UseSubmissionParams) => {
   const { url, handleUrl, isValidUrl, isUrlError, setIsUrlError } = useUrl();
   const {
     description,

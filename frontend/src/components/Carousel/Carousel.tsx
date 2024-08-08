@@ -1,4 +1,4 @@
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 import * as S from './Carousel.styled';
 import useCarousel from '@/hooks/useCarousel';
 import LeftArrow from '@/assets/images/leftArrow.svg';

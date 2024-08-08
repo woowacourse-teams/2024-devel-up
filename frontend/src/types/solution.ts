@@ -1,4 +1,4 @@
-import { Mission } from './index';
+import type { Mission } from './index';
 
 interface Member {
   id: number;

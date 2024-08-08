@@ -1,6 +1,6 @@
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
-import { Solution } from '@/types/solution';
+import type { Solution } from '@/types/solution';
 
 export interface PostSolutionResponse {
   data: Solution;

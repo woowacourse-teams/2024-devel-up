@@ -1,6 +1,5 @@
 import type { PropsWithChildren } from 'react';
 import * as S from './Button.styled';
-import type { ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps {
   content: string;
