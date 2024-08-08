@@ -1,13 +1,13 @@
 package develup.application.solution;
 
-import develup.domain.member.Member;
-import develup.domain.mission.Mission;
+import develup.application.member.MemberResponse;
+import develup.application.mission.MissionResponse;
 import develup.domain.solution.Solution;
 
 public record SolutionResponse(
         Long id,
-        Mission mission,
-        Member member,
+        MissionResponse mission,
+        MemberResponse member,
         String title,
         String description,
         String url
@@ -16,11 +16,22 @@ public record SolutionResponse(
     public static SolutionResponse from(Solution solution) {
         return new SolutionResponse(
                 solution.getId(),
-                solution.getMission(),
-                solution.getMember(),
+                MissionResponse.from(solution.getMission()),
+                MemberResponse.from(solution.getMember()),
                 solution.getTitle().value(),
                 solution.getDescription(),
                 solution.getUrl()
+        );
+    }
+
+    public static SolutionResponse start(Solution solution) {
+        return new SolutionResponse(
+                solution.getId(),
+                MissionResponse.from(solution.getMission()),
+                MemberResponse.from(solution.getMember()),
+                null,
+                null,
+                null
         );
     }
 }

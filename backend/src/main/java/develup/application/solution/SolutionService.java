@@ -2,15 +2,15 @@ package develup.application.solution;
 
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
+import develup.application.auth.Accessor;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
+import develup.domain.mission.MissionRepositoryName;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
-import develup.application.auth.Accessor;
-import develup.domain.mission.MissionRepositoryName;
 import develup.domain.solution.SolutionSummary;
 import develup.domain.solution.Title;
 import java.util.List;
@@ -38,18 +38,19 @@ public class SolutionService {
         this.memberRepository = memberRepository;
     }
 
-    public Solution startMission(Long memberId, Long missionId) {
+    public SolutionResponse startMission(Long memberId, Long missionId) {
         validateAlreadyStarted(memberId, missionId);
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
         Mission mission = missionRepository.findById(missionId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
 
-        return creatSolution(member, mission);
+        return SolutionResponse.start(creatSolution(member, mission));
     }
 
     private void validateAlreadyStarted(Long memberId, Long missionId) {
-        boolean alreadyStarted = solutionRepository.existsByMember_IdAndMission_IdAndStatus(memberId, missionId, SolutionStatus.IN_PROGRESS);
+        boolean alreadyStarted = solutionRepository.existsByMember_IdAndMission_IdAndStatus(memberId, missionId,
+                SolutionStatus.IN_PROGRESS);
         if (alreadyStarted) {
             throw new DevelupException(ExceptionType.SOLUTION_ALREADY_STARTED);
         }

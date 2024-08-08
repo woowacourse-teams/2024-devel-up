@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Optional;
 import develup.api.exception.DevelupException;
 import develup.application.auth.Accessor;
 import develup.domain.member.Member;
@@ -19,6 +18,7 @@ import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,9 +65,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
 
-        Solution solution = solutionService.startMission(member.getId(), mission.getId());
+        SolutionResponse response = solutionService.startMission(member.getId(), mission.getId());
 
-        Optional<Solution> found = solutionRepository.findById(solution.getId());
+        Optional<Solution> found = solutionRepository.findById(response.id());
         assertThat(found)
                 .map(Solution::isInProgress)
                 .hasValue(true);
@@ -123,8 +123,8 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
         assertAll(
                 () -> assertEquals(solutionResponse.id(), 1L),
-                () -> assertEquals(solutionResponse.mission().getId(), 1L),
-                () -> assertEquals(solutionResponse.member().getId(), member.getId()),
+                () -> assertEquals(solutionResponse.mission().id(), 1L),
+                () -> assertEquals(solutionResponse.member().id(), member.getId()),
                 () -> assertEquals(solutionResponse.title(), "value"),
                 () -> assertEquals(solutionResponse.description(), "description"),
                 () -> assertEquals(solutionResponse.url(), "https://github.com/develup-mission/java-smoking/pull/1")

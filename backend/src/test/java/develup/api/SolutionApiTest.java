@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import develup.api.auth.AuthArgumentResolver;
 import develup.application.auth.Accessor;
@@ -23,6 +22,7 @@ import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -88,8 +88,6 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.data.url", equalTo("https://github.com/develup/mission/pull/1")))
                 .andExpect(jsonPath("$.data.member.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.member.email", equalTo("email@email.com")))
-                .andExpect(jsonPath("$.data.member.provider", equalTo("GITHUB")))
-                .andExpect(jsonPath("$.data.member.socialId", equalTo(1234)))
                 .andExpect(jsonPath("$.data.member.name", equalTo("tester")))
                 .andExpect(jsonPath("$.data.member.imageUrl", equalTo("image.com/1.jpg")))
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
@@ -126,8 +124,6 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.data.url", equalTo("https://github.com/develup/mission/pull/1")))
                 .andExpect(jsonPath("$.data.member.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.member.email", equalTo("email@email.com")))
-                .andExpect(jsonPath("$.data.member.provider", equalTo("GITHUB")))
-                .andExpect(jsonPath("$.data.member.socialId", equalTo(1234)))
                 .andExpect(jsonPath("$.data.member.name", equalTo("tester")))
                 .andExpect(jsonPath("$.data.member.imageUrl", equalTo("image.com/1.jpg")))
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
@@ -144,12 +140,12 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .withMember(MemberTestData.defaultMember().withId(1L).build())
                 .withId(1L)
                 .build();
-
+        SolutionResponse solutionResponse = SolutionResponse.start(solution);
 
         BDDMockito.given(argumentResolver.resolveArgument(any(), any(), any(), any()))
                 .willReturn(new Accessor(1L));
         BDDMockito.given(solutionService.startMission(any(), any()))
-                .willReturn(solution);
+                .willReturn(solutionResponse);
 
         StartSolutionRequest request = new StartSolutionRequest(1L);
 
@@ -161,14 +157,11 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id", equalTo(1)))
-                .andExpect(jsonPath("$.data.title", equalTo("루터회관 흡연단속 제출합니다.")))
-                .andExpect(jsonPath("$.data.description", equalTo("안녕하세요. 피드백 잘 부탁 드려요.")))
-                .andExpect(jsonPath("$.data.url", equalTo("https://github.com/develup/mission/pull/1")))
-                .andExpect(jsonPath("$.data.status", equalTo("COMPLETED")))
+                .andExpect(jsonPath("$.data.title", equalTo(null)))
+                .andExpect(jsonPath("$.data.description", equalTo(null)))
+                .andExpect(jsonPath("$.data.url", equalTo(null)))
                 .andExpect(jsonPath("$.data.member.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.member.email", equalTo("email@email.com")))
-                .andExpect(jsonPath("$.data.member.provider", equalTo("GITHUB")))
-                .andExpect(jsonPath("$.data.member.socialId", equalTo(1234)))
                 .andExpect(jsonPath("$.data.member.name", equalTo("tester")))
                 .andExpect(jsonPath("$.data.member.imageUrl", equalTo("image.com/1.jpg")))
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))

@@ -6,7 +6,6 @@ import develup.application.auth.Accessor;
 import develup.application.solution.SolutionRequest;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.SolutionService;
-import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionSummary;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,13 +29,24 @@ public class SolutionApi {
 
     @PostMapping("/solutions/start")
     @Operation(summary = "미션 시작 API", description = "미션을 시작합니다.")
-    public ResponseEntity<ApiResponse<Solution>> startSolution(
+    public ResponseEntity<ApiResponse<SolutionResponse>> startSolution(
             @RequestBody StartSolutionRequest request,
             @Auth Accessor accessor
     ) {
-        Solution solution = solutionService.startMission(accessor.id(), request.missionId());
+        SolutionResponse response = solutionService.startMission(accessor.id(), request.missionId());
 
-        return ResponseEntity.ok(new ApiResponse<>(solution));
+        return ResponseEntity.ok(new ApiResponse<>(response));
+    }
+
+    @PostMapping("/solutions/submit")
+    @Operation(summary = "솔루션 제출 API", description = "솔루션을 제출합니다.")
+    public ResponseEntity<ApiResponse<SolutionResponse>> createSolution(
+            @Auth Accessor accessor, //TODO: Accessor 지우기
+            @RequestBody SolutionRequest request
+    ) {
+        SolutionResponse response = solutionService.create(accessor, request);
+
+        return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
     @GetMapping("/solutions")
@@ -53,16 +63,5 @@ public class SolutionApi {
         SolutionResponse solutionResponse = solutionService.getById(id);
 
         return ResponseEntity.ok(new ApiResponse<>(solutionResponse));
-    }
-
-    @PostMapping("/solutions/submit")
-    @Operation(summary = "솔루션 제출 API", description = "솔루션을 제출합니다.")
-    public ResponseEntity<ApiResponse<SolutionResponse>> createSolution(
-            @Auth Accessor accessor, //TODO: Accessor 지우기
-            @RequestBody SolutionRequest request
-    ) {
-        SolutionResponse response = solutionService.create(accessor, request);
-
-        return ResponseEntity.ok(new ApiResponse<>(response));
     }
 }
