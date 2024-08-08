@@ -1,19 +1,23 @@
-import type { Mission } from './index';
+interface Mission {
+  id: number;
+  title: string;
+  thumbnail: string;
+  url: string;
+  descriptionUrl: string;
+}
 
 interface Member {
   id: number;
   email: string;
-  provider: string;
-  socialId: number;
   name: string;
   imageUrl: string;
 }
 
 export interface Solution {
   id: number;
-  mission: Mission;
-  member: Member;
   title: string;
   description: string;
   url: string;
+  member: Member;
+  mission: Mission;
 }
