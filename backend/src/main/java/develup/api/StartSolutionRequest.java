@@ -1,4 +1,7 @@
 package develup.api;
 
-public record StartSolutionRequest(Long missionId) {
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+public record StartSolutionRequest(@NotNull @Positive Long missionId) {
 }

@@ -1,9 +1,13 @@
 package develup.application.solution;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 public record SolutionRequest(
-        Long missionId,
-        String title,
-        String description,
-        String url
+        @NotNull @Positive Long missionId,
+        @NotBlank String title,
+        @NotBlank String description,
+        @NotBlank String url
 ) {
 }
