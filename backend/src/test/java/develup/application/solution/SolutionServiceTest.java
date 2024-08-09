@@ -151,9 +151,18 @@ class SolutionServiceTest extends IntegrationTestSupport {
     @DisplayName("미션 제출 시 PR url 의 형식이 올바르지 않으면 예외가 발생한다.")
     void createFailWhenWrongPRUrl() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.IN_PROGRESS)
+                .build();
+
+        solutionRepository.save(solution);
+
         Accessor accessor = new Accessor(member.getId());
         SolutionRequest solutionRequest = new SolutionRequest(
-                1L,
+                mission.getId(),
                 "value",
                 "description",
                 "url"
@@ -168,9 +177,18 @@ class SolutionServiceTest extends IntegrationTestSupport {
     @DisplayName("미션 제출 시 PR url 의 저장소가 올바르지 않은 경우 예외가 발생한다.")
     void createFailWhenWrongPRUrlRepository() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.IN_PROGRESS)
+                .build();
+
+        solutionRepository.save(solution);
+
         Accessor accessor = new Accessor(member.getId());
         SolutionRequest solutionRequest = new SolutionRequest(
-                1L,
+                mission.getId(),
                 "value",
                 "description",
                 "https://github.com/develup-mission/java-undefinedMission/pull/1"
