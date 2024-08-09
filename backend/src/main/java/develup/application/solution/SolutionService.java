@@ -63,15 +63,6 @@ public class SolutionService {
         return solutionRepository.save(solution);
     }
 
-    public SolutionResponse getById(Long id) {
-        return SolutionResponse.from(solutionRepository.findById(id)
-                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND)));
-    }
-
-    public List<SolutionSummary> getCompletedSummaries() {
-        return solutionRepository.findCompletedSummaries();
-    }
-
     public SolutionResponse submit(Long memberId, SolutionRequest solutionRequest) {
         Solution solution = solutionRepository.findByMember_IdAndMission_IdAndStatus(
                 memberId,
@@ -86,6 +77,7 @@ public class SolutionService {
                 solutionRequest.url()
         );
         solution.submit(solutionSubmit);
+
         return SolutionResponse.from(solution);
     }
 
@@ -99,5 +91,16 @@ public class SolutionService {
         if (!MissionRepositoryName.contains(repositoryName)) {
             throw new DevelupException(ExceptionType.INVALID_URL);
         }
+    }
+
+    public SolutionResponse getById(Long id) {
+        Solution solution = solutionRepository.findById(id)
+                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+
+        return SolutionResponse.from(solution);
+    }
+
+    public List<SolutionSummary> getCompletedSummaries() {
+        return solutionRepository.findCompletedSummaries();
     }
 }
