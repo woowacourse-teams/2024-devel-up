@@ -60,7 +60,7 @@ export default class APIClient implements APIClientType {
         throw new Error(response.statusText);
       }
 
-      const data = await response.json();
+      const data = response.status === 204 ? null : await response.json();
 
       return data;
     } catch (err) {

@@ -27,7 +27,6 @@ export default function Header() {
 
   const handleUserLogout = async () => {
     await deleteLogout();
-    window.location.reload();
   };
 
   return (

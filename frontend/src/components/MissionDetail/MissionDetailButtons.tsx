@@ -8,19 +8,13 @@ import MissionProcess from '../ModalContent/MissionProcess';
 import useMissionStartMutation from '@/hooks/useMissionStartMutation';
 import Button from '../common/Button/Button';
 import { GithubIcon } from './MissionDetail.styled';
+import { useState } from 'react';
 
 interface MissionDetailButtonsProps {
   id: number;
   missionUrl: string;
   isStarted?: boolean;
 }
-
-const MOCK_USER = {
-  id: 1,
-  email: 'brgndy@gmail.com',
-  name: 'taeheon',
-  imageUrl: '',
-};
 
 export default function MissionDetailButtons({
   id,
@@ -31,9 +25,18 @@ export default function MissionDetailButtons({
   const handleNavigateToSubmit = () => {
     navigate(`${ROUTES.submitSolution}/${id}`);
   };
+  const [isMissionStarted, setIsMissionStarted] = useState(false);
+
+  const handleStartMission = () => {
+    handleModalOpen();
+    setIsMissionStarted(true);
+  };
+
   const { data: userInfo } = useUserInfo();
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
-  const { startMissionMutation } = useMissionStartMutation({ onSuccessCallback: handleModalOpen });
+  const { startMissionMutation } = useMissionStartMutation({
+    onSuccessCallback: handleStartMission,
+  });
 
   // const handleNavigateToMyPr = () => {
   //   window.open('', '_blank'); // 추후 구현 예정입니다 @프룬
@@ -41,7 +44,6 @@ export default function MissionDetailButtons({
 
   const handleMissionStart = () => {
     startMissionMutation({ missionId: id });
-    window.location.reload();
   };
 
   const handleNavigateToMission = () => {
@@ -54,7 +56,7 @@ export default function MissionDetailButtons({
         <GithubIcon />
       </Button>
       <S.ButtonWrapper>
-        {userInfo && !isStarted && (
+        {userInfo && !isMissionStarted && (
           <S.MissionButton
             $bgColor="--primary-500"
             $fontColor="--white-color"
@@ -64,7 +66,7 @@ export default function MissionDetailButtons({
             미션 시작하기
           </S.MissionButton>
         )}
-        {userInfo && isStarted && (
+        {userInfo && isMissionStarted && (
           <S.MissionButton
             $bgColor="--primary-500"
             $fontColor="--white-color"
