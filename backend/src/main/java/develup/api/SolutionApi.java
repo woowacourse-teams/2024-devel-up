@@ -10,6 +10,7 @@ import develup.application.solution.SolutionService;
 import develup.domain.solution.SolutionSummary;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class SolutionApi {
     @PostMapping("/solutions/start")
     @Operation(summary = "미션 시작 API", description = "미션을 시작합니다.")
     public ResponseEntity<ApiResponse<SolutionResponse>> startMission(
-            @RequestBody StartSolutionRequest request,
+            @Valid @RequestBody StartSolutionRequest request,
             @Auth Accessor accessor
     ) {
         SolutionResponse response = solutionService.startMission(accessor.id(), request.missionId());
@@ -42,7 +43,7 @@ public class SolutionApi {
     @Operation(summary = "솔루션 제출 API", description = "솔루션을 제출합니다.")
     public ResponseEntity<ApiResponse<SolutionResponse>> submitSolution(
             @Auth Accessor accessor,
-            @RequestBody SolutionRequest request
+            @Valid @RequestBody SolutionRequest request
     ) {
         SolutionResponse response = solutionService.submit(accessor.id(), request);
 
