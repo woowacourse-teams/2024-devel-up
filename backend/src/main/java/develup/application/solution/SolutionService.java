@@ -54,7 +54,7 @@ public class SolutionService {
         boolean alreadyStarted = solutionRepository.existsByMember_IdAndMission_IdAndStatus(memberId, missionId,
                 SolutionStatus.IN_PROGRESS);
         if (alreadyStarted) {
-            throw new DevelupException(ExceptionType.SOLUTION_ALREADY_SUBMITTED);
+            throw new DevelupException(ExceptionType.SOLUTION_ALREADY_STARTED);
         }
     }
 
@@ -66,10 +66,11 @@ public class SolutionService {
 
     public SolutionResponse submit(Long memberId, SolutionRequest solutionRequest) {
         Solution solution = solutionRepository.findByMember_IdAndMission_IdAndStatus(
-                memberId,
-                solutionRequest.missionId(),
-                SolutionStatus.IN_PROGRESS
-        );
+                        memberId,
+                        solutionRequest.missionId(),
+                        SolutionStatus.IN_PROGRESS
+                )
+                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_STARTED));
 
         validatePullRequestUrl(solutionRequest.url());
         SolutionSubmit solutionSubmit = new SolutionSubmit(

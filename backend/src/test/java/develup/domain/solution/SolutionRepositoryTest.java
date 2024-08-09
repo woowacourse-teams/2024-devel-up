@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
+import java.util.Optional;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
@@ -91,21 +92,25 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
         Solution saveInProgress = solutionRepository.save(inProgressSolution);
         Solution saveComplete = solutionRepository.save(completeSolution);
 
-        Solution solutionInProgress = solutionRepository.findByMember_IdAndMission_IdAndStatus(
+        Optional<Solution> solutionInProgress = solutionRepository.findByMember_IdAndMission_IdAndStatus(
                 member.getId(),
                 mission.getId(),
                 inProgress
         );
 
-        Solution solutionCompleted = solutionRepository.findByMember_IdAndMission_IdAndStatus(
+        Optional<Solution> solutionCompleted = solutionRepository.findByMember_IdAndMission_IdAndStatus(
                 member.getId(),
                 mission.getId(),
                 completed
         );
 
         assertAll(
-                () -> assertThat(solutionInProgress.getId()).isEqualTo(saveInProgress.getId()),
-                () -> assertThat(solutionCompleted.getId()).isEqualTo(saveComplete.getId())
+                () -> assertThat(solutionInProgress)
+                        .map(Solution::getId)
+                        .hasValue(saveInProgress.getId()),
+                () -> assertThat(solutionCompleted)
+                        .map(Solution::getId)
+                        .hasValue(saveComplete.getId())
         );
     }
 
