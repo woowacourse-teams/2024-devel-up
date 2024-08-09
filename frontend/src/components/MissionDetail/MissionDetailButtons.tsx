@@ -25,7 +25,7 @@ export default function MissionDetailButtons({
   const handleNavigateToSubmit = () => {
     navigate(`${ROUTES.submitSolution}/${id}`);
   };
-  const [isMissionStarted, setIsMissionStarted] = useState(false);
+  const [isMissionStarted, setIsMissionStarted] = useState(isStarted);
 
   const handleStartMission = () => {
     handleModalOpen();
