@@ -17,6 +17,7 @@ const useSubmitSolutionMutation = ({
     onSuccess: () => {
       onSuccessCallback();
       queryClient.invalidateQueries({ queryKey: missionKeys.detail(missionId) });
+      queryClient.invalidateQueries({ queryKey: ['solutionSummaries'] });
     },
     onError: (error: Error) => {
       console.error(error.message);

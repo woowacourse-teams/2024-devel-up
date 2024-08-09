@@ -22,14 +22,14 @@ export default function MissionSubmitPage() {
     description,
     handleDescription,
     handleUrl,
-    handleSubmission,
+    handleSubmitSolution,
     handleSolutionTitle,
     isPending,
     isModalOpen,
     isUrlError,
     isDescriptionError,
     isSolutionTitleError,
-  } = useSubmitSolution({ missionId, title: mission.title });
+  } = useSubmitSolution({ missionId });
 
   return (
     <S.Container>
@@ -40,7 +40,7 @@ export default function MissionSubmitPage() {
         title={mission.title}
         language={mission.language}
       />
-      <form onSubmit={handleSubmission}>
+      <form onSubmit={handleSubmitSolution}>
         <MissionTitle
           value={solutionTitle}
           onChange={handleSolutionTitle}

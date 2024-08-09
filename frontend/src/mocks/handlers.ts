@@ -17,4 +17,12 @@ export const handlers = [
   http.post(`${BASE_URL.dev}${PATH.submitSolution}`, () => {
     return HttpResponse.json({ data: submission });
   }),
+  // 로그아웃
+  // http.post(`${BASE_URL.dev}${PATH.logout}`, () => {
+
+  //   return HttpResponse.json({
+  //     headers
+  //   })
+
+  // })
 ];
