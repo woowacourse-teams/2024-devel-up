@@ -17,8 +17,10 @@ import develup.domain.solution.SolutionStatus;
 import develup.domain.solution.SolutionSummary;
 import develup.domain.solution.Title;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class SolutionService {
 
     private static final String URL_REGEX = "https://github\\.com/develup-mission/([^/]+)/pull/([0-9]+)";
