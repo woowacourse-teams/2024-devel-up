@@ -7,7 +7,6 @@ import useSolutionTitle from './useSolutionTitle';
 
 interface UseSubmitSolutionParams {
   missionId: number;
-  title: string;
 }
 
 const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
@@ -32,7 +31,7 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
     missionId,
   });
 
-  const handleSubmission = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitSolution = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isValidSolutionTitle) {
@@ -58,7 +57,7 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
     solutionTitle,
     handleDescription,
     handleUrl,
-    handleSubmission,
+    handleSubmitSolution,
     handleSolutionTitle,
     isPending,
     isModalOpen,
