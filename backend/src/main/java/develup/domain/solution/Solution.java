@@ -1,6 +1,7 @@
 package develup.domain.solution;
 
-import develup.application.solution.SolutionSubmit;
+import develup.api.exception.DevelupException;
+import develup.api.exception.ExceptionType;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import jakarta.persistence.Column;
@@ -76,6 +77,10 @@ public class Solution {
     }
 
     public void submit(SolutionSubmit solutionSubmit) {
+        if (!isInProgress()) {
+            throw new DevelupException(ExceptionType.SOLUTION_ALREADY_SUBMITTED);
+        }
+
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
         this.url = solutionSubmit.url();

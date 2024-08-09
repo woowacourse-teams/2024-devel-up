@@ -1,6 +1,4 @@
-package develup.application.solution;
-
-import develup.domain.solution.Title;
+package develup.domain.solution;
 
 public record SolutionSubmit(
         Title title,

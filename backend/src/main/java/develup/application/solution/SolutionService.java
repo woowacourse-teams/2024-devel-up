@@ -13,6 +13,7 @@ import develup.domain.mission.MissionRepositoryName;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
+import develup.domain.solution.SolutionSubmit;
 import develup.domain.solution.SolutionSummary;
 import develup.domain.solution.Title;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class SolutionService {
         boolean alreadyStarted = solutionRepository.existsByMember_IdAndMission_IdAndStatus(memberId, missionId,
                 SolutionStatus.IN_PROGRESS);
         if (alreadyStarted) {
-            throw new DevelupException(ExceptionType.SOLUTION_ALREADY_STARTED);
+            throw new DevelupException(ExceptionType.SOLUTION_ALREADY_SUBMITTED);
         }
     }
 
