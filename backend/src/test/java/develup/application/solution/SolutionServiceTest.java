@@ -119,7 +119,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         Accessor accessor = new Accessor(member.getId());
         SolutionRequest solutionRequest = getSolutionRequest();
 
-        SolutionResponse solutionResponse = solutionService.create(accessor, solutionRequest);
+        SolutionResponse solutionResponse = solutionService.submit(accessor.id(), solutionRequest);
 
         assertAll(
                 () -> assertEquals(solutionResponse.id(), 1L),
@@ -129,16 +129,6 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 () -> assertEquals(solutionResponse.description(), "description"),
                 () -> assertEquals(solutionResponse.url(), "https://github.com/develup-mission/java-smoking/pull/1")
         );
-    }
-
-    @Test
-    @DisplayName("비로그인 사용자가 미션 제출 시 예외가 발생한다.")
-    void create_guest() {
-        SolutionRequest solutionRequest = getSolutionRequest();
-
-        assertThatThrownBy(() -> solutionService.create(Accessor.GUEST, solutionRequest))
-                .isInstanceOf(DevelupException.class)
-                .hasMessage("권한이 없는 요청입니다.");
     }
 
     @Test
@@ -153,7 +143,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "https://github.com/develup-mission/java-smoking/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.create(accessor, solutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(accessor.id(), solutionRequest))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -169,7 +159,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "url"
         );
 
-        assertThatThrownBy(() -> solutionService.create(accessor, solutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(accessor.id(), solutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }
@@ -186,7 +176,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "https://github.com/develup-mission/java-undefinedMission/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.create(accessor, solutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(accessor.id(), solutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }

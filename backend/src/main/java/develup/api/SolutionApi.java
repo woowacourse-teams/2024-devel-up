@@ -29,7 +29,7 @@ public class SolutionApi {
 
     @PostMapping("/solutions/start")
     @Operation(summary = "미션 시작 API", description = "미션을 시작합니다.")
-    public ResponseEntity<ApiResponse<SolutionResponse>> startSolution(
+    public ResponseEntity<ApiResponse<SolutionResponse>> startMission(
             @RequestBody StartSolutionRequest request,
             @Auth Accessor accessor
     ) {
@@ -40,11 +40,11 @@ public class SolutionApi {
 
     @PostMapping("/solutions/submit")
     @Operation(summary = "솔루션 제출 API", description = "솔루션을 제출합니다.")
-    public ResponseEntity<ApiResponse<SolutionResponse>> createSolution(
-            @Auth Accessor accessor, //TODO: Accessor 지우기
+    public ResponseEntity<ApiResponse<SolutionResponse>> submitSolution(
+            @Auth Accessor accessor,
             @RequestBody SolutionRequest request
     ) {
-        SolutionResponse response = solutionService.create(accessor, request);
+        SolutionResponse response = solutionService.submit(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }

@@ -110,7 +110,7 @@ class SolutionApiTest extends IntegrationTestSupport {
                 "value",
                 "description",
                 "https://github.com/develup/mission/pull/1");
-        BDDMockito.given(solutionService.create(any(Accessor.class), any(SolutionRequest.class)))
+        BDDMockito.given(solutionService.submit(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(post("/solutions/submit")

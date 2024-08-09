@@ -5,7 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
-import develup.application.auth.Accessor;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
@@ -73,17 +72,12 @@ public class SolutionService {
         return solutionRepository.findCompletedSummaries();
     }
 
-    public SolutionResponse create(Accessor accessor, SolutionRequest solutionRequest) {
-        if (accessor.isGuest()) {
-            throw new DevelupException(ExceptionType.FORBIDDEN);
-        }
-
-        Solution solution = solutionRepository
-                .findByMember_IdAndMission_IdAndStatus(
-                        accessor.id(),
-                        solutionRequest.missionId(),
-                        SolutionStatus.IN_PROGRESS
-                );
+    public SolutionResponse submit(Long memberId, SolutionRequest solutionRequest) {
+        Solution solution = solutionRepository.findByMember_IdAndMission_IdAndStatus(
+                memberId,
+                solutionRequest.missionId(),
+                SolutionStatus.IN_PROGRESS
+        );
 
         validatePullRequestUrl(solutionRequest.url());
         SolutionSubmit solutionSubmit = new SolutionSubmit(
