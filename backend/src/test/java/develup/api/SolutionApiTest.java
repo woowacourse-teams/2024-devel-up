@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import develup.application.auth.Accessor;
 import develup.application.solution.SolutionRequest;
 import develup.application.solution.SolutionResponse;
 import develup.domain.solution.Solution;
@@ -57,13 +56,13 @@ class SolutionApiTest extends ApiTestSupport {
     @Test
     @DisplayName("솔루션을 조회한다.")
     void getSolution() throws Exception {
-        SolutionResponse solutionResponse = SolutionResponse.from(SolutionTestData.defaultSolution()
+        SolutionResponse response = SolutionResponse.from(SolutionTestData.defaultSolution()
                 .withMission(MissionTestData.defaultMission().withId(1L).build())
                 .withMember(MemberTestData.defaultMember().withId(1L).build())
                 .withId(1L)
                 .build());
         BDDMockito.given(solutionService.getById(any()))
-                .willReturn(solutionResponse);
+                .willReturn(response);
 
         mockMvc.perform(get("/solutions/1"))
                 .andDo(print())
@@ -126,9 +125,9 @@ class SolutionApiTest extends ApiTestSupport {
                 .withMember(MemberTestData.defaultMember().withId(1L).build())
                 .withId(1L)
                 .build();
-        SolutionResponse solutionResponse = SolutionResponse.start(solution);
+        SolutionResponse response = SolutionResponse.start(solution);
         BDDMockito.given(solutionService.startMission(any(), any()))
-                .willReturn(solutionResponse);
+                .willReturn(response);
         StartSolutionRequest request = new StartSolutionRequest(1L);
 
         mockMvc.perform(
