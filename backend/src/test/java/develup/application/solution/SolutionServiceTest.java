@@ -109,7 +109,6 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 .withId(1L)
                 .withMission(mission)
                 .withMember(member)
-                .withTitle(null)
                 .withDescription(null)
                 .withUrl(null)
                 .withStatus(SolutionStatus.IN_PROGRESS)

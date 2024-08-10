@@ -18,7 +18,7 @@ public record SolutionResponse(
                 solution.getId(),
                 MissionResponse.from(solution.getMission()),
                 MemberResponse.from(solution.getMember()),
-                solution.getTitle().value(),
+                solution.getTitle().getValue(),
                 solution.getDescription(),
                 solution.getUrl()
         );
