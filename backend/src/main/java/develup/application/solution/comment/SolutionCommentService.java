@@ -39,11 +39,7 @@ public class SolutionCommentService {
         return null;
     }
 
-    public CreateSolutionCommentResponse addComment(
-            Long solutionId,
-            SolutionCommentRequest request,
-            Long memberId
-    ) {
+    public CreateSolutionCommentResponse addComment(Long solutionId, SolutionCommentRequest request, Long memberId) {
         Member member = getMember(memberId);
         Solution solution = getSolution(solutionId);
 
@@ -59,21 +55,13 @@ public class SolutionCommentService {
 
     private SolutionComment createReplyComment(SolutionCommentRequest request, Member member) {
         SolutionComment parentComment = getComment(request.parentCommentId());
-
-        SolutionComment replyComment = parentComment.reply(
-                request.content(),
-                member
-        );
+        SolutionComment replyComment = parentComment.reply(request.content(), member);
 
         return solutionCommentRepository.save(replyComment);
     }
 
     private SolutionComment createRootComment(SolutionCommentRequest request, Solution solution, Member member) {
-        SolutionComment rootComment = SolutionComment.create(
-                request.content(),
-                solution,
-                member
-        );
+        SolutionComment rootComment = SolutionComment.create(request.content(), solution, member);
 
         return solutionCommentRepository.save(rootComment);
     }
