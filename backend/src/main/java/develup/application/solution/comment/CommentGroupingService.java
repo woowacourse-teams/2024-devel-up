@@ -23,7 +23,7 @@ public class CommentGroupingService {
         List<SolutionRootCommentResponse> commentWithReplies = attachRepliesToRootComments(rootComments, repliesMap);
 
         return commentWithReplies.stream()
-                .filter(this::isNotDeletedOrHasReplies)
+                .filter(this::isRootCommentNotDeletedOrHasReplies)
                 .toList();
     }
 
@@ -59,7 +59,7 @@ public class CommentGroupingService {
                 .toList();
     }
 
-    private boolean isNotDeletedOrHasReplies(SolutionRootCommentResponse rootCommentResponse) {
+    private boolean isRootCommentNotDeletedOrHasReplies(SolutionRootCommentResponse rootCommentResponse) {
         return !rootCommentResponse.isDeleted() || !rootCommentResponse.replies().isEmpty();
     }
 }
