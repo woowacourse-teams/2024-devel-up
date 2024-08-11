@@ -15,7 +15,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class SolutionComment extends CreatedAtAuditableEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
