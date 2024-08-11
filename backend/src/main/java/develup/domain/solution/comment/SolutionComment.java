@@ -1,6 +1,8 @@
 package develup.domain.solution.comment;
 
 import java.time.LocalDateTime;
+import develup.api.exception.DevelupException;
+import develup.api.exception.ExceptionType;
 import develup.domain.CreatedAtAuditableEntity;
 import develup.domain.member.Member;
 import develup.domain.solution.Solution;
@@ -60,6 +62,36 @@ public class SolutionComment extends CreatedAtAuditableEntity {
         this.deletedAt = deletedAt;
     }
 
+    public SolutionComment create(String content, Solution solution, Member member) {
+        return new SolutionComment(content, solution, member, null, null);
+    }
+
+    public SolutionComment reply(String content, Member member) {
+        if (this.isDeleted()) {
+            throw new DevelupException(ExceptionType.COMMENT_ALREADY_DELETED);
+        }
+
+        if (this.isReply()) {
+            throw new DevelupException(ExceptionType.CANNOT_REPLY_TO_REPLY);
+        }
+
+        SolutionComment reply = new SolutionComment();
+        reply.content = content;
+        reply.solution = this.solution;
+        reply.member = member;
+        reply.parentComment = this;
+
+        return reply;
+    }
+
+    public void delete() {
+        if (this.isDeleted()) {
+            throw new DevelupException(ExceptionType.COMMENT_ALREADY_DELETED);
+        }
+
+        this.deletedAt = LocalDateTime.now();
+    }
+
     public String getContent() {
         return content;
     }
@@ -76,7 +108,15 @@ public class SolutionComment extends CreatedAtAuditableEntity {
         return parentComment;
     }
 
+    public boolean isReply() {
+        return parentComment != null;
+    }
+
     public LocalDateTime getDeletedAt() {
         return deletedAt;
+    }
+
+    public boolean isDeleted() {
+        return deletedAt != null;
     }
 }

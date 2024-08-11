@@ -17,6 +17,8 @@ public enum ExceptionType {
     SOLUTION_ALREADY_SUBMITTED(HttpStatus.BAD_REQUEST, "이미 제출한 미션입니다."),
     INVALID_URL(HttpStatus.BAD_REQUEST, "올바르지 않은 주소입니다."),
     INVALID_TITLE(HttpStatus.BAD_REQUEST, "올바르지 않은 제목입니다."),
+    COMMENT_ALREADY_DELETED(HttpStatus.BAD_REQUEST, "이미 삭제된 댓글입니다."),
+    CANNOT_REPLY_TO_REPLY(HttpStatus.BAD_REQUEST, "답글에는 답글을 작성할 수 없습니다."),
     ;
 
     private final HttpStatus status;
