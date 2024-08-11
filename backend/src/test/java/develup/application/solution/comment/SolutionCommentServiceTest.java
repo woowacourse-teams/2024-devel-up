@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.time.LocalDateTime;
 import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
@@ -53,13 +54,33 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("댓글을 조회 시 존재하지 않는 경우 예외가 발생한다.")
+    @DisplayName("댓글 조회 시 존재하지 않는 경우 예외가 발생한다.")
     void getComment_notFound() {
         // given
         Long unknownId = -1L;
 
         // when & then
         assertThatThrownBy(() -> solutionCommentService.getComment(unknownId))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("존재하지 않는 댓글입니다.");
+    }
+
+    @Test
+    @DisplayName("댓글 조회 시 삭제된 댓글일 경우 예외가 발생한다.")
+    void getCommentFailedWhenDeleted() {
+        // given
+        Solution solution = createSolution();
+        Member member = solution.getMember();
+        SolutionComment deletedComment = SolutionCommentTestData.defaultSolutionComment()
+                .withSolution(solution)
+                .withMember(member)
+                .withDeletedAt(LocalDateTime.now())
+                .build();
+        solutionCommentRepository.save(deletedComment);
+
+        // when & then
+        Long commentId = deletedComment.getId();
+        assertThatThrownBy(() -> solutionCommentService.getComment(commentId))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 댓글입니다.");
     }

@@ -31,8 +31,14 @@ public class SolutionCommentService {
     }
 
     public SolutionComment getComment(Long commentId) {
-        return solutionCommentRepository.findById(commentId)
+        SolutionComment comment = solutionCommentRepository.findById(commentId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.COMMENT_NOT_FOUND));
+
+        if (comment.isDeleted()) {
+            throw new DevelupException(ExceptionType.COMMENT_NOT_FOUND);
+        }
+
+        return comment;
     }
 
     public List<SolutionRootCommentResponse> getComments(Long solutionId) {
