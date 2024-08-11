@@ -80,13 +80,13 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
                 .build();
 
         // when
-        SolutionReplyResponse replyResponse = solutionCommentMapper.toReplyResponse(reply);
         SolutionRootCommentResponse rootCommentResponse = solutionCommentMapper.toRootCommentResponse(
                 rootComment,
-                List.of(replyResponse)
+                List.of(reply)
         );
 
         // then
+        SolutionReplyResponse replyResponse = solutionCommentMapper.toReplyResponse(reply);
         assertAll(
                 () -> assertThat(rootCommentResponse.replies()).containsExactly(replyResponse),
                 () -> assertThat(rootCommentResponse.isDeleted()).isFalse()
@@ -107,13 +107,13 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
                 .build();
 
         // when
-        SolutionReplyResponse replyResponse = solutionCommentMapper.toReplyResponse(reply);
         SolutionRootCommentResponse rootCommentResponse = solutionCommentMapper.toRootCommentResponse(
                 rootComment,
-                List.of(replyResponse)
+                List.of(reply)
         );
 
         // then
+        SolutionReplyResponse replyResponse = solutionCommentMapper.toReplyResponse(reply);
         assertAll(
                 () -> assertThat(rootCommentResponse.replies()).containsExactly(replyResponse),
                 () -> assertThat(rootCommentResponse.isDeleted()).isTrue(),

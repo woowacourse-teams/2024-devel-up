@@ -43,10 +43,14 @@ public class SolutionCommentMapper {
 
     public SolutionRootCommentResponse toRootCommentResponse(
             SolutionComment rootComment,
-            List<SolutionReplyResponse> replies
+            List<SolutionComment> replies
     ) {
+        List<SolutionReplyResponse> replyResponses = replies.stream()
+                .map(this::toReplyResponse)
+                .toList();
+
         if (rootComment.isDeleted()) {
-            return toDeletedRootCommentResponse(rootComment, replies);
+            return toDeletedRootCommentResponse(rootComment, replyResponses);
         }
 
         return new SolutionRootCommentResponse(
@@ -54,7 +58,7 @@ public class SolutionCommentMapper {
                 rootComment.getSolutionId(),
                 rootComment.getContent(),
                 MemberResponse.from(rootComment.getMember()),
-                replies,
+                replyResponses,
                 rootComment.getCreatedAt(),
                 false
         );
@@ -62,14 +66,14 @@ public class SolutionCommentMapper {
 
     private SolutionRootCommentResponse toDeletedRootCommentResponse(
             SolutionComment rootComment,
-            List<SolutionReplyResponse> replies
+            List<SolutionReplyResponse> replyResponses
     ) {
         return new SolutionRootCommentResponse(
                 rootComment.getId(),
                 rootComment.getSolutionId(),
                 "",
                 EMPTY_MEMBER,
-                replies,
+                replyResponses,
                 EPOCH_TIME,
                 true
         );

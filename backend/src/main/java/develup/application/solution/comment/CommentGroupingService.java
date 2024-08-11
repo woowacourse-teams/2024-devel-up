@@ -19,7 +19,7 @@ public class CommentGroupingService {
     public List<SolutionRootCommentResponse> groupReplies(List<SolutionComment> comments) {
         List<SolutionComment> rootComments = filterRootComments(comments);
 
-        Map<Long, List<SolutionReplyResponse>> repliesMap = createRepliesMapByRootCommentId(comments);
+        Map<Long, List<SolutionComment>> repliesMap = createRepliesMapByRootCommentId(comments);
         List<SolutionRootCommentResponse> commentWithReplies = attachRepliesToRootComments(rootComments, repliesMap);
 
         return commentWithReplies.stream()
@@ -33,15 +33,15 @@ public class CommentGroupingService {
                 .toList();
     }
 
-    private Map<Long, List<SolutionReplyResponse>> createRepliesMapByRootCommentId(List<SolutionComment> comments) {
-        Map<Long, List<SolutionReplyResponse>> repliesMap = new HashMap<>();
+    private Map<Long, List<SolutionComment>> createRepliesMapByRootCommentId(List<SolutionComment> comments) {
+        Map<Long, List<SolutionComment>> repliesMap = new HashMap<>();
         comments.stream()
                 .filter(SolutionComment::isReply)
                 .filter(SolutionComment::isNotDeleted)
                 .forEach(it -> {
                     Long rootCommentId = it.getParentCommentId();
                     repliesMap.computeIfAbsent(rootCommentId, k -> new ArrayList<>())
-                            .add(commentMapper.toReplyResponse(it));
+                            .add(it);
                 });
 
         return repliesMap;
@@ -49,11 +49,11 @@ public class CommentGroupingService {
 
     private List<SolutionRootCommentResponse> attachRepliesToRootComments(
             List<SolutionComment> rootComments,
-            Map<Long, List<SolutionReplyResponse>> repliesMap
+            Map<Long, List<SolutionComment>> repliesMap
     ) {
         return rootComments.stream()
                 .map(it -> {
-                    List<SolutionReplyResponse> replies = repliesMap.getOrDefault(it.getId(), List.of());
+                    List<SolutionComment> replies = repliesMap.getOrDefault(it.getId(), List.of());
                     return commentMapper.toRootCommentResponse(it, replies);
                 })
                 .toList();
