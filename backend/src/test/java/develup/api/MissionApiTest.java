@@ -11,20 +11,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import develup.application.mission.MissionResponse;
-import develup.application.mission.MissionService;
 import develup.application.mission.MissionWithStartedResponse;
 import develup.domain.mission.Mission;
-import develup.support.IntegrationTestSupport;
 import develup.support.data.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-class MissionApiTest extends IntegrationTestSupport {
-
-    @MockBean
-    private MissionService missionService;
+class MissionApiTest extends ApiTestSupport {
 
     @Test
     @DisplayName("미션 목록을 조회한다.")
