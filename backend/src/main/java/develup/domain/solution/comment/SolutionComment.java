@@ -104,6 +104,10 @@ public class SolutionComment extends CreatedAtAuditableEntity {
         return member;
     }
 
+    public boolean isNotWrittenBy(Long memberId) {
+        return !member.getId().equals(memberId);
+    }
+
     public SolutionComment getParentComment() {
         return parentComment;
     }

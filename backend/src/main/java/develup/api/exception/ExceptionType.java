@@ -19,7 +19,8 @@ public enum ExceptionType {
     INVALID_TITLE(HttpStatus.BAD_REQUEST, "올바르지 않은 제목입니다."),
     COMMENT_ALREADY_DELETED(HttpStatus.BAD_REQUEST, "이미 삭제된 댓글입니다."),
     CANNOT_REPLY_TO_REPLY(HttpStatus.BAD_REQUEST, "답글에는 답글을 작성할 수 없습니다."),
-    ;
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 댓글입니다."),
+    COMMENT_NOT_WRITTEN_BY_MEMBER(HttpStatus.FORBIDDEN, "작성자만 댓글을 삭제할 수 있습니다.");
 
     private final HttpStatus status;
     private final String message;
