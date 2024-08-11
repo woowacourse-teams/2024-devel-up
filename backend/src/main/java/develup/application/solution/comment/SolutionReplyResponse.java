@@ -3,7 +3,7 @@ package develup.application.solution.comment;
 import java.time.LocalDateTime;
 import develup.application.member.MemberResponse;
 
-public record SolutionReplyCommentResponse(
+public record SolutionReplyResponse(
         Long id,
         Long solutionId,
         Long parentCommentId,

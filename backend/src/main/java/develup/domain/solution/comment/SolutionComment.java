@@ -116,12 +116,24 @@ public class SolutionComment extends CreatedAtAuditableEntity {
         return parentComment;
     }
 
+    public Long getParentCommentId() {
+        return parentComment.getId();
+    }
+
+    public boolean isRootComment() {
+        return parentComment == null;
+    }
+
     public boolean isReply() {
         return parentComment != null;
     }
 
     public LocalDateTime getDeletedAt() {
         return deletedAt;
+    }
+
+    public boolean isNotDeleted() {
+        return deletedAt == null;
     }
 
     public boolean isDeleted() {

@@ -16,15 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SolutionCommentService {
 
+    private final CommentGroupingService commentGroupingService;
     private final SolutionCommentRepository solutionCommentRepository;
     private final MemberRepository memberRepository;
     private final SolutionRepository solutionRepository;
 
     public SolutionCommentService(
+            CommentGroupingService commentGroupingService,
             SolutionCommentRepository solutionCommentRepository,
             MemberRepository memberRepository,
             SolutionRepository solutionRepository
     ) {
+        this.commentGroupingService = commentGroupingService;
         this.solutionCommentRepository = solutionCommentRepository;
         this.memberRepository = memberRepository;
         this.solutionRepository = solutionRepository;
@@ -41,8 +44,10 @@ public class SolutionCommentService {
         return comment;
     }
 
-    public List<SolutionRootCommentResponse> getComments(Long solutionId) {
-        return null;
+    public List<SolutionRootCommentResponse> getCommentsWithReplies(Long solutionId) {
+        List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solutionId);
+
+        return commentGroupingService.groupReplies(comments);
     }
 
     public CreateSolutionCommentResponse addComment(Long solutionId, SolutionCommentRequest request, Long memberId) {
@@ -51,7 +56,7 @@ public class SolutionCommentService {
 
         boolean isReply = request.parentCommentId() != null;
         if (isReply) {
-            SolutionComment reply = createReplyComment(request, member);
+            SolutionComment reply = createReply(request, member);
             return CreateSolutionCommentResponse.from(reply);
         }
 
@@ -59,11 +64,11 @@ public class SolutionCommentService {
         return CreateSolutionCommentResponse.from(rootComment);
     }
 
-    private SolutionComment createReplyComment(SolutionCommentRequest request, Member member) {
+    private SolutionComment createReply(SolutionCommentRequest request, Member member) {
         SolutionComment parentComment = getComment(request.parentCommentId());
-        SolutionComment replyComment = parentComment.reply(request.content(), member);
+        SolutionComment reply = parentComment.reply(request.content(), member);
 
-        return solutionCommentRepository.save(replyComment);
+        return solutionCommentRepository.save(reply);
     }
 
     private SolutionComment createRootComment(SolutionCommentRequest request, Solution solution, Member member) {

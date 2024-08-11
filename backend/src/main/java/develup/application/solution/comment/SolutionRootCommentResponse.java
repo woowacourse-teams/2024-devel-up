@@ -9,7 +9,7 @@ public record SolutionRootCommentResponse(
         Long solutionId,
         String content,
         MemberResponse member,
-        List<SolutionReplyCommentResponse> replies,
+        List<SolutionReplyResponse> replies,
         LocalDateTime createdAt,
         boolean isDeleted
 ) {
