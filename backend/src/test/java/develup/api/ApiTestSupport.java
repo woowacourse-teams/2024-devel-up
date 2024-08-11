@@ -11,12 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(controllers = {
-        AuthApi.class,
-        MemberApi.class,
-        MissionApi.class,
-        SolutionApi.class
-})
+@WebMvcTest
 public class ApiTestSupport {
 
     @Autowired
