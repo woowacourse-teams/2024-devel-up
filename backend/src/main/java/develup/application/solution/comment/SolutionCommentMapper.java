@@ -13,25 +13,6 @@ public class SolutionCommentMapper {
     private static final LocalDateTime EPOCH_TIME = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
     private static final MemberResponse EMPTY_MEMBER = new MemberResponse(0L, "", "", "");
 
-    public SolutionRootCommentResponse toRootCommentResponse(
-            SolutionComment rootComment,
-            List<SolutionReplyResponse> replies
-    ) {
-        if (rootComment.isDeleted()) {
-            return toDeletedRootCommentResponse(rootComment);
-        }
-
-        return new SolutionRootCommentResponse(
-                rootComment.getId(),
-                rootComment.getSolutionId(),
-                rootComment.getContent(),
-                MemberResponse.from(rootComment.getMember()),
-                replies,
-                rootComment.getCreatedAt(),
-                false
-        );
-    }
-
     public SolutionReplyResponse toReplyResponse(SolutionComment reply) {
         if (reply.isDeleted()) {
             return toDeletedReplyResponse(reply);
@@ -48,18 +29,6 @@ public class SolutionCommentMapper {
         );
     }
 
-    private SolutionRootCommentResponse toDeletedRootCommentResponse(SolutionComment rootComment) {
-        return new SolutionRootCommentResponse(
-                rootComment.getId(),
-                rootComment.getSolutionId(),
-                "",
-                EMPTY_MEMBER,
-                List.of(),
-                EPOCH_TIME,
-                true
-        );
-    }
-
     private SolutionReplyResponse toDeletedReplyResponse(SolutionComment reply) {
         return new SolutionReplyResponse(
                 reply.getId(),
@@ -67,6 +36,40 @@ public class SolutionCommentMapper {
                 reply.getParentCommentId(),
                 "",
                 EMPTY_MEMBER,
+                EPOCH_TIME,
+                true
+        );
+    }
+
+    public SolutionRootCommentResponse toRootCommentResponse(
+            SolutionComment rootComment,
+            List<SolutionReplyResponse> replies
+    ) {
+        if (rootComment.isDeleted()) {
+            return toDeletedRootCommentResponse(rootComment, replies);
+        }
+
+        return new SolutionRootCommentResponse(
+                rootComment.getId(),
+                rootComment.getSolutionId(),
+                rootComment.getContent(),
+                MemberResponse.from(rootComment.getMember()),
+                replies,
+                rootComment.getCreatedAt(),
+                false
+        );
+    }
+
+    private SolutionRootCommentResponse toDeletedRootCommentResponse(
+            SolutionComment rootComment,
+            List<SolutionReplyResponse> replies
+    ) {
+        return new SolutionRootCommentResponse(
+                rootComment.getId(),
+                rootComment.getSolutionId(),
+                "",
+                EMPTY_MEMBER,
+                replies,
                 EPOCH_TIME,
                 true
         );
