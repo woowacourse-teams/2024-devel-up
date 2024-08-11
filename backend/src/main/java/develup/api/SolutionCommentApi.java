@@ -32,7 +32,9 @@ public class SolutionCommentApi {
 
     @GetMapping("/solutions/{solutionId}/comments")
     @Operation(summary = "솔루션 댓글 조회 API", description = "솔루션의 댓글 목록을 조회합니다. 댓글들과 댓글들에 대한 답글을 조회합니다.")
-    public ResponseEntity<ApiResponse<List<SolutionRootCommentResponse>>> getComments(@PathVariable Long solutionId) {
+    public ResponseEntity<ApiResponse<List<SolutionRootCommentResponse>>> getComments(
+            @PathVariable Long solutionId
+    ) {
         List<SolutionRootCommentResponse> responses = solutionCommentService.getCommentsWithReplies(solutionId);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
