@@ -62,7 +62,7 @@ public class SolutionComment extends CreatedAtAuditableEntity {
         this.deletedAt = deletedAt;
     }
 
-    public SolutionComment create(String content, Solution solution, Member member) {
+    public static SolutionComment create(String content, Solution solution, Member member) {
         return new SolutionComment(content, solution, member, null, null);
     }
 
@@ -98,6 +98,10 @@ public class SolutionComment extends CreatedAtAuditableEntity {
 
     public Solution getSolution() {
         return solution;
+    }
+
+    public Long getSolutionId() {
+        return solution.getId();
     }
 
     public Member getMember() {

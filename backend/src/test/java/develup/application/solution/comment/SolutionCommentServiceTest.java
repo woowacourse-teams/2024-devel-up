@@ -2,6 +2,7 @@ package develup.application.solution.comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
@@ -64,6 +65,53 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     }
 
     @Test
+    @DisplayName("댓글을 추가한다.")
+    void addComment() {
+        // given
+        Solution solution = createSolution();
+        Member member = solution.getMember();
+
+        // when
+        Long solutionId = solution.getId();
+        Long memberId = member.getId();
+        SolutionCommentRequest request = new SolutionCommentRequest(
+                "댓글입니다.",
+                null
+        );
+        CreateSolutionCommentResponse response = solutionCommentService.addComment(solutionId, request, memberId);
+
+        // then
+        assertAll(
+                () -> assertThat(solutionCommentRepository.findAll()).hasSize(1),
+                () -> assertThat(response.parentCommentId()).isNull()
+        );
+    }
+
+    @Test
+    @DisplayName("답글을 추가한다.")
+    void addReply() {
+        // given
+        SolutionComment solutionComment = createSolutionComment();
+        Member member = solutionComment.getMember();
+        Solution solution = solutionComment.getSolution();
+
+        // when
+        Long solutionId = solution.getId();
+        Long memberId = member.getId();
+        SolutionCommentRequest request = new SolutionCommentRequest(
+                "답글입니다.",
+                solutionComment.getId()
+        );
+        CreateSolutionCommentResponse response = solutionCommentService.addComment(solutionId, request, memberId);
+
+        // then
+        assertAll(
+                () -> assertThat(solutionCommentRepository.findAll()).hasSize(2),
+                () -> assertThat(response.parentCommentId()).isEqualTo(solutionComment.getId())
+        );
+    }
+
+    @Test
     @DisplayName("댓글을 삭제한다.")
     void deleteComment() {
         // given
@@ -75,8 +123,9 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         solutionCommentService.deleteComment(commentId, memberId);
 
         // then
-        SolutionComment actual = solutionCommentRepository.findById(commentId).get();
-        assertThat(actual.isDeleted()).isTrue();
+        assertThat(solutionCommentRepository.findById(commentId))
+                .map(SolutionComment::isDeleted)
+                .hasValue(true);
     }
 
     @Test
@@ -94,17 +143,22 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
                 .hasMessage("작성자만 댓글을 삭제할 수 있습니다.");
     }
 
-    private SolutionComment createSolutionComment() {
+    private Solution createSolution() {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Solution solution = SolutionTestData.defaultSolution()
                 .withMission(mission)
                 .withMember(member)
                 .build();
-        solutionRepository.save(solution);
+
+        return solutionRepository.save(solution);
+    }
+
+    private SolutionComment createSolutionComment() {
+        Solution solution = createSolution();
         SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
                 .withSolution(solution)
-                .withMember(member)
+                .withMember(solution.getMember())
                 .build();
         solutionCommentRepository.save(solutionComment);
 

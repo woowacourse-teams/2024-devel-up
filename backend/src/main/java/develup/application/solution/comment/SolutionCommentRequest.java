@@ -1,4 +1,9 @@
 package develup.application.solution.comment;
 
-public record SolutionCommentRequest() {
+import jakarta.validation.constraints.NotBlank;
+
+public record SolutionCommentRequest(
+        @NotBlank String content,
+        Long parentCommentId
+) {
 }
