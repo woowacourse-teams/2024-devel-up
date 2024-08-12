@@ -104,8 +104,8 @@ public class Solution {
         return member;
     }
 
-    public Title getTitle() {
-        return title;
+    public String getTitle() {
+        return title.getValue();
     }
 
     public String getDescription() {
