@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.StartSolutionRequest;
@@ -23,13 +22,9 @@ import develup.support.data.SolutionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 class SolutionApiTest extends ApiTestSupport {
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("솔루션 목록을 조회한다.")
