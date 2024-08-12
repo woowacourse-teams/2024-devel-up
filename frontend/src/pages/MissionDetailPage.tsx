@@ -21,7 +21,7 @@ export default function MissionDetailPage() {
         missionUrl={missionData.url}
         isStarted={missionData.isStarted}
       />
-      <MissionDetailContent descriptionUrl={missionData.description} />
+      <MissionDetailContent description={missionData.description} />
     </S.MissionDetailPageContainer>
   );
 }

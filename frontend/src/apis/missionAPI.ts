@@ -1,6 +1,13 @@
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
-import type { Mission, MissionSubmission, SubmissionPayload, Submission } from '@/types';
+import type {
+  Mission,
+  MissionSubmission,
+  SubmissionPayload,
+  Submission,
+  MissionResponse,
+} from '@/types';
+import { populateMissionDescription } from './utils/populateMissionDescription';
 
 interface getMissionInProgressResponse {
   data: MissionSubmission;
@@ -11,14 +18,14 @@ interface getMissionCompletedResponse {
 }
 
 interface getMissionByIdResponse {
-  data: Mission;
+  data: MissionResponse;
 }
 
 interface getAllMissionResponse {
-  data: Mission[];
+  data: MissionResponse[];
 }
 
-export const getAllMissions = async (): Promise<Mission[]> => {
+export const getAllMissions = async (): Promise<MissionResponse[]> => {
   const { data } = await develupAPIClient.get<getAllMissionResponse>(PATH.missionList);
 
   return data;
@@ -26,8 +33,9 @@ export const getAllMissions = async (): Promise<Mission[]> => {
 
 export const getMissionById = async (id: number): Promise<Mission> => {
   const { data } = await develupAPIClient.get<getMissionByIdResponse>(`${PATH.missionList}/${id}`);
+  const mission = await populateMissionDescription(data);
 
-  return data;
+  return mission;
 };
 
 export const getMissionInProgress = async (): Promise<MissionSubmission> => {

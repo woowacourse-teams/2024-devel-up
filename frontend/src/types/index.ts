@@ -9,14 +9,19 @@ export interface TabInfo {
 }
 
 //TODO 백엔드에서 내려주는 language 타입이 string이라서 일단 string으로 수정해놓았습니다!
-export interface Mission {
+
+export interface MissionResponse {
   id: number;
   title: string;
   language: string;
-  description: string;
+  descriptionUrl: string;
   thumbnail: string;
   url: string;
   isStarted?: boolean;
+}
+
+export interface Mission extends MissionResponse {
+  description: string;
 }
 
 export interface MissionSubmission {
