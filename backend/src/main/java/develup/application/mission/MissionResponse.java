@@ -7,6 +7,7 @@ public record MissionResponse(
         String title,
         String descriptionUrl,
         String thumbnail,
+        String summary,
         String url
 ) {
 
@@ -16,6 +17,7 @@ public record MissionResponse(
                 mission.getTitle(),
                 mission.getDescriptionUrl(),
                 mission.getThumbnail(),
+                mission.getSummary(),
                 mission.getUrl()
         );
     }
