@@ -16,11 +16,11 @@ public class Title {
     }
 
     public Title(String value) {
-        validate(value);
+        validateIsNotBlank(value);
         this.value = value;
     }
 
-    private void validate(String value) {
+    private void validateIsNotBlank(String value) {
         if (value.isBlank()) {
             throw new DevelupException(ExceptionType.INVALID_TITLE);
         }
