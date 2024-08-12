@@ -40,10 +40,10 @@ class SolutionServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("존재하지 않는 미션에 대한 솔루션 시작은 불가능하다.")
     void startWithUnknownMission() {
-        Long unknownMissionId = -1L;
+        StartSolutionRequest request = new StartSolutionRequest(Long.MAX_VALUE);
         Long memberId = memberRepository.save(MemberTestData.defaultMember().build()).getId();
 
-        assertThatThrownBy(() -> solutionService.startMission(memberId, unknownMissionId))
+        assertThatThrownBy(() -> solutionService.startMission(memberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 미션입니다.");
     }
@@ -53,8 +53,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void startWithUnknownMember() {
         Long unknownMemberId = -1L;
         Long missionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
+        StartSolutionRequest request = new StartSolutionRequest(missionId);
 
-        assertThatThrownBy(() -> solutionService.startMission(unknownMemberId, missionId))
+        assertThatThrownBy(() -> solutionService.startMission(unknownMemberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 회원입니다.");
     }
@@ -64,8 +65,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void start() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        StartSolutionRequest request = new StartSolutionRequest(mission.getId());
 
-        SolutionResponse response = solutionService.startMission(member.getId(), mission.getId());
+        SolutionResponse response = solutionService.startMission(member.getId(), request);
 
         Optional<Solution> found = solutionRepository.findById(response.id());
         assertThat(found)
@@ -78,6 +80,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void alreadyStarted() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        StartSolutionRequest request = new StartSolutionRequest(mission.getId());
         Solution inProgressSolution = SolutionTestData.defaultSolution()
                 .withMission(mission)
                 .withMember(member)
@@ -85,7 +88,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 .build();
         solutionRepository.save(inProgressSolution);
 
-        assertThatThrownBy(() -> solutionService.startMission(member.getId(), mission.getId()))
+        assertThatThrownBy(() -> solutionService.startMission(member.getId(), request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("이미 진행 중인 미션입니다.");
     }

@@ -7,6 +7,7 @@ import develup.application.auth.Accessor;
 import develup.application.solution.SolutionRequest;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.SolutionService;
+import develup.application.solution.StartSolutionRequest;
 import develup.domain.solution.SolutionSummary;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,7 +35,7 @@ public class SolutionApi {
             @Valid @RequestBody StartSolutionRequest request,
             @Auth Accessor accessor
     ) {
-        SolutionResponse response = solutionService.startMission(accessor.id(), request.missionId());
+        SolutionResponse response = solutionService.startMission(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }

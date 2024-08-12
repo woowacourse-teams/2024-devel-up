@@ -40,11 +40,11 @@ public class SolutionService {
         this.memberRepository = memberRepository;
     }
 
-    public SolutionResponse startMission(Long memberId, Long missionId) {
-        validateAlreadyStarted(memberId, missionId);
+    public SolutionResponse startMission(Long memberId, StartSolutionRequest request) {
+        validateAlreadyStarted(memberId, request.missionId());
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
-        Mission mission = missionRepository.findById(missionId)
+        Mission mission = missionRepository.findById(request.missionId())
                 .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
 
         return SolutionResponse.start(creatSolution(member, mission));

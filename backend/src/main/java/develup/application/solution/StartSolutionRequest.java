@@ -1,4 +1,4 @@
-package develup.api;
+package develup.application.solution;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
