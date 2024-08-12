@@ -79,7 +79,7 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
-                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 
     @Test
@@ -115,7 +115,7 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
-                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 
     @Test
@@ -149,6 +149,6 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
-                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 }

@@ -9,7 +9,7 @@ public class MissionTestData {
                 .withTitle("루터회관 흡연단속")
                 .withThumbnail("https://thumbnail.com/1.png")
                 .withSummary("담배피다 걸린 행성이를 위한 벌금 계산 미션")
-                .withUrl("https://github.com/develup/mission");
+                .withUrl("https://github.com/develup-mission/java-smoking");
     }
 
     public static class MissionBuilder {
