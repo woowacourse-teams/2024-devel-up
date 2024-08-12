@@ -34,7 +34,7 @@ public class Solution {
     @Embedded
     private Title title;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column
