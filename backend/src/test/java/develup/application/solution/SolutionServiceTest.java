@@ -119,9 +119,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
         solutionRepository.save(solution);
         Accessor accessor = new Accessor(member.getId());
-        SolutionRequest solutionRequest = getSolutionRequest();
+        SubmitSolutionRequest submitSolutionRequest = getSolutionRequest();
 
-        SolutionResponse solutionResponse = solutionService.submit(accessor.id(), solutionRequest);
+        SolutionResponse solutionResponse = solutionService.submit(accessor.id(), submitSolutionRequest);
 
         assertAll(
                 () -> assertEquals(solutionResponse.id(), 1L),
@@ -138,14 +138,14 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void createFailWhenTitleIsBlank() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Accessor accessor = new Accessor(member.getId());
-        SolutionRequest solutionRequest = new SolutionRequest(
+        SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
                 1L,
                 "",
                 "description",
                 "https://github.com/develup-mission/java-smoking/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.submit(accessor.id(), solutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(accessor.id(), submitSolutionRequest))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -163,14 +163,14 @@ class SolutionServiceTest extends IntegrationTestSupport {
         solutionRepository.save(solution);
 
         Accessor accessor = new Accessor(member.getId());
-        SolutionRequest solutionRequest = new SolutionRequest(
+        SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
                 mission.getId(),
                 "value",
                 "description",
                 "url"
         );
 
-        assertThatThrownBy(() -> solutionService.submit(accessor.id(), solutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(accessor.id(), submitSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }
@@ -189,20 +189,20 @@ class SolutionServiceTest extends IntegrationTestSupport {
         solutionRepository.save(solution);
 
         Accessor accessor = new Accessor(member.getId());
-        SolutionRequest solutionRequest = new SolutionRequest(
+        SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
                 mission.getId(),
                 "value",
                 "description",
                 "https://github.com/develup-mission/java-undefinedMission/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.submit(accessor.id(), solutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(accessor.id(), submitSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }
 
-    private SolutionRequest getSolutionRequest() {
-        return new SolutionRequest(
+    private SubmitSolutionRequest getSolutionRequest() {
+        return new SubmitSolutionRequest(
                 1L,
                 "value",
                 "description",

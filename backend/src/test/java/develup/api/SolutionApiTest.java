@@ -11,9 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import develup.application.solution.SolutionRequest;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.StartSolutionRequest;
+import develup.application.solution.SubmitSolutionRequest;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionSummary;
 import develup.support.data.MemberTestData;
@@ -91,7 +91,7 @@ class SolutionApiTest extends ApiTestSupport {
                 .withId(1L)
                 .build();
         SolutionResponse response = SolutionResponse.from(solution);
-        SolutionRequest request = new SolutionRequest(
+        SubmitSolutionRequest request = new SubmitSolutionRequest(
                 1L,
                 "value",
                 "description",

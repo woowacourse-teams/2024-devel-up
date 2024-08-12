@@ -1,30 +1,23 @@
 package develup.application.solution;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
-import develup.domain.mission.MissionRepositoryName;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
 import develup.domain.solution.SolutionSubmit;
 import develup.domain.solution.SolutionSummary;
-import develup.domain.solution.Title;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 public class SolutionService {
-
-    private static final String URL_REGEX = "https://github\\.com/develup-mission/([^/]+)/pull/([0-9]+)";
-    private static final Pattern URL_PATTERN = Pattern.compile(URL_REGEX);
 
     private final SolutionRepository solutionRepository;
     private final MissionRepository missionRepository;
@@ -64,35 +57,18 @@ public class SolutionService {
         return solutionRepository.save(solution);
     }
 
-    public SolutionResponse submit(Long memberId, SolutionRequest solutionRequest) {
+    public SolutionResponse submit(Long memberId, SubmitSolutionRequest submitSolutionRequest) {
         Solution solution = solutionRepository.findByMember_IdAndMission_IdAndStatus(
                         memberId,
-                        solutionRequest.missionId(),
+                        submitSolutionRequest.missionId(),
                         SolutionStatus.IN_PROGRESS
                 )
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_STARTED));
 
-        validatePullRequestUrl(solutionRequest.url());
-        SolutionSubmit solutionSubmit = new SolutionSubmit(
-                new Title(solutionRequest.title()),
-                solutionRequest.description(),
-                solutionRequest.url()
-        );
+        SolutionSubmit solutionSubmit = SolutionSubmit.toSubmitPayload(submitSolutionRequest);
         solution.submit(solutionSubmit);
 
         return SolutionResponse.from(solution);
-    }
-
-    private void validatePullRequestUrl(String url) {
-        Matcher matcher = URL_PATTERN.matcher(url);
-        if (!matcher.matches()) {
-            throw new DevelupException(ExceptionType.INVALID_URL);
-        }
-
-        String repositoryName = matcher.group(1);
-        if (!MissionRepositoryName.contains(repositoryName)) {
-            throw new DevelupException(ExceptionType.INVALID_URL);
-        }
     }
 
     public SolutionResponse getById(Long id) {

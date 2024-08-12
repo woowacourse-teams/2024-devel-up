@@ -15,7 +15,11 @@ class SolutionTest {
         Solution solution = SolutionTestData.defaultSolution()
                 .withStatus(SolutionStatus.COMPLETED)
                 .build();
-        SolutionSubmit solutionSubmit = new SolutionSubmit(new Title("title"), "description", "url");
+        SolutionSubmit solutionSubmit = new SolutionSubmit(
+                new Title("title"),
+                "description",
+                "https://github.com/develup-mission/java-smoking/pull/1"
+        );
 
         assertThatThrownBy(() -> solution.submit(solutionSubmit))
                 .isInstanceOf(DevelupException.class)
