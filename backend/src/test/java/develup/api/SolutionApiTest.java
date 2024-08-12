@@ -11,15 +11,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import develup.api.auth.AuthArgumentResolver;
 import develup.application.auth.Accessor;
 import develup.application.solution.SolutionRequest;
 import develup.application.solution.SolutionResponse;
-import develup.application.solution.SolutionService;
 import develup.domain.solution.Solution;
-import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionSummary;
-import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
@@ -27,22 +23,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
-class SolutionApiTest extends IntegrationTestSupport {
+class SolutionApiTest extends ApiTestSupport {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @MockBean
-    private SolutionRepository solutionRepository;
-
-    @MockBean
-    private SolutionService solutionService;
-
-    @MockBean
-    private AuthArgumentResolver argumentResolver;
 
     @Test
     @DisplayName("솔루션 목록을 조회한다.")
@@ -115,7 +101,7 @@ class SolutionApiTest extends IntegrationTestSupport {
 
         mockMvc.perform(post("/solutions/submit")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id", equalTo(1)))
@@ -141,12 +127,8 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .withId(1L)
                 .build();
         SolutionResponse solutionResponse = SolutionResponse.start(solution);
-
-        BDDMockito.given(argumentResolver.resolveArgument(any(), any(), any(), any()))
-                .willReturn(new Accessor(1L));
         BDDMockito.given(solutionService.startMission(any(), any()))
                 .willReturn(solutionResponse);
-
         StartSolutionRequest request = new StartSolutionRequest(1L);
 
         mockMvc.perform(

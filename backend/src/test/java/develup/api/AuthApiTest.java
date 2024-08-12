@@ -7,18 +7,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import develup.application.auth.AuthService;
-import develup.support.IntegrationTestSupport;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-class AuthApiTest extends IntegrationTestSupport {
-
-    @MockBean
-    private AuthService authService;
+class AuthApiTest extends ApiTestSupport {
 
     @Test
     @DisplayName("github 로그인 페이지로 리다이렉트한다.")
