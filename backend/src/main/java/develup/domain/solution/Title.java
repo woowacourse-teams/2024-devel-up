@@ -10,10 +10,9 @@ import jakarta.persistence.Embeddable;
 public class Title {
 
     @Column(name = "title")
-    private final String value;
+    private String value;
 
     protected Title() {
-        this.value = "";
     }
 
     public Title(String value) {
