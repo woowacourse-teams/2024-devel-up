@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import closeIcon from '@/assets/images/close.svg';
-import ButtonSample from '@/components/common/ButtonSample/ButtonSample';
+import ButtonSample from '@/components/common/Button/Button';
 
 export const MissionProcessContentContainer = styled.div`
   width: 53rem;

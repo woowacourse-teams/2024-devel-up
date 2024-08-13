@@ -4,7 +4,7 @@ import LeftArrow from '@/assets/images/smallLeftArrow.svg';
 import RightArrow from '@/assets/images/smallRightArrow.svg';
 import ContentImage from '@/assets/images/contentImage.svg';
 import { GithubIcon } from '@/components/MissionSubmit/SubmitBanner.styled';
-import ButtonSample from '@/components/common/ButtonSample/ButtonSample';
+import Button from '@/components/common/Button/Button';
 
 const MOCK_CONTENT_LIST = [
   {
@@ -46,10 +46,10 @@ export default function MissionProcess({ handleModalClose, onClick }: MissionPro
       <S.ButtonWrapper>
         {isEndContent ? (
           <>
-            <ButtonSample variant="primary" onClick={onClick}>
+            <Button variant="primary" onClick={onClick}>
               <GithubIcon />
               미션 코드 보러 가기
-            </ButtonSample>
+            </Button>
           </>
         ) : (
           <>

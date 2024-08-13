@@ -1,39 +1,23 @@
-import type { PropsWithChildren } from 'react';
+import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import * as S from './Button.styled';
 
-interface ButtonProps {
-  content: string;
-  type?: 'default' | 'icon';
-  $bgColor?: string;
-  $hoverColor?: string;
-  $fontColor?: string;
-  disabled?: boolean;
-  onHandleClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+export type ButtonVariant = 'default' | 'primary';
+export type ButtonSize = 'default' | 'half' | 'full';
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
 }
 
 export default function Button({
-  content,
-  type = 'default',
-  $bgColor = '--primary-500',
-  $hoverColor = '--primary-600',
-  $fontColor = '--white-color',
-  disabled = false,
-  onHandleClick,
+  variant = 'default',
+  size = 'default',
   children,
-}: ButtonProps & PropsWithChildren) {
-  type;
-  $bgColor;
-  disabled;
+  ...rest
+}: PropsWithChildren<ButtonProps>) {
   return (
-    <S.CommonButton
-      $bgColor={disabled ? '--grey-100' : $bgColor}
-      $hoverColor={disabled ? '--grey-100' : $hoverColor}
-      $fontColor={disabled ? '--black-color' : $fontColor}
-      onClick={onHandleClick}
-      disabled={disabled}
-    >
-      {type === 'icon' && children}
-      {content}
+    <S.CommonButton $size={size} $variant={variant} {...rest}>
+      {children}
     </S.CommonButton>
   );
 }

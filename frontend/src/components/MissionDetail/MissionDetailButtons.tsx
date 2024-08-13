@@ -7,7 +7,7 @@ import Modal from '../common/Modal/Modal';
 import MissionProcess from '../ModalContent/MissionProcess';
 import useMissionStartMutation from '@/hooks/useMissionStartMutation';
 import { useState } from 'react';
-import ButtonSample from '../common/ButtonSample/ButtonSample';
+import Button from '../common/Button/Button';
 
 interface MissionDetailButtonsProps {
   id: number;
@@ -49,14 +49,14 @@ export default function MissionDetailButtons({
     <S.MissionDetailButtonsContainer>
       <S.ButtonWrapper>
         {userInfo && !isMissionStarted && (
-          <ButtonSample variant="primary" size="half" onClick={handleMissionStart}>
+          <Button variant="primary" size="half" onClick={handleMissionStart}>
             미션 시작하기
-          </ButtonSample>
+          </Button>
         )}
         {userInfo && isMissionStarted && (
-          <ButtonSample variant="primary" size="half" onClick={handleNavigateToSubmit}>
+          <Button variant="primary" size="half" onClick={handleNavigateToSubmit}>
             미션 제출하기
-          </ButtonSample>
+          </Button>
         )}
 
         <Modal isModalOpen={isModalOpen}>
