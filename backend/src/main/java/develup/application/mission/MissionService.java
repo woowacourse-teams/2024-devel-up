@@ -25,7 +25,7 @@ public class MissionService {
     }
 
     public List<MissionResponse> getMissions() {
-        return missionRepository.findAll().stream()
+        return missionRepository.findAllHashTaggedMission().stream()
                 .map(MissionResponse::from)
                 .toList();
     }
