@@ -11,3 +11,7 @@ export const PATH = {
   startSolution: '/solutions/start',
   logout: '/auth/logout',
 };
+
+export const PATH_FORMATTER = {
+  comments: (solutionId: number) => `/solutions/${solutionId}/comments`,
+};
