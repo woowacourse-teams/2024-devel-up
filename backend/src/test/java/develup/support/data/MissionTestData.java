@@ -8,6 +8,7 @@ public class MissionTestData {
         return new MissionBuilder()
                 .withTitle("루터회관 흡연단속")
                 .withThumbnail("https://thumbnail.com/1.png")
+                .withSummary("담배피다 걸린 행성이를 위한 벌금 계산 미션")
                 .withUrl("https://github.com/develup/mission");
     }
 
@@ -16,6 +17,7 @@ public class MissionTestData {
         private Long id;
         private String title;
         private String thumbnail;
+        private String summary;
         private String url;
 
         public MissionBuilder withId(Long id) {
@@ -33,6 +35,11 @@ public class MissionTestData {
             return this;
         }
 
+        public MissionBuilder withSummary(String summary) {
+            this.summary = summary;
+            return this;
+        }
+
         public MissionBuilder withUrl(String url) {
             this.url = url;
             return this;
@@ -43,6 +50,7 @@ public class MissionTestData {
                     id,
                     title,
                     thumbnail,
+                    summary,
                     url
             );
         }
