@@ -17,4 +17,6 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
     List<SolutionSummary> findCompletedSummaries();
 
     Solution findByMember_IdAndMission_IdAndStatus(Long memberId, Long missionId, SolutionStatus status);
+
+    List<Solution> findByMember_IdAndStatus(Long memberId, SolutionStatus status);
 }
