@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import closeIcon from '@/assets/images/close.svg';
-import ButtonSample from '@/components/common/Button/Button';
+import Button from '@/components/common/Button/Button';
 
 export const MissionProcessContentContainer = styled.div`
   width: 53rem;
@@ -47,6 +47,6 @@ export const ButtonWrapper = styled.div`
   gap: 0.8rem;
 `;
 
-export const ArrowButton = styled(ButtonSample)`
+export const ArrowButton = styled(Button)`
   gap: 1.2rem;
 `;
