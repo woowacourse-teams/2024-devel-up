@@ -1,9 +1,11 @@
-import type { MissionResponse } from '@/types';
+import type { Mission, MissionWithDescription } from '@/types';
 import * as Sentry from '@sentry/react';
 
-export const populateMissionDescription = async (missionResponse: MissionResponse) => {
+export const populateMissionDescription = async (
+  mission: Mission,
+): Promise<MissionWithDescription> => {
   try {
-    const response = await fetch(missionResponse.descriptionUrl);
+    const response = await fetch(mission.descriptionUrl);
 
     if (!response.ok) {
       throw new Error(response.statusText);
@@ -11,12 +13,12 @@ export const populateMissionDescription = async (missionResponse: MissionRespons
 
     const description = await response.text();
 
-    const mission = {
-      ...missionResponse,
+    const missionWithDescription = {
+      ...mission,
       description,
     };
 
-    return mission;
+    return missionWithDescription;
   } catch (err) {
     Sentry.withScope((scope: Sentry.Scope) => {
       scope.setLevel('error');
