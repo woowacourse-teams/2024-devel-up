@@ -17,7 +17,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             JOIN FETCH mht.hashTag ht
             WHERE m.id = :id
             """)
-    Optional<Mission> findWithHashTagsById(Long id);
+    Optional<Mission> findHashTaggedMissionById(Long id);
 
     @Query("""
             SELECT DISTINCT m

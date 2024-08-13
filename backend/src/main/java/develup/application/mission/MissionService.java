@@ -40,7 +40,7 @@ public class MissionService {
     }
 
     public MissionWithStartedResponse getMission(Accessor accessor, Long missionId) {
-        Mission mission = missionRepository.findWithHashTagsById(missionId)
+        Mission mission = missionRepository.findHashTaggedMissionById(missionId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
 
         if (accessor.isGuest()) {

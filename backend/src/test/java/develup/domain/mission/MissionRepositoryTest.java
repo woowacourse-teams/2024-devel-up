@@ -32,8 +32,8 @@ class MissionRepositoryTest extends IntegrationTestSupport {
         Mission nonTaggedMission = MissionTestData.defaultMission().build();
         missionRepository.saveAll(List.of(hashTaggedMission, nonTaggedMission));
 
-        Optional<Mission> hashTaggedFound = missionRepository.findWithHashTagsById(hashTaggedMission.getId());
-        Optional<Mission> noneTaggedFound = missionRepository.findWithHashTagsById(nonTaggedMission.getId());
+        Optional<Mission> hashTaggedFound = missionRepository.findHashTaggedMissionById(hashTaggedMission.getId());
+        Optional<Mission> noneTaggedFound = missionRepository.findHashTaggedMissionById(nonTaggedMission.getId());
 
         Assertions.assertAll(
                 () -> assertThat(hashTaggedFound)
