@@ -46,7 +46,7 @@ public class Mission {
         this(null, title, thumbnail, summary, url, hashTags);
     }
 
-    public Mission(Long id, String title, String thumbnail,String summary, String url, List<HashTag> hashTags) {
+    public Mission(Long id, String title, String thumbnail, String summary, String url, List<HashTag> hashTags) {
         this.id = id;
         this.title = title;
         this.thumbnail = thumbnail;
