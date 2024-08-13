@@ -1,9 +1,11 @@
 package develup.domain.solution;
 
+import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
+import develup.domain.mission.MissionHashTag;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -125,5 +127,13 @@ public class Solution {
 
     public SolutionStatus getStatus() {
         return status;
+    }
+
+    public String getMissionThumbnail() {
+        return mission.getThumbnail();
+    }
+
+    public List<MissionHashTag> getHashTags() {
+        return mission.getHashTags();
     }
 }

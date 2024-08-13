@@ -14,8 +14,12 @@ import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.StartSolutionRequest;
 import develup.application.solution.SubmitSolutionRequest;
+import develup.application.solution.SummarizedSolutionResponse;
+import develup.domain.hashtag.HashTag;
+import develup.domain.member.Member;
+import develup.domain.mission.Mission;
 import develup.domain.solution.Solution;
-import develup.domain.solution.SolutionSummary;
+import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
@@ -29,35 +33,29 @@ class SolutionApiTest extends ApiTestSupport {
     @Test
     @DisplayName("솔루션 목록을 조회한다.")
     void getSolutions() throws Exception {
-        List<SolutionSummary> summaries = List.of(
-                new SolutionSummary(1L, "thumbnail", "value", "description"),
-                new SolutionSummary(2L, "thumbnail", "value", "description")
+        List<SummarizedSolutionResponse> responses = List.of(
+                SummarizedSolutionResponse.from(createSolution()),
+                SummarizedSolutionResponse.from(createSolution())
         );
         BDDMockito.given(solutionService.getCompletedSummaries())
-                .willReturn(summaries);
+                .willReturn(responses);
 
         mockMvc.perform(get("/solutions"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id", equalTo(1)))
-                .andExpect(jsonPath("$.data[0].title", equalTo("value")))
-                .andExpect(jsonPath("$.data[0].thumbnail", equalTo("thumbnail")))
-                .andExpect(jsonPath("$.data[0].description", equalTo("description")))
-                .andExpect(jsonPath("$.data[1].id", equalTo(2)))
-                .andExpect(jsonPath("$.data[1].title", equalTo("value")))
-                .andExpect(jsonPath("$.data[1].thumbnail", equalTo("thumbnail")))
-                .andExpect(jsonPath("$.data[1].description", equalTo("description")))
+                .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속 제출합니다.")))
+                .andExpect(jsonPath("$.data[0].thumbnail", equalTo("https://thumbnail.com/1.png")))
+                .andExpect(jsonPath("$.data[0].description", equalTo("안녕하세요. 피드백 잘 부탁 드려요.")))
+                .andExpect(jsonPath("$.data[0].hashTag[0].id", is(1)))
+                .andExpect(jsonPath("$.data[0].hashTag[0].name", equalTo("JAVA")))
                 .andExpect(jsonPath("$.data.length()", is(2)));
     }
 
     @Test
     @DisplayName("솔루션을 조회한다.")
     void getSolution() throws Exception {
-        SolutionResponse response = SolutionResponse.from(SolutionTestData.defaultSolution()
-                .withMission(MissionTestData.defaultMission().withId(1L).build())
-                .withMember(MemberTestData.defaultMember().withId(1L).build())
-                .withId(1L)
-                .build());
+        SolutionResponse response = SolutionResponse.from(createSolution());
         BDDMockito.given(solutionService.getById(any()))
                 .willReturn(response);
 
@@ -74,19 +72,15 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.member.imageUrl", equalTo("image.com/1.jpg")))
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data.mission.summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 
     @Test
     @DisplayName("솔루션을 제출한다.")
-    void createSolution() throws Exception {
-        Solution solution = SolutionTestData.defaultSolution()
-                .withMission(MissionTestData.defaultMission().withId(1L).build())
-                .withMember(MemberTestData.defaultMember().withId(1L).build())
-                .withId(1L)
-                .build();
-        SolutionResponse response = SolutionResponse.from(solution);
+    void submitSolution() throws Exception {
+        SolutionResponse response = SolutionResponse.from(createSolution());
         SubmitSolutionRequest request = new SubmitSolutionRequest(
                 1L,
                 "value",
@@ -110,6 +104,7 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.member.imageUrl", equalTo("image.com/1.jpg")))
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data.mission.summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
@@ -117,12 +112,7 @@ class SolutionApiTest extends ApiTestSupport {
     @Test
     @DisplayName("솔루션을 시작한다.")
     void startSolution() throws Exception {
-        Solution solution = SolutionTestData.defaultSolution()
-                .withMission(MissionTestData.defaultMission().withId(1L).build())
-                .withMember(MemberTestData.defaultMember().withId(1L).build())
-                .withId(1L)
-                .build();
-        SolutionResponse response = SolutionResponse.start(solution);
+        SolutionResponse response = SolutionResponse.start(createSolution());
         BDDMockito.given(solutionService.startMission(any(), any()))
                 .willReturn(response);
         StartSolutionRequest request = new StartSolutionRequest(1L);
@@ -144,6 +134,7 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.member.imageUrl", equalTo("image.com/1.jpg")))
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data.mission.summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
@@ -167,5 +158,24 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[1].id", equalTo(2)))
                 .andExpect(jsonPath("$.data[1].thumbnail", equalTo("thumbnail")))
                 .andExpect(jsonPath("$.data[1].title", equalTo("title")));
+    }
+
+    private Solution createSolution() {
+        HashTag hashTag = HashTagTestData.defaultHashTag()
+                .withId(1L)
+                .build();
+        Member member = MemberTestData.defaultMember()
+                .withId(1L)
+                .build();
+        Mission mission = MissionTestData.defaultMission()
+                .withId(1L)
+                .withHashTags(List.of(hashTag))
+                .build();
+
+        return SolutionTestData.defaultSolution()
+                .withId(1L)
+                .withMission(mission)
+                .withMember(member)
+                .build();
     }
 }
