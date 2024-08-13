@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 public class Mission {
@@ -36,6 +37,7 @@ public class Mission {
     @Column(nullable = false)
     private String url;
 
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "mission", cascade = CascadeType.PERSIST)
     private List<MissionHashTag> hashTags = new ArrayList<>();
 
