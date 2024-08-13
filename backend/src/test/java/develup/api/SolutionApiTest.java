@@ -11,9 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import develup.application.auth.Accessor;
-import develup.application.solution.SolutionRequest;
 import develup.application.solution.SolutionResponse;
+import develup.application.solution.StartSolutionRequest;
+import develup.application.solution.SubmitSolutionRequest;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionSummary;
 import develup.support.data.MemberTestData;
@@ -57,13 +57,13 @@ class SolutionApiTest extends ApiTestSupport {
     @Test
     @DisplayName("솔루션을 조회한다.")
     void getSolution() throws Exception {
-        SolutionResponse solutionResponse = SolutionResponse.from(SolutionTestData.defaultSolution()
+        SolutionResponse response = SolutionResponse.from(SolutionTestData.defaultSolution()
                 .withMission(MissionTestData.defaultMission().withId(1L).build())
                 .withMember(MemberTestData.defaultMember().withId(1L).build())
                 .withId(1L)
                 .build());
         BDDMockito.given(solutionService.getById(any()))
-                .willReturn(solutionResponse);
+                .willReturn(response);
 
         mockMvc.perform(get("/solutions/1"))
                 .andDo(print())
@@ -79,7 +79,7 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
-                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 
     @Test
@@ -91,12 +91,12 @@ class SolutionApiTest extends ApiTestSupport {
                 .withId(1L)
                 .build();
         SolutionResponse response = SolutionResponse.from(solution);
-        SolutionRequest request = new SolutionRequest(
+        SubmitSolutionRequest request = new SubmitSolutionRequest(
                 1L,
                 "value",
                 "description",
                 "https://github.com/develup/mission/pull/1");
-        BDDMockito.given(solutionService.create(any(Accessor.class), any(SolutionRequest.class)))
+        BDDMockito.given(solutionService.submit(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(post("/solutions/submit")
@@ -115,7 +115,7 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
-                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 
     @Test
@@ -126,9 +126,9 @@ class SolutionApiTest extends ApiTestSupport {
                 .withMember(MemberTestData.defaultMember().withId(1L).build())
                 .withId(1L)
                 .build();
-        SolutionResponse solutionResponse = SolutionResponse.start(solution);
+        SolutionResponse response = SolutionResponse.start(solution);
         BDDMockito.given(solutionService.startMission(any(), any()))
-                .willReturn(solutionResponse);
+                .willReturn(response);
         StartSolutionRequest request = new StartSolutionRequest(1L);
 
         mockMvc.perform(
@@ -149,6 +149,6 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
-                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 }

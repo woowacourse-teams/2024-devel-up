@@ -4,12 +4,14 @@ import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
-import develup.application.solution.SolutionRequest;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.SolutionService;
+import develup.application.solution.StartSolutionRequest;
+import develup.application.solution.SubmitSolutionRequest;
 import develup.domain.solution.SolutionSummary;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,22 +31,22 @@ public class SolutionApi {
 
     @PostMapping("/solutions/start")
     @Operation(summary = "미션 시작 API", description = "미션을 시작합니다.")
-    public ResponseEntity<ApiResponse<SolutionResponse>> startSolution(
-            @RequestBody StartSolutionRequest request,
+    public ResponseEntity<ApiResponse<SolutionResponse>> startMission(
+            @Valid @RequestBody StartSolutionRequest request,
             @Auth Accessor accessor
     ) {
-        SolutionResponse response = solutionService.startMission(accessor.id(), request.missionId());
+        SolutionResponse response = solutionService.startMission(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
     @PostMapping("/solutions/submit")
     @Operation(summary = "솔루션 제출 API", description = "솔루션을 제출합니다.")
-    public ResponseEntity<ApiResponse<SolutionResponse>> createSolution(
-            @Auth Accessor accessor, //TODO: Accessor 지우기
-            @RequestBody SolutionRequest request
+    public ResponseEntity<ApiResponse<SolutionResponse>> submitSolution(
+            @Auth Accessor accessor,
+            @Valid @RequestBody SubmitSolutionRequest request
     ) {
-        SolutionResponse response = solutionService.create(accessor, request);
+        SolutionResponse response = solutionService.submit(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }

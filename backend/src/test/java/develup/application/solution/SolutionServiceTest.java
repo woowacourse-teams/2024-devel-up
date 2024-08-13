@@ -40,10 +40,10 @@ class SolutionServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("존재하지 않는 미션에 대한 솔루션 시작은 불가능하다.")
     void startWithUnknownMission() {
-        Long unknownMissionId = -1L;
+        StartSolutionRequest request = new StartSolutionRequest(Long.MAX_VALUE);
         Long memberId = memberRepository.save(MemberTestData.defaultMember().build()).getId();
 
-        assertThatThrownBy(() -> solutionService.startMission(memberId, unknownMissionId))
+        assertThatThrownBy(() -> solutionService.startMission(memberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 미션입니다.");
     }
@@ -53,8 +53,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void startWithUnknownMember() {
         Long unknownMemberId = -1L;
         Long missionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
+        StartSolutionRequest request = new StartSolutionRequest(missionId);
 
-        assertThatThrownBy(() -> solutionService.startMission(unknownMemberId, missionId))
+        assertThatThrownBy(() -> solutionService.startMission(unknownMemberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 회원입니다.");
     }
@@ -64,8 +65,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void start() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        StartSolutionRequest request = new StartSolutionRequest(mission.getId());
 
-        SolutionResponse response = solutionService.startMission(member.getId(), mission.getId());
+        SolutionResponse response = solutionService.startMission(member.getId(), request);
 
         Optional<Solution> found = solutionRepository.findById(response.id());
         assertThat(found)
@@ -78,6 +80,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void alreadyStarted() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        StartSolutionRequest request = new StartSolutionRequest(mission.getId());
         Solution inProgressSolution = SolutionTestData.defaultSolution()
                 .withMission(mission)
                 .withMember(member)
@@ -85,7 +88,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 .build();
         solutionRepository.save(inProgressSolution);
 
-        assertThatThrownBy(() -> solutionService.startMission(member.getId(), mission.getId()))
+        assertThatThrownBy(() -> solutionService.startMission(member.getId(), request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("이미 진행 중인 미션입니다.");
     }
@@ -109,7 +112,6 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 .withId(1L)
                 .withMission(mission)
                 .withMember(member)
-                .withTitle(null)
                 .withDescription(null)
                 .withUrl(null)
                 .withStatus(SolutionStatus.IN_PROGRESS)
@@ -117,9 +119,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
         solutionRepository.save(solution);
         Accessor accessor = new Accessor(member.getId());
-        SolutionRequest solutionRequest = getSolutionRequest();
+        SubmitSolutionRequest submitSolutionRequest = getSolutionRequest();
 
-        SolutionResponse solutionResponse = solutionService.create(accessor, solutionRequest);
+        SolutionResponse solutionResponse = solutionService.submit(accessor.id(), submitSolutionRequest);
 
         assertAll(
                 () -> assertEquals(solutionResponse.id(), 1L),
@@ -132,28 +134,18 @@ class SolutionServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("비로그인 사용자가 미션 제출 시 예외가 발생한다.")
-    void create_guest() {
-        SolutionRequest solutionRequest = getSolutionRequest();
-
-        assertThatThrownBy(() -> solutionService.create(Accessor.GUEST, solutionRequest))
-                .isInstanceOf(DevelupException.class)
-                .hasMessage("권한이 없는 요청입니다.");
-    }
-
-    @Test
     @DisplayName("미션 제출 시 value 이 비어있으면 예외가 발생한다.")
     void createFailWhenTitleIsBlank() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Accessor accessor = new Accessor(member.getId());
-        SolutionRequest solutionRequest = new SolutionRequest(
+        SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
                 1L,
                 "",
                 "description",
                 "https://github.com/develup-mission/java-smoking/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.create(accessor, solutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(accessor.id(), submitSolutionRequest))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -161,15 +153,24 @@ class SolutionServiceTest extends IntegrationTestSupport {
     @DisplayName("미션 제출 시 PR url 의 형식이 올바르지 않으면 예외가 발생한다.")
     void createFailWhenWrongPRUrl() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.IN_PROGRESS)
+                .build();
+
+        solutionRepository.save(solution);
+
         Accessor accessor = new Accessor(member.getId());
-        SolutionRequest solutionRequest = new SolutionRequest(
-                1L,
+        SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
+                mission.getId(),
                 "value",
                 "description",
                 "url"
         );
 
-        assertThatThrownBy(() -> solutionService.create(accessor, solutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(accessor.id(), submitSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }
@@ -178,21 +179,30 @@ class SolutionServiceTest extends IntegrationTestSupport {
     @DisplayName("미션 제출 시 PR url 의 저장소가 올바르지 않은 경우 예외가 발생한다.")
     void createFailWhenWrongPRUrlRepository() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.IN_PROGRESS)
+                .build();
+
+        solutionRepository.save(solution);
+
         Accessor accessor = new Accessor(member.getId());
-        SolutionRequest solutionRequest = new SolutionRequest(
-                1L,
+        SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
+                mission.getId(),
                 "value",
                 "description",
                 "https://github.com/develup-mission/java-undefinedMission/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.create(accessor, solutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(accessor.id(), submitSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }
 
-    private SolutionRequest getSolutionRequest() {
-        return new SolutionRequest(
+    private SubmitSolutionRequest getSolutionRequest() {
+        return new SubmitSolutionRequest(
                 1L,
                 "value",
                 "description",
