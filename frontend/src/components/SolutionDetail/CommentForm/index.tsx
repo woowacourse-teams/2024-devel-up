@@ -1,12 +1,12 @@
-import usePostCommentMutation from '@/hooks/usePostCommentMutation';
-import * as S from './SolutionDetail.styled';
 import { useState } from 'react';
+import usePostCommentMutation from '@/hooks/usePostCommentMutation';
+import * as S from './CommentForm.styled';
 
 interface CommentFormProps {
-  solutionId?: number;
+  solutionId: number;
 }
 
-export default function CommentForm({ solutionId = 1 }: CommentFormProps) {
+export default function CommentForm({ solutionId }: CommentFormProps) {
   const [comment, setComment] = useState('');
 
   const resetComment = () => setComment('');
