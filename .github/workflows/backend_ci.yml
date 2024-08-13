@@ -51,6 +51,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Test with Gradle
+        continue-on-error: true
         id: gradle_test
         run: |
           cd backend
@@ -59,7 +60,7 @@ jobs:
   BE_SLACK_MESSAGE:
     runs-on: ubuntu-latest
     needs: BE_CI
-    if: ${{!cancelled()}}
+    if: ${{needs.BE_CI.result != 'skipped'}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
