@@ -3,8 +3,8 @@ import * as S from './ModalProcess.styled';
 import LeftArrow from '@/assets/images/smallLeftArrow.svg';
 import RightArrow from '@/assets/images/smallRightArrow.svg';
 import ContentImage from '@/assets/images/contentImage.svg';
-import Button from '@/components/common/Button/Button';
 import { GithubIcon } from '@/components/MissionSubmit/SubmitBanner.styled';
+import ButtonSample from '@/components/common/ButtonSample/ButtonSample';
 
 const MOCK_CONTENT_LIST = [
   {
@@ -42,25 +42,26 @@ export default function MissionProcess({ handleModalClose, onClick }: MissionPro
       </S.CloseIconWrapper>
       <S.Title>어떻게 진행하나요?</S.Title>
       <ContentImage width={413} height={250} />
-      <S.Text>{currentContent?.content}</S.Text>{' '}
-      {/* TODO 현재 공통 컴포넌트 설정에는 아이콘 위치 같은게 고정이 되어있어서 일단 기본 태그로 구현해놓습니다 @버건디 */}
+      <S.Text>{currentContent?.content}</S.Text>
       <S.ButtonWrapper>
         {isEndContent ? (
           <>
-            <Button type="icon" content="미션 코드 보러 가기" onHandleClick={onClick}>
+            <ButtonSample variant="primary" onClick={onClick}>
               <GithubIcon />
-            </Button>
+              미션 코드 보러 가기
+            </ButtonSample>
           </>
         ) : (
           <>
-            <S.Button onClick={handlePreviousMissionProcess}>
+            <S.ArrowButton onClick={handlePreviousMissionProcess}>
               <LeftArrow />
               Prev
-            </S.Button>
-            <S.RightButton onClick={handleNextMissionProcess}>
+            </S.ArrowButton>
+
+            <S.ArrowButton onClick={handleNextMissionProcess}>
               Next
               <RightArrow />
-            </S.RightButton>
+            </S.ArrowButton>
           </>
         )}
       </S.ButtonWrapper>
