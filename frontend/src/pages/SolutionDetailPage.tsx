@@ -1,3 +1,10 @@
+import CommentForm from '@/components/SolutionDetail/CommentForm';
+import * as S from '@/components/SolutionDetail/SolutionDetail.styled';
+
 export default function SolutionDetailPage() {
-  return <div>디테일 페이지</div>;
+  return (
+    <S.SolutionDetailPageContainer>
+      <CommentForm />
+    </S.SolutionDetailPageContainer>
+  );
 }
