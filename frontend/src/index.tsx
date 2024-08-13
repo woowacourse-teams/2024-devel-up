@@ -18,6 +18,7 @@ import * as Sentry from '@sentry/react';
 import ErrorPage from './pages/ErrorPage';
 import SolutionListPage from './pages/SolutionListPage';
 import MissionListPage from './pages/MissionListPage';
+import DashboardPage from './pages/DashboardPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -125,6 +126,42 @@ const routes = [
       </App>
     ),
   },
+  {
+    path: ROUTES.dashboardHome,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <DashboardPage />
+        </Suspense>
+      </App>
+    ),
+    children: [
+      {
+        path: ROUTES.dashboardMissionInProgress,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <div>progress</div>
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.dashboardSubmittedSolution,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <div>Submitted Solution</div>
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.dashboardComments,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <div>comments</div>
+          </Suspense>
+        ),
+      },
+    ],
+  },
 ];
 
 export const router = createBrowserRouter(routes, {
@@ -143,30 +180,30 @@ async function enableMocking() {
   return worker.start();
 }
 
-// enableMocking().then(() => {
-//   root.render(
-//     <React.StrictMode>
-//       <QueryClientProvider client={queryClient}>
-//         <QueryErrorBoundary>
-//           <ErrorBoundary fallback={<div>에러에요!</div>}>
-//             <GlobalStyle />
-//             <RouterProvider router={router} />
-//           </ErrorBoundary>
-//         </QueryErrorBoundary>
-//       </QueryClientProvider>
-//     </React.StrictMode>,
-//   );
-// });
+enableMocking().then(() => {
+  root.render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <QueryErrorBoundary>
+          <ErrorBoundary fallback={<div>에러에요!</div>}>
+            <GlobalStyle />
+            <RouterProvider router={router} />
+          </ErrorBoundary>
+        </QueryErrorBoundary>
+      </QueryClientProvider>
+    </React.StrictMode>,
+  );
+});
 
-root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <QueryErrorBoundary>
-        <ErrorBoundary fallback={<div>에러에요!</div>}>
-          <GlobalStyle />
-          <RouterProvider router={router} />
-        </ErrorBoundary>
-      </QueryErrorBoundary>
-    </QueryClientProvider>
-  </React.StrictMode>,
-);
+// root.render(
+//   <React.StrictMode>
+//     <QueryClientProvider client={queryClient}>
+//       <QueryErrorBoundary>
+//         <ErrorBoundary fallback={<div>에러에요!</div>}>
+//           <GlobalStyle />
+//           <RouterProvider router={router} />
+//         </ErrorBoundary>
+//       </QueryErrorBoundary>
+//     </QueryClientProvider>
+//   </React.StrictMode>,
+// );

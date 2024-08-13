@@ -9,4 +9,8 @@ export const ROUTES = {
   submissions: '/submissions',
   error: '/error',
   solutions: '/solutions',
+  dashboardHome: '/dashboard',
+  dashboardMissionInProgress: 'in-progress-mission',
+  dashboardSubmittedSolution: 'submitted-solution',
+  dashboardComments: 'comments',
 } as const;
