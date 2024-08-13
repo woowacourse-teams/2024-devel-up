@@ -201,6 +201,49 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 .hasMessage("올바르지 않은 주소입니다.");
     }
 
+    @Test
+    @DisplayName("나의 솔루션 리스트를 조회한다.")
+    void getSubmittedSolutionsByMemberId() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.COMPLETED)
+                .build();
+
+        solutionRepository.save(solution);
+
+        Accessor accessor = new Accessor(member.getId());
+
+        assertThat(solutionService.getSubmittedSolutionsByMemberId(accessor.id())).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("나의 솔루션 리스트 조회 시, 제출 완료 상태가 아닌 솔루션은 조회되지 않는다.")
+    void shouldNotRetrieveSolutionsThatAreNotCompleted() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution inProgress = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.IN_PROGRESS)
+                .build();
+
+        Solution completed = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.COMPLETED)
+                .build();
+
+        solutionRepository.save(inProgress);
+        solutionRepository.save(completed);
+
+        Accessor accessor = new Accessor(member.getId());
+
+        assertThat(solutionService.getSubmittedSolutionsByMemberId(accessor.id())).hasSize(1);
+    }
+
     private SubmitSolutionRequest getSolutionRequest() {
         return new SubmitSolutionRequest(
                 1L,
