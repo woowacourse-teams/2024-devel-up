@@ -11,15 +11,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import develup.api.auth.AuthArgumentResolver;
-import develup.application.auth.Accessor;
-import develup.application.solution.SolutionRequest;
 import develup.application.solution.SolutionResponse;
-import develup.application.solution.SolutionService;
+import develup.application.solution.StartSolutionRequest;
+import develup.application.solution.SubmitSolutionRequest;
 import develup.domain.solution.Solution;
-import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionSummary;
-import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
@@ -27,22 +23,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
-class SolutionApiTest extends IntegrationTestSupport {
+class SolutionApiTest extends ApiTestSupport {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @MockBean
-    private SolutionRepository solutionRepository;
-
-    @MockBean
-    private SolutionService solutionService;
-
-    @MockBean
-    private AuthArgumentResolver argumentResolver;
 
     @Test
     @DisplayName("솔루션 목록을 조회한다.")
@@ -71,13 +57,13 @@ class SolutionApiTest extends IntegrationTestSupport {
     @Test
     @DisplayName("솔루션을 조회한다.")
     void getSolution() throws Exception {
-        SolutionResponse solutionResponse = SolutionResponse.from(SolutionTestData.defaultSolution()
+        SolutionResponse response = SolutionResponse.from(SolutionTestData.defaultSolution()
                 .withMission(MissionTestData.defaultMission().withId(1L).build())
                 .withMember(MemberTestData.defaultMember().withId(1L).build())
                 .withId(1L)
                 .build());
         BDDMockito.given(solutionService.getById(any()))
-                .willReturn(solutionResponse);
+                .willReturn(response);
 
         mockMvc.perform(get("/solutions/1"))
                 .andDo(print())
@@ -93,7 +79,7 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
-                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 
     @Test
@@ -105,17 +91,17 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .withId(1L)
                 .build();
         SolutionResponse response = SolutionResponse.from(solution);
-        SolutionRequest request = new SolutionRequest(
+        SubmitSolutionRequest request = new SubmitSolutionRequest(
                 1L,
                 "value",
                 "description",
                 "https://github.com/develup/mission/pull/1");
-        BDDMockito.given(solutionService.create(any(Accessor.class), any(SolutionRequest.class)))
+        BDDMockito.given(solutionService.submit(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(post("/solutions/submit")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id", equalTo(1)))
@@ -129,7 +115,7 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
-                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 
     @Test
@@ -140,13 +126,9 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .withMember(MemberTestData.defaultMember().withId(1L).build())
                 .withId(1L)
                 .build();
-        SolutionResponse solutionResponse = SolutionResponse.start(solution);
-
-        BDDMockito.given(argumentResolver.resolveArgument(any(), any(), any(), any()))
-                .willReturn(new Accessor(1L));
+        SolutionResponse response = SolutionResponse.start(solution);
         BDDMockito.given(solutionService.startMission(any(), any()))
-                .willReturn(solutionResponse);
-
+                .willReturn(response);
         StartSolutionRequest request = new StartSolutionRequest(1L);
 
         mockMvc.perform(
@@ -167,6 +149,6 @@ class SolutionApiTest extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
-                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup/mission")));
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 }

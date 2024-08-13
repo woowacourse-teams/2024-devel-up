@@ -10,13 +10,12 @@ interface MissionListProps {
 export default function MissionList({ missions }: MissionListProps) {
   return (
     <S.MissionList>
-      {missions.map(({ id, thumbnail, title, description }) => (
+      {missions.map(({ id, thumbnail, title }) => (
         <Link key={id} to={`/missions/${id}`}>
           <InfoCard
             id={id}
             thumbnailSrc={thumbnail}
             title={title}
-            description={description}
             thumbnailFallbackText="Mission"
           />
         </Link>

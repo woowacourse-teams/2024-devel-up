@@ -1,9 +1,10 @@
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
-import type { Mission, SubmissionPayload, Submission } from '@/types';
+import type { Mission, MissionWithDescription, SubmissionPayload, Submission } from '@/types';
+import { populateMissionDescription } from './utils/populateMissionDescription';
 
 interface getMissionByIdResponse {
-  data: Mission;
+  data: MissionWithDescription;
 }
 
 interface getAllMissionResponse {
@@ -16,10 +17,11 @@ export const getAllMissions = async (): Promise<Mission[]> => {
   return data;
 };
 
-export const getMissionById = async (id: number): Promise<Mission> => {
+export const getMissionById = async (id: number): Promise<MissionWithDescription> => {
   const { data } = await develupAPIClient.get<getMissionByIdResponse>(`${PATH.missionList}/${id}`);
+  const mission = await populateMissionDescription(data);
 
-  return data;
+  return mission;
 };
 
 export interface PostSubmissionResponse {

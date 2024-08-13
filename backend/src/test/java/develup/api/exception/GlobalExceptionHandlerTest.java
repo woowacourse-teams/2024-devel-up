@@ -47,7 +47,7 @@ class GlobalExceptionHandlerTest {
     ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("DTO를 검증 예외를 처리한다.")
+    @DisplayName("DTO 검증 예외를 처리한다.")
     void methodArgumentNotValidException() throws Exception {
         mockMvc.perform(
                         post("/")
