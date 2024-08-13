@@ -11,7 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import develup.application.mission.MissionResponse;
 import develup.application.mission.MissionWithStartedResponse;
+import develup.domain.hashtag.HashTag;
 import develup.domain.mission.Mission;
+import develup.support.data.HashTagTestData;
 import develup.support.data.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,7 +48,13 @@ class MissionApiTest extends ApiTestSupport {
     @Test
     @DisplayName("미션을 조회한다.")
     void getMission() throws Exception {
-        Mission mission = MissionTestData.defaultMission().withId(1L).build();
+        HashTag hashTag = HashTagTestData.defaultHashTag()
+                .withId(1L)
+                .build();
+        Mission mission = MissionTestData.defaultMission()
+                .withId(1L)
+                .withHashTags(List.of(hashTag))
+                .build();
         MissionWithStartedResponse response = MissionWithStartedResponse.of(mission, false);
         BDDMockito.given(missionService.getMission(any(), any()))
                 .willReturn(response);
@@ -60,7 +68,9 @@ class MissionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.url", equalTo("https://github.com/develup-mission/java-smoking")))
                 .andExpect(jsonPath("$.data.descriptionUrl",
                         equalTo("https://raw.githubusercontent.com/develup-mission/java-smoking/main/README.md")))
-                .andExpect(jsonPath("$.data.isStarted", is(false)));
+                .andExpect(jsonPath("$.data.isStarted", is(false)))
+                .andExpect(jsonPath("$.data.hashTag[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.data.hashTag[0].name", equalTo("JAVA")));
     }
 
     @Test

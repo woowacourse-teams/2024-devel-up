@@ -7,6 +7,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.application.auth.Accessor;
+import develup.domain.hashtag.HashTag;
+import develup.domain.hashtag.HashTagRepository;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
@@ -14,6 +16,7 @@ import develup.domain.mission.MissionRepository;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.support.IntegrationTestSupport;
+import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
@@ -35,11 +38,14 @@ class MissionServiceTest extends IntegrationTestSupport {
     @Autowired
     private SolutionRepository solutionRepository;
 
+    @Autowired
+    private HashTagRepository hashTagRepository;
+
     @Test
     @DisplayName("미션 목록을 조회한다.")
     void getMissions() {
-        missionRepository.save(MissionTestData.defaultMission().build());
-        missionRepository.save(MissionTestData.defaultMission().build());
+        createMission();
+        createMission();
 
         List<MissionResponse> responses = missionService.getMissions();
 
@@ -57,7 +63,8 @@ class MissionServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("비로그인 사용자가 미션 조회 시 시작 상태는 false이다.")
     void getMission_guest() {
-        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Mission mission = createMission();
+
         MissionWithStartedResponse response = missionService.getMission(Accessor.GUEST, mission.getId());
 
         assertThat(response.isStarted()).isFalse();
@@ -66,7 +73,7 @@ class MissionServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("미션을 시작하지 않은 로그인 사용자가 미션 조회 시 시작 상태는 false이다.")
     void getMission_notStarted() {
-        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Mission mission = createMission();
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Accessor accessor = new Accessor(member.getId());
 
@@ -79,12 +86,13 @@ class MissionServiceTest extends IntegrationTestSupport {
     @DisplayName("미션을 시작한 로그인 사용자가 미션 조회 시 시작 상태는 true이다.")
     void getMission_started() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
-        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
-        solutionRepository.save(SolutionTestData.defaultSolution()
+        Mission mission = createMission();
+        Solution solution = SolutionTestData.defaultSolution()
                 .withMember(member)
                 .withMission(mission)
                 .withStatus(IN_PROGRESS)
-                .build());
+                .build();
+        solutionRepository.save(solution);
         Accessor accessor = new Accessor(member.getId());
 
         MissionWithStartedResponse response = missionService.getMission(accessor, mission.getId());
@@ -115,5 +123,14 @@ class MissionServiceTest extends IntegrationTestSupport {
         List<MissionResponse> inProgressMissions = missionService.getInProgressMissions(member.getId());
 
         assertThat(inProgressMissions).hasSize(2);
+    }
+
+    private Mission createMission() {
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Mission mission = MissionTestData.defaultMission()
+                .withHashTags(List.of(hashTag))
+                .build();
+
+        return missionRepository.save(mission);
     }
 }
