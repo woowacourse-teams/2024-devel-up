@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import type { ButtonSize, ButtonVariant } from './Button';
+import { BUTTON_SIZE, BUTTON_VARIANTS } from '@/constants/variants';
 
 interface CommonButtonProps {
   $size: ButtonSize;
@@ -8,10 +9,10 @@ interface CommonButtonProps {
 
 const buttonSize = (size: ButtonSize) => {
   switch (size) {
-    case 'half':
+    case BUTTON_SIZE.half:
       return '27.1rem';
 
-    case 'full':
+    case BUTTON_SIZE.full:
       return '100%';
 
     default:
@@ -21,7 +22,7 @@ const buttonSize = (size: ButtonSize) => {
 
 const color = (variant: ButtonVariant) => {
   switch (variant) {
-    case 'primary':
+    case BUTTON_VARIANTS.primary:
       return `background-color: var(--primary-500);
               color: var(--white-color);
                 &:hover {

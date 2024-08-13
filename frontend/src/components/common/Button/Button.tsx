@@ -1,8 +1,9 @@
 import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import * as S from './Button.styled';
+import type { BUTTON_VARIANTS, BUTTON_SIZE } from '@/constants/variants';
 
-export type ButtonVariant = 'default' | 'primary';
-export type ButtonSize = 'default' | 'half' | 'full';
+export type ButtonVariant = keyof typeof BUTTON_VARIANTS;
+export type ButtonSize = keyof typeof BUTTON_SIZE;
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
