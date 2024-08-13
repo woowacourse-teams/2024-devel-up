@@ -11,6 +11,7 @@ import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
+import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
@@ -89,5 +90,30 @@ class MissionServiceTest extends IntegrationTestSupport {
         MissionWithStartedResponse response = missionService.getMission(accessor, mission.getId());
 
         assertThat(response.isStarted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("사용자가 시작한 미션 목록을 조회한다.")
+    void getInProgressMissions() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(IN_PROGRESS)
+                .build();
+
+        Mission otherMission = missionRepository.save(MissionTestData.defaultMission().withTitle("다른 미션").build());
+        Solution otherSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(otherMission)
+                .withStatus(IN_PROGRESS)
+                .build();
+
+        solutionRepository.saveAll(List.of(solution, otherSolution));
+        List<MissionResponse> inProgressMissions = missionService.getInProgressMissions(member.getId());
+
+        assertThat(inProgressMissions).hasSize(2);
     }
 }
