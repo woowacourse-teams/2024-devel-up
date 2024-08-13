@@ -59,7 +59,7 @@ jobs:
   BE_SLACK_MESSAGE:
     runs-on: ubuntu-latest
     needs: BE_CI
-    if: ${{needs.BE_CI.result != 'skipped'}}
+    if: ${{!cancelled()}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
