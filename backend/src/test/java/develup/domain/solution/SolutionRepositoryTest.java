@@ -75,6 +75,7 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
     void findAllCompletedSolution() {
         createSolution(SolutionStatus.COMPLETED);
         createSolution(SolutionStatus.COMPLETED);
+        createSolution(SolutionStatus.IN_PROGRESS);
 
         List<Solution> actual = solutionRepository.findAllCompletedSolution();
 
