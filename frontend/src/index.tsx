@@ -18,6 +18,7 @@ import * as Sentry from '@sentry/react';
 import ErrorPage from './pages/ErrorPage';
 import SolutionListPage from './pages/SolutionListPage';
 import MissionListPage from './pages/MissionListPage';
+import SolutionDetailPage from './pages/SolutionDetailPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -121,6 +122,16 @@ const routes = [
       <App>
         <Suspense fallback={<LoadingSpinner />}>
           <SolutionListPage />
+        </Suspense>
+      </App>
+    ),
+  },
+  {
+    path: `${ROUTES.solutions}/:id`,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <SolutionDetailPage />
         </Suspense>
       </App>
     ),
