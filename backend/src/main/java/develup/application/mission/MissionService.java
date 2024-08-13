@@ -10,8 +10,10 @@ import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class MissionService {
 
     private final MissionRepository missionRepository;
