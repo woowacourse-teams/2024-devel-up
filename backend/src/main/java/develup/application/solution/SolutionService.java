@@ -72,7 +72,7 @@ public class SolutionService {
                 )
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_STARTED));
         validatePullRequestUrl(submitSolutionRequest.url());
-        SolutionSubmit solutionSubmit = SolutionSubmit.toSubmitPayload(submitSolutionRequest);
+        SolutionSubmit solutionSubmit = submitSolutionRequest.toSubmitPayload();
         solution.submit(solutionSubmit);
 
         return SolutionResponse.from(solution);
