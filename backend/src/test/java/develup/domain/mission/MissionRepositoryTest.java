@@ -43,4 +43,21 @@ class MissionRepositoryTest extends IntegrationTestSupport {
                 () -> assertThat(noneTaggedFound).isEmpty()
         );
     }
+
+    @Test
+    @DisplayName("해시태그가 존재하는 모든 미션을 조회한다.")
+    void findAllHashTaggedMission() {
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Mission mission1 = MissionTestData.defaultMission()
+                .withHashTags(List.of(hashTag))
+                .build();
+        Mission mission2 = MissionTestData.defaultMission()
+                .withHashTags(List.of(hashTag))
+                .build();
+        missionRepository.saveAll(List.of(mission1, mission2));
+
+        List<Mission> missions = missionRepository.findAllHashTaggedMission();
+
+        assertThat(missions).hasSize(2);
+    }
 }
