@@ -13,8 +13,8 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     @Query("""
             SELECT DISTINCT m
             FROM Mission m
-            JOIN FETCH m.hashTags mht
-            JOIN FETCH mht.hashTag ht
+            JOIN FETCH m.missionHashTags.hashTags mhts
+            JOIN FETCH mhts.hashTag ht
             WHERE m.id = :id
             """)
     Optional<Mission> findHashTaggedMissionById(Long id);
@@ -22,8 +22,8 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     @Query("""
             SELECT DISTINCT m
             FROM Mission m
-            JOIN FETCH m.hashTags mht
-            JOIN FETCH mht.hashTag ht
+            JOIN FETCH m.missionHashTags.hashTags mhts
+            JOIN FETCH mhts.hashTag ht
             """)
     List<Mission> findAllHashTaggedMission();
 }

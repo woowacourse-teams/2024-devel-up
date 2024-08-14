@@ -13,8 +13,8 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
             SELECT DISTINCT s
             FROM Solution s
             JOIN FETCH s.mission m
-            JOIN FETCH m.hashTags mht
-            JOIN FETCH mht.hashTag ht
+            JOIN FETCH m.missionHashTags.hashTags mhts
+            JOIN FETCH mhts.hashTag ht
             WHERE s.status = 'COMPLETED'
             ORDER BY s.id DESC
             """)
