@@ -74,7 +74,7 @@ class MissionApiTest extends ApiTestSupport {
         BDDMockito.given(missionService.getInProgressMissions(any()))
                 .willReturn(responses);
 
-        mockMvc.perform(get("/missions/start"))
+        mockMvc.perform(get("/missions/in-progress"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속")))
