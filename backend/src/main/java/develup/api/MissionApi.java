@@ -32,8 +32,8 @@ public class MissionApi {
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
 
-    @GetMapping("/missions/start")
-    @Operation(summary = "미션 목록 조회 API", description = "미션 목록을 조회합니다.")
+    @GetMapping("/missions/mine")
+    @Operation(summary = "사용자가 시작한 미션 목록 조회 API", description = "사용자가 시작한 미션 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<MissionResponse>>> getInProgressMissions(@Auth Accessor accessor) {
         List<MissionResponse> responses = missionService.getInProgressMissions(accessor.id());
 
