@@ -31,7 +31,7 @@ public class MissionService {
     }
 
     public List<MissionResponse> getInProgressMissions(Long memberId) {
-        return solutionRepository.findByMember_IdAndStatus(memberId, SolutionStatus.IN_PROGRESS)
+        return solutionRepository.findAllByMember_IdAndStatus(memberId, SolutionStatus.IN_PROGRESS)
                 .stream()
                 .map(Solution::getMission)
                 .distinct()
