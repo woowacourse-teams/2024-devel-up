@@ -10,9 +10,11 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
     boolean existsByMember_IdAndMission_IdAndStatus(Long memberId, Long missionId, SolutionStatus status);
 
     @Query("""
-            SELECT s
+            SELECT DISTINCT s
             FROM Solution s
             JOIN FETCH s.mission m
+            JOIN FETCH m.hashTags mht
+            JOIN FETCH mht.hashTag ht
             WHERE s.status = 'COMPLETED'
             ORDER BY s.id DESC
             """)

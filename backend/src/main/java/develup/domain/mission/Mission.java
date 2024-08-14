@@ -1,8 +1,9 @@
 package develup.domain.mission;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.hashtag.HashTag;
@@ -13,7 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import org.hibernate.annotations.BatchSize;
+import jakarta.persistence.OrderBy;
 
 @Entity
 public class Mission {
@@ -37,9 +38,9 @@ public class Mission {
     @Column(nullable = false)
     private String url;
 
-    @BatchSize(size = 100)
+    @OrderBy(value = "id ASC")
     @OneToMany(mappedBy = "mission", cascade = CascadeType.PERSIST)
-    private List<MissionHashTag> hashTags = new ArrayList<>();
+    private Set<MissionHashTag> hashTags = new LinkedHashSet<>();
 
     protected Mission() {
     }
@@ -64,16 +65,6 @@ public class Mission {
         hashTags.addAll(mapToMissionHashTag(tags));
     }
 
-    private void validateAlreadyTagged(List<HashTag> tags) {
-        boolean alreadyTagged = hashTags.stream()
-                .map(MissionHashTag::getHashTag)
-                .anyMatch(tags::contains);
-
-        if (alreadyTagged) {
-            throw new DevelupException(ExceptionType.DUPLICATED_HASHTAG);
-        }
-    }
-
     private void validateDuplicated(List<HashTag> tags) {
         int uniqueSize = tags.stream()
                 .distinct()
@@ -81,6 +72,16 @@ public class Mission {
                 .size();
 
         if (uniqueSize != tags.size()) {
+            throw new DevelupException(ExceptionType.DUPLICATED_HASHTAG);
+        }
+    }
+
+    private void validateAlreadyTagged(List<HashTag> tags) {
+        boolean alreadyTagged = hashTags.stream()
+                .map(MissionHashTag::getHashTag)
+                .anyMatch(tags::contains);
+
+        if (alreadyTagged) {
             throw new DevelupException(ExceptionType.DUPLICATED_HASHTAG);
         }
     }
@@ -117,7 +118,7 @@ public class Mission {
         return url;
     }
 
-    public List<MissionHashTag> getHashTags() {
-        return Collections.unmodifiableList(hashTags);
+    public Set<MissionHashTag> getHashTags() {
+        return Collections.unmodifiableSet(hashTags);
     }
 }

@@ -1,6 +1,6 @@
 package develup.domain.solution;
 
-import java.util.List;
+import java.util.Set;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.member.Member;
@@ -133,7 +133,7 @@ public class Solution {
         return mission.getThumbnail();
     }
 
-    public List<MissionHashTag> getHashTags() {
+    public Set<MissionHashTag> getHashTags() {
         return mission.getHashTags();
     }
 }
