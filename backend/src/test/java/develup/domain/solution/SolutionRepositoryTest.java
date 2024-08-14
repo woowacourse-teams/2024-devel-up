@@ -134,8 +134,8 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
         solutionRepository.save(inProgressSolution);
         solutionRepository.save(completeSolution);
 
-        List<Solution> solutionInProgress = solutionRepository.findByMember_IdAndStatus(member.getId(), inProgress);
-        List<Solution> solutionCompleted = solutionRepository.findByMember_IdAndStatus(member.getId(), completed);
+        List<Solution> solutionInProgress = solutionRepository.findAllByMember_IdAndStatus(member.getId(), inProgress);
+        List<Solution> solutionCompleted = solutionRepository.findAllByMember_IdAndStatus(member.getId(), completed);
 
         assertAll(
                 () -> assertThat(solutionInProgress).hasSize(1),

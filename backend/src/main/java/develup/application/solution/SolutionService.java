@@ -109,7 +109,7 @@ public class SolutionService {
     }
 
     public List<MySolutionResponse> getSubmittedSolutionsByMemberId(Long memberId) {
-        List<Solution> mySolutions = solutionRepository.findByMember_IdAndStatus(memberId, SolutionStatus.COMPLETED);
+        List<Solution> mySolutions = solutionRepository.findAllByMember_IdAndStatus(memberId, SolutionStatus.COMPLETED);
         return mySolutions.stream()
                 .map(MySolutionResponse::from)
                 .toList();
