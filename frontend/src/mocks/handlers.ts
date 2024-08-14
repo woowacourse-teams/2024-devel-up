@@ -3,6 +3,7 @@ import { BASE_URL } from '@/apis/baseUrl';
 import { PATH } from '@/apis/paths';
 import missions from './missions.json';
 import submission from './submission.json';
+import missionListInProgress from './missionInProgress.json';
 
 export const handlers = [
   http.get(`${BASE_URL.dev}${PATH.missionList}`, () => {
@@ -36,6 +37,30 @@ export const handlers = [
         },
       },
     );
+  }),
+  http.get(`${BASE_URL.dev}${PATH.missionInProgress}`, () => {
+    return HttpResponse.json({
+      data: [
+        {
+          id: 1,
+          title: '루터회관 흡연 단속',
+          language: 'JAVA',
+          summary: '루터회관 흡연 벌칙 프로그램을 구현한다.',
+          thumbnail:
+            'https://file.notion.so/f/f/d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48/38a7f41b-80d7-48ca-97c9-99ceda5c4dbd/smoking.png?id=60756a7a-c50f-4946-ab6e-4177598b926b&table=block&spaceId=d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48&expirationTimestamp=1721174400000&signature=todzUdb5cUyzW4ZQNaHvL-uiCngfMJJAl94RpE1TGEA&downloadName=smoking.png',
+          hashtag: ['java', 'backend', '문제', 'ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'],
+        },
+        {
+          id: 2,
+          title: '프론트엔드 숫자 야구 문제',
+          language: 'React',
+          summary: '프론트엔드 숫자 야구 문젤르 구현합니다',
+          thumbnail:
+            'https://file.notion.so/f/f/d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48/38a7f41b-80d7-48ca-97c9-99ceda5c4dbd/smoking.png?id=60756a7a-c50f-4946-ab6e-4177598b926b&table=block&spaceId=d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48&expirationTimestamp=1721174400000&signature=todzUdb5cUyzW4ZQNaHvL-uiCngfMJJAl94RpE1TGEA&downloadName=smoking.png',
+          hashtag: ['react', 'javascript', 'frontend', 'ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'],
+        },
+      ],
+    });
   }),
   // http.post(`${BASE_URL.dev}${PATH.logout}`, () => {
   //   return HttpResponse.json(null, {

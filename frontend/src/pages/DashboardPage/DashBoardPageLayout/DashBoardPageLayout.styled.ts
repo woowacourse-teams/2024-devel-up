@@ -2,18 +2,22 @@ import { styled } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  gap: 5rem;
+  gap: 4rem;
   margin: 0 auto;
   margin-bottom: 10rem;
   padding: 3.5rem 0;
   width: 100rem;
 `;
 
-export const ContentWrapper = styled.div``;
+export const ContentWrapper = styled.div`
+  width: 100%;
+`;
 
 export const ProfileAndCurrentPathWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  min-width: 28rem;
+  padding: 3rem;
 `;
 
 export const ProfileWrapper = styled.div`
@@ -68,4 +72,9 @@ export const Circle = styled.div<{ $isSelected: boolean }>`
   border-radius: 50%;
   background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-500)' : 'var(--grey-400)')};
   margin-right: 1rem;
+`;
+
+export const CurrentPathText = styled.div`
+  font-size: 2rem;
+  font-weight: bold;
 `;

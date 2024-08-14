@@ -7,7 +7,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
 import MainPage from './pages/MainPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
-import SubmissionPage from './pages/SubmissionPage';
 import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
 import React, { Suspense } from 'react';
@@ -19,6 +18,7 @@ import ErrorPage from './pages/ErrorPage';
 import SolutionListPage from './pages/SolutionListPage';
 import MissionListPage from './pages/MissionListPage';
 import DashboardPage from './pages/DashboardPage';
+import DashBoardMissionInProgressPage from './pages/DashboardPage/MissionInProgress';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -96,16 +96,16 @@ const routes = [
       </App>
     ),
   },
-  {
-    path: ROUTES.submissions,
-    element: (
-      <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <SubmissionPage />
-        </Suspense>
-      </App>
-    ),
-  },
+  // {
+  //   path: ROUTES.submissions,
+  //   element: (
+  //     <App>
+  //       <Suspense fallback={<LoadingSpinner />}>
+  //         <SubmissionPage />
+  //       </Suspense>
+  //     </App>
+  //   ),
+  // },
   {
     path: ROUTES.error,
     element: (
@@ -140,7 +140,7 @@ const routes = [
         path: ROUTES.dashboardMissionInProgress,
         element: (
           <Suspense fallback={<LoadingSpinner />}>
-            <div>progress</div>
+            <DashBoardMissionInProgressPage />
           </Suspense>
         ),
       },

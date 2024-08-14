@@ -1,13 +1,14 @@
 export const PATH = {
   missionList: '/missions',
   submissions: '/submissions',
-  missionInProgress: '/submissions/now',
+  // missionInProgress: '/submissions/now',
   githubLogin: '/auth/social/redirect/github',
   userInfo: '/members/mine',
-  submissionsInProgress: '/submissions/now',
+  // submissionsInProgress: '/submissions/now',
   pairReview: '/pair-review',
   solutionSummaries: '/solutions',
   submitSolution: '/solutions/submit',
   startSolution: '/solutions/start',
   logout: '/auth/logout',
+  missionInProgress: '/missions/in-progress',
 };

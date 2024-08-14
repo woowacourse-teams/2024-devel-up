@@ -21,6 +21,7 @@ const PATH_INFO = [
 export default function DashboardPageLayout({ children }: PropsWithChildren) {
   const { data: userInfo } = useUserInfo();
   const location = useLocation();
+  const currentPathText = PATH_INFO.find((path) => path.name === location.pathname);
 
   return (
     <S.Container>
@@ -45,7 +46,10 @@ export default function DashboardPageLayout({ children }: PropsWithChildren) {
           })}
         </S.PathWrapper>
       </S.ProfileAndCurrentPathWrapper>
-      <S.ContentWrapper>{children}</S.ContentWrapper>
+      <S.ContentWrapper>
+        <S.CurrentPathText>{currentPathText?.text}</S.CurrentPathText>
+        {children}
+      </S.ContentWrapper>
     </S.Container>
   );
 }
