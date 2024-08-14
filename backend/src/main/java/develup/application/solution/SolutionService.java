@@ -107,4 +107,11 @@ public class SolutionService {
     public List<SolutionSummary> getCompletedSummaries() {
         return solutionRepository.findCompletedSummaries();
     }
+
+    public List<MySolutionResponse> getSubmittedSolutionsByMemberId(Long memberId) {
+        List<Solution> mySolutions = solutionRepository.findAllByMember_IdAndStatus(memberId, SolutionStatus.COMPLETED);
+        return mySolutions.stream()
+                .map(MySolutionResponse::from)
+                .toList();
+    }
 }

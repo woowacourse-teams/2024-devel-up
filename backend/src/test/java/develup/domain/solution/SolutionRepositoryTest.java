@@ -114,6 +114,35 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
         );
     }
 
+    @Test
+    @DisplayName("멤버 식별자와 특정 상태에 해당하는 솔루션을 조회한다.")
+    void findByMember_IdAndStatus() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        SolutionStatus inProgress = SolutionStatus.IN_PROGRESS;
+        SolutionStatus completed = SolutionStatus.COMPLETED;
+        Solution inProgressSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(inProgress)
+                .build();
+        Solution completeSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(completed)
+                .build();
+        solutionRepository.save(inProgressSolution);
+        solutionRepository.save(completeSolution);
+
+        List<Solution> solutionInProgress = solutionRepository.findAllByMember_IdAndStatus(member.getId(), inProgress);
+        List<Solution> solutionCompleted = solutionRepository.findAllByMember_IdAndStatus(member.getId(), completed);
+
+        assertAll(
+                () -> assertThat(solutionInProgress).hasSize(1),
+                () -> assertThat(solutionCompleted).hasSize(1)
+        );
+    }
+
     private void createSolution(SolutionStatus status) {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
