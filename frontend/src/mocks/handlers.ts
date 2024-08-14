@@ -2,8 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '@/apis/baseUrl';
 import { PATH } from '@/apis/paths';
 import missions from './missions.json';
-import submission from './submission.json';
-import missionListInProgress from './missionInProgress.json';
+import submittedSolutions from './SubmittedSolutions.json';
 
 export const handlers = [
   http.get(`${BASE_URL.dev}${PATH.missionList}`, () => {
@@ -15,9 +14,9 @@ export const handlers = [
     const mission = missions.find((mission) => mission.id === id);
     return HttpResponse.json({ data: mission });
   }),
-  http.post(`${BASE_URL.dev}${PATH.submitSolution}`, () => {
-    return HttpResponse.json({ data: submission });
-  }),
+  // http.post(`${BASE_URL.dev}${PATH.submitSolution}`, () => {
+  //   return HttpResponse.json({ data: submission });
+  // }),
 
   http.get(`${BASE_URL.dev}${PATH.userInfo}`, () => {
     return HttpResponse.json(
@@ -60,6 +59,11 @@ export const handlers = [
           hashtag: ['react', 'javascript', 'frontend', 'ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'],
         },
       ],
+    });
+  }),
+  http.get(`${BASE_URL.dev}${PATH.submitSolution}`, () => {
+    return HttpResponse.json({
+      data: submittedSolutions,
     });
   }),
   // http.post(`${BASE_URL.dev}${PATH.logout}`, () => {

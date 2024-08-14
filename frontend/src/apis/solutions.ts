@@ -1,6 +1,7 @@
 import { develupAPIClient } from '@/apis/clients/develupClient';
 import { PATH } from '@/apis/paths';
-import type { Solution } from '@/types/solution';
+import type { Solution, SubmittedSolution } from '@/types/solution';
+import SubmittedSolutions from '@/mocks/SubmittedSolutions.json';
 
 export interface SolutionSummary {
   // solution 리스트에 필요한 필드만 포함한 데이터 (solution 원본 데이터와는 다름)
@@ -39,4 +40,12 @@ export const postSolutionSubmit = async (payload: {
   const { data } = await develupAPIClient.post<PostSolutionResponse>(PATH.submitSolution, payload);
 
   return data;
+};
+
+export interface GetSubmittedSolution {
+  data: SubmittedSolution[];
+}
+
+export const getSubmittedSolution = async (): Promise<SubmittedSolution[]> => {
+  return SubmittedSolutions;
 };

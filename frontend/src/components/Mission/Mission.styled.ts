@@ -1,5 +1,16 @@
 import { styled } from 'styled-components';
 
+export const MissionListContainer = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 5rem;
+  row-gap: 3.6rem;
+  margin: 0 auto;
+  margin-bottom: 10rem;
+  padding-top: 3rem;
+  width: 100%;
+`;
+
 export const MissionItemContainer = styled.article`
   width: 100%;
   max-width: 30rem;
@@ -48,6 +59,19 @@ export const MissionHashTagWrapper = styled.div`
   margin-top: 6.2rem;
   overflow-x: auto;
   white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    width: 2px; /* 세로 스크롤바의 너비 */
+    height: 2px; /* 가로 스크롤바의 높이 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent; /* 스크롤바의 색상 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent; /* 스크롤바 트랙의 색상 */
+  }
 `;
 
 export const MissionHashTag = styled.span`

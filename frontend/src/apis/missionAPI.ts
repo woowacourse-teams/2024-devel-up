@@ -28,37 +28,15 @@ interface GetMissionInProgressResponse {
   data: MissionInProgress[];
 }
 
+// TODO 실제 API 연결 아직 안했습니다.
 export const getMissionInProgress = async () => {
   // const { data } = await develupAPIClient.get<GetMissionInProgressResponse>(PATH.missionInProgress);
 
   // console.log('data : ', data);
 
   return MissionListInProgress;
+  // return [];
 };
-
-// export const getMissionInProgress = async (): Promise<MissionSubmission> => {
-//   const { data } = await develupAPIClient.get<getMissionInProgressResponse>(
-//     PATH.submissionsInProgress,
-//   );
-
-//   return data;
-// };
-
-// export const getMissionCompleted = async (): Promise<MissionSubmission[]> => {
-//   const { data } = await develupAPIClient.get<getMissionCompletedResponse>(PATH.submissions);
-
-//   return data;
-// };
-
-// getMissionInProgressResponse 타입 네이밍 변경 예정입니다 @프룬
-// 해당 타입이 미션 현황 페이지에서 쓰이는 api 반환값으로 많이 쓰이고 있음
-// export const postCompleteReview = async (submissionId: number): Promise<MissionSubmission> => {
-//   const { data } = await develupAPIClient.post<getMissionInProgressResponse>(
-//     `${PATH.pairReview}/${submissionId}`,
-//   );
-
-//   return data;
-// };
 
 export interface PostSubmissionResponse {
   data: Submission;

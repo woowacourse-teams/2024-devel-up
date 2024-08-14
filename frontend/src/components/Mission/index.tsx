@@ -5,14 +5,21 @@ import { HashTag } from '@/types/mission';
 
 interface MissionProps extends PropsWithChildren {
   id: number;
+  type: 'solution' | 'mission';
 }
 
-export default function Mission({ children }: PropsWithChildren) {
-  return <S.MissionItemContainer>{children}</S.MissionItemContainer>;
+export default function Mission({ id, type, children }: MissionProps) {
+  // TODO 솔루션 상세 URL이 아직 정해져 있지 않아서 임시로 해놓습니다.
+  const targeRoute = type === 'mission' ? '/missions/' : '/solutions/';
+  return (
+    <S.MissionItemContainer>
+      <Link to={`${targeRoute}${id}`}>{children}</Link>
+    </S.MissionItemContainer>
+  );
 }
 
 Mission.Card = function MissionCard({ id, children }: MissionProps) {
-  return <Link to={`/missions/${id}`}>{children}</Link>;
+  return;
 };
 
 Mission.InfoWrapper = function MissionInfoWrapper({ children }: PropsWithChildren) {
