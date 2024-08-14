@@ -15,6 +15,7 @@ export default function MissionDetailPage() {
         title={missionData.title}
         thumbnail={missionData.thumbnail}
         language={missionData.language}
+        hashTag={missionData.hashTag}
       />
       <MissionDetailButtons
         id={Number(missionData.id)}
