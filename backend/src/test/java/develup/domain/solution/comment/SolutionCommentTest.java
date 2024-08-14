@@ -2,7 +2,7 @@ package develup.domain.solution.comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDateTime;
 import develup.api.exception.DevelupException;
@@ -22,11 +22,11 @@ class SolutionCommentTest {
                 .withContent(content)
                 .build();
 
-        assertSoftly(softly -> {
-            softly.assertThat(comment.getContent()).isEqualTo(content);
-            softly.assertThat(comment.getParentComment()).isNull();
-            softly.assertThat(comment.getDeletedAt()).isNull();
-        });
+        assertAll(
+                () -> assertThat(comment.getContent()).isEqualTo(content),
+                () -> assertThat(comment.getParentComment()).isNull(),
+                () -> assertThat(comment.getDeletedAt()).isNull()
+        );
     }
 
     @Test
@@ -60,13 +60,13 @@ class SolutionCommentTest {
 
         SolutionComment reply = parentComment.reply(content, member);
 
-        assertSoftly(softly -> {
-            softly.assertThat(reply.getContent()).isEqualTo(content);
-            softly.assertThat(reply.getSolution()).isEqualTo(parentComment.getSolution());
-            softly.assertThat(reply.getMember()).isEqualTo(member);
-            softly.assertThat(reply.getParentComment()).isEqualTo(parentComment);
-            softly.assertThat(reply.getDeletedAt()).isNull();
-        });
+        assertAll(
+                () -> assertThat(reply.getContent()).isEqualTo(content),
+                () -> assertThat(reply.getSolution()).isEqualTo(parentComment.getSolution()),
+                () -> assertThat(reply.getMember()).isEqualTo(member),
+                () -> assertThat(reply.getParentComment()).isEqualTo(parentComment),
+                () -> assertThat(reply.getDeletedAt()).isNull()
+        );
     }
 
     @Test
