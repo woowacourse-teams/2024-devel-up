@@ -103,7 +103,7 @@ public class Solution {
         return mission;
     }
 
-    public String getThumbnail() {
+    public String getMissionThumbnail() {
         return mission.getThumbnail();
     }
 
