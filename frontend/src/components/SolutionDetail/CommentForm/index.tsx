@@ -4,9 +4,10 @@ import * as S from './CommentForm.styled';
 
 interface CommentFormProps {
   solutionId: number;
+  parentCommentId?: number;
 }
 
-export default function CommentForm({ solutionId }: CommentFormProps) {
+export default function CommentForm({ solutionId, parentCommentId }: CommentFormProps) {
   const [comment, setComment] = useState('');
 
   const resetComment = () => setComment('');
@@ -19,7 +20,7 @@ export default function CommentForm({ solutionId }: CommentFormProps) {
 
   const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postCommentMutation({ solutionId, body: { content: comment } });
+    postCommentMutation({ solutionId, body: { content: comment, parentCommentId } });
   };
 
   return (

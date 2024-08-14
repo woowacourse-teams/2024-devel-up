@@ -12,7 +12,11 @@ export default function SolutionDetailPage() {
   return (
     <S.SolutionDetailPageContainer>
       <CommentList comments={CommentsMock} />
-      {userInfo && <CommentForm solutionId={solutionId} />}
+      {userInfo && (
+        <S.CommentFormWrapper>
+          <CommentForm solutionId={solutionId} />
+        </S.CommentFormWrapper>
+      )}
     </S.SolutionDetailPageContainer>
   );
 }

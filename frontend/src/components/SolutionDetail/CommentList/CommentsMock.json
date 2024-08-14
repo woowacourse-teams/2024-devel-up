@@ -25,6 +25,21 @@
         },
         "createdAt": "2024-08-12T06:36:50.012Z",
         "isDeleted": true
+      },
+      {
+        "id": 11,
+        "solutionId": 1,
+        "parentCommentId": 1,
+        "content": "111 대댓글입니다. 2",
+        "member": {
+          "id": 0,
+          "email": "bbbb@naver.com",
+          "name": "bbbb",
+          "imageUrl": "https://placehold.co/200x200?text=bbbb",
+          "description": "안녕하세요, 데벨업에서 같이 레벨업해봐요~!"
+        },
+        "createdAt": "2024-08-12T06:36:50.012Z",
+        "isDeleted": true
       }
     ],
     "createdAt": "2024-08-12T06:36:50.012Z",

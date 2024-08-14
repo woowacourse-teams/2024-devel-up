@@ -4,9 +4,9 @@ export const CommentListContainer = styled.div`
   margin-top: 3rem;
 `;
 
-export const CommentItemContainer = styled.div`
+export const CommentItemContainer = styled.div<{ $isReply?: boolean }>`
   padding: 1.5rem 0;
-  border-bottom: 1px solid #c6b9ff;
+  border-bottom: 1px solid ${({ $isReply }) => ($isReply ? 'var(--grey-200)' : '#c6b9ff')};
 
   &:first-child {
     padding-top: 0;
@@ -39,11 +39,28 @@ export const UserName = styled.div`
 `;
 
 export const CommentContent = styled.div`
-  margin-left: 5.2rem;
   font-size: 1.6rem;
+  margin-left: 5.2rem;
 `;
 
 export const CommentReplyListContainer = styled.div`
-  padding-left: 5.2rem;
   margin-top: 2rem;
+`;
+
+export const ReplyWriteButton = styled.button`
+  background-color: var(--primary-100);
+  padding: 0.3rem 0.5rem;
+`;
+
+export const CommentContentWrapper = styled.div`
+  margin-left: 5.2rem;
+`;
+
+export const CommentReplyWrapper = styled.div`
+  margin-left: 5.2rem;
+  margin-top: 1.5rem;
+`;
+
+export const CommentReplyFormWrapper = styled.div`
+  margin-top: 1.5rem;
 `;

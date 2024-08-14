@@ -4,7 +4,6 @@ export const CommentForm = styled.form`
   border: 1px solid var(--grey-400);
   padding: 2.4rem;
   border-radius: 1.6rem;
-  margin-top: 5.7rem;
 `;
 
 export const CommentTextArea = styled.textarea`
