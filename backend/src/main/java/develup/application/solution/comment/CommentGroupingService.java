@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import develup.domain.solution.comment.SolutionComment;
 import org.springframework.stereotype.Service;
 
@@ -34,17 +35,10 @@ public class CommentGroupingService {
     }
 
     private Map<Long, List<SolutionComment>> createRepliesMapByRootCommentId(List<SolutionComment> comments) {
-        Map<Long, List<SolutionComment>> repliesMap = new HashMap<>();
-        comments.stream()
+        return comments.stream()
                 .filter(SolutionComment::isReply)
                 .filter(SolutionComment::isNotDeleted)
-                .forEach(it -> {
-                    Long rootCommentId = it.getParentCommentId();
-                    repliesMap.computeIfAbsent(rootCommentId, k -> new ArrayList<>())
-                            .add(it);
-                });
-
-        return repliesMap;
+                .collect(Collectors.groupingBy(SolutionComment::getParentCommentId));
     }
 
     private List<SolutionRootCommentResponse> attachRepliesToRootComments(
