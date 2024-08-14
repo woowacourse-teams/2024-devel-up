@@ -3,6 +3,8 @@ import { PATH } from './paths';
 import type { Mission, SubmissionPayload, Submission } from '@/types';
 // import type { MissionInProgress } from '@/types/mission';
 import MissionListInProgress from '@/mocks/missionInProgress.json';
+import type { MissionWithDescription } from '@/types';
+import { populateMissionDescription } from './utils/populateMissionDescription';
 
 interface getMissionByIdResponse {
   data: MissionWithDescription;

@@ -5,6 +5,18 @@ export interface TabInfo {
   content: ReactNode;
 }
 
+export interface MissionWithDescription extends Mission {
+  description: string;
+}
+
+export interface MissionSubmission {
+  id: number;
+  mission: Mission;
+  myPrLink: string;
+  pairPrLink: string;
+  status: string;
+}
+
 //TODO 백엔드에서 내려주는 language 타입이 string이라서 일단 string으로 수정해놓았습니다!
 
 export interface Mission {
