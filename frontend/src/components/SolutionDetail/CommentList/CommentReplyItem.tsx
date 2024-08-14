@@ -1,13 +1,12 @@
-import type { Comment } from '@/types';
 import * as S from './CommentList.styled';
-import CommentReplyList from './CommentReplyList';
+import type { CommentReply } from '@/types';
 
-interface CommentItemProps {
-  comment: Comment;
+interface CommentReplyItemProps {
+  commentReply: CommentReply;
 }
 
-export default function CommentItem({ comment }: CommentItemProps) {
-  const { content, member, replies } = comment;
+export default function CommentReplyItem({ commentReply }: CommentReplyItemProps) {
+  const { member, content } = commentReply;
 
   return (
     <S.CommentItemContainer>
@@ -16,7 +15,6 @@ export default function CommentItem({ comment }: CommentItemProps) {
         <S.UserName>{member.name}</S.UserName>
       </S.UserInfoWrapper>
       <S.CommentContent>{content}</S.CommentContent>
-      <CommentReplyList commentReplies={replies} />
     </S.CommentItemContainer>
   );
 }

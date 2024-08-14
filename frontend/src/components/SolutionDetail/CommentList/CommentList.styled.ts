@@ -42,3 +42,8 @@ export const CommentContent = styled.div`
   margin-left: 5.2rem;
   font-size: 1.6rem;
 `;
+
+export const CommentReplyListContainer = styled.div`
+  padding-left: 5.2rem;
+  margin-top: 2rem;
+`;
