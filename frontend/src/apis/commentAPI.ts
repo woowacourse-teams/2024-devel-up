@@ -1,5 +1,14 @@
+import type { Comment } from '@/types';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH_FORMATTER } from './paths';
+
+export const getComments = async (solutionId: number): Promise<Comment[]> => {
+  const { data } = await develupAPIClient.get<{ data: Comment[] }>(
+    PATH_FORMATTER.comments(solutionId),
+  );
+
+  return data;
+};
 
 interface PostCommentPayload {
   content: string;

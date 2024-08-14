@@ -65,5 +65,4 @@ export interface CommentReply {
   content: string;
   member: UserInfo;
   createdAt: string;
-  isDeleted: boolean;
 }

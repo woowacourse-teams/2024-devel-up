@@ -10,3 +10,7 @@ export const missionKeys = {
   inProgress: ['inProgress'],
   completed: ['completed'],
 } as const;
+
+export const commentKeys = {
+  all: ['comments'],
+};
