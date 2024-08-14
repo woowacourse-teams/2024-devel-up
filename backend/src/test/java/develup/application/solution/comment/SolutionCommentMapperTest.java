@@ -23,7 +23,6 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
     @Test
     @DisplayName("SolutionReplyResponse로 매핑한다.")
     void toReplyResponse() {
-        // given
         SolutionComment rootComment = SolutionCommentTestData.defaultSolutionComment()
                 .withId(1L)
                 .build();
@@ -32,10 +31,8 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
                 .withParentComment(rootComment)
                 .build();
 
-        // when
         SolutionReplyResponse replyResponse = solutionCommentMapper.toReplyResponse(reply);
 
-        // then
         assertAll(
                 () -> assertThat(replyResponse.parentCommentId()).isEqualTo(rootComment.getId()),
                 () -> assertThat(replyResponse.isDeleted()).isFalse()
@@ -45,7 +42,6 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
     @Test
     @DisplayName("SolutionReplyResponse로 매핑 시 삭제된 댓글인 경우 내용 숨김 처리한다.")
     void hideContentWhenDeletedSolutionReplyResponse() {
-        // given
         SolutionComment rootComment = SolutionCommentTestData.defaultSolutionComment()
                 .withId(1L)
                 .build();
@@ -55,10 +51,8 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
                 .withDeletedAt(LocalDateTime.now())
                 .build();
 
-        // when
         SolutionReplyResponse replyResponse = solutionCommentMapper.toReplyResponse(reply);
 
-        // then
         assertAll(
                 () -> assertThat(replyResponse.parentCommentId()).isEqualTo(rootComment.getId()),
                 () -> assertThat(replyResponse.isDeleted()).isTrue(),
@@ -70,7 +64,6 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
     @Test
     @DisplayName("SolutionRootCommentResponse로 매핑한다.")
     void toRootCommentResponse() {
-        // given
         SolutionComment rootComment = SolutionCommentTestData.defaultSolutionComment()
                 .withId(1L)
                 .build();
@@ -79,13 +72,11 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
                 .withParentComment(rootComment)
                 .build();
 
-        // when
         SolutionRootCommentResponse rootCommentResponse = solutionCommentMapper.toRootCommentResponse(
                 rootComment,
                 List.of(reply)
         );
 
-        // then
         SolutionReplyResponse replyResponse = solutionCommentMapper.toReplyResponse(reply);
         assertAll(
                 () -> assertThat(rootCommentResponse.replies()).containsExactly(replyResponse),
@@ -96,7 +87,6 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
     @Test
     @DisplayName("SolutionRootCommentResponse로 매핑 시 삭제된 댓글인 경우 내용 숨김 처리한다.")
     void hideContentWhenDeletedSolutionRootCommentResponse() {
-        // given
         SolutionComment rootComment = SolutionCommentTestData.defaultSolutionComment()
                 .withId(1L)
                 .withDeletedAt(LocalDateTime.now())
@@ -106,13 +96,11 @@ class SolutionCommentMapperTest extends IntegrationTestSupport {
                 .withParentComment(rootComment)
                 .build();
 
-        // when
         SolutionRootCommentResponse rootCommentResponse = solutionCommentMapper.toRootCommentResponse(
                 rootComment,
                 List.of(reply)
         );
 
-        // then
         SolutionReplyResponse replyResponse = solutionCommentMapper.toReplyResponse(reply);
         assertAll(
                 () -> assertThat(rootCommentResponse.replies()).containsExactly(replyResponse),

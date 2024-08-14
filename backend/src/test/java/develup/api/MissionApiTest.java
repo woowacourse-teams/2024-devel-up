@@ -3,7 +3,6 @@ package develup.api;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -49,7 +48,7 @@ class MissionApiTest extends ApiTestSupport {
     void getMission() throws Exception {
         Mission mission = MissionTestData.defaultMission().withId(1L).build();
         MissionWithStartedResponse response = MissionWithStartedResponse.of(mission, false);
-        BDDMockito.given(missionService.getMission(any(), anyLong()))
+        BDDMockito.given(missionService.getMission(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(get("/missions/1"))

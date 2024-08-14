@@ -43,23 +43,18 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 조회한다.")
     void getComment() {
-        // given
         SolutionComment solutionComment = createSolutionComment();
 
-        // when
         SolutionComment foundSolutionComment = solutionCommentService.getComment(solutionComment.getId());
 
-        // then
         assertThat(foundSolutionComment).isNotNull();
     }
 
     @Test
     @DisplayName("댓글 조회 시 존재하지 않는 경우 예외가 발생한다.")
     void getComment_notFound() {
-        // given
         Long unknownId = -1L;
 
-        // when & then
         assertThatThrownBy(() -> solutionCommentService.getComment(unknownId))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 댓글입니다.");
@@ -68,7 +63,6 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글 조회 시 삭제된 댓글일 경우 예외가 발생한다.")
     void getCommentFailedWhenDeleted() {
-        // given
         Solution solution = createSolution();
         Member member = solution.getMember();
         SolutionComment deletedComment = SolutionCommentTestData.defaultSolutionComment()
@@ -78,7 +72,6 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
                 .build();
         solutionCommentRepository.save(deletedComment);
 
-        // when & then
         Long commentId = deletedComment.getId();
         assertThatThrownBy(() -> solutionCommentService.getComment(commentId))
                 .isInstanceOf(DevelupException.class)
@@ -88,11 +81,9 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 추가한다.")
     void addComment() {
-        // given
         Solution solution = createSolution();
         Member member = solution.getMember();
 
-        // when
         Long solutionId = solution.getId();
         Long memberId = member.getId();
         SolutionCommentRequest request = new SolutionCommentRequest(
@@ -101,7 +92,6 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         );
         CreateSolutionCommentResponse response = solutionCommentService.addComment(solutionId, request, memberId);
 
-        // then
         assertAll(
                 () -> assertThat(solutionCommentRepository.findAll()).hasSize(1),
                 () -> assertThat(response.parentCommentId()).isNull()
@@ -111,12 +101,10 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("답글을 추가한다.")
     void addReply() {
-        // given
         SolutionComment solutionComment = createSolutionComment();
         Member member = solutionComment.getMember();
         Solution solution = solutionComment.getSolution();
 
-        // when
         Long solutionId = solution.getId();
         Long memberId = member.getId();
         SolutionCommentRequest request = new SolutionCommentRequest(
@@ -125,7 +113,6 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         );
         CreateSolutionCommentResponse response = solutionCommentService.addComment(solutionId, request, memberId);
 
-        // then
         assertAll(
                 () -> assertThat(solutionCommentRepository.findAll()).hasSize(2),
                 () -> assertThat(response.parentCommentId()).isEqualTo(solutionComment.getId())
@@ -135,15 +122,12 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 삭제한다.")
     void deleteComment() {
-        // given
         SolutionComment solutionComment = createSolutionComment();
 
-        // when
         Long memberId = solutionComment.getMember().getId();
         Long commentId = solutionComment.getId();
         solutionCommentService.deleteComment(commentId, memberId);
 
-        // then
         assertThat(solutionCommentRepository.findById(commentId))
                 .map(SolutionComment::isDeleted)
                 .hasValue(true);
@@ -152,10 +136,8 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 삭제 시 작성자가 아닌 경우 예외가 발생한다.")
     void deleteComment_notWrittenBy() {
-        // given
         SolutionComment solutionComment = createSolutionComment();
 
-        // when & then
         Long nonWriterId = -1L;
         Long commentId = solutionComment.getId();
 

@@ -17,13 +17,11 @@ class SolutionCommentTest {
     @Test
     @DisplayName("댓글을 생성할 수 있다.")
     void create() {
-        // given & when
         String content = "댓글입니다.";
         SolutionComment comment = SolutionCommentTestData.defaultSolutionComment()
                 .withContent(content)
                 .build();
 
-        // then
         assertSoftly(softly -> {
             softly.assertThat(comment.getContent()).isEqualTo(content);
             softly.assertThat(comment.getParentComment()).isNull();
@@ -34,25 +32,20 @@ class SolutionCommentTest {
     @Test
     @DisplayName("댓글을 삭제할 수 있다.")
     void delete() {
-        // given
         SolutionComment comment = SolutionCommentTestData.defaultSolutionComment().build();
 
-        // when
         comment.delete();
 
-        // then
         assertThat(comment.getDeletedAt()).isNotNull();
     }
 
     @Test
     @DisplayName("삭제된 댓글은 삭제할 수 없다.")
     void deleteFailedWhenAlreadyDeleted() {
-        // given
         SolutionComment comment = SolutionCommentTestData.defaultSolutionComment()
                 .withDeletedAt(LocalDateTime.now())
                 .build();
 
-        // when & then
         assertThatThrownBy(comment::delete)
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("이미 삭제된 댓글입니다.");
@@ -61,15 +54,12 @@ class SolutionCommentTest {
     @Test
     @DisplayName("댓글에 답글을 달 수 있다.")
     void reply() {
-        // given
         SolutionComment parentComment = SolutionCommentTestData.defaultSolutionComment().build();
         String content = "답글입니다.";
         Member member = MemberTestData.defaultMember().build();
 
-        // when
         SolutionComment reply = parentComment.reply(content, member);
 
-        // then
         assertSoftly(softly -> {
             softly.assertThat(reply.getContent()).isEqualTo(content);
             softly.assertThat(reply.getSolution()).isEqualTo(parentComment.getSolution());
@@ -82,14 +72,12 @@ class SolutionCommentTest {
     @Test
     @DisplayName("삭제된 댓글에는 답글을 달 수 없다.")
     void replyFailedWhenAlreadyDeleted() {
-        // given
         SolutionComment parentComment = SolutionCommentTestData.defaultSolutionComment()
                 .withDeletedAt(LocalDateTime.now())
                 .build();
         String content = "답글입니다.";
         Member member = MemberTestData.defaultMember().build();
 
-        // when & then
         assertThatThrownBy(() -> parentComment.reply(content, member))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("이미 삭제된 댓글입니다.");
@@ -98,7 +86,6 @@ class SolutionCommentTest {
     @Test
     @DisplayName("답글에는 답글을 달 수 없다.")
     void replyFailedWhenAlreadyReply() {
-        // given
         SolutionComment rootComment = SolutionCommentTestData.defaultSolutionComment().build();
         SolutionComment reply = SolutionCommentTestData.defaultSolutionComment()
                 .withParentComment(rootComment)
@@ -106,7 +93,6 @@ class SolutionCommentTest {
         String content = "답글에 대한 답글입니다.";
         Member member = MemberTestData.defaultMember().build();
 
-        // when & then
         assertThatThrownBy(() -> reply.reply(content, member))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("답글에는 답글을 작성할 수 없습니다.");

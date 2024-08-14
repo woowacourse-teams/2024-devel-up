@@ -29,13 +29,10 @@ class CommentGroupingServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 그룹화한다.")
     void groupReplies() {
-        // given
         List<SolutionComment> comments = createComments();
 
-        // when
         List<SolutionRootCommentResponse> rootCommentResponses = commentGroupingService.groupReplies(comments);
 
-        // then
         assertAll(
                 () -> assertThat(rootCommentResponses).hasSize(2),
                 () -> assertThat(rootCommentResponses.get(0).replies()).hasSize(1),

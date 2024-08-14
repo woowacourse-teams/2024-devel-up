@@ -3,7 +3,6 @@ package develup.api;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -83,7 +82,7 @@ class SolutionCommentApiTest extends ApiTestSupport {
     void deleteComment() throws Exception {
         BDDMockito.doNothing()
                 .when(solutionCommentService)
-                .deleteComment(anyLong(), anyLong());
+                .deleteComment(any(), any());
 
         mockMvc.perform(
                         delete("/solutions/comments/1")
