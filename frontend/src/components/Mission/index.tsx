@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import * as S from './Mission.styled';
 import { Link } from 'react-router-dom';
-import { HashTag } from '@/types/mission';
+import type { HashTag } from '@/types/mission';
 
 interface MissionProps extends PropsWithChildren {
   id: number;
@@ -17,10 +17,6 @@ export default function Mission({ id, type, children }: MissionProps) {
     </S.MissionItemContainer>
   );
 }
-
-Mission.Card = function MissionCard({ id, children }: MissionProps) {
-  return;
-};
 
 Mission.InfoWrapper = function MissionInfoWrapper({ children }: PropsWithChildren) {
   return <S.MissionInfoWrapper>{children}</S.MissionInfoWrapper>;

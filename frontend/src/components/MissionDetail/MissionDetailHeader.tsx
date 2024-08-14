@@ -9,7 +9,7 @@ interface MissionDetailHeaderProps {
 export default function MissionDetailHeader({
   title,
   thumbnail,
-  language,
+  // language,
 }: MissionDetailHeaderProps) {
   return (
     <S.MissionDetailHeaderContainer>
