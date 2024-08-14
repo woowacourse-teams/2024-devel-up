@@ -5,8 +5,8 @@ interface InfoCardProps {
   id: number;
   thumbnailSrc: string;
   title: string;
-  description: string;
   thumbnailFallbackText: string;
+  description?: string;
 }
 
 export default function InfoCard({
