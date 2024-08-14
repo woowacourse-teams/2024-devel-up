@@ -4,6 +4,7 @@ import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
+import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.SolutionService;
 import develup.application.solution.StartSolutionRequest;
@@ -65,5 +66,13 @@ public class SolutionApi {
         SolutionResponse solutionResponse = solutionService.getById(id);
 
         return ResponseEntity.ok(new ApiResponse<>(solutionResponse));
+    }
+
+    @GetMapping("/solutions/mine")
+    @Operation(summary = "나의 솔루션 목록 조회 API", description = "내가 제출한 솔루션 목록을 조회합니다.")
+    public ResponseEntity<ApiResponse<List<MySolutionResponse>>> getMySolutions(@Auth Accessor accessor) {
+        List<MySolutionResponse> response = solutionService.getSubmittedSolutionsByMemberId(accessor.id());
+
+        return ResponseEntity.ok(new ApiResponse<>(response));
     }
 }

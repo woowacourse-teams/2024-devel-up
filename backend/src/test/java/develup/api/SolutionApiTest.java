@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.StartSolutionRequest;
 import develup.application.solution.SubmitSolutionRequest;
@@ -150,5 +151,26 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
+    }
+
+    @Test
+    @DisplayName("나의 솔루션 목록을 조회한다.")
+    void getMySolutions() throws Exception {
+        List<MySolutionResponse> mySolutions = List.of(
+                new MySolutionResponse(1L, "thumbnail", "title"),
+                new MySolutionResponse(2L, "thumbnail", "title")
+        );
+        BDDMockito.given(solutionService.getSubmittedSolutionsByMemberId(any()))
+                .willReturn(mySolutions);
+
+        mockMvc.perform(get("/solutions/mine"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.data[0].thumbnail", equalTo("thumbnail")))
+                .andExpect(jsonPath("$.data[0].title", equalTo("title")))
+                .andExpect(jsonPath("$.data[1].id", equalTo(2)))
+                .andExpect(jsonPath("$.data[1].thumbnail", equalTo("thumbnail")))
+                .andExpect(jsonPath("$.data[1].title", equalTo("title")));
     }
 }
