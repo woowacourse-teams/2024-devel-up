@@ -1,0 +1,95 @@
+[
+  {
+    "id": 1,
+    "solutionId": 1,
+    "content": "댓글입니다. 111",
+    "member": {
+      "id": 0,
+      "email": "aaaa@naver.com",
+      "name": "aaaa",
+      "imageUrl": "https://placehold.co/200x200?text=aaaa",
+      "description": "안녕하세요, 데벨업에서 같이 레벨업해봐요~!"
+    },
+    "replies": [
+      {
+        "id": 10,
+        "solutionId": 1,
+        "parentCommentId": 1,
+        "content": "111 대댓글입니다.",
+        "member": {
+          "id": 0,
+          "email": "bbbb@naver.com",
+          "name": "bbbb",
+          "imageUrl": "https://placehold.co/200x200?text=bbbb",
+          "description": "안녕하세요, 데벨업에서 같이 레벨업해봐요~!"
+        },
+        "createdAt": "2024-08-12T06:36:50.012Z",
+        "isDeleted": true
+      }
+    ],
+    "createdAt": "2024-08-12T06:36:50.012Z",
+    "isDeleted": true
+  },
+  {
+    "id": 2,
+    "solutionId": 1,
+    "content": "댓글입니다. 222",
+    "member": {
+      "id": 0,
+      "email": "cccc@naver.com",
+      "name": "cccc",
+      "imageUrl": "https://placehold.co/200x200?text=cccc",
+      "description": "안녕하세요, 데벨업에서 같이 레벨업해봐요~!"
+    },
+    "replies": [
+      {
+        "id": 12,
+        "solutionId": 1,
+        "parentCommentId": 2,
+        "content": "222 대댓글입니다.",
+        "member": {
+          "id": 0,
+          "email": "dddd@naver.com",
+          "name": "dddd",
+          "imageUrl": "https://placehold.co/200x200?text=dddd",
+          "description": "안녕하세요, 데벨업에서 같이 레벨업해봐요~!"
+        },
+        "createdAt": "2024-08-12T06:36:50.012Z",
+        "isDeleted": true
+      }
+    ],
+    "createdAt": "2024-08-12T06:36:50.012Z",
+    "isDeleted": true
+  },
+  {
+    "id": 3,
+    "solutionId": 1,
+    "content": "댓글입니다. 222",
+    "member": {
+      "id": 0,
+      "email": "cccc@naver.com",
+      "name": "cccc",
+      "imageUrl": "https://placehold.co/200x200?text=cccc",
+      "description": "안녕하세요, 데벨업에서 같이 레벨업해봐요~!"
+    },
+    "replies": [
+      {
+        "id": 13,
+        "solutionId": 1,
+        "parentCommentId": 2,
+        "content": "222 대댓글입니다.",
+        "member": {
+          "id": 0,
+          "email": "dddd@naver.com",
+          "name": "dddd",
+          "imageUrl": "https://placehold.co/200x200?text=dddd",
+          "description": "안녕하세요, 데벨업에서 같이 레벨업해봐요~!"
+        },
+        "createdAt": "2024-08-12T06:36:50.012Z",
+        "isDeleted": true
+      }
+    ],
+    "createdAt": "2024-08-12T06:36:50.012Z",
+    "isDeleted": true
+  }
+]

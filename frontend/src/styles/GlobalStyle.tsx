@@ -179,7 +179,8 @@ body {
   scrollbar-width: none;  /* Firefox */
 }
 
-body::-webkit-scrollbar {
+
+::-webkit-scrollbar {
   display: none;  /* Safari and Chrome */
 }
 
