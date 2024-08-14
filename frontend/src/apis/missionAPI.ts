@@ -5,7 +5,7 @@ import type { Mission, SubmissionPayload, Submission } from '@/types';
 import MissionListInProgress from '@/mocks/missionInProgress.json';
 
 interface getMissionByIdResponse {
-  data: Mission;
+  data: MissionWithDescription;
 }
 
 interface getAllMissionResponse {
@@ -18,10 +18,11 @@ export const getAllMissions = async (): Promise<Mission[]> => {
   return data;
 };
 
-export const getMissionById = async (id: number): Promise<Mission> => {
+export const getMissionById = async (id: number): Promise<MissionWithDescription> => {
   const { data } = await develupAPIClient.get<getMissionByIdResponse>(`${PATH.missionList}/${id}`);
+  const mission = await populateMissionDescription(data);
 
-  return data;
+  return mission;
 };
 
 // interface GetMissionInProgressResponse {

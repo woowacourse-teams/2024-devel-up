@@ -1,6 +1,7 @@
 package develup.domain.solution;
 
-import develup.application.solution.SolutionSubmit;
+import develup.api.exception.DevelupException;
+import develup.api.exception.ExceptionType;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import jakarta.persistence.Column;
@@ -8,9 +9,11 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -20,16 +23,18 @@ public class Solution {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @JoinColumn(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Mission mission;
 
-    @ManyToOne
+    @JoinColumn(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @Embedded
     private Title title;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column
@@ -76,6 +81,10 @@ public class Solution {
     }
 
     public void submit(SolutionSubmit solutionSubmit) {
+        if (!isInProgress()) {
+            throw new DevelupException(ExceptionType.SOLUTION_ALREADY_SUBMITTED);
+        }
+
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
         this.url = solutionSubmit.url();
@@ -98,8 +107,8 @@ public class Solution {
         return member;
     }
 
-    public Title getTitle() {
-        return title;
+    public String getTitle() {
+        return title.getValue();
     }
 
     public String getDescription() {

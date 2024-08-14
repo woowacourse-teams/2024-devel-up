@@ -6,11 +6,7 @@ interface MissionDetailHeaderProps {
   language: string;
 }
 
-export default function MissionDetailHeader({
-  title,
-  thumbnail,
-  // language,
-}: MissionDetailHeaderProps) {
+export default function MissionDetailHeader({ title, thumbnail }: MissionDetailHeaderProps) {
   return (
     <S.MissionDetailHeaderContainer>
       <S.ThumbnailWrapper>

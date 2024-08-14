@@ -23,19 +23,23 @@ public class Mission {
     private String thumbnail;
 
     @Column(nullable = false)
+    private String summary;
+
+    @Column(nullable = false)
     private String url;
 
     protected Mission() {
     }
 
-    public Mission(String title, String thumbnail, String url) {
-        this(null, title, thumbnail, url);
+    public Mission(String title, String thumbnail, String summary, String url) {
+        this(null, title, thumbnail, summary, url);
     }
 
-    public Mission(Long id, String title, String thumbnail, String url) {
+    public Mission(Long id, String title, String thumbnail, String summary, String url) {
         this.id = id;
         this.title = title;
         this.thumbnail = thumbnail;
+        this.summary = summary;
         this.url = url;
     }
 
@@ -49,6 +53,10 @@ public class Mission {
 
     public String getThumbnail() {
         return thumbnail;
+    }
+
+    public String getSummary() {
+        return summary;
     }
 
     public String getUrl() {

@@ -5,8 +5,8 @@ import develup.domain.mission.Mission;
 public record MissionResponse(
         Long id,
         String title,
-        String descriptionUrl,
         String thumbnail,
+        String summary,
         String url
 ) {
 
@@ -14,8 +14,8 @@ public record MissionResponse(
         return new MissionResponse(
                 mission.getId(),
                 mission.getTitle(),
-                mission.getDescriptionUrl(),
                 mission.getThumbnail(),
+                mission.getSummary(),
                 mission.getUrl()
         );
     }
