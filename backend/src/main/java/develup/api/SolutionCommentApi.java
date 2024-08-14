@@ -50,6 +50,7 @@ public class SolutionCommentApi {
         CreateSolutionCommentResponse response = solutionCommentService.addComment(solutionId, request, accessor.id());
 
         URI location = URI.create("/solutions/" + response.solutionId() + "/comments/" + response.id());
+
         return ResponseEntity.created(location).body(new ApiResponse<>(response));
     }
 
