@@ -6,11 +6,14 @@ import develup.api.exception.ExceptionType;
 import develup.application.auth.Accessor;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
+import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class MissionService {
 
     private final MissionRepository missionRepository;
@@ -23,6 +26,15 @@ public class MissionService {
 
     public List<MissionResponse> getMissions() {
         return missionRepository.findAll().stream()
+                .map(MissionResponse::from)
+                .toList();
+    }
+
+    public List<MissionResponse> getInProgressMissions(Long memberId) {
+        return solutionRepository.findAllByMember_IdAndStatus(memberId, SolutionStatus.IN_PROGRESS)
+                .stream()
+                .map(Solution::getMission)
+                .distinct()
                 .map(MissionResponse::from)
                 .toList();
     }

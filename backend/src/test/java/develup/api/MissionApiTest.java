@@ -36,9 +36,11 @@ class MissionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data[0].thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data[0].url", equalTo("https://github.com/develup-mission/java-smoking")))
+                .andExpect(jsonPath("$.data[0].summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
                 .andExpect(jsonPath("$.data[1].title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data[1].thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data[1].url", equalTo("https://github.com/develup-mission/java-smoking")))
+                .andExpect(jsonPath("$.data[1].summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
                 .andExpect(jsonPath("$.data.length()", is(2)));
     }
 
@@ -60,5 +62,29 @@ class MissionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.descriptionUrl",
                         equalTo("https://raw.githubusercontent.com/develup-mission/java-smoking/main/README.md")))
                 .andExpect(jsonPath("$.data.isStarted", is(false)));
+    }
+
+    @Test
+    @DisplayName("사용자가 시작한 미션 목록을 조회한다.")
+    void getInProgressMissions() throws Exception {
+        List<MissionResponse> responses = List.of(
+                MissionResponse.from(MissionTestData.defaultMission().build()),
+                MissionResponse.from(MissionTestData.defaultMission().build())
+        );
+        BDDMockito.given(missionService.getInProgressMissions(any()))
+                .willReturn(responses);
+
+        mockMvc.perform(get("/missions/in-progress"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data[0].thumbnail", equalTo("https://thumbnail.com/1.png")))
+                .andExpect(jsonPath("$.data[0].url", equalTo("https://github.com/develup-mission/java-smoking")))
+                .andExpect(jsonPath("$.data[0].summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
+                .andExpect(jsonPath("$.data[1].title", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data[1].thumbnail", equalTo("https://thumbnail.com/1.png")))
+                .andExpect(jsonPath("$.data[1].url", equalTo("https://github.com/develup-mission/java-smoking")))
+                .andExpect(jsonPath("$.data[1].summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
+                .andExpect(jsonPath("$.data.length()", is(2)));
     }
 }
