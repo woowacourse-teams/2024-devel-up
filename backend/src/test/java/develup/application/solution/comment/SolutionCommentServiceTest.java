@@ -47,7 +47,7 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
 
         SolutionComment foundSolutionComment = solutionCommentService.getComment(solutionComment.getId());
 
-        assertThat(foundSolutionComment).isNotNull();
+        assertThat(foundSolutionComment).isEqualTo(solutionComment);
     }
 
     @Test
