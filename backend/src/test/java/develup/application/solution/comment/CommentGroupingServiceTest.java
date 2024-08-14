@@ -31,16 +31,16 @@ class CommentGroupingServiceTest extends IntegrationTestSupport {
     void groupReplies() {
         List<SolutionComment> comments = createComments();
 
-        List<SolutionRootCommentResponse> rootCommentResponses = commentGroupingService.groupReplies(comments);
+        List<SolutionCommentRepliesResponse> rootCommentResponses = commentGroupingService.groupReplies(comments);
 
         assertAll(
                 () -> assertThat(rootCommentResponses).hasSize(2),
                 () -> assertThat(rootCommentResponses.get(0).replies()).hasSize(1),
                 () -> assertThat(rootCommentResponses.get(1).replies()).hasSize(2),
-                () -> assertThat(rootCommentResponses.get(0).replies().get(0).isDeleted()).isFalse(),
+                () -> assertThat(rootCommentResponses.get(0).replies().get(0)).isNotNull(),
                 () -> assertThat(rootCommentResponses.get(1).isDeleted()).isTrue(),
-                () -> assertThat(rootCommentResponses.get(1).replies().get(0).isDeleted()).isFalse(),
-                () -> assertThat(rootCommentResponses.get(1).replies().get(1).isDeleted()).isFalse()
+                () -> assertThat(rootCommentResponses.get(1).replies().get(0)).isNotNull(),
+                () -> assertThat(rootCommentResponses.get(1).replies().get(1)).isNotNull()
         );
     }
 

@@ -9,17 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentGroupingService {
 
-    private final SolutionCommentMapper commentMapper;
-
-    public CommentGroupingService(SolutionCommentMapper commentMapper) {
-        this.commentMapper = commentMapper;
-    }
-
-    public List<SolutionRootCommentResponse> groupReplies(List<SolutionComment> comments) {
+    public List<SolutionCommentRepliesResponse> groupReplies(List<SolutionComment> comments) {
         List<SolutionComment> rootComments = filterRootComments(comments);
 
         Map<Long, List<SolutionComment>> repliesMap = createRepliesMapByRootCommentId(comments);
-        List<SolutionRootCommentResponse> commentWithReplies = attachRepliesToRootComments(rootComments, repliesMap);
+        List<SolutionCommentRepliesResponse> commentWithReplies = attachRepliesToRootComments(rootComments, repliesMap);
 
         return commentWithReplies.stream()
                 .filter(this::isRootCommentNotDeletedOrHasReplies)
@@ -39,19 +33,25 @@ public class CommentGroupingService {
                 .collect(Collectors.groupingBy(SolutionComment::getParentCommentId));
     }
 
-    private List<SolutionRootCommentResponse> attachRepliesToRootComments(
+    private List<SolutionCommentRepliesResponse> attachRepliesToRootComments(
             List<SolutionComment> rootComments,
             Map<Long, List<SolutionComment>> repliesMap
     ) {
         return rootComments.stream()
-                .map(it -> {
-                    List<SolutionComment> replies = repliesMap.getOrDefault(it.getId(), List.of());
-                    return commentMapper.toRootCommentResponse(it, replies);
-                })
+                .map(rootComment -> createSolutionCommentRepliesResponse(rootComment, repliesMap))
                 .toList();
     }
 
-    private boolean isRootCommentNotDeletedOrHasReplies(SolutionRootCommentResponse rootCommentResponse) {
+    private static SolutionCommentRepliesResponse createSolutionCommentRepliesResponse(
+            SolutionComment rootComment,
+            Map<Long, List<SolutionComment>> repliesMap
+    ) {
+        List<SolutionComment> replies = repliesMap.getOrDefault(rootComment.getId(), List.of());
+
+        return SolutionCommentRepliesResponse.from(rootComment, replies);
+    }
+
+    private boolean isRootCommentNotDeletedOrHasReplies(SolutionCommentRepliesResponse rootCommentResponse) {
         return !rootCommentResponse.isDeleted() || !rootCommentResponse.replies().isEmpty();
     }
 }

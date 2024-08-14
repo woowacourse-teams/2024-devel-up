@@ -8,7 +8,7 @@ import develup.application.auth.Accessor;
 import develup.application.solution.comment.CreateSolutionCommentResponse;
 import develup.application.solution.comment.SolutionCommentRequest;
 import develup.application.solution.comment.SolutionCommentService;
-import develup.application.solution.comment.SolutionRootCommentResponse;
+import develup.application.solution.comment.SolutionCommentRepliesResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -32,10 +32,10 @@ public class SolutionCommentApi {
 
     @GetMapping("/solutions/{solutionId}/comments")
     @Operation(summary = "솔루션 댓글 조회 API", description = "솔루션의 댓글 목록을 조회합니다. 댓글들과 댓글들에 대한 답글을 조회합니다.")
-    public ResponseEntity<ApiResponse<List<SolutionRootCommentResponse>>> getComments(
+    public ResponseEntity<ApiResponse<List<SolutionCommentRepliesResponse>>> getComments(
             @PathVariable Long solutionId
     ) {
-        List<SolutionRootCommentResponse> responses = solutionCommentService.getCommentsWithReplies(solutionId);
+        List<SolutionCommentRepliesResponse> responses = solutionCommentService.getCommentsWithReplies(solutionId);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }

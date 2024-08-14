@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import develup.application.member.MemberResponse;
 import develup.application.solution.comment.CreateSolutionCommentResponse;
+import develup.application.solution.comment.SolutionCommentRepliesResponse;
 import develup.application.solution.comment.SolutionCommentRequest;
 import develup.application.solution.comment.SolutionReplyResponse;
-import develup.application.solution.comment.SolutionRootCommentResponse;
 import develup.domain.member.Member;
 import develup.support.data.MemberTestData;
 import jakarta.servlet.http.Cookie;
@@ -32,7 +32,7 @@ class SolutionCommentApiTest extends ApiTestSupport {
     void getComments() throws Exception {
         SolutionReplyResponse replyResponse = createReplyResponse();
         List<SolutionReplyResponse> replyResponses = List.of(replyResponse);
-        List<SolutionRootCommentResponse> responses = List.of(createRootCommentResponse(replyResponses));
+        List<SolutionCommentRepliesResponse> responses = List.of(createRootCommentResponse(replyResponses));
 
         BDDMockito.given(solutionCommentService.getCommentsWithReplies(any()))
                 .willReturn(responses);
@@ -92,8 +92,8 @@ class SolutionCommentApiTest extends ApiTestSupport {
                 .andExpect(status().isNoContent());
     }
 
-    private SolutionRootCommentResponse createRootCommentResponse(List<SolutionReplyResponse> replyResponses) {
-        return new SolutionRootCommentResponse(
+    private SolutionCommentRepliesResponse createRootCommentResponse(List<SolutionReplyResponse> replyResponses) {
+        return new SolutionCommentRepliesResponse(
                 1L,
                 1L,
                 "content",
@@ -111,8 +111,7 @@ class SolutionCommentApiTest extends ApiTestSupport {
                 1L,
                 "reply",
                 MemberResponse.from(MemberTestData.defaultMember().withId(1L).build()),
-                LocalDateTime.now(),
-                false
+                LocalDateTime.now()
         );
     }
 }

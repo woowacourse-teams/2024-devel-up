@@ -5,55 +5,34 @@ import java.time.ZoneOffset;
 import java.util.List;
 import develup.application.member.MemberResponse;
 import develup.domain.solution.comment.SolutionComment;
-import org.springframework.stereotype.Component;
 
-@Component
-public class SolutionCommentMapper {
+public record SolutionCommentRepliesResponse(
+        Long id,
+        Long solutionId,
+        String content,
+        MemberResponse member,
+        List<SolutionReplyResponse> replies,
+        LocalDateTime createdAt,
+        boolean isDeleted
+) {
 
     private static final LocalDateTime EPOCH_TIME = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
     private static final MemberResponse EMPTY_MEMBER = new MemberResponse(0L, "", "", "");
 
-    public SolutionReplyResponse toReplyResponse(SolutionComment reply) {
-        if (reply.isDeleted()) {
-            return toDeletedReplyResponse(reply);
-        }
-
-        return new SolutionReplyResponse(
-                reply.getId(),
-                reply.getSolutionId(),
-                reply.getParentCommentId(),
-                reply.getContent(),
-                MemberResponse.from(reply.getMember()),
-                reply.getCreatedAt(),
-                false
-        );
-    }
-
-    private SolutionReplyResponse toDeletedReplyResponse(SolutionComment reply) {
-        return new SolutionReplyResponse(
-                reply.getId(),
-                reply.getSolutionId(),
-                reply.getParentCommentId(),
-                "",
-                EMPTY_MEMBER,
-                EPOCH_TIME,
-                true
-        );
-    }
-
-    public SolutionRootCommentResponse toRootCommentResponse(
+    public static SolutionCommentRepliesResponse from(
             SolutionComment rootComment,
             List<SolutionComment> replies
     ) {
         List<SolutionReplyResponse> replyResponses = replies.stream()
-                .map(this::toReplyResponse)
+                .map(SolutionReplyResponse::from)
                 .toList();
 
+
         if (rootComment.isDeleted()) {
-            return toDeletedRootCommentResponse(rootComment, replyResponses);
+            return fromDeleted(rootComment, replyResponses);
         }
 
-        return new SolutionRootCommentResponse(
+        return new SolutionCommentRepliesResponse(
                 rootComment.getId(),
                 rootComment.getSolutionId(),
                 rootComment.getContent(),
@@ -64,11 +43,11 @@ public class SolutionCommentMapper {
         );
     }
 
-    private SolutionRootCommentResponse toDeletedRootCommentResponse(
+    private static SolutionCommentRepliesResponse fromDeleted(
             SolutionComment rootComment,
             List<SolutionReplyResponse> replyResponses
     ) {
-        return new SolutionRootCommentResponse(
+        return new SolutionCommentRepliesResponse(
                 rootComment.getId(),
                 rootComment.getSolutionId(),
                 "",

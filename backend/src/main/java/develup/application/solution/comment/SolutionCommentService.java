@@ -44,7 +44,7 @@ public class SolutionCommentService {
         return comment;
     }
 
-    public List<SolutionRootCommentResponse> getCommentsWithReplies(Long solutionId) {
+    public List<SolutionCommentRepliesResponse> getCommentsWithReplies(Long solutionId) {
         List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solutionId);
 
         return commentGroupingService.groupReplies(comments);
