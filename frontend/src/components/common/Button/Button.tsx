@@ -14,10 +14,10 @@ export default function Button({
   variant = 'default',
   size = 'default',
   children,
-  ...rest
+  ...props
 }: PropsWithChildren<ButtonProps>) {
   return (
-    <S.CommonButton $size={size} $variant={variant} {...rest}>
+    <S.CommonButton $size={size} $variant={variant} {...props}>
       {children}
     </S.CommonButton>
   );
