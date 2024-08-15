@@ -16,7 +16,6 @@ import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
-import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,6 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private HashTagRepository hashTagRepository;
-
-    @Autowired
-    private EntityManagerFactory factory;
 
     @Test
     @DisplayName("멤버 식별자와 미션 식별자와 특정 상태에 해당하는 솔루션이 존재하는지 확인한다. ")
