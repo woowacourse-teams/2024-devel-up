@@ -48,7 +48,7 @@ public class CommentGroupingService {
     ) {
         List<SolutionComment> replies = repliesMap.getOrDefault(rootComment.getId(), List.of());
 
-        return SolutionCommentRepliesResponse.from(rootComment, replies);
+        return SolutionCommentRepliesResponse.of(rootComment, replies);
     }
 
     private boolean isRootCommentNotDeletedOrHasReplies(SolutionCommentRepliesResponse rootCommentResponse) {

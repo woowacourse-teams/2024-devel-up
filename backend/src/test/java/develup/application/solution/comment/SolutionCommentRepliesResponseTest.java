@@ -26,7 +26,7 @@ class SolutionCommentRepliesResponseTest {
                 .withParentComment(rootComment)
                 .build();
 
-        SolutionCommentRepliesResponse rootCommentResponse = SolutionCommentRepliesResponse.from(
+        SolutionCommentRepliesResponse rootCommentResponse = SolutionCommentRepliesResponse.of(
                 rootComment,
                 List.of(reply)
         );
@@ -50,7 +50,7 @@ class SolutionCommentRepliesResponseTest {
                 .withParentComment(rootComment)
                 .build();
 
-        SolutionCommentRepliesResponse rootCommentResponse = SolutionCommentRepliesResponse.from(
+        SolutionCommentRepliesResponse rootCommentResponse = SolutionCommentRepliesResponse.of(
                 rootComment,
                 List.of(reply)
         );

@@ -19,7 +19,7 @@ public record SolutionCommentRepliesResponse(
     private static final LocalDateTime EPOCH_TIME = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
     private static final MemberResponse EMPTY_MEMBER = new MemberResponse(0L, "", "", "");
 
-    public static SolutionCommentRepliesResponse from(
+    public static SolutionCommentRepliesResponse of(
             SolutionComment rootComment,
             List<SolutionComment> replies
     ) {
@@ -29,7 +29,7 @@ public record SolutionCommentRepliesResponse(
 
 
         if (rootComment.isDeleted()) {
-            return fromDeleted(rootComment, replyResponses);
+            return ofDeleted(rootComment, replyResponses);
         }
 
         return new SolutionCommentRepliesResponse(
@@ -43,7 +43,7 @@ public record SolutionCommentRepliesResponse(
         );
     }
 
-    private static SolutionCommentRepliesResponse fromDeleted(
+    private static SolutionCommentRepliesResponse ofDeleted(
             SolutionComment rootComment,
             List<SolutionReplyResponse> replyResponses
     ) {
