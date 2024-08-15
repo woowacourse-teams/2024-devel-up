@@ -10,7 +10,7 @@ public record SummarizedSolutionResponse(
         String title,
         String thumbnail,
         String description,
-        List<HashTagResponse> hashTag
+        List<HashTagResponse> hashTags
 ) {
 
     public static SummarizedSolutionResponse from(Solution solution) {

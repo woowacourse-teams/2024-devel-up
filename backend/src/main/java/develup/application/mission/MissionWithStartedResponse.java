@@ -12,7 +12,7 @@ public record MissionWithStartedResponse(
         String thumbnail,
         String url,
         boolean isStarted,
-        List<HashTagResponse> hashTag
+        List<HashTagResponse> hashTags
 ) {
 
     public static MissionWithStartedResponse of(Mission mission, boolean isStarted) {

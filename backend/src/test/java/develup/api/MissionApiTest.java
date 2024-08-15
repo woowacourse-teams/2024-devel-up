@@ -69,8 +69,8 @@ class MissionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.descriptionUrl",
                         equalTo("https://raw.githubusercontent.com/develup-mission/java-smoking/main/README.md")))
                 .andExpect(jsonPath("$.data.isStarted", is(false)))
-                .andExpect(jsonPath("$.data.hashTag[0].id", equalTo(1)))
-                .andExpect(jsonPath("$.data.hashTag[0].name", equalTo("JAVA")));
+                .andExpect(jsonPath("$.data.hashTags[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.data.hashTags[0].name", equalTo("JAVA")));
     }
 
     @Test

@@ -11,7 +11,7 @@ public record MissionResponse(
         String thumbnail,
         String summary,
         String url,
-        List<HashTagResponse> hashTag
+        List<HashTagResponse> hashTags
 ) {
 
     public static MissionResponse from(Mission mission) {

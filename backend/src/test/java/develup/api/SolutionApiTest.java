@@ -47,8 +47,8 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속 제출합니다.")))
                 .andExpect(jsonPath("$.data[0].thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data[0].description", equalTo("안녕하세요. 피드백 잘 부탁 드려요.")))
-                .andExpect(jsonPath("$.data[0].hashTag[0].id", is(1)))
-                .andExpect(jsonPath("$.data[0].hashTag[0].name", equalTo("JAVA")))
+                .andExpect(jsonPath("$.data[0].hashTags[0].id", is(1)))
+                .andExpect(jsonPath("$.data[0].hashTags[0].name", equalTo("JAVA")))
                 .andExpect(jsonPath("$.data.length()", is(2)));
     }
 

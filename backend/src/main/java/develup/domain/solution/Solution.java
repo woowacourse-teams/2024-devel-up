@@ -105,10 +105,6 @@ public class Solution {
         return mission;
     }
 
-    public String getMissionThumbnail() {
-        return mission.getThumbnail();
-    }
-
     public Member getMember() {
         return member;
     }
