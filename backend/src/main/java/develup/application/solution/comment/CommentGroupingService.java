@@ -42,7 +42,7 @@ public class CommentGroupingService {
                 .toList();
     }
 
-    private static SolutionCommentRepliesResponse createSolutionCommentRepliesResponse(
+    private SolutionCommentRepliesResponse createSolutionCommentRepliesResponse(
             SolutionComment rootComment,
             Map<Long, List<SolutionComment>> repliesMap
     ) {
