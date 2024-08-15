@@ -11,7 +11,7 @@ interface InfoCardProps {
   title: string;
   thumbnailFallbackText: string;
   description?: string;
-  hashTag: HashTag[];
+  hashTags: HashTag[];
 }
 
 export default function InfoCard({
@@ -19,7 +19,7 @@ export default function InfoCard({
   thumbnailSrc,
   title,
   description,
-  hashTag,
+  hashTags,
   thumbnailFallbackText,
 }: InfoCardProps) {
   const { onMouseDown, onMouseMove, onMouseUp, inActive, isDragging } =
@@ -48,8 +48,8 @@ export default function InfoCard({
             onMouseUp={onMouseUp}
             onMouseLeave={inActive}
           >
-            {hashTag &&
-              hashTag.map((tag) => {
+            {hashTags &&
+              hashTags.map((tag) => {
                 return (
                   <li key={tag.id}>
                     <Badge text={`# ${tag.name}`} />

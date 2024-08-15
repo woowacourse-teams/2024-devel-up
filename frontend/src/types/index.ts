@@ -22,7 +22,7 @@ export interface Mission {
   thumbnail: string;
   url: string;
   isStarted?: boolean;
-  hashTag: HashTag[];
+  hashTags: HashTag[];
 }
 
 export interface MissionWithDescription extends Mission {

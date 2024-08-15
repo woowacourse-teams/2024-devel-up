@@ -9,7 +9,7 @@ export interface SolutionSummary {
   thumbnail: string;
   description: string;
   title: string;
-  hashTag: HashTag[];
+  hashTags: HashTag[];
 }
 
 interface GetSolutionSummariesResponse {

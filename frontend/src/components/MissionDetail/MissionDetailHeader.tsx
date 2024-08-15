@@ -6,13 +6,13 @@ interface MissionDetailHeaderProps {
   title: string;
   thumbnail: string;
   language: string;
-  hashTag: HashTag[];
+  hashTags: HashTag[];
 }
 
 export default function MissionDetailHeader({
   title,
   thumbnail,
-  hashTag,
+  hashTags,
 }: MissionDetailHeaderProps) {
   return (
     <S.MissionDetailHeaderContainer>
@@ -21,8 +21,8 @@ export default function MissionDetailHeader({
         <S.GradientOverlay />
         <S.Title>{title}</S.Title>
         <S.HashTagWrapper>
-          {hashTag &&
-            hashTag.map((tag) => {
+          {hashTags &&
+            hashTags.map((tag) => {
               return <HashTagButton key={tag.id}># {tag.name}</HashTagButton>;
             })}
         </S.HashTagWrapper>
