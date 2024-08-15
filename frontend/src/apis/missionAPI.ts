@@ -6,6 +6,7 @@ import type {
   MissionSubmission,
   SubmissionPayload,
   Submission,
+  HashTag,
 } from '@/types';
 import { populateMissionDescription } from './utils/populateMissionDescription';
 
@@ -25,8 +26,16 @@ interface getAllMissionResponse {
   data: Mission[];
 }
 
-export const getAllMissions = async (): Promise<Mission[]> => {
-  const { data } = await develupAPIClient.get<getAllMissionResponse>(PATH.missionList);
+interface getHashTagsResponse {
+  data: HashTag[];
+}
+
+export const getMissions = async (filter: string): Promise<Mission[]> => {
+  const { data } = await develupAPIClient.get<getAllMissionResponse>(
+    // `${PATH.missionList}?hashTag=${filter}`, // TODO: 추후 필터링 추가 예정입니다 @프룬
+    `${PATH.missionList}`,
+  );
+  filter; // TODO: 임시로 선언만 해놓을게요 @프룬
 
   return data;
 };
@@ -68,6 +77,12 @@ export interface PostSubmissionResponse {
 
 export const postSubmission = async (payload: SubmissionPayload) => {
   const data = await develupAPIClient.post<PostSubmissionResponse>(PATH.submissions, payload);
+
+  return data;
+};
+
+export const getHashTags = async (): Promise<HashTag[]> => {
+  const { data } = await develupAPIClient.get<getHashTagsResponse>(PATH.hashTags);
 
   return data;
 };

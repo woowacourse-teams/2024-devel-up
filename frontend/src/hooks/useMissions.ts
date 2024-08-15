@@ -1,12 +1,12 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import type { Mission } from '@/types';
-import { getAllMissions } from '@/apis/missionAPI';
+import { getMissions } from '@/apis/missionAPI';
 import { missionKeys } from './queries/keys';
 
-const useMissions = () => {
+const useMissions = (filter: string = '') => {
   return useSuspenseQuery<Mission[]>({
     queryKey: missionKeys.all,
-    queryFn: getAllMissions,
+    queryFn: () => getMissions(filter),
   });
 };
 
