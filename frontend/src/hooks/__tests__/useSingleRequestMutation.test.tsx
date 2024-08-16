@@ -10,7 +10,7 @@ const wrapper = ({ children }: PropsWithChildren) => (
 );
 
 const mockVariable = jest.fn();
-const mockMutationFn = jest.fn().mockResolvedValue('success'); // 비동기 함수로 설정
+const mockMutationFn = jest.fn().mockResolvedValue('success');
 const mockOnMutate = jest.fn();
 const mockOnSuccess = jest.fn();
 const mockOnError = jest.fn();
