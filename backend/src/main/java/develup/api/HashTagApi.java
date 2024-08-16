@@ -23,6 +23,8 @@ class HashTagApi {
     @GetMapping("/hash-tags")
     @Operation(summary = "해시태그 목록 조회 API", description = "해시태그 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<HashTagResponse>>> getHashTags() {
-        return ResponseEntity.ok(new ApiResponse<>(hashTagService.getHashTags()));
+        List<HashTagResponse> responses = hashTagService.getHashTags();
+
+        return ResponseEntity.ok(new ApiResponse<>(responses));
     }
 }
