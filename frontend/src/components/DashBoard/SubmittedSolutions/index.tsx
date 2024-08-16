@@ -9,7 +9,7 @@ export default function SubmittedSolutionList() {
   return (
     <>
       {!submittedSolutionList.length ? (
-        <NoContent />
+        <NoContent type="submitted" />
       ) : (
         <S.MissionListContainer>
           {submittedSolutionList.map((mission) => {

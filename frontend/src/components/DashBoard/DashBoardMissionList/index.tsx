@@ -11,7 +11,7 @@ export default function DashBoardMissionList({ missionList }: DashBoardMissionLi
   return (
     <>
       {!missionList.length ? (
-        <NoContent />
+        <NoContent type="inProgress" />
       ) : (
         <S.MissionListContainer>
           {missionList.map((mission) => {
