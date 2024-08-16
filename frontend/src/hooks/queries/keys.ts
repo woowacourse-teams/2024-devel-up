@@ -7,6 +7,4 @@
 export const missionKeys = {
   all: ['missions'],
   detail: (id: number) => [...missionKeys.all, id],
-  inProgress: ['inProgress'],
-  completed: ['completed'],
 } as const;
