@@ -11,7 +11,7 @@ public record GithubUserInfo(
         String login,
         String avatarUrl,
         @Nullable String email,
-        String name
+        @Nullable String name
 ) {
 
     public OAuthUserInfo toOAuthUserInfo() {

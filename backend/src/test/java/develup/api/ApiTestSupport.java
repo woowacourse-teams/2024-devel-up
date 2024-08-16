@@ -1,11 +1,13 @@
 package develup.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import develup.api.auth.AuthArgumentResolver;
 import develup.api.auth.CookieAuthorizationExtractor;
 import develup.application.auth.AuthService;
 import develup.application.member.MemberService;
 import develup.application.mission.MissionService;
 import develup.application.solution.SolutionService;
+import develup.application.solution.comment.SolutionCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,6 +18,9 @@ public class ApiTestSupport {
 
     @Autowired
     protected MockMvc mockMvc;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     @MockBean
     protected AuthService authService;
@@ -28,6 +33,9 @@ public class ApiTestSupport {
 
     @MockBean
     protected SolutionService solutionService;
+
+    @MockBean
+    protected SolutionCommentService solutionCommentService;
 
     @MockBean
     protected CookieAuthorizationExtractor cookieAuthorizationExtractor;
