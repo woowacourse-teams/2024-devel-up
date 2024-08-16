@@ -1,7 +1,10 @@
 INSERT INTO member (email, provider, social_id, name, image_url, created_at)
-VALUES ('test1@gmail.com', 'GITHUB', '1234', '구름', 'www.naver.com', '2024-08-16 13:40:00'),
-       ('test1@gmail.com', 'GITHUB', '1234', '리브', 'www.naver.com', '2024-08-16 13:40:00'),
-       ('test1@gmail.com', 'GITHUB', '1234', '아톰', 'www.naver.com', '2024-08-16 13:40:00');
+VALUES ('test1@gmail.com', 'GITHUB', '1234', '구름', 'https://avatars.githubusercontent.com/u/75781414?v=4',
+        '2024-08-16 13:40:00'),
+       ('test1@gmail.com', 'GITHUB', '1234', '리브', 'https://avatars.githubusercontent.com/u/131349867?v=4',
+        '2024-08-16 13:40:00'),
+       ('test1@gmail.com', 'GITHUB', '1234', '아톰', 'https://avatars.githubusercontent.com/u/39932141?v=4',
+        '2024-08-16 13:40:00');
 
 INSERT INTO mission (title, thumbnail, summary, url)
 VALUES ('루터회관 흡연 단속', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-smoking.png',
