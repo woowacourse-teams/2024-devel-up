@@ -17,7 +17,7 @@ export const NoContent = styled(NoResultIcon)`
 `;
 
 export const MainText = styled.span`
-  font-size: 2rem;
+  font-size: 1.6rem;
   margin-bottom: 0.5rem;
 `;
 

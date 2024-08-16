@@ -21,7 +21,7 @@ export default function DashBoardMissionList({ missionList }: DashBoardMissionLi
                 <Mission.InfoWrapper>
                   <Mission.Title>{mission.title}</Mission.Title>
                   <Mission.Summary>{mission.summary}</Mission.Summary>
-                  <Mission.HashTag hashtagList={mission.hashtag} />
+                  <Mission.HashTag hashTagList={mission.hashTag} />
                 </Mission.InfoWrapper>
               </Mission>
             );

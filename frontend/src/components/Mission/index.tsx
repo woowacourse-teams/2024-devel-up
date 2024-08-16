@@ -31,13 +31,13 @@ Mission.Summary = function MissionSummary({ children }: PropsWithChildren) {
 };
 
 interface MissionHashTagProps extends PropsWithChildren {
-  hashtagList: HashTag[];
+  hashTagList: HashTag[];
 }
 
-Mission.HashTag = function MissionHashTag({ hashtagList }: MissionHashTagProps) {
+Mission.HashTag = function MissionHashTag({ hashTagList }: MissionHashTagProps) {
   return (
     <S.MissionHashTagWrapper>
-      {hashtagList.map((hashTag) => {
+      {hashTagList.map((hashTag) => {
         return <S.MissionHashTag key={hashTag.id}># {hashTag.name}</S.MissionHashTag>;
       })}
     </S.MissionHashTagWrapper>

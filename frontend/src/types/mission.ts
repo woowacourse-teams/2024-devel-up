@@ -8,5 +8,5 @@ export interface MissionInProgress {
   thumbnail: string;
   title: string;
   summary: string;
-  hashtag: HashTag[];
+  hashTag: HashTag[];
 }
