@@ -26,7 +26,7 @@ export default function CommentItem({ comment }: CommentItemProps) {
         <S.UserProfileImg src={member.imageUrl} />
         <S.UserName>{member.name}</S.UserName>
       </S.UserInfoWrapper>
-      <S.CommentContent>{content}</S.CommentContent>
+      <S.CommentContent source={content} />
       <S.CommentReplyWrapper>
         {userInfo && (
           <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글 작성</S.ReplyWriteButton>

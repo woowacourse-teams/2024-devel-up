@@ -14,7 +14,7 @@ export default function CommentReplyItem({ commentReply }: CommentReplyItemProps
         <S.UserProfileImg src={member.imageUrl} />
         <S.UserName>{member.name}</S.UserName>
       </S.UserInfoWrapper>
-      <S.CommentContent>{content}</S.CommentContent>
+      <S.CommentContent source={content} />
     </S.CommentItemContainer>
   );
 }

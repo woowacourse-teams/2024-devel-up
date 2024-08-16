@@ -1,3 +1,4 @@
+import MDEditor from '@uiw/react-md-editor';
 import styled from 'styled-components';
 
 export const CommentListContainer = styled.div`
@@ -38,7 +39,7 @@ export const UserName = styled.div`
   color: var(--grey-600);
 `;
 
-export const CommentContent = styled.div`
+export const CommentContent = styled(MDEditor.Markdown)`
   font-size: 1.6rem;
   margin-left: 5.2rem;
 `;
