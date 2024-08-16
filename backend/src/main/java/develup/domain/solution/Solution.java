@@ -19,12 +19,12 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Solution extends CreatedAtAuditableEntity {
 
-    @JoinColumn(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
     private Mission mission;
 
-    @JoinColumn(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
     private Member member;
 
     @Embedded
