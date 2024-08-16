@@ -13,7 +13,6 @@ import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
 import develup.domain.solution.SolutionSubmit;
-import develup.domain.solution.SolutionSummary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -104,7 +103,16 @@ public class SolutionService {
         return SolutionResponse.from(solution);
     }
 
-    public List<SolutionSummary> getCompletedSummaries() {
-        return solutionRepository.findCompletedSummaries();
+    public List<SummarizedSolutionResponse> getCompletedSummaries() {
+        return solutionRepository.findAllCompletedSolution().stream()
+                .map(SummarizedSolutionResponse::from)
+                .toList();
+    }
+
+    public List<MySolutionResponse> getSubmittedSolutionsByMemberId(Long memberId) {
+        List<Solution> mySolutions = solutionRepository.findAllByMember_IdAndStatus(memberId, SolutionStatus.COMPLETED);
+        return mySolutions.stream()
+                .map(MySolutionResponse::from)
+                .toList();
     }
 }

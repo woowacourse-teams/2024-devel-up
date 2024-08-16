@@ -1,6 +1,10 @@
 package develup.domain.mission;
 
+import java.util.List;
+import java.util.Set;
+import develup.domain.hashtag.HashTag;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,19 +32,33 @@ public class Mission {
     @Column(nullable = false)
     private String url;
 
+    @Embedded
+    private MissionHashTags missionHashTags;
+
     protected Mission() {
     }
 
-    public Mission(String title, String thumbnail, String summary, String url) {
-        this(null, title, thumbnail, summary, url);
+    public Mission(String title, String thumbnail, String summary, String url, List<HashTag> hashTags) {
+        this(null, title, thumbnail, summary, url, hashTags);
     }
 
-    public Mission(Long id, String title, String thumbnail, String summary, String url) {
+    public Mission(Long id, String title, String thumbnail, String summary, String url, List<HashTag> hashTags) {
         this.id = id;
         this.title = title;
         this.thumbnail = thumbnail;
         this.summary = summary;
         this.url = url;
+        this.missionHashTags = new MissionHashTags(this, hashTags);
+    }
+
+    public void tagAll(List<HashTag> tags) {
+        missionHashTags.addAll(this, tags);
+    }
+
+    public String getDescriptionUrl() {
+        String[] split = url.split("/");
+
+        return DESCRIPTION_BASE_URL_PREFIX + split[split.length - 1] + DESCRIPTION_BASE_URL_SUFFIX;
     }
 
     public Long getId() {
@@ -63,9 +81,7 @@ public class Mission {
         return url;
     }
 
-    public String getDescriptionUrl() {
-        String[] split = url.split("/");
-
-        return DESCRIPTION_BASE_URL_PREFIX + split[split.length - 1] + DESCRIPTION_BASE_URL_SUFFIX;
+    public Set<MissionHashTag> getHashTags() {
+        return missionHashTags.getHashTags();
     }
 }

@@ -12,6 +12,12 @@ public record OAuthUserInfo(
         String name
 ) {
 
+    public OAuthUserInfo {
+        if (name == null || name.isBlank()) {
+            name = login;
+        }
+    }
+
     public Member toMember(Provider provider) {
         return new Member(
                 email,
