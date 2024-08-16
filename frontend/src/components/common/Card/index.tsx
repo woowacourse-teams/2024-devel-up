@@ -22,7 +22,12 @@ export default function Card({
 
   return (
     <S.CardContainer {...attributes}>
-      <S.Thumbnail src={thumbnailSrc} onError={handleImageError} alt={thumbnailFallbackText} />
+      <S.Thumbnail
+        draggable={false}
+        src={thumbnailSrc}
+        onError={handleImageError}
+        alt={thumbnailFallbackText}
+      />
       <S.Content>{contentElement}</S.Content>
     </S.CardContainer>
   );

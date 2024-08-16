@@ -1,5 +1,6 @@
 import { develupAPIClient } from '@/apis/clients/develupClient';
 import { PATH } from '@/apis/paths';
+import type { HashTag } from '@/types';
 import type { Solution } from '@/types/solution';
 
 export interface SolutionSummary {
@@ -8,6 +9,7 @@ export interface SolutionSummary {
   thumbnail: string;
   description: string;
   title: string;
+  hashTags: HashTag[];
 }
 
 interface GetSolutionSummariesResponse {
