@@ -1,4 +1,4 @@
-import MDEditor from '@uiw/react-md-editor';
+import SanitizedMDPreview from '@/components/common/SanitizedMDPreview';
 import styled from 'styled-components';
 
 export const CommentListContainer = styled.div`
@@ -39,7 +39,7 @@ export const UserName = styled.div`
   color: var(--grey-600);
 `;
 
-export const CommentContent = styled(MDEditor.Markdown)`
+export const CommentContent = styled(SanitizedMDPreview)`
   font-size: 1.6rem;
   margin-left: 5.2rem;
 `;

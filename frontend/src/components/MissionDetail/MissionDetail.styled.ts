@@ -3,7 +3,7 @@ import infoIcon from '@/assets/images/infoIcon.svg';
 import githubLogo from '@/assets/images/githubLogo.svg';
 import javaIcon from '@/assets/images/java.svg';
 import { CommonButton } from '../common/Button/Button.styled';
-import MDEditor from '@uiw/react-md-editor';
+import SanitizedMDPreview from '../common/SanitizedMDPreview';
 
 // MissionDetailHeader
 
@@ -120,6 +120,6 @@ export const MissionDescription = styled.div`
   border-radius: 0.8rem;
 `;
 
-export const MissionDescriptionText = styled(MDEditor.Markdown)`
+export const MissionDescriptionText = styled(SanitizedMDPreview)`
   font-size: 2rem;
 `;
