@@ -4,6 +4,7 @@ import CommentReplyList from './CommentReplyList';
 import CommentForm from '../CommentForm';
 import { useState } from 'react';
 import useUserInfo from '@/hooks/useUserInfo';
+import CommentUserInfo from './CommentUserInfo';
 
 interface CommentItemProps {
   comment: Comment;
@@ -22,10 +23,7 @@ export default function CommentItem({ comment }: CommentItemProps) {
 
   return (
     <S.CommentItemContainer>
-      <S.UserInfoWrapper>
-        <S.UserProfileImg src={member.imageUrl} />
-        <S.UserName>{member.name}</S.UserName>
-      </S.UserInfoWrapper>
+      <CommentUserInfo member={member} />
       <S.CommentContent source={content} />
       <S.CommentReplyWrapper>
         {userInfo && (

@@ -1,5 +1,6 @@
 import * as S from './CommentList.styled';
 import type { CommentReply } from '@/types';
+import CommentUserInfo from './CommentUserInfo';
 
 interface CommentReplyItemProps {
   commentReply: CommentReply;
@@ -10,10 +11,7 @@ export default function CommentReplyItem({ commentReply }: CommentReplyItemProps
 
   return (
     <S.CommentItemContainer $isReply>
-      <S.UserInfoWrapper>
-        <S.UserProfileImg src={member.imageUrl} />
-        <S.UserName>{member.name}</S.UserName>
-      </S.UserInfoWrapper>
+      <CommentUserInfo member={member} />
       <S.CommentContent source={content} />
     </S.CommentItemContainer>
   );
