@@ -47,7 +47,7 @@ class MissionServiceTest extends IntegrationTestSupport {
         createMission();
         createMission();
 
-        List<MissionResponse> responses = missionService.getMissions();
+        List<MissionResponse> responses = missionService.getMissions("all");
 
         assertThat(responses).hasSize(2);
     }
