@@ -3,6 +3,7 @@ import { PATH } from '@/apis/paths';
 import SubmittedSolutions from '@/mocks/SubmittedSolutions.json';
 import type { HashTag } from '@/types';
 import type { Solution, SubmittedSolution } from '@/types/solution';
+import mockSolutions from '@/mocks/SubmittedSolutions.json';
 
 export interface SolutionSummary {
   // solution 리스트에 필요한 필드만 포함한 데이터 (solution 원본 데이터와는 다름)
@@ -17,8 +18,16 @@ interface GetSolutionSummariesResponse {
   data: SolutionSummary[];
 }
 
-export const getSolutionSummaries = async (): Promise<SolutionSummary[]> => {
-  const { data } = await develupAPIClient.get<GetSolutionSummariesResponse>(PATH.solutionSummaries);
+export const getSolutionSummaries = async (filter: string): Promise<SolutionSummary[]> => {
+  const { data } = await develupAPIClient.get<GetSolutionSummariesResponse>(
+    // `${PATH.solutionSummaries}?hashTag=${filter}`, // TODO: 추후 변경 필요
+    `${PATH.solutionSummaries}`,
+  );
+
+  // TODO: API 들어오면 삭제해야 하는 mock 코드
+  if (filter) {
+    return mockSolutions.filter((solution) => solution.hashTags[0].name === filter);
+  }
 
   return data;
 };
