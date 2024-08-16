@@ -11,7 +11,7 @@ interface CommentItemProps {
 }
 
 export default function CommentItem({ comment }: CommentItemProps) {
-  const { id, solutionId, content, member, replies } = comment;
+  const { id, solutionId, content, member, replies, isDeleted } = comment;
 
   const { data: userInfo } = useUserInfo();
 
@@ -23,10 +23,16 @@ export default function CommentItem({ comment }: CommentItemProps) {
 
   return (
     <S.CommentItemContainer>
-      <CommentUserInfo member={member} />
-      <S.CommentContent source={content} />
+      {isDeleted ? (
+        <S.DeletedComment>삭제된 댓글입니다.</S.DeletedComment>
+      ) : (
+        <>
+          <CommentUserInfo member={member} />
+          <S.CommentContent source={content} />
+        </>
+      )}
       <S.CommentReplyWrapper>
-        {userInfo && (
+        {userInfo && !isDeleted && (
           <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글 작성</S.ReplyWriteButton>
         )}
         {userInfo && isReplyFormOpen && (

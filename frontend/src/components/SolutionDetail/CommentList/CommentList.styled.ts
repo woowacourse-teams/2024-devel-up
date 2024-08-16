@@ -39,6 +39,12 @@ export const UserName = styled.div`
   color: var(--grey-600);
 `;
 
+export const DeletedComment = styled.div`
+  margin: 0.5rem 0;
+  color: var(--grey-500);
+  font-size: 1.6rem;
+`;
+
 export const CommentContent = styled(SanitizedMDPreview)`
   font-size: 1.6rem;
   margin-left: 5.2rem;
