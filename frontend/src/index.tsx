@@ -7,7 +7,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
 import MainPage from './pages/MainPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
-import SubmissionPage from './pages/SubmissionPage';
 import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
 import React, { Suspense } from 'react';
@@ -91,16 +90,6 @@ const routes = [
       <App>
         <Suspense fallback={<LoadingSpinner />}>
           <MissionListPage />
-        </Suspense>
-      </App>
-    ),
-  },
-  {
-    path: ROUTES.submissions,
-    element: (
-      <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <SubmissionPage />
         </Suspense>
       </App>
     ),

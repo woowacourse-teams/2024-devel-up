@@ -6,9 +6,8 @@ import useModal from '@/hooks/useModal';
 import Modal from '../common/Modal/Modal';
 import MissionProcess from '../ModalContent/MissionProcess';
 import useMissionStartMutation from '@/hooks/useMissionStartMutation';
-import Button from '../common/Button/Button';
-import { GithubIcon } from './MissionDetail.styled';
 import { useState } from 'react';
+import Button from '../common/Button/Button';
 
 interface MissionDetailButtonsProps {
   id: number;
@@ -38,10 +37,6 @@ export default function MissionDetailButtons({
     onSuccessCallback: handleStartMission,
   });
 
-  // const handleNavigateToMyPr = () => {
-  //   window.open('', '_blank'); // 추후 구현 예정입니다 @프룬
-  // };
-
   const handleMissionStart = () => {
     startMissionMutation({ missionId: id });
   };
@@ -52,42 +47,21 @@ export default function MissionDetailButtons({
 
   return (
     <S.MissionDetailButtonsContainer>
-      <Button type="icon" content="미션 코드 보러 가기" onHandleClick={handleNavigateToMission}>
-        <GithubIcon />
-      </Button>
       <S.ButtonWrapper>
         {userInfo && !isMissionStarted && (
-          <S.MissionButton
-            $bgColor="--primary-500"
-            $fontColor="--white-color"
-            $hoverColor="--primary-600"
-            onClick={handleMissionStart}
-          >
+          <Button variant="primary" size="half" onClick={handleMissionStart}>
             미션 시작하기
-          </S.MissionButton>
+          </Button>
         )}
         {userInfo && isMissionStarted && (
-          <S.MissionButton
-            $bgColor="--primary-500"
-            $fontColor="--white-color"
-            $hoverColor="--primary-600"
-            onClick={handleNavigateToSubmit}
-          >
+          <Button variant="primary" size="half" onClick={handleNavigateToSubmit}>
             미션 제출하기
-          </S.MissionButton>
+          </Button>
         )}
 
         <Modal isModalOpen={isModalOpen}>
           <MissionProcess handleModalClose={handleModalClose} onClick={handleNavigateToMission} />
         </Modal>
-
-        {/* <Button
-          content="내 PR 보러 가기"
-          $bgColor="--grey-200"
-          $hoverColor="--grey-300"
-          $fontColor="--black-color"
-          onHandleClick={handleNavigateToMyPr}
-        /> */}
       </S.ButtonWrapper>
 
       <S.InfoMsgWrapper onClick={handleModalOpen}>

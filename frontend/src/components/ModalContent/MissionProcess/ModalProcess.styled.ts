@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import closeIcon from '@/assets/images/close.svg';
+import Button from '@/components/common/Button/Button';
 
 export const MissionProcessContentContainer = styled.div`
   width: 53rem;
@@ -43,27 +44,9 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 5rem;
+  gap: 0.8rem;
 `;
 
-export const Button = styled.button`
-  background-color: var(--grey-200);
-  color: var(--black-color);
-
-  width: fit-content;
-  padding: 1.2rem 1.8rem;
-  border-radius: 0.8rem;
-
-  display: flex;
-  gap: 0.3rem;
-  justify-content: center;
-  align-items: center;
-
-  white-space: nowrap;
-  font-size: 1.4rem;
-  font-weight: 500;
-  font-family: inherit;
-`;
-
-export const RightButton = styled(Button)`
-  margin-left: 0.8rem;
+export const ArrowButton = styled(Button)`
+  gap: 1.2rem;
 `;

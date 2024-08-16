@@ -24,14 +24,6 @@ export interface MissionWithDescription extends Mission {
   description: string;
 }
 
-export interface MissionSubmission {
-  id: number;
-  mission: Mission;
-  myPrLink: string;
-  pairPrLink: string;
-  status: string;
-}
-
 // postSubmission에 관련된 타입 선언
 export interface SubmissionPayload {
   missionId: number;
