@@ -35,7 +35,7 @@ public abstract class IdentifiableEntity {
             return false;
         }
         IdentifiableEntity that = (IdentifiableEntity) o;
-        return Objects.equals(getId(), that.getId());
+        return this.getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override
