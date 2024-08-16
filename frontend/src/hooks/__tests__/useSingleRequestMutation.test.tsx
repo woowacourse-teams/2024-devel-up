@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import useSingleRequestMutation from '../useSingleRequestMutation';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 const createQueryClient = () => new QueryClient();
 

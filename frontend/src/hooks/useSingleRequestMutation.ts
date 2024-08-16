@@ -1,4 +1,5 @@
-import { useMutation, UseMutationOptions, UseMutationResult } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import type { UseMutationResult, UseMutationOptions } from '@tanstack/react-query';
 import useSingleRequest from './useSingleRequest';
 import { ERROR_MESSAGE } from '@/constants/messages';
 
