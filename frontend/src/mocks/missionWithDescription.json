@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "루터회관 흡연 단속",
+    "language": "JAVA",
+    "thumbnail": "https://file.notion.so/f/f/d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48/38a7f41b-80d7-48ca-97c9-99ceda5c4dbd/smoking.png?id=60756a7a-c50f-4946-ab6e-4177598b926b&table=block&spaceId=d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48&expirationTimestamp=1721174400000&signature=todzUdb5cUyzW4ZQNaHvL-uiCngfMJJAl94RpE1TGEA&downloadName=smoking.png",
+    "url": "https://github.com/develup-mission/java-smoking",
+    "isStarted": false,
+    "descriptionUrl": "https://raw.githubusercontent.com/develup-mission/java-smoking/main/README.md",
+    "description": "루터회관 흡연 벌칙 프로그램을 구현합니다다"
+  }
+]
