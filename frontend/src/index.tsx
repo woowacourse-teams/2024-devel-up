@@ -17,6 +17,9 @@ import * as Sentry from '@sentry/react';
 import ErrorPage from './pages/ErrorPage';
 import SolutionListPage from './pages/SolutionListPage';
 import MissionListPage from './pages/MissionListPage';
+import DashboardPage from './pages/DashboardPage';
+import DashBoardMissionInProgressPage from './pages/DashboardPage/MissionInProgress';
+import SubmittedSolutionList from './components/DashBoard/SubmittedSolutions';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -114,23 +117,59 @@ const routes = [
       </App>
     ),
   },
+  {
+    path: ROUTES.dashboardHome,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <DashboardPage />
+        </Suspense>
+      </App>
+    ),
+    children: [
+      {
+        path: ROUTES.dashboardMissionInProgress,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DashBoardMissionInProgressPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.dashboardSubmittedSolution,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <SubmittedSolutionList />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.dashboardComments,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <div>comments</div>
+          </Suspense>
+        ),
+      },
+    ],
+  },
 ];
 
 export const router = createBrowserRouter(routes, {
   basename: ROUTES.main,
 });
 
-async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
-    return;
-  }
+// async function enableMocking() {
+//   if (process.env.NODE_ENV !== 'development') {
+//     return;
+//   }
 
-  const { worker } = await import('./mocks/browser');
+//   const { worker } = await import('./mocks/browser');
 
-  // `worker.start()` returns a Promise that resolves
-  // once the Service Worker is up and ready to intercept requests.
-  return worker.start();
-}
+//   // `worker.start()` returns a Promise that resolves
+//   // once the Service Worker is up and ready to intercept requests.
+//   return worker.start();
+// }
 
 // enableMocking().then(() => {
 //   root.render(

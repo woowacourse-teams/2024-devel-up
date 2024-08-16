@@ -1,20 +1,13 @@
 package develup.domain.member;
 
-import java.util.Objects;
+import develup.domain.CreatedAtAuditableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
-public class Member {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Member extends CreatedAtAuditableEntity {
 
     @Column
     private String email;
@@ -40,16 +33,13 @@ public class Member {
     }
 
     public Member(Long id, String email, Provider provider, Long socialId, String name, String imageUrl) {
+        super(id);
         this.id = id;
         this.email = email;
         this.provider = provider;
         this.socialId = socialId;
         this.name = name;
         this.imageUrl = imageUrl;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getEmail() {
@@ -70,22 +60,5 @@ public class Member {
 
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Member member)) {
-            return false;
-        }
-
-        return this.getId() != null && Objects.equals(getId(), member.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
     }
 }

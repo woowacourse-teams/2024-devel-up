@@ -42,6 +42,7 @@ export default function Header() {
           <HeaderMenu name="솔루션" path={ROUTES.solutions} currentPath={pathname} />
         </S.MenuWrapper>
         <S.RightPart>
+          <HeaderMenu name="대시보드" path={ROUTES.dashboardHome} currentPath={pathname} />
           {userInfo && <S.BellIcon onClick={handleBellClick} />}
           {!userInfo ? (
             <a href={`${BASE_URL.dev}${PATH.githubLogin}?next=${pathname}`}>

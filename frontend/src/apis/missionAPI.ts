@@ -1,6 +1,8 @@
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
-import type { Mission, MissionWithDescription, SubmissionPayload, Submission } from '@/types';
+import type { Mission, SubmissionPayload, Submission, MissionWithDescription } from '@/types';
+// import type { MissionInProgress } from '@/types/mission';
+import MissionListInProgress from '@/mocks/missionInProgress.json';
 import { populateMissionDescription } from './utils/populateMissionDescription';
 
 interface getMissionByIdResponse {
@@ -22,6 +24,20 @@ export const getMissionById = async (id: number): Promise<MissionWithDescription
   const mission = await populateMissionDescription(data);
 
   return mission;
+};
+
+// interface GetMissionInProgressResponse {
+//   data: MissionInProgress[];
+// }
+
+// TODO 실제 API 연결 아직 안했습니다.
+export const getMissionInProgress = async () => {
+  // const { data } = await develupAPIClient.get<GetMissionInProgressResponse>(PATH.missionInProgress);
+
+  // console.log('data : ', data);
+
+  return MissionListInProgress;
+  // return [];
 };
 
 export interface PostSubmissionResponse {

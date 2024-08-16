@@ -21,3 +21,9 @@ export interface Solution {
   member: Member;
   mission: Mission;
 }
+
+export interface SubmittedSolution {
+  id: number;
+  thumbnail: string;
+  title: string;
+}
