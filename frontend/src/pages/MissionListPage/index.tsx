@@ -12,7 +12,10 @@ export default function MissionListPage() {
 
   return (
     <S.MissionListPageContainer>
-      <S.MissionListTitle>지금 참여할 수 있는 미션</S.MissionListTitle>
+      <S.TitleWrapper>
+        <S.MissionListTitle>🎯 지금 참여할 수 있는 미션</S.MissionListTitle>
+        <S.Subtitle>미션에 참여하고 의견을 주고받을 수 있어요!</S.Subtitle>
+      </S.TitleWrapper>
       <HashTagList
         hashTags={allHashTags}
         setSelectedHashTag={setSelectedHashTag}

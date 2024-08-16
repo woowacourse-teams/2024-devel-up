@@ -20,10 +20,9 @@ export const TitleWrapper = styled.div`
 `;
 
 export const SolutionListPageContainer = styled.div`
-  margin: 0 auto;
   width: 100%;
   max-width: 100rem;
-  padding: 3.5rem 0;
+  margin: 5rem auto;
 
   display: flex;
   flex-direction: column;
