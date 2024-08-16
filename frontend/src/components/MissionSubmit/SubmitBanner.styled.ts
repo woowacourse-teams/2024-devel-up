@@ -9,12 +9,11 @@ export const Container = styled.div`
 `;
 
 export const GithubIcon = styled(GithubLogo)`
-  width: 3rem;
-  height: 3rem;
-  margin-right: 2rem;
+  width: 2.2rem;
+  height: 2.2rem;
   display: flex;
   justify-content: center;
-  margin-bottom: 0.5rem;
+  margin-right: 0.3rem;
 `;
 
 export const BannerTitle = styled.h1`

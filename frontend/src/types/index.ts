@@ -1,6 +1,3 @@
-//TODO 임시로 유저 정보에 대한 타입을 정의합니다.
-// 추후에 깃허브 로그인 기능과 연동했을때 수정 됩니다 @버건디
-
 import type { ReactNode } from 'react';
 
 export interface TabInfo {
@@ -22,18 +19,11 @@ export interface Mission {
   thumbnail: string;
   url: string;
   isStarted?: boolean;
+  hashTags: HashTag[];
 }
 
 export interface MissionWithDescription extends Mission {
   description: string;
-}
-
-export interface MissionSubmission {
-  id: number;
-  mission: Mission;
-  myPrLink: string;
-  pairPrLink: string;
-  status: string;
 }
 
 // postSubmission에 관련된 타입 선언

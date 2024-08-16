@@ -1,12 +1,14 @@
 export const ROUTES = {
   main: '/',
-  submission: '/submission',
   missionDetail: '/missions',
   missionList: '/missions',
   profile: '/profile',
   guide: '/guide',
   submitSolution: '/submit/solution',
-  submissions: '/submissions',
   error: '/error',
   solutions: '/solutions',
+  dashboardHome: '/dashboard',
+  dashboardMissionInProgress: 'in-progress-mission',
+  dashboardSubmittedSolution: 'submitted-solution',
+  dashboardComments: 'comments',
 } as const;

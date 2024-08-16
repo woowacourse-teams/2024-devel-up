@@ -12,4 +12,5 @@ export const BadgeContainer = styled.div<BadgeContainerProps>`
   padding: 0.4rem 0.8rem;
   border-radius: 0.4rem;
   font-size: 1.2rem;
+  white-space: nowrap;
 `;
