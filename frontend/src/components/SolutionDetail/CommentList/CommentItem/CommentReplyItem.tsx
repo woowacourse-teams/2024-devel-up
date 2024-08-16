@@ -1,4 +1,4 @@
-import * as S from './CommentList.styled';
+import * as S from '../CommentList.styled';
 import type { CommentReply } from '@/types';
 import CommentUserInfo from './CommentUserInfo';
 

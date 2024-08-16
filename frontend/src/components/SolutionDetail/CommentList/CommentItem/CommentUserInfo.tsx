@@ -1,5 +1,5 @@
 import type { UserInfo } from '@/types/user';
-import * as S from './CommentList.styled';
+import * as S from '../CommentList.styled';
 import type { SyntheticEvent } from 'react';
 import DefaultUserIcon from '@/assets/images/default-user.png';
 

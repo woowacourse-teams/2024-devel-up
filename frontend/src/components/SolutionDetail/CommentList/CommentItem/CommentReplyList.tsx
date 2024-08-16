@@ -1,6 +1,6 @@
+import * as S from '../CommentList.styled';
 import type { CommentReply } from '@/types';
 import CommentReplyItem from './CommentReplyItem';
-import * as S from './CommentList.styled';
 
 interface CommentReplyListProps {
   commentReplies: CommentReply[];
