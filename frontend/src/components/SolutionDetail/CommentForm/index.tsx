@@ -29,7 +29,7 @@ export default function CommentForm({ solutionId, parentCommentId }: CommentForm
         value={comment}
       />
       <S.StartFromRight>
-        <S.CommentButton>제출하기</S.CommentButton>
+        <S.CommentButton>작성하기</S.CommentButton>
       </S.StartFromRight>
     </S.CommentForm>
   );

@@ -4,11 +4,16 @@ import {
   type PostCommentParams,
   type PostCommentResponseData,
 } from '@/apis/commentAPI';
+import { queryClient } from '..';
+import { commentKeys } from './queries/keys';
 
 const usePostCommentMutation = (onSuccess?: () => void, onError?: (error: Error) => void) => {
   return useMutation<PostCommentResponseData, Error, PostCommentParams>({
     mutationFn: postComment,
-    onSuccess,
+    onSuccess: ({ solutionId }) => {
+      onSuccess?.();
+      queryClient.invalidateQueries({ queryKey: commentKeys.all(solutionId) });
+    },
     onError,
   });
 };

@@ -4,7 +4,7 @@ import { getComments } from '@/apis/commentAPI';
 
 export const useComments = (solutionId: number) => {
   return useSuspenseQuery({
-    queryKey: commentKeys.all,
+    queryKey: commentKeys.all(solutionId),
     queryFn: () => getComments(solutionId),
   });
 };
