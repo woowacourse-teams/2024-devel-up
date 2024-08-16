@@ -4,7 +4,7 @@ import { solutionKeys } from './queries/keys';
 
 const useSolutionSummaries = () => {
   return useSuspenseQuery<SolutionSummary[]>({
-    queryKey: solutionKeys.all,
+    queryKey: solutionKeys.summaries,
     queryFn: getSolutionSummaries,
   });
 };
