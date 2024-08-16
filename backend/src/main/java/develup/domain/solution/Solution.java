@@ -3,6 +3,7 @@ package develup.domain.solution;
 import java.util.Set;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
+import develup.domain.CreatedAtAuditableEntity;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionHashTag;
@@ -12,18 +13,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Solution {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Solution extends CreatedAtAuditableEntity {
 
     @JoinColumn(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -69,7 +63,7 @@ public class Solution {
             String url,
             SolutionStatus status
     ) {
-        this.id = id;
+        super(id);
         this.mission = mission;
         this.member = member;
         this.title = title;
@@ -95,10 +89,6 @@ public class Solution {
 
     public boolean isInProgress() {
         return status.isInProgress();
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Mission getMission() {
