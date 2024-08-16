@@ -2,23 +2,17 @@ package develup.domain.mission;
 
 import java.util.List;
 import java.util.Set;
+import develup.domain.IdentifiableEntity;
 import develup.domain.hashtag.HashTag;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
-public class Mission {
+public class Mission extends IdentifiableEntity {
 
     private static final String DESCRIPTION_BASE_URL_PREFIX = "https://raw.githubusercontent.com/develup-mission/";
     private static final String DESCRIPTION_BASE_URL_SUFFIX = "/main/README.md";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(nullable = false)
     private String title;
@@ -43,7 +37,7 @@ public class Mission {
     }
 
     public Mission(Long id, String title, String thumbnail, String summary, String url, List<HashTag> hashTags) {
-        this.id = id;
+        super(id);
         this.title = title;
         this.thumbnail = thumbnail;
         this.summary = summary;
@@ -59,10 +53,6 @@ public class Mission {
         String[] split = url.split("/");
 
         return DESCRIPTION_BASE_URL_PREFIX + split[split.length - 1] + DESCRIPTION_BASE_URL_SUFFIX;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getTitle() {
