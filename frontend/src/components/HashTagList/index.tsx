@@ -1,6 +1,7 @@
 import type { HashTag } from '@/types';
 import HashTagButton from '../common/HashTagButton';
 import * as S from './HashTagList.styled';
+import { HASHTAGS } from '@/constants/hashTags';
 
 interface HashTagListProps {
   hashTags: HashTag[];
@@ -20,7 +21,7 @@ export default function HashTagList({
         return (
           <HashTagButton
             isSelected={isSelected}
-            onClick={() => setSelectedHashTag(isSelected ? '' : name)}
+            onClick={() => setSelectedHashTag(isSelected ? HASHTAGS.all : name)}
             key={id}
           >
             {name}

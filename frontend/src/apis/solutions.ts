@@ -1,7 +1,7 @@
 import { develupAPIClient } from '@/apis/clients/develupClient';
 import { PATH } from '@/apis/paths';
 import SubmittedSolutions from '@/mocks/SubmittedSolutions.json';
-import { HashTag } from '@/types/mission';
+import type { HashTag } from '@/types';
 import type { Solution, SubmittedSolution } from '@/types/solution';
 
 export interface SolutionSummary {

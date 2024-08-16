@@ -1,7 +1,4 @@
-export interface HashTag {
-  id: number;
-  name: string;
-}
+import type { HashTag } from '.';
 
 export interface MissionInProgress {
   id: number;
