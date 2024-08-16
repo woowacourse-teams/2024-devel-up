@@ -7,7 +7,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MissionDetailPage from './pages/MissionDetailPage';
 import MainPage from './pages/MainPage';
 import MissionSubmitPage from './pages/MissionSubmitPage';
-import SubmissionPage from './pages/SubmissionPage';
 import UserProfilePage from './pages/UserProfilePage';
 import GuidePage from './pages/GuidePage';
 import React, { Suspense } from 'react';
@@ -19,6 +18,9 @@ import ErrorPage from './pages/ErrorPage';
 import SolutionListPage from './pages/SolutionListPage';
 import MissionListPage from './pages/MissionListPage';
 import SolutionDetailPage from './pages/SolutionDetailPage';
+import DashboardPage from './pages/DashboardPage';
+import DashBoardMissionInProgressPage from './pages/DashboardPage/MissionInProgress';
+import SubmittedSolutionList from './components/DashBoard/SubmittedSolutions';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -97,16 +99,6 @@ const routes = [
     ),
   },
   {
-    path: ROUTES.submissions,
-    element: (
-      <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <SubmissionPage />
-        </Suspense>
-      </App>
-    ),
-  },
-  {
     path: ROUTES.error,
     element: (
       <App>
@@ -127,6 +119,42 @@ const routes = [
     ),
   },
   {
+    path: ROUTES.dashboardHome,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <DashboardPage />
+        </Suspense>
+      </App>
+    ),
+    children: [
+      {
+        path: ROUTES.dashboardMissionInProgress,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DashBoardMissionInProgressPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.dashboardSubmittedSolution,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <SubmittedSolutionList />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.dashboardComments,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <div>comments</div>
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
     path: `${ROUTES.solutions}/:id`,
     element: (
       <App>
@@ -142,17 +170,17 @@ export const router = createBrowserRouter(routes, {
   basename: ROUTES.main,
 });
 
-async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
-    return;
-  }
+// async function enableMocking() {
+//   if (process.env.NODE_ENV !== 'development') {
+//     return;
+//   }
 
-  const { worker } = await import('./mocks/browser');
+//   const { worker } = await import('./mocks/browser');
 
-  // `worker.start()` returns a Promise that resolves
-  // once the Service Worker is up and ready to intercept requests.
-  return worker.start();
-}
+//   // `worker.start()` returns a Promise that resolves
+//   // once the Service Worker is up and ready to intercept requests.
+//   return worker.start();
+// }
 
 // enableMocking().then(() => {
 //   root.render(

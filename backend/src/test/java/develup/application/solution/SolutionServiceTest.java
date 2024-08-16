@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
 import develup.api.exception.DevelupException;
-import develup.application.auth.Accessor;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
@@ -118,10 +117,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 .build();
 
         solutionRepository.save(solution);
-        Accessor accessor = new Accessor(member.getId());
         SubmitSolutionRequest submitSolutionRequest = getSolutionRequest();
 
-        SolutionResponse solutionResponse = solutionService.submit(accessor.id(), submitSolutionRequest);
+        SolutionResponse solutionResponse = solutionService.submit(member.getId(), submitSolutionRequest);
 
         assertAll(
                 () -> assertEquals(solutionResponse.id(), 1L),
@@ -137,7 +135,6 @@ class SolutionServiceTest extends IntegrationTestSupport {
     @DisplayName("미션 제출 시 value 이 비어있으면 예외가 발생한다.")
     void createFailWhenTitleIsBlank() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
-        Accessor accessor = new Accessor(member.getId());
         SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
                 1L,
                 "",
@@ -145,7 +142,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "https://github.com/develup-mission/java-smoking/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.submit(accessor.id(), submitSolutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(member.getId(), submitSolutionRequest))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -162,7 +159,6 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
         solutionRepository.save(solution);
 
-        Accessor accessor = new Accessor(member.getId());
         SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
                 mission.getId(),
                 "value",
@@ -170,7 +166,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "url"
         );
 
-        assertThatThrownBy(() -> solutionService.submit(accessor.id(), submitSolutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(member.getId(), submitSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }
@@ -188,7 +184,6 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
         solutionRepository.save(solution);
 
-        Accessor accessor = new Accessor(member.getId());
         SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
                 mission.getId(),
                 "value",
@@ -196,9 +191,48 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "https://github.com/develup-mission/java-undefinedMission/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.submit(accessor.id(), submitSolutionRequest))
+        assertThatThrownBy(() -> solutionService.submit(member.getId(), submitSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
+    }
+
+    @Test
+    @DisplayName("나의 솔루션 리스트를 조회한다.")
+    void getSubmittedSolutionsByMemberId() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.COMPLETED)
+                .build();
+
+        solutionRepository.save(solution);
+
+        assertThat(solutionService.getSubmittedSolutionsByMemberId(member.getId())).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("나의 솔루션 리스트 조회 시, 제출 완료 상태가 아닌 솔루션은 조회되지 않는다.")
+    void shouldNotRetrieveSolutionsThatAreNotCompleted() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution inProgress = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.IN_PROGRESS)
+                .build();
+
+        Solution completed = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.COMPLETED)
+                .build();
+
+        solutionRepository.save(inProgress);
+        solutionRepository.save(completed);
+
+        assertThat(solutionService.getSubmittedSolutionsByMemberId(member.getId())).hasSize(1);
     }
 
     private SubmitSolutionRequest getSolutionRequest() {

@@ -1,4 +1,4 @@
 export const BASE_URL = {
-  dev: 'https://api.devel-up.co.kr',
+  dev: 'http:localhost:8080',
   prod: 'https://api.devel-up.co.kr',
 } as const;

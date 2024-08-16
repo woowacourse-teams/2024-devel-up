@@ -13,7 +13,7 @@ export default function SolutionDetailPage() {
   return (
     <S.SolutionDetailPageContainer>
       <CommentList comments={comments} />
-      {userInfo && (
+      {(true || userInfo) && (
         <S.CommentFormWrapper>
           <CommentForm solutionId={solutionId} />
         </S.CommentFormWrapper>

@@ -16,7 +16,7 @@ export const Container = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20rem;
+  padding: 0 26rem;
 `;
 
 export const LogoImg = styled.img`

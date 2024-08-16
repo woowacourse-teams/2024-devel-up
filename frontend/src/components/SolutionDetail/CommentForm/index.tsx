@@ -14,10 +14,6 @@ export default function CommentForm({ solutionId, parentCommentId }: CommentForm
 
   const { mutate: postCommentMutation } = usePostCommentMutation(resetComment);
 
-  const onChangeCommentTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value);
-  };
-
   const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     postCommentMutation({ solutionId, body: { content: comment, parentCommentId } });
@@ -25,7 +21,13 @@ export default function CommentForm({ solutionId, parentCommentId }: CommentForm
 
   return (
     <S.CommentForm onSubmit={onSubmitComment}>
-      <S.CommentTextArea onChange={onChangeCommentTextArea} value={comment} />
+      <S.MDEditor
+        height="fit-content"
+        maxHeight={200}
+        preview="edit"
+        onChange={(v?: string) => setComment(v || '')}
+        value={comment}
+      />
       <S.StartFromRight>
         <S.CommentButton>제출하기</S.CommentButton>
       </S.StartFromRight>

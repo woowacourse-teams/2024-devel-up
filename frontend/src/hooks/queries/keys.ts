@@ -7,10 +7,13 @@
 export const missionKeys = {
   all: ['missions'],
   detail: (id: number) => [...missionKeys.all, id],
-  inProgress: ['inProgress'],
-  completed: ['completed'],
 } as const;
 
 export const commentKeys = {
   all: ['comments'],
+};
+
+export const solutionKeys = {
+  all: ['solutions'],
+  submitted: ['submitted solutions'],
 };
