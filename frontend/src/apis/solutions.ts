@@ -1,7 +1,8 @@
 import { develupAPIClient } from '@/apis/clients/develupClient';
 import { PATH } from '@/apis/paths';
-import type { Solution, SubmittedSolution } from '@/types/solution';
 import SubmittedSolutions from '@/mocks/SubmittedSolutions.json';
+import { HashTag } from '@/types/mission';
+import type { Solution, SubmittedSolution } from '@/types/solution';
 
 export interface SolutionSummary {
   // solution 리스트에 필요한 필드만 포함한 데이터 (solution 원본 데이터와는 다름)
@@ -9,6 +10,7 @@ export interface SolutionSummary {
   thumbnail: string;
   description: string;
   title: string;
+  hashTags: HashTag[];
 }
 
 interface GetSolutionSummariesResponse {

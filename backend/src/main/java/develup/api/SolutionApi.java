@@ -4,11 +4,12 @@ import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
+import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.SolutionService;
 import develup.application.solution.StartSolutionRequest;
 import develup.application.solution.SubmitSolutionRequest;
-import develup.domain.solution.SolutionSummary;
+import develup.application.solution.SummarizedSolutionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -53,17 +54,25 @@ public class SolutionApi {
 
     @GetMapping("/solutions")
     @Operation(summary = "솔루션 조회 목록 API", description = "솔루션 목록을 조회합니다.")
-    public ResponseEntity<ApiResponse<List<SolutionSummary>>> getSolutions() {
-        List<SolutionSummary> summaries = solutionService.getCompletedSummaries();
+    public ResponseEntity<ApiResponse<List<SummarizedSolutionResponse>>> getSolutions() {
+        List<SummarizedSolutionResponse> responses = solutionService.getCompletedSummaries();
 
-        return ResponseEntity.ok(new ApiResponse<>(summaries));
+        return ResponseEntity.ok(new ApiResponse<>(responses));
     }
 
     @GetMapping("/solutions/{id}")
     @Operation(summary = "솔루션 조회 API", description = "솔루션을 조회합니다.")
     public ResponseEntity<ApiResponse<SolutionResponse>> getSolution(@PathVariable Long id) {
-        SolutionResponse solutionResponse = solutionService.getById(id);
+        SolutionResponse response = solutionService.getById(id);
 
-        return ResponseEntity.ok(new ApiResponse<>(solutionResponse));
+        return ResponseEntity.ok(new ApiResponse<>(response));
+    }
+
+    @GetMapping("/solutions/mine")
+    @Operation(summary = "나의 솔루션 목록 조회 API", description = "내가 제출한 솔루션 목록을 조회합니다.")
+    public ResponseEntity<ApiResponse<List<MySolutionResponse>>> getMySolutions(@Auth Accessor accessor) {
+        List<MySolutionResponse> response = solutionService.getSubmittedSolutionsByMemberId(accessor.id());
+
+        return ResponseEntity.ok(new ApiResponse<>(response));
     }
 }

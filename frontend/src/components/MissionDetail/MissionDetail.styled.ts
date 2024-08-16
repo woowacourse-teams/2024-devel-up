@@ -32,6 +32,7 @@ export const GradientOverlay = styled.div`
   position: absolute;
   inset: 0;
   background: linear-gradient(rgba(0, 0, 0, 0), var(--black-color));
+  opacity: 0.5;
   pointer-events: none; // 그라데이션이 클릭 이벤트를 방지하지 않도록 설정
 `;
 
@@ -45,27 +46,18 @@ export const Title = styled.h1`
   color: var(--white-color);
 `;
 
-export const LangBadgeWrapper = styled.div`
-  width: 5rem;
-  height: 5rem;
+export const JavaIcon = styled(javaIcon)``;
 
+export const HashTagWrapper = styled.ul`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 0.4rem;
-  box-sizing: border-box;
-  border-radius: 10rem;
-  overflow: hidden;
+  gap: 1.1rem;
 
   position: absolute;
   right: 2.1rem;
   bottom: 2.4rem;
-
-  background-color: var(--white-color);
 `;
-
-export const JavaIcon = styled(javaIcon)``;
 
 // MissionDetailButtons
 

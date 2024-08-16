@@ -5,16 +5,25 @@ export interface TabInfo {
   content: ReactNode;
 }
 
-export interface MissionWithDescription extends Mission {
-  description: string;
+export interface HashTag {
+  id: number;
+  name: string;
 }
 
-export interface MissionSubmission {
+//TODO 백엔드에서 내려주는 language 타입이 string이라서 일단 string으로 수정해놓았습니다!
+export interface Mission {
   id: number;
-  mission: Mission;
-  myPrLink: string;
-  pairPrLink: string;
-  status: string;
+  title: string;
+  language: string;
+  descriptionUrl: string;
+  thumbnail: string;
+  url: string;
+  isStarted?: boolean;
+  hashTags: HashTag[];
+}
+
+export interface MissionWithDescription extends Mission {
+  description: string;
 }
 
 export interface Mission {
@@ -26,7 +35,6 @@ export interface Mission {
   url: string;
   isStarted?: boolean;
 }
-
 // postSubmission에 관련된 타입 선언
 export interface SubmissionPayload {
   missionId: number;
