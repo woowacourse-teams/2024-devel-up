@@ -22,13 +22,13 @@ export const MainText = styled.span`
 `;
 
 export const SubText = styled.span`
-  color: var(--grey-400);
+  color: ${(props) => props.theme.colors.grey400};
   font-size: 1.4rem;
   margin-bottom: 1rem;
 `;
 
 export const Button = styled.button`
-  background: var(--grey-200);
+  background: ${(props) => props.theme.colors.grey200};
   padding: 1.2rem 1.8rem;
   border-radius: 0.8rem;
 `;

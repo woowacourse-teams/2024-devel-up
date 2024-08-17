@@ -13,7 +13,7 @@ export const MissionImageWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   width: 40rem;
-  border: 1px solid var(--grey-200);
+  border: 1px solid ${(props) => props.theme.colors.grey200};
   margin: 0 auto;
   border-radius: 1rem;
 `;
@@ -30,7 +30,7 @@ export const MissionSummaryWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  background: var(--grey-50);
+  background: ${(props) => props.theme.colors.grey50};
   border-radius: 0 0 1rem 1rem;
 `;
 

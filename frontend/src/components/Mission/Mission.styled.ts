@@ -15,7 +15,7 @@ export const MissionItemContainer = styled.article`
   width: 100%;
   max-width: 30rem;
   border-radius: 1rem;
-  border: 1px solid var(--grey-200);
+  border: 1px solid ${(props) => props.theme.colors.grey200};
   cursor: pointer;
 `;
 
@@ -24,7 +24,7 @@ export const MissionThumbnailImg = styled.img`
   width: 100%;
   height: 23rem;
   object-fit: cover;
-  border-bottom: 1px solid var(--grey-200);
+  border-bottom: 1px solid ${(props) => props.theme.colors.grey200};
 `;
 
 export const MissionInfoWrapper = styled.div`
@@ -51,7 +51,7 @@ export const MissionSummary = styled.div`
   justify-content: space-between;
   height: 100%;
   font-size: 1.4rem;
-  color: var(--grey-500);
+  color: ${(props) => props.theme.colors.grey500};
 `;
 
 export const MissionHashTagWrapper = styled.div`
@@ -75,7 +75,7 @@ export const MissionHashTagWrapper = styled.div`
 `;
 
 export const MissionHashTag = styled.span`
-  background: var(--primary-100);
+  background: ${(props) => props.theme.colors.primary100};
   border-radius: 0.8rem;
   padding: 0.4rem 0.8rem;
   text-align: center;

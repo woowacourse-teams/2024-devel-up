@@ -56,5 +56,5 @@ export const MenuWrapper = styled.div`
 
 export const MenuText = styled.p<{ $isActive?: boolean }>`
   font-size: 1.6rem;
-  color: ${({ $isActive }) => ($isActive ? '' : 'var(--grey-400)')};
+  color: ${({ $isActive, theme }) => ($isActive ? '' : theme.colors.grey400)};
 `;

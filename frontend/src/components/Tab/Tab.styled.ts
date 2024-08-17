@@ -24,16 +24,17 @@ const fadeIn = keyframes`
 export const CurrentContentContainer = styled.div`
   word-break: break-all;
   animation: ${fadeIn} 0.3s ease-out;
-  background: var(--grey-50);
+  background: ${(props) => props.theme.colors.grey50};
   font-size: 2rem;
 `;
 
 export const TabContainer = styled.div<{ $isSelected: boolean }>`
   padding: 1rem 2rem;
   cursor: pointer;
-  background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-200)' : 'var(--grey-50)')};
+  background: ${({ $isSelected, theme }) =>
+    $isSelected ? theme.colors.primary200 : theme.colors.grey50};
   font-size: 1.5rem;
-  color: var(--black-color);
+  color: ${(props) => props.theme.colors.blackColor};
   border-radius: 3rem 3rem 0 0;
   flex: 1;
   transition:
@@ -48,7 +49,8 @@ export const TabContainer = styled.div<{ $isSelected: boolean }>`
   `}
 
   &:hover {
-    background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-300)' : 'var(--grey-100)')};
+    background: ${({ $isSelected, theme }) =>
+      $isSelected ? theme.colors.primary300 : theme.colors.grey100};
   }
 
   @keyframes tabSelected {

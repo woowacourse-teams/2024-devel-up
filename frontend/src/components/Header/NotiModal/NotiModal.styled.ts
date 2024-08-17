@@ -20,13 +20,13 @@ export const NotiItem = styled.div`
   font-size: 1.1rem;
   margin-bottom: 1rem;
   padding: 2.3rem 0;
-  border-bottom: 0.1rem solid var(--grey-100);
+  border-bottom: 0.1rem solid ${(props) => props.theme.colors.grey100};
   background-color: white;
   cursor: pointer;
 `;
 
 export const NotiModalTitle = styled.h2`
-  color: var(--grey-600);
+  color: ${(props) => props.theme.colors.grey600};
   font-size: 1.4rem;
   margin-bottom: 1.2rem;
   font-weight: 500;
@@ -48,7 +48,7 @@ export const NotiTitle = styled.div`
 `;
 
 export const NotiMessage = styled.div`
-  color: var(--grey-500);
+  color: ${(props) => props.theme.colors.grey500};
   font-size: 1.4rem;
   font-weight: 500;
 

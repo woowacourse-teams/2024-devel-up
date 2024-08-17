@@ -31,7 +31,7 @@ export const ProfileImageWrapper = styled.div`
   width: 7.6rem;
   height: 7.5rem;
   border-radius: 50%;
-  border: 1px solid var(--grey-400);
+  border: 1px solid ${(props) => props.theme.colors.grey400};
   overflow: hidden;
   padding: 1rem;
 `;
@@ -52,7 +52,7 @@ export const PathWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 5rem 3.5rem;
-  border-top: 1px solid var(--grey-200);
+  border-top: 1px solid ${(props) => props.theme.colors.grey200};
 `;
 
 export const LinkWrapper = styled.div`
@@ -63,14 +63,16 @@ export const LinkWrapper = styled.div`
 
 export const Path = styled.span<{ $isSelected: boolean }>`
   font-size: 1.6rem;
-  color: ${({ $isSelected }) => ($isSelected ? 'var(--black-color)' : 'var(--grey-400)')};
+  color: ${({ $isSelected, theme }) =>
+    $isSelected ? theme.colors.blackColor : theme.colors.grey400};
 `;
 
 export const Circle = styled.div<{ $isSelected: boolean }>`
   width: 0.6rem;
   height: 0.6rem;
   border-radius: 50%;
-  background: ${({ $isSelected }) => ($isSelected ? 'var(--primary-500)' : 'var(--grey-400)')};
+  background: ${({ $isSelected, theme }) =>
+    $isSelected ? theme.colors.primary500 : theme.colors.grey400};
   margin-right: 1rem;
 `;
 

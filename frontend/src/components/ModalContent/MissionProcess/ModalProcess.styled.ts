@@ -5,7 +5,7 @@ import Button from '@/components/common/Button/Button';
 export const MissionProcessContentContainer = styled.div`
   width: 53rem;
   height: 58rem;
-  background: var(--white-color);
+  background: ${(props) => props.theme.colors.whiteColor};
   box-shadow: var(--shadow-8);
   border-radius: 0.5rem;
   position: relative;

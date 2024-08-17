@@ -21,7 +21,7 @@ export const Title = styled.div`
 export const Description = styled.div`
   font-size: 1.6rem;
   font-weight: 300;
-  color: var(--grey-500);
+  color: ${(props) => props.theme.colors.grey500};
   margin-top: 0.5rem;
 `;
 

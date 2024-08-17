@@ -1,4 +1,4 @@
-import { styled, css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface InputProps {
   $width: 'small' | 'medium' | 'large' | 'xlarge';
@@ -42,7 +42,7 @@ const borderRadiusStyles = {
 
 const typeStyles = {
   default: css`
-    background: var(--grey-100);
+    background: ${(props) => props.theme.colors.grey100};
   `,
 };
 
@@ -61,17 +61,17 @@ export const Input = styled.input<InputProps>`
   ${(props) =>
     props.$danger
       ? css`
-          border-bottom-color: var(--danger-600);
+          border-bottom-color: ${(props) => props.theme.colors.danger600};
         `
       : css`
           &:focus {
-            border-bottom-color: var(--primary-500);
+            border-bottom-color: ${(props) => props.theme.colors.primary500};
           }
         `}
 `;
 
 export const DangerText = styled.p`
-  color: var(--danger-600);
+  color: ${(props) => props.theme.colors.danger600};
   font-size: 1.6rem;
   margin-top: 1rem;
   margin-left: 2.3rem;

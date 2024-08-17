@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Button = styled.div`
-  background-color: var(--primary-50);
-  color: var(--black-color);
+  background-color: ${(props) => props.theme.colors.primary50};
+  color: ${(props) => props.theme.colors.blackColor};
   display: flex;
   justify-content: center;
   align-items: center;

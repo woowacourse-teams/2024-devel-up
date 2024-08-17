@@ -27,7 +27,7 @@ export const MissionItemContainer = styled.article`
   width: 35rem;
 
   border-radius: 1rem;
-  border: 1px solid var(--grey-200);
+  border: 1px solid ${(props) => props.theme.colors.grey200};
   cursor: pointer;
 `;
 
@@ -36,7 +36,7 @@ export const MissionThumbnailImg = styled.img`
   width: 100%;
   height: 23rem;
   object-fit: cover;
-  border-bottom: 1px solid var(--grey-200);
+  border-bottom: 1px solid ${(props) => props.theme.colors.grey200};
 `;
 
 export const MissionDescription = styled.div`

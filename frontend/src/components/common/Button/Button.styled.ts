@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import type { ButtonSize, ButtonVariant } from './Button';
 import { BUTTON_SIZE, BUTTON_VARIANTS } from '@/constants/variants';
 
@@ -7,6 +7,7 @@ interface CommonButtonProps {
   $variant: ButtonVariant;
 }
 
+// TODO: 객체 형태로 바꾸기 @프룬
 const buttonSize = (size: ButtonSize) => {
   switch (size) {
     case BUTTON_SIZE.half:
@@ -23,20 +24,22 @@ const buttonSize = (size: ButtonSize) => {
 const color = (variant: ButtonVariant) => {
   switch (variant) {
     case BUTTON_VARIANTS.primary:
-      return `background-color: var(--primary-500);
-              color: var(--white-color);
-                &:hover {
-                  background-color: var(--primary-600);
-                }
-            `;
+      return css`
+        background-color: ${(props) => props.theme.colors.primary500};
+        color: ${(props) => props.theme.colors.whiteColor};
+        &:hover {
+          background-color: ${(props) => props.theme.colors.primary600};
+        }
+      `;
 
     default:
-      return `background-color: var(--grey-200);
-              color: var(--black-color);
-                &:hover {
-                  background-color: var(--grey-300);
-                }
-            `;
+      return css`
+        background-color: ${(props) => props.theme.colors.grey200};
+        color: ${(props) => props.theme.colors.blackColor};
+        &:hover {
+          background-color: ${(props) => props.theme.colors.grey300};
+        }
+      `;
   }
 };
 
