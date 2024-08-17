@@ -5,9 +5,7 @@ export const NotiModalContainer = styled.div`
   position: fixed;
   top: 5.5rem;
   right: 17rem;
-  box-shadow:
-    0 0.6rem 0.9rem rgba(0, 0, 0, 0.12),
-    0 1.2rem 1.8rem rgba(0, 0, 0, 0.08);
+  box-shadow: ${(props) => props.theme.boxShadow.shadow12};
 
   border-radius: 1rem;
   padding: 2.5rem 3.4rem;

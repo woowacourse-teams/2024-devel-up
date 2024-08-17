@@ -6,7 +6,7 @@ export const MissionProcessContentContainer = styled.div`
   width: 53rem;
   height: 58rem;
   background: ${(props) => props.theme.colors.whiteColor};
-  box-shadow: var(--shadow-8);
+  box-shadow: ${(props) => props.theme.boxShadow.shadow08};
   border-radius: 0.5rem;
   position: relative;
   padding: 3.9rem;

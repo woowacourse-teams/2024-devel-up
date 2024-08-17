@@ -4,7 +4,7 @@ export const SubmitPopUpContainer = styled.div`
   width: 39rem;
   height: 32rem;
   background: ${(props) => props.theme.colors.whiteColor};
-  box-shadow: var(--shadow-8);
+  box-shadow: ${(props) => props.theme.boxShadow.shadow08};
   border-radius: 0.5rem;
   position: relative;
   padding: 3.9rem;
