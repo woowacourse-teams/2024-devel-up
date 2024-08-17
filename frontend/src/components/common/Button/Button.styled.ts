@@ -58,9 +58,7 @@ export const CommonButton = styled.button<CommonButtonProps>`
   transition: 0.2s;
 
   white-space: nowrap;
-  font-size: 1.4rem;
-  font-weight: 500;
-  font-family: inherit;
+  ${(props) => props.theme.font.button}
 
   &:disabled {
     cursor: default;

@@ -42,8 +42,7 @@ export const ProfileImage = styled.img`
 `;
 
 export const ProfileName = styled.span`
-  font-weight: bold;
-  font-size: 2rem;
+  ${(props) => props.theme.font.bodyBold}
   text-align: center;
   margin-top: 1rem;
 `;
@@ -62,7 +61,7 @@ export const LinkWrapper = styled.div`
 `;
 
 export const Path = styled.span<{ $isSelected: boolean }>`
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.body}
   color: ${({ $isSelected, theme }) =>
     $isSelected ? theme.colors.blackColor : theme.colors.grey400};
 `;
@@ -77,6 +76,5 @@ export const Circle = styled.div<{ $isSelected: boolean }>`
 `;
 
 export const CurrentPathText = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
+  ${(props) => props.theme.font.bodyBold}
 `;

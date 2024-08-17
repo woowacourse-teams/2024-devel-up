@@ -39,8 +39,7 @@ export const MissionDescription = styled.div`
 `;
 
 export const MissionTitle = styled.p`
-  font-size: 1.6rem;
-  font-weight: bold;
+  ${(props) => props.theme.font.bodyBold}
   color: black;
   margin-bottom: 1.7rem;
 `;
@@ -50,7 +49,7 @@ export const MissionSummary = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  font-size: 1.4rem;
+  ${(props) => props.theme.font.body}
   color: ${(props) => props.theme.colors.grey500};
 `;
 
@@ -88,6 +87,6 @@ export const MissionHashTag = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 1.4rem;
+  ${(props) => props.theme.font.badge}
   flex-shrink: 0;
 `;

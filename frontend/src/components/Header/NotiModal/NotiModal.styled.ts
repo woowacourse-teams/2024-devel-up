@@ -15,7 +15,7 @@ export const NotiModalContainer = styled.div`
 export const NotiItem = styled.div`
   width: 28rem;
   position: relative;
-  font-size: 1.1rem;
+  ${(props) => props.theme.font.caption}
   margin-bottom: 1rem;
   padding: 2.3rem 0;
   border-bottom: 0.1rem solid ${(props) => props.theme.colors.grey100};
@@ -25,13 +25,12 @@ export const NotiItem = styled.div`
 
 export const NotiModalTitle = styled.h2`
   color: ${(props) => props.theme.colors.grey600};
-  font-size: 1.4rem;
+  ${(props) => props.theme.font.caption}
   margin-bottom: 1.2rem;
-  font-weight: 500;
 `;
 
 export const NotiReadBtn = styled.button`
-  font-size: 1.5rem;
+  ${(props) => props.theme.font.body}
   width: 1.5rem;
   height: 1.5rem;
   position: absolute;
@@ -40,15 +39,13 @@ export const NotiReadBtn = styled.button`
 `;
 
 export const NotiTitle = styled.div`
-  font-size: 1.6rem;
-  font-weight: bold;
+  ${(props) => props.theme.font.bodyBold}
   margin-bottom: 0.6rem;
 `;
 
 export const NotiMessage = styled.div`
   color: ${(props) => props.theme.colors.grey500};
-  font-size: 1.4rem;
-  font-weight: 500;
+  ${(props) => props.theme.font.caption}
 
   overflow: hidden;
   text-overflow: ellipsis;

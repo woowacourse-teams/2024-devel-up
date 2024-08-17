@@ -8,8 +8,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-weight: bold;
-  font-size: 1.5rem;
+  ${(props) => props.theme.font.bodyBold}
   margin: 1.1rem 0;
 `;
 

@@ -17,13 +17,13 @@ export const NoContent = styled(NoResultIcon)`
 `;
 
 export const MainText = styled.span`
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.body}
   margin-bottom: 0.5rem;
 `;
 
 export const SubText = styled.span`
   color: ${(props) => props.theme.colors.grey400};
-  font-size: 1.4rem;
+  ${(props) => props.theme.font.caption}
   margin-bottom: 1rem;
 `;
 

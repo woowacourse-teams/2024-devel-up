@@ -13,7 +13,6 @@ export const Button = styled.button`
   color: #fff;
   width: 100%;
   height: 5rem;
-  font-weight: bold;
-  font-size: 2rem;
+  ${(props) => props.theme.font.button}
   margin-top: 10rem;
 `;

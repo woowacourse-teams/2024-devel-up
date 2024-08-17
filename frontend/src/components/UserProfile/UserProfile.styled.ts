@@ -30,8 +30,7 @@ export const InfoContainer = styled.div`
 
 // 사용자 이름
 export const ProfileInfoText = styled.p`
-  font-weight: bold;
-  font-size: 3rem;
+  ${(props) => props.theme.font.heading3}
   word-break: break-all;
   min-width: 100%;
   text-align: center;

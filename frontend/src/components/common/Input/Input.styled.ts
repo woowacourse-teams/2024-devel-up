@@ -72,7 +72,7 @@ export const Input = styled.input<InputProps>`
 
 export const DangerText = styled.p`
   color: ${(props) => props.theme.colors.danger600};
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.caption}
   margin-top: 1rem;
   margin-left: 2.3rem;
 `;

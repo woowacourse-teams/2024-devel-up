@@ -21,7 +21,7 @@ export const PopUpMessageContainer = styled.div`
 `;
 
 export const PopUpMessage = styled.p`
-  font-size: 1.5rem;
+  ${(props) => props.theme.font.body}
   color: ${(props) => props.theme.colors.blackColor};
 `;
 
@@ -36,7 +36,7 @@ export const SubmitButtonContainer = styled.div`
 export const SubmitButton = styled.button`
   padding: 1rem;
   color: ${(props) => props.theme.colors.whiteColor};
-  font-size: 1.5rem;
+  ${(props) => props.theme.font.button}
   background: ${(props) => props.theme.colors.primary500};
   border-radius: 0.8rem;
   cursor: pointer;

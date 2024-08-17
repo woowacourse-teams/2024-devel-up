@@ -35,8 +35,7 @@ export const MissionSummaryWrapper = styled.div`
 `;
 
 export const MissionSummaryText = styled.span`
-  font-weight: 700;
-  font-size: 1.7rem;
+  ${(props) => props.theme.font.bodyBold}
 `;
 
 export const JavaIcon = styled(javaIcon)``;

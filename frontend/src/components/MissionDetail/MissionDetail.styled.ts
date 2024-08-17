@@ -40,9 +40,7 @@ export const Title = styled.h1`
   position: absolute;
   left: 2.1rem;
   bottom: 2.4rem;
-
-  font-size: 2.8rem;
-  font-weight: bold;
+  ${(props) => props.theme.font.heading1}
   color: ${(props) => props.theme.colors.whiteColor};
 `;
 
@@ -76,8 +74,7 @@ export const InfoMsgWrapper = styled.div`
   padding: 0.3rem;
 
   color: ${(props) => props.theme.colors.grey500};
-  font-size: 1.4rem;
-  font-weight: 500;
+  ${(props) => props.theme.font.caption}
 
   cursor: pointer;
 

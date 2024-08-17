@@ -16,9 +16,8 @@ export const MissionProcessContentContainer = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.bodyBold}
   margin-bottom: 2.4rem;
-  font-weight: bold;
 `;
 
 export const CloseIconWrapper = styled.div`
@@ -35,7 +34,7 @@ export const CloseIcon = styled(closeIcon)`
 `;
 
 export const Text = styled.p`
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.body}
 `;
 
 // Prev Next 버튼
