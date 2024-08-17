@@ -17,7 +17,9 @@ VALUES ('JAVA'),
        ('객체지향'),
        ('TDD'),
        ('클린코드'),
-       ('레벨1');
+       ('레벨1'),
+       ('잠실캠퍼스'),
+       ('선릉캠퍼스');
 
 INSERT INTO mission_hash_tag (mission_id, hash_tag_id)
 VALUES (1, 1),
@@ -25,11 +27,13 @@ VALUES (1, 1),
        (1, 3),
        (1, 4),
        (1, 5),
+       (1, 6),
        (2, 1),
        (2, 2),
        (2, 3),
        (2, 4),
-       (2, 5);
+       (2, 5),
+       (2, 7);
 
 INSERT INTO solution (mission_id, member_id, title, description, url, status, created_at)
 VALUES (1, 1, '릴리 미션 제출합니다.', '안녕하세요. 잘 부탁 드립니다.', 'https://github.com/develup/mission/pull/1', 'COMPLETED',

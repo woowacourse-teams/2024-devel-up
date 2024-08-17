@@ -15,10 +15,19 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
             JOIN FETCH s.mission m
             JOIN FETCH m.missionHashTags.hashTags mhts
             JOIN FETCH mhts.hashTag ht
-            WHERE s.status = 'COMPLETED'
+            WHERE
+                s.status = 'COMPLETED' AND
+                EXISTS (
+                   SELECT 1
+                   FROM MissionHashTag smht
+                   JOIN smht.hashTag sht
+                   WHERE
+                       smht.mission.id = m.id AND
+                       (LOWER(:name) = 'all' OR sht.name = :name)
+               )
             ORDER BY s.id DESC
             """)
-    List<Solution> findAllCompletedSolution();
+    List<Solution> findAllCompletedSolutionByHashTagName(String name);
 
     List<Solution> findAllByMember_IdAndStatus(Long memberId, SolutionStatus status);
 

@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import develup.domain.hashtag.HashTag;
 import develup.domain.hashtag.HashTagRepository;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
+import develup.domain.mission.MissionHashTag;
 import develup.domain.mission.MissionRepository;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.HashTagTestData;
@@ -73,9 +75,38 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
         createSolution(SolutionStatus.COMPLETED);
         createSolution(SolutionStatus.IN_PROGRESS);
 
-        List<Solution> actual = solutionRepository.findAllCompletedSolution();
+        List<Solution> actual = solutionRepository.findAllCompletedSolutionByHashTagName("all");
 
         assertThat(actual).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("주어진 해시태그가 포함된 완료된 솔루션을 조회할 수 있다.")
+    void findAllCompletedSolutionByHashTag() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        Mission mission1 = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+        Mission mission2 = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution1 = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission1)
+                .withStatus(SolutionStatus.COMPLETED)
+                .build();
+        Solution solution2 = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission2)
+                .withStatus(SolutionStatus.COMPLETED)
+                .build();
+
+        solutionRepository.saveAll(List.of(solution1, solution2));
+
+        List<Solution> solutions = solutionRepository.findAllCompletedSolutionByHashTagName("JAVA");
+
+        assertThat(solutions)
+                .map(Solution::getHashTags)
+                .flatMap(Function.identity())
+                .map(MissionHashTag::getHashTag)
+                .contains(hashTag);
     }
 
     @Test

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import develup.domain.hashtag.HashTag;
 import develup.domain.hashtag.HashTagRepository;
 import develup.support.IntegrationTestSupport;
@@ -46,7 +47,7 @@ class MissionRepositoryTest extends IntegrationTestSupport {
 
     @Test
     @DisplayName("해시태그가 존재하는 모든 미션을 조회한다.")
-    void findAllHashTaggedMission() {
+    void all() {
         HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
         Mission mission1 = MissionTestData.defaultMission()
                 .withHashTags(List.of(hashTag))
@@ -56,8 +57,25 @@ class MissionRepositoryTest extends IntegrationTestSupport {
                 .build();
         missionRepository.saveAll(List.of(mission1, mission2));
 
-        List<Mission> missions = missionRepository.findAllHashTaggedMission();
+        List<Mission> missions = missionRepository.findAllByHashTagName("all");
 
         assertThat(missions).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("특정 해시태그가 태그된 모든 미션을 조회한다.")
+    void findAllByHashTagName() {
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        Mission mission1 = MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build();
+        Mission mission2 = MissionTestData.defaultMission().build();
+        missionRepository.saveAll(List.of(mission1, mission2));
+
+        List<Mission> missions = missionRepository.findAllByHashTagName("JAVA");
+
+        assertThat(missions)
+                .map(Mission::getHashTags)
+                .flatMap(Function.identity())
+                .map(MissionHashTag::getHashTag)
+                .contains(hashTag);
     }
 }
