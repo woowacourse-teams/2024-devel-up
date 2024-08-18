@@ -14,3 +14,7 @@ export const solutionKeys = {
   all: ['solutions'],
   submitted: ['submitted solutions'],
 };
+
+export const hashTagsKeys = {
+  hashTags: ['hashTags'],
+};

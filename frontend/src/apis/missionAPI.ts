@@ -9,7 +9,7 @@ import type {
 } from '@/types';
 import MissionListInProgress from '@/mocks/missionInProgress.json';
 import { populateMissionDescription } from './utils/populateMissionDescription';
-import mockMissions from '@/mocks/missions.json';
+import { HASHTAGS } from '@/constants/hashTags';
 
 interface getMissionByIdResponse {
   data: MissionWithDescription;
@@ -23,16 +23,10 @@ interface getHashTagsResponse {
   data: HashTag[];
 }
 
-export const getMissions = async (filter: string): Promise<Mission[]> => {
-  const { data } = await develupAPIClient.get<getAllMissionResponse>(
-    // `${PATH.missionList}?hashTag=${filter}`, // TODO: 추후 변경 필요
-    `${PATH.missionList}`,
-  );
-
-  // TODO: API 들어오면 삭제해야 하는 mock 코드
-  if (filter) {
-    return mockMissions.filter((mission) => mission.hashTags[0].name === filter);
-  }
+export const getMissions = async (filter: string = HASHTAGS.all): Promise<Mission[]> => {
+  const { data } = await develupAPIClient.get<getAllMissionResponse>(`${PATH.missionList}`, {
+    hashTag: filter,
+  });
 
   return data;
 };

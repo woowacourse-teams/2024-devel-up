@@ -1,15 +1,13 @@
-// import { getHashTags } from '@/apis/missionAPI';
-// import type { HashTag } from '@/types';
-// import { useSuspenseQuery } from '@tanstack/react-query';
-import mockHashTags from '@/mocks/hashTag.json';
+import { getHashTags } from '@/apis/missionAPI';
+import type { HashTag } from '@/types';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { hashTagsKeys } from './queries/keys';
 
 const useHashTags = () => {
-  // TODO: API 배포 시 수정 필요 @프룬
-  // return useSuspenseQuery<HashTag[]>({
-  //   queryKey: ['hashTags'],
-  //   queryFn: () => getHashTags(),
-  // });
-  return { data: mockHashTags };
+  return useSuspenseQuery<HashTag[]>({
+    queryKey: hashTagsKeys.hashTags,
+    queryFn: () => getHashTags(),
+  });
 };
 
 export default useHashTags;

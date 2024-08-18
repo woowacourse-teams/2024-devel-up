@@ -10,6 +10,6 @@ export const PATH = {
   submitSolution: '/solutions/submit',
   startSolution: '/solutions/start',
   logout: '/auth/logout',
-  hashTags: '/hashtags', // TODO: 아직 API가 만들어지지 않아 미정입니다.
+  hashTags: '/hash-tags',
   missionInProgress: '/missions/in-progress',
 };

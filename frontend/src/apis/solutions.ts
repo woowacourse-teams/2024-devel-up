@@ -18,16 +18,11 @@ interface GetSolutionSummariesResponse {
   data: SolutionSummary[];
 }
 
-export const getSolutionSummaries = async (filter: string): Promise<SolutionSummary[]> => {
+export const getSolutionSummaries = async (filter: string = 'all'): Promise<SolutionSummary[]> => {
   const { data } = await develupAPIClient.get<GetSolutionSummariesResponse>(
-    // `${PATH.solutionSummaries}?hashTag=${filter}`, // TODO: 추후 변경 필요
     `${PATH.solutionSummaries}`,
+    { hashTag: filter },
   );
-
-  // TODO: API 들어오면 삭제해야 하는 mock 코드
-  if (filter) {
-    return mockSolutions.filter((solution) => solution.hashTags[0].name === filter);
-  }
 
   return data;
 };
