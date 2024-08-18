@@ -5,10 +5,18 @@ import missions from './missions.json';
 import submittedSolutions from './SubmittedSolutions.json';
 
 export const handlers = [
-  http.get(`${BASE_URL.dev}${PATH.missionList}`, () => {
-    return HttpResponse.json({ data: missions });
+  http.get(`${BASE_URL.dev}${PATH.missionList}`, ({ request }) => {
+    const url = new URL(request.url);
+    const hashTag = url.searchParams.get('hashTag');
+    if (hashTag === 'all') {
+      return HttpResponse.json({ data: missions });
+    }
+
+    const filteredMissions = missions.filter((mission) => mission.hashTags[0].name === hashTag);
+
+    return HttpResponse.json({ data: filteredMissions });
   }),
-  
+
   http.get(`${BASE_URL.dev}${PATH.missionList}/:id`, ({ request }) => {
     const url = new URL(request.url);
     const id = Number(url.pathname.split('/').pop());
