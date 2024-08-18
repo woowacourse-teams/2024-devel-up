@@ -29,7 +29,7 @@ class MissionApiTest extends ApiTestSupport {
                 MissionResponse.from(mission),
                 MissionResponse.from(mission)
         );
-        BDDMockito.given(missionService.getMissions())
+        BDDMockito.given(missionService.getMissions(any()))
                 .willReturn(responses);
 
         mockMvc.perform(get("/missions"))
