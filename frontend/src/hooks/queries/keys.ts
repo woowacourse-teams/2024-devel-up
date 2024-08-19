@@ -12,5 +12,10 @@ export const missionKeys = {
 
 export const solutionKeys = {
   all: ['solutions'],
+  summaries: ['solutionSummaries'],
   submitted: ['submitted solutions'],
+};
+
+export const userKeys = {
+  info: ['userInfo'],
 };

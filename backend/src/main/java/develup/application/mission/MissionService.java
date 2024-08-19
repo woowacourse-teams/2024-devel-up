@@ -24,8 +24,8 @@ public class MissionService {
         this.solutionRepository = solutionRepository;
     }
 
-    public List<MissionResponse> getMissions() {
-        return missionRepository.findAllHashTaggedMission().stream()
+    public List<MissionResponse> getMissions(String hashTagName) {
+        return missionRepository.findAllByHashTagName(hashTagName).stream()
                 .map(MissionResponse::from)
                 .toList();
     }

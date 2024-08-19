@@ -24,6 +24,15 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             FROM Mission m
             JOIN FETCH m.missionHashTags.hashTags mhts
             JOIN FETCH mhts.hashTag ht
+            WHERE
+               EXISTS (
+                   SELECT 1
+                   FROM MissionHashTag smht
+                   JOIN smht.hashTag sht
+                   WHERE
+                       smht.mission.id = m.id AND
+                       (LOWER(:name) = 'all' OR sht.name = :name)
+               )
             """)
-    List<Mission> findAllHashTaggedMission();
+    List<Mission> findAllByHashTagName(String name);
 }
