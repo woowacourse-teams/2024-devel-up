@@ -30,13 +30,13 @@ const useSingleRequestMutation = <TData, TError, TVariables = void>(
     onSuccess: (data: TData, variables: TVariables, context: unknown) => {
       endRequest(requestId);
       if (options?.onSuccess) {
-        options.onSuccess(data, variables, context as unknown);
+        options.onSuccess(data, variables, context);
       }
     },
     onError: (error: TError, variables: TVariables, context: unknown) => {
       endRequest(requestId);
       if (options?.onError) {
-        options.onError(error, variables, context as unknown);
+        options.onError(error, variables, context);
       }
     },
     onSettled: (
@@ -47,7 +47,7 @@ const useSingleRequestMutation = <TData, TError, TVariables = void>(
     ) => {
       endRequest(requestId);
       if (options?.onSettled) {
-        options.onSettled(data, error, variables, context as unknown);
+        options.onSettled(data, error, variables, context);
       }
     },
   });
