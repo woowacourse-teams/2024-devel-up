@@ -99,6 +99,25 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     }
 
     @Test
+    @DisplayName("특정 회원이 작성한 댓글 목록을 조회할 때 삭제된 댓글은 제외한다.")
+    void getMyCommentsWithDelete() {
+        Solution solution = createSolution();
+        Member member = createMember();
+        List<SolutionComment> solutionComments = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            SolutionComment solutionComment = createSolutionComment(solution, member);
+            solutionComments.add(solutionComment);
+        }
+        createDeletedSolutionComment(solution, member);
+        createSolutionComment();
+
+        List<MySolutionCommentResponse> myComments = solutionCommentService.getMyComments(member.getId());
+
+        assertThat(myComments)
+                .hasSize(solutionComments.size());
+    }
+
+    @Test
     @DisplayName("댓글을 추가한다.")
     void addComment() {
         Solution solution = createSolution();
@@ -198,6 +217,17 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
                 .withSolution(solution)
                 .withMember(member)
+                .build();
+        solutionCommentRepository.save(solutionComment);
+
+        return solutionComment;
+    }
+
+    private SolutionComment createDeletedSolutionComment(Solution solution, Member member) {
+        SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
+                .withSolution(solution)
+                .withMember(member)
+                .withDeletedAt(LocalDateTime.now())
                 .build();
         solutionCommentRepository.save(solutionComment);
 

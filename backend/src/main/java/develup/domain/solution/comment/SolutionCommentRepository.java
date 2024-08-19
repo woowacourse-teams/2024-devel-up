@@ -14,7 +14,7 @@ public interface SolutionCommentRepository extends JpaRepository<SolutionComment
             FROM SolutionComment sc
             JOIN sc.solution s
             JOIN sc.member m
-            WHERE sc.member.id = :memberId
+            WHERE sc.member.id = :memberId AND sc.deletedAt is null
             GROUP BY sc.id
             """)
     List<MySolutionComment> findAllMySolutionComment(Long memberId);
