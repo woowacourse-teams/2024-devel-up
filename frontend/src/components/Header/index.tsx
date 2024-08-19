@@ -7,27 +7,14 @@ import { BASE_URL } from '@/apis/baseUrl';
 import { PATH } from '@/apis/paths';
 import useUserInfo from '@/hooks/useUserInfo';
 import HeaderMenu from './HeaderMenu';
-import { deleteLogout } from '@/apis/authAPI';
+import useLogoutMutation from '@/hooks/useLogoutMutation';
+import useModal from '@/hooks/useModal';
 
 export default function Header() {
   const { pathname } = useLocation();
   const { data: userInfo } = useUserInfo();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleBellClick = () => {
-    setIsModalOpen((prev) => !prev);
-  };
-
-  const closeModal = () => {
-    if (isModalOpen) {
-      setIsModalOpen(false);
-    }
-  };
-
-  const handleUserLogout = async () => {
-    await deleteLogout();
-  };
+  const { handleUserLogout } = useLogoutMutation();
+  const { isModalOpen, handleModalClose, handleToggleModal } = useModal();
 
   return (
     <>
@@ -43,7 +30,7 @@ export default function Header() {
         </S.MenuWrapper>
         <S.RightPart>
           <HeaderMenu name="대시보드" path={ROUTES.dashboardHome} currentPath={pathname} />
-          {userInfo && <S.BellIcon onClick={handleBellClick} />}
+          {userInfo && <S.BellIcon onClick={handleToggleModal} />}
           {!userInfo ? (
             <a href={`${BASE_URL.dev}${PATH.githubLogin}?next=${pathname}`}>
               <S.LoginButton>로그인</S.LoginButton>
@@ -53,7 +40,7 @@ export default function Header() {
           )}
         </S.RightPart>
       </S.Container>
-      {isModalOpen && <NotiModal closeModal={closeModal} />}
+      {isModalOpen && <NotiModal closeModal={handleModalClose} />}
       <S.Spacer />
     </>
   );
