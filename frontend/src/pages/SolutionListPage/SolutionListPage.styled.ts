@@ -1,8 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 
 export const SolutionTitle = styled.h2`
-  font-size: 2.8rem;
-  font-weight: bold;
+  margin-bottom: 3.5rem;
+  ${(props) => props.theme.font.heading1}
 `;
 
 export const Subtitle = styled.p`

@@ -5,8 +5,8 @@ import Button from '@/components/common/Button/Button';
 export const MissionProcessContentContainer = styled.div`
   width: 53rem;
   height: 58rem;
-  background: var(--white-color);
-  box-shadow: var(--shadow-8);
+  background: ${(props) => props.theme.colors.white};
+  box-shadow: ${(props) => props.theme.boxShadow.shadow08};
   border-radius: 0.5rem;
   position: relative;
   padding: 3.9rem;
@@ -16,9 +16,8 @@ export const MissionProcessContentContainer = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.bodyBold}
   margin-bottom: 2.4rem;
-  font-weight: bold;
 `;
 
 export const CloseIconWrapper = styled.div`
@@ -35,7 +34,7 @@ export const CloseIcon = styled(closeIcon)`
 `;
 
 export const Text = styled.p`
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.body}
 `;
 
 // Prev Next 버튼

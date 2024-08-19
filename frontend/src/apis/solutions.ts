@@ -3,7 +3,6 @@ import { PATH } from '@/apis/paths';
 import SubmittedSolutions from '@/mocks/SubmittedSolutions.json';
 import type { HashTag } from '@/types';
 import type { Solution, SubmittedSolution } from '@/types/solution';
-import mockSolutions from '@/mocks/SubmittedSolutions.json';
 
 export interface SolutionSummary {
   // solution 리스트에 필요한 필드만 포함한 데이터 (solution 원본 데이터와는 다름)

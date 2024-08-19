@@ -13,3 +13,7 @@ export const PATH = {
   hashTags: '/hash-tags',
   missionInProgress: '/missions/in-progress',
 };
+
+export const PATH_FORMATTER = {
+  comments: (solutionId: number) => `/solutions/${solutionId}/comments`,
+};
