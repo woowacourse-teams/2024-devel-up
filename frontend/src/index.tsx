@@ -17,6 +17,7 @@ import * as Sentry from '@sentry/react';
 import ErrorPage from './pages/ErrorPage';
 import SolutionListPage from './pages/SolutionListPage';
 import MissionListPage from './pages/MissionListPage';
+import SolutionDetailPage from './pages/SolutionDetailPage';
 import DashboardPage from './pages/DashboardPage';
 import DashBoardMissionInProgressPage from './pages/DashboardPage/MissionInProgress';
 import SubmittedSolutionList from './components/DashBoard/SubmittedSolutions';
@@ -154,6 +155,16 @@ const routes = [
         ),
       },
     ],
+  },
+  {
+    path: `${ROUTES.solutions}/:id`,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <SolutionDetailPage />
+        </Suspense>
+      </App>
+    ),
   },
 ];
 

@@ -7,7 +7,7 @@ interface MissionDetailContentProps {
 export default function MissionDetailContent({ description }: MissionDetailContentProps) {
   return (
     <S.MissionDescription>
-      <S.MissionDescriptionText>{description}</S.MissionDescriptionText>
+      <S.MissionDescriptionText source={description} />
     </S.MissionDescription>
   );
 }

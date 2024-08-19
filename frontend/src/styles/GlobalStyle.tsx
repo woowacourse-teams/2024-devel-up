@@ -175,12 +175,11 @@ html,
 
 body {
   animation: fadeIn 0.2s ease-in-out;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
 }
 
-body::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
+
+::-webkit-scrollbar {
+  /* display: none;  Safari and Chrome */
 }
 
   li {
