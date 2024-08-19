@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import develup.application.member.MemberResponse;
 import develup.application.solution.comment.CreateSolutionCommentResponse;
+import develup.application.solution.comment.MySolutionCommentResponse;
 import develup.application.solution.comment.SolutionCommentRepliesResponse;
 import develup.application.solution.comment.SolutionCommentRequest;
 import develup.application.solution.comment.SolutionReplyResponse;
@@ -45,6 +46,28 @@ class SolutionCommentApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[0].content", equalTo("content")))
                 .andExpect(jsonPath("$.data[0].replies", hasSize(1)))
                 .andExpect(jsonPath("$.data[0].replies[0].id", equalTo(2)));
+    }
+
+    @Test
+    @DisplayName("내가 솔루션에 작성한 댓글 목록을 조회한다.")
+    void getMyComments() throws Exception {
+        LocalDateTime now = LocalDateTime.now();
+        MySolutionCommentResponse mySolutionCommentResponse = new MySolutionCommentResponse(1L, 1L, "댓글 내용", now, "솔루션 제목", 123L);
+        List<MySolutionCommentResponse> responses = List.of(mySolutionCommentResponse);
+
+        BDDMockito.given(solutionCommentService.getMyComments(any()))
+                .willReturn(responses);
+
+        mockMvc.perform(
+                        get("/solutions/comments/mine"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.data[0].solutionId", equalTo(1)))
+                .andExpect(jsonPath("$.data[0].content", equalTo("댓글 내용")))
+                .andExpect(jsonPath("$.data[0].createdAt", equalTo(now.toString())))
+                .andExpect(jsonPath("$.data[0].solutionTitle", equalTo("솔루션 제목")))
+                .andExpect(jsonPath("$.data[0].solutionCommentCount", equalTo(123)));
     }
 
     @Test
