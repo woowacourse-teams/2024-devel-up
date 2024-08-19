@@ -12,8 +12,8 @@ export const CommentTextArea = styled.textarea`
 
 export const CommentButton = styled.button`
   margin-top: 1.7rem;
-  font-size: 1.2rem;
-  background-color: var(--primary-50);
+  font-size: 1.4rem;
+  color: var(--primary-500);
 `;
 
 export const StartFromRight = styled.div`

@@ -17,9 +17,9 @@ export default function CommentUserInfo({ member }: CommentUserInfoProps) {
   };
 
   return (
-    <S.UserInfoWrapper>
+    <S.CommentUserInfoContainer>
       <S.UserProfileImg src={imageUrl} onError={handleImageError} />
       <S.UserName>{name}</S.UserName>
-    </S.UserInfoWrapper>
+    </S.CommentUserInfoContainer>
   );
 }

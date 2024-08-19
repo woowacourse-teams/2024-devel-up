@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import usePostCommentMutation from '@/hooks/usePostCommentMutation';
 import * as S from './CommentForm.styled';
+import { commands } from '@uiw/react-md-editor';
 
 interface CommentFormProps {
   solutionId: number;
@@ -23,13 +24,21 @@ export default function CommentForm({ solutionId, parentCommentId }: CommentForm
     <S.CommentForm onSubmit={onSubmitComment}>
       <S.MDEditor
         height="fit-content"
-        maxHeight={200}
         preview="edit"
+        visibleDragbar={false}
         onChange={(v?: string) => setComment(v || '')}
         value={comment}
+        commands={[
+          commands.bold,
+          commands.italic,
+          commands.strikethrough,
+          commands.codeBlock,
+          commands.image,
+        ]}
+        extraCommands={[commands.codeEdit, commands.codeLive]}
       />
       <S.StartFromRight>
-        <S.CommentButton>작성하기</S.CommentButton>
+        <S.CommentButton>제출</S.CommentButton>
       </S.StartFromRight>
     </S.CommentForm>
   );

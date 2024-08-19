@@ -19,7 +19,7 @@ export const CommentItemContainer = styled.div<{ $isReply?: boolean }>`
   }
 `;
 
-export const UserInfoWrapper = styled.div`
+export const CommentUserInfoContainer = styled.div`
   display: flex;
   align-items: center;
 `;
@@ -40,7 +40,8 @@ export const UserName = styled.div`
 `;
 
 export const DeletedComment = styled.div`
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
   color: var(--grey-500);
   font-size: 1.6rem;
 `;
@@ -50,24 +51,20 @@ export const CommentContent = styled(SanitizedMDPreview)`
   margin-left: 5.2rem;
 `;
 
-export const CommentReplyListContainer = styled.div`
-  margin-top: 2rem;
-`;
+export const CommentReplyListContainer = styled.div``;
 
 export const ReplyWriteButton = styled.button`
-  background-color: var(--primary-100);
-  padding: 0.3rem 0.5rem;
+  color: var(--primary-500);
+  font-size: 1.4rem;
+  margin: 1.5rem 0;
 `;
 
 export const CommentContentWrapper = styled.div`
   margin-left: 5.2rem;
 `;
 
-export const CommentReplyWrapper = styled.div`
+export const CommentReplySectionContainer = styled.section`
   margin-left: 5.2rem;
-  margin-top: 1.5rem;
 `;
 
-export const CommentReplyFormWrapper = styled.div`
-  margin-top: 1.5rem;
-`;
+export const CommentReplyFormWrapper = styled.div``;

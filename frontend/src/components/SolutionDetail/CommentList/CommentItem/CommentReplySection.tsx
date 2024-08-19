@@ -22,16 +22,18 @@ export default function CommentReplySection({
   };
 
   return (
-    <S.CommentReplyWrapper>
-      {isLoggedIn && !isParentDeleted && (
-        <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글 작성</S.ReplyWriteButton>
-      )}
-      {isLoggedIn && isReplyFormOpen && (
-        <S.CommentReplyFormWrapper>
-          <CommentForm solutionId={solutionId} parentCommentId={parentId} />
-        </S.CommentReplyFormWrapper>
+    <S.CommentReplySectionContainer>
+      {!isLoggedIn && !isParentDeleted && (
+        <>
+          <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글</S.ReplyWriteButton>
+          {isReplyFormOpen && (
+            <S.CommentReplyFormWrapper>
+              <CommentForm solutionId={solutionId} parentCommentId={parentId} />
+            </S.CommentReplyFormWrapper>
+          )}
+        </>
       )}
       <CommentReplyList commentReplies={replies} />
-    </S.CommentReplyWrapper>
+    </S.CommentReplySectionContainer>
   );
 }
