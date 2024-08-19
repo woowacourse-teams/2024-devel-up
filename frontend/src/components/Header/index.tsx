@@ -2,7 +2,6 @@ import { Link, useLocation } from 'react-router-dom';
 import * as S from './Header.styled';
 import { ROUTES } from '@/constants/routes';
 import NotiModal from './NotiModal';
-import { useState } from 'react';
 import { BASE_URL } from '@/apis/baseUrl';
 import { PATH } from '@/apis/paths';
 import useUserInfo from '@/hooks/useUserInfo';
