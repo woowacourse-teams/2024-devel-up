@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const MissionListContainer = styled.div`
   display: flex;
@@ -16,11 +16,24 @@ export const MissionListTitle = styled.h2`
   margin-bottom: 3rem;
 `;
 
+const show = keyframes`
+  0% {
+    opacity: 0;
+    }
+
+  100% {
+    opacity: 1;
+  }
+`;
+
 export const MissionList = styled.div`
   display: flex;
   width: 100rem;
   column-gap: 5rem;
   row-gap: 3.6rem;
+
+  animation: ${show} 0.5s;
+  transition: 0.5s;
 `;
 
 export const MissionItemContainer = styled.article`
