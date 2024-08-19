@@ -1,15 +1,13 @@
 import styled from 'styled-components';
 
 export const Button = styled.div`
-  background-color: var(--primary-50);
-  color: var(--black-color);
+  background-color: ${(props) => props.theme.colors.primary50};
+  color: ${(props) => props.theme.colors.black};
   display: flex;
   justify-content: center;
   align-items: center;
 
-  font-size: 1.2rem;
-  font-weight: 500;
-  font-family: inherit;
+  ${(props) => props.theme.font.badge}
 
   padding: 1rem 1.6rem;
   border-radius: 2rem;

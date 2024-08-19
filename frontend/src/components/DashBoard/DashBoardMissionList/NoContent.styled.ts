@@ -17,18 +17,18 @@ export const NoContent = styled(NoResultIcon)`
 `;
 
 export const MainText = styled.span`
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.body}
   margin-bottom: 0.5rem;
 `;
 
 export const SubText = styled.span`
-  color: var(--grey-400);
-  font-size: 1.4rem;
+  color: ${(props) => props.theme.colors.grey400};
+  ${(props) => props.theme.font.caption}
   margin-bottom: 1rem;
 `;
 
 export const Button = styled.button`
-  background: var(--grey-200);
+  background: ${(props) => props.theme.colors.grey200};
   padding: 1.2rem 1.8rem;
   border-radius: 0.8rem;
 `;

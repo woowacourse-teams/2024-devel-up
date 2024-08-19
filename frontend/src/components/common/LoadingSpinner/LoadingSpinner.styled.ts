@@ -70,7 +70,7 @@ export const Dot = styled.div`
     height: 0%;
     width: 100%;
     padding-bottom: 100%;
-    background-color: var(--primary-700);
+    background-color: ${(props) => props.theme.colors.primary700};
     border-radius: 50%;
   }
 

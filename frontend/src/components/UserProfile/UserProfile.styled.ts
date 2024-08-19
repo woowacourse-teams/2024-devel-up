@@ -30,8 +30,7 @@ export const InfoContainer = styled.div`
 
 // 사용자 이름
 export const ProfileInfoText = styled.p`
-  font-weight: bold;
-  font-size: 3rem;
+  ${(props) => props.theme.font.heading3}
   word-break: break-all;
   min-width: 100%;
   text-align: center;
@@ -40,7 +39,7 @@ export const ProfileInfoText = styled.p`
 // 사용자 한줄 소개
 export const DescriptionInput = styled.input`
   min-width: 100%;
-  border: 1px solid var(--grey-200);
+  border: 1px solid ${(props) => props.theme.colors.grey200};
 `;
 
 export const DescriptionForm = styled.form`

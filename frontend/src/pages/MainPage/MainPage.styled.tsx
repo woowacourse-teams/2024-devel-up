@@ -11,7 +11,6 @@ export const MainPageContainer = styled.div`
 `;
 
 export const MissionListTitle = styled.h2`
-  font-size: 2.4rem;
-  font-weight: 700;
+  ${(props) => props.theme.font.heading1}
   margin-bottom: 3rem;
 `;

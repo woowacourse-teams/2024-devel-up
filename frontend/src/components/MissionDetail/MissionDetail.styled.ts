@@ -31,7 +31,7 @@ export const ThumbnailImg = styled.img`
 export const GradientOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0), var(--black-color));
+  background: linear-gradient(rgba(0, 0, 0, 0), ${(props) => props.theme.colors.black});
   opacity: 0.5;
   pointer-events: none; // 그라데이션이 클릭 이벤트를 방지하지 않도록 설정
 `;
@@ -40,10 +40,8 @@ export const Title = styled.h1`
   position: absolute;
   left: 2.1rem;
   bottom: 2.4rem;
-
-  font-size: 2.8rem;
-  font-weight: bold;
-  color: var(--white-color);
+  ${(props) => props.theme.font.heading1}
+  color: ${(props) => props.theme.colors.white};
 `;
 
 export const JavaIcon = styled(javaIcon)``;
@@ -75,14 +73,13 @@ export const InfoMsgWrapper = styled.div`
   border-radius: 0.8rem;
   padding: 0.3rem;
 
-  color: var(--grey-500);
-  font-size: 1.4rem;
-  font-weight: 500;
+  color: ${(props) => props.theme.colors.grey500};
+  ${(props) => props.theme.font.caption}
 
   cursor: pointer;
 
   &:hover {
-    background-color: var(--grey-50);
+    background-color: ${(props) => props.theme.colors.grey50};
   }
 `;
 
@@ -116,7 +113,7 @@ export const MissionDescription = styled.div`
   width: 100%;
   padding: 2rem;
 
-  background-color: var(--grey-50);
+  background-color: ${(props) => props.theme.colors.grey50};
   border-radius: 0.8rem;
 `;
 

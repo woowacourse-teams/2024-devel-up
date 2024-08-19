@@ -11,6 +11,6 @@ export const BadgeContainer = styled.div<BadgeContainerProps>`
   width: fit-content;
   padding: 0.4rem 0.8rem;
   border-radius: 0.4rem;
-  font-size: 1.2rem;
+  ${(props) => props.theme.font.badge}
   white-space: nowrap;
 `;
