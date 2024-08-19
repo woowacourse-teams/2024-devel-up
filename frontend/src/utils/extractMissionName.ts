@@ -1,3 +1,4 @@
+/*eslint-disable no-useless-escape */
 const extractMissionName = (url: string) => {
   const match = url.match(/^https:\/\/github\.com\/[^\/]+\/([^\/]+)\/pull\/\d+$/);
   return match ? match[1] : '';
