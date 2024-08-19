@@ -7,7 +7,7 @@ export const CommentListContainer = styled.div`
 
 export const CommentItemContainer = styled.div<{ $isReply?: boolean }>`
   padding: 1.5rem 0;
-  border-bottom: 1px solid ${({ $isReply }) => ($isReply ? 'var(--grey-200)' : '#c6b9ff')};
+  border-bottom: 1px solid ${({ $isReply, theme }) => ($isReply ? theme.colors.grey200 : '#c6b9ff')};
 
   &:first-child {
     padding-top: 0;
@@ -27,36 +27,35 @@ export const CommentUserInfoContainer = styled.div`
 export const UserProfileImg = styled.img`
   width: 4.2rem;
   height: 4.2rem;
-  border: 1px solid var(--grey-400);
+  border: 1px solid ${({ theme }) => theme.colors.grey400};
   border-radius: 10rem;
   object-fit: cover;
   margin-right: 1rem;
 `;
 
 export const UserName = styled.div`
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--grey-600);
+  color: ${({ theme }) => theme.colors.grey600};
+  ${({ theme }) => theme.font.body}
 `;
 
 export const DeletedComment = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
-  color: var(--grey-500);
-  font-size: 1.6rem;
+  color: ${({ theme }) => theme.colors.grey500};
+  ${({ theme }) => theme.font.body}
 `;
 
 export const CommentContent = styled(SanitizedMDPreview)`
-  font-size: 1.6rem;
+  ${({ theme }) => theme.font.body}
   margin-left: 5.2rem;
 `;
 
 export const CommentReplyListContainer = styled.div``;
 
 export const ReplyWriteButton = styled.button`
-  color: var(--primary-500);
-  font-size: 1.4rem;
+  color: ${({ theme }) => theme.colors.primary500};
   margin: 1.5rem 0;
+  ${({ theme }) => theme.font.button};
 `;
 
 export const CommentContentWrapper = styled.div`

@@ -6,14 +6,14 @@ export const CommentForm = styled.form``;
 export const CommentTextArea = styled.textarea`
   width: 100%;
   padding: 1.4rem;
-  border: 1px solid var(--grey-400);
+  border: 1px solid ${({ theme }) => theme.colors.grey400};
   border-radius: 1rem;
 `;
 
 export const CommentButton = styled.button`
   margin-top: 1.7rem;
-  font-size: 1.4rem;
-  color: var(--primary-500);
+  color: ${({ theme }) => theme.colors.primary500};
+  ${({ theme }) => theme.font.button}
 `;
 
 export const StartFromRight = styled.div`
@@ -22,7 +22,7 @@ export const StartFromRight = styled.div`
 `;
 
 export const MDEditor = styled(MarkdownEditor)`
-  border: 0.05rem solid var(--grey-300);
+  border: 0.05rem solid ${({ theme }) => theme.colors.grey300};
   border-radius: 1rem;
   overflow: overlay;
 
