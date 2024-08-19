@@ -5,9 +5,7 @@ export const NotiModalContainer = styled.div`
   position: fixed;
   top: 5.5rem;
   right: 17rem;
-  box-shadow:
-    0 0.6rem 0.9rem rgba(0, 0, 0, 0.12),
-    0 1.2rem 1.8rem rgba(0, 0, 0, 0.08);
+  box-shadow: ${(props) => props.theme.boxShadow.shadow12};
 
   border-radius: 1rem;
   padding: 2.5rem 3.4rem;
@@ -17,23 +15,22 @@ export const NotiModalContainer = styled.div`
 export const NotiItem = styled.div`
   width: 28rem;
   position: relative;
-  font-size: 1.1rem;
+  ${(props) => props.theme.font.caption}
   margin-bottom: 1rem;
   padding: 2.3rem 0;
-  border-bottom: 0.1rem solid var(--grey-100);
+  border-bottom: 0.1rem solid ${(props) => props.theme.colors.grey100};
   background-color: white;
   cursor: pointer;
 `;
 
 export const NotiModalTitle = styled.h2`
-  color: var(--grey-600);
-  font-size: 1.4rem;
+  color: ${(props) => props.theme.colors.grey600};
+  ${(props) => props.theme.font.caption}
   margin-bottom: 1.2rem;
-  font-weight: 500;
 `;
 
 export const NotiReadBtn = styled.button`
-  font-size: 1.5rem;
+  ${(props) => props.theme.font.body}
   width: 1.5rem;
   height: 1.5rem;
   position: absolute;
@@ -42,15 +39,13 @@ export const NotiReadBtn = styled.button`
 `;
 
 export const NotiTitle = styled.div`
-  font-size: 1.6rem;
-  font-weight: bold;
+  ${(props) => props.theme.font.bodyBold}
   margin-bottom: 0.6rem;
 `;
 
 export const NotiMessage = styled.div`
-  color: var(--grey-500);
-  font-size: 1.4rem;
-  font-weight: 500;
+  color: ${(props) => props.theme.colors.grey500};
+  ${(props) => props.theme.font.caption}
 
   overflow: hidden;
   text-overflow: ellipsis;

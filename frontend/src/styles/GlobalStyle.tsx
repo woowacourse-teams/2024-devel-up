@@ -223,7 +223,6 @@ body {
     --grey-700:#4C4C4C;
     --grey-800:#2F2F2F;
     --grey-900:#0E0E0E;
-
     --white-color: #FFFFFF;
     --black-color: #000000;
   }

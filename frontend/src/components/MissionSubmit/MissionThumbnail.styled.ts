@@ -3,7 +3,6 @@ import javaIcon from '@/assets/images/java.svg';
 
 //TODO shadow에 대한 스타일 변수 적용해야합니다. @버건디
 export const MissionImageContainer = styled.div`
-  box-shadow: var(--shadow-20);
   margin-bottom: 4rem;
 `;
 
@@ -13,7 +12,8 @@ export const MissionImageWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   width: 40rem;
-  border: 1px solid var(--grey-200);
+  border: 1px solid ${(props) => props.theme.colors.grey200};
+  filter: drop-shadow(${(props) => props.theme.boxShadow.shadow04});
   margin: 0 auto;
   border-radius: 1rem;
 `;
@@ -30,13 +30,12 @@ export const MissionSummaryWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  background: var(--grey-50);
+  background: ${(props) => props.theme.colors.grey50};
   border-radius: 0 0 1rem 1rem;
 `;
 
 export const MissionSummaryText = styled.span`
-  font-weight: 700;
-  font-size: 1.7rem;
+  ${(props) => props.theme.font.bodyBold}
 `;
 
 export const JavaIcon = styled(javaIcon)``;

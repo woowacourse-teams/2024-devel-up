@@ -17,6 +17,5 @@ export const GithubIcon = styled(GithubLogo)`
 `;
 
 export const BannerTitle = styled.h1`
-  font-weight: bold;
-  font-size: 3rem;
+  ${(props) => props.theme.font.heading3}
 `;

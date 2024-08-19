@@ -103,8 +103,8 @@ public class SolutionService {
         return SolutionResponse.from(solution);
     }
 
-    public List<SummarizedSolutionResponse> getCompletedSummaries() {
-        return solutionRepository.findAllCompletedSolution().stream()
+    public List<SummarizedSolutionResponse> getCompletedSummaries(String hashTagName) {
+        return solutionRepository.findAllCompletedSolutionByHashTagName(hashTagName).stream()
                 .map(SummarizedSolutionResponse::from)
                 .toList();
     }

@@ -14,14 +14,12 @@ export const TitleWrapper = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 1.6rem;
-  font-weight: 600;
+  ${(props) => props.theme.font.bodyBold}
 `;
 
 export const Description = styled.div`
-  font-size: 1.6rem;
-  font-weight: 300;
-  color: var(--grey-500);
+  ${(props) => props.theme.font.body}
+  color: ${(props) => props.theme.colors.grey500};
   margin-top: 0.5rem;
 `;
 
