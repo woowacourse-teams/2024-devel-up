@@ -10,9 +10,9 @@ export default function CommentReplyItem({ commentReply }: CommentReplyItemProps
   const { member, content } = commentReply;
 
   return (
-    <S.CommentItemContainer $isReply>
+    <S.CommentReplyItemContainer>
       <CommentUserInfo member={member} />
       <S.CommentContent source={content} />
-    </S.CommentItemContainer>
+    </S.CommentReplyItemContainer>
   );
 }

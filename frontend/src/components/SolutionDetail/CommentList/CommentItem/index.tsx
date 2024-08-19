@@ -15,14 +15,16 @@ export default function CommentItem({ comment }: CommentItemProps) {
 
   return (
     <S.CommentItemContainer>
-      {isDeleted ? (
-        <S.DeletedComment>삭제된 댓글입니다.</S.DeletedComment>
-      ) : (
-        <>
-          <CommentUserInfo member={member} />
-          <S.CommentContent source={content} />
-        </>
-      )}
+      <S.CommentContentWrapper>
+        {isDeleted ? (
+          <S.DeletedComment>삭제된 댓글입니다.</S.DeletedComment>
+        ) : (
+          <>
+            <CommentUserInfo member={member} />
+            <S.CommentContent source={content} />
+          </>
+        )}
+      </S.CommentContentWrapper>
       <CommentReplySection parentComment={comment} isLoggedIn={Boolean(userInfo)} />
     </S.CommentItemContainer>
   );
