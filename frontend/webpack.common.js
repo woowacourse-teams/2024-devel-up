@@ -29,6 +29,10 @@ module.exports = {
           outputPath: 'assets/',
         },
       },
+      {
+        test: /\.(css|scss)$/i,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
 

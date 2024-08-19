@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,8 +27,10 @@ public class MissionApi {
 
     @GetMapping("/missions")
     @Operation(summary = "미션 목록 조회 API", description = "미션 목록을 조회합니다.")
-    public ResponseEntity<ApiResponse<List<MissionResponse>>> getMissions() {
-        List<MissionResponse> responses = missionService.getMissions();
+    public ResponseEntity<ApiResponse<List<MissionResponse>>> getMissions(
+            @RequestParam(defaultValue = "all") String hashTag
+    ) {
+        List<MissionResponse> responses = missionService.getMissions(hashTag);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }

@@ -62,12 +62,11 @@ export const ModalContainer = styled.div<ModalContainerProps>`
 `;
 
 export const TitleText = styled.h1`
-  font-weight: bold;
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.bodyBold}
 `;
 
 export const SubTitleText = styled.p`
-  font-size: 1.6rem;
+  ${(props) => props.theme.font.caption}
   margin-bottom: 1rem;
 `;
 

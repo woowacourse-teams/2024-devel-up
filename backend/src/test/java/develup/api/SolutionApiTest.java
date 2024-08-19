@@ -37,7 +37,7 @@ class SolutionApiTest extends ApiTestSupport {
                 SummarizedSolutionResponse.from(createSolution()),
                 SummarizedSolutionResponse.from(createSolution())
         );
-        BDDMockito.given(solutionService.getCompletedSummaries())
+        BDDMockito.given(solutionService.getCompletedSummaries(any()))
                 .willReturn(responses);
 
         mockMvc.perform(get("/solutions"))

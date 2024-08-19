@@ -43,6 +43,7 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
       setIsUrlError(true);
       return;
     }
+
     if (!isValidDescription) {
       setIsDescriptionError(true);
       return;
