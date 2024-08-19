@@ -4,13 +4,17 @@ import useSubmitSolutionMutation from './useSubmitSolutionMutation';
 import useModal from './useModal';
 import type { FormEvent } from 'react';
 import useSolutionTitle from './useSolutionTitle';
+import extractMissionName from '@/utils/extractMissionName';
 
 interface UseSubmitSolutionParams {
   missionId: number;
+  missionName: string;
 }
 
-const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
+const useSubmitSolution = ({ missionId, missionName }: UseSubmitSolutionParams) => {
   const { url, handleUrl, isValidUrl, isUrlError, setIsUrlError } = useUrl();
+  const isMatchedMissionName = missionName === extractMissionName(url);
+
   const {
     description,
     handleDescription,
@@ -43,6 +47,7 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
       setIsUrlError(true);
       return;
     }
+
     if (!isValidDescription) {
       setIsDescriptionError(true);
       return;
@@ -64,6 +69,7 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
     isUrlError,
     isDescriptionError,
     isSolutionTitleError,
+    isMatchedMissionName,
   };
 };
 
