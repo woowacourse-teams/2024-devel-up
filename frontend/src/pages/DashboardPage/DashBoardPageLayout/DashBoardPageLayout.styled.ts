@@ -33,12 +33,12 @@ export const ProfileImageWrapper = styled.div`
   border-radius: 50%;
   border: 1px solid var(--grey-400);
   overflow: hidden;
-  padding: 1rem;
 `;
 
 export const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
+  border-radius: 50%;
 `;
 
 export const ProfileName = styled.span`
