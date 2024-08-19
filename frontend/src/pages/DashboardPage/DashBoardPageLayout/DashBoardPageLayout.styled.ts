@@ -62,8 +62,7 @@ export const LinkWrapper = styled.div`
 
 export const Path = styled.span<{ $isSelected: boolean }>`
   ${(props) => props.theme.font.body}
-  color: ${({ $isSelected, theme }) =>
-    $isSelected ? theme.colors.blackColor : theme.colors.grey400};
+  color: ${({ $isSelected, theme }) => ($isSelected ? theme.colors.black : theme.colors.grey400)};
 `;
 
 export const Circle = styled.div<{ $isSelected: boolean }>`

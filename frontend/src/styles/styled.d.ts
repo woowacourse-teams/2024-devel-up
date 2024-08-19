@@ -34,8 +34,8 @@ declare module 'styled-components' {
       grey800: string;
       grey900: string;
 
-      whiteColor: string;
-      blackColor: string;
+      white: string;
+      black: string;
     };
     font: {
       heading1: string;

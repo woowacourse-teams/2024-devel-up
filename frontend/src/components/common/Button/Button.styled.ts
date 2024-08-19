@@ -26,7 +26,7 @@ const color = (variant: ButtonVariant) => {
     case BUTTON_VARIANTS.primary:
       return css`
         background-color: ${(props) => props.theme.colors.primary500};
-        color: ${(props) => props.theme.colors.whiteColor};
+        color: ${(props) => props.theme.colors.white};
         &:hover {
           background-color: ${(props) => props.theme.colors.primary600};
         }
@@ -35,7 +35,7 @@ const color = (variant: ButtonVariant) => {
     default:
       return css`
         background-color: ${(props) => props.theme.colors.grey200};
-        color: ${(props) => props.theme.colors.blackColor};
+        color: ${(props) => props.theme.colors.black};
         &:hover {
           background-color: ${(props) => props.theme.colors.grey300};
         }

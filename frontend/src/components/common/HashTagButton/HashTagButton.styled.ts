@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Button = styled.div`
   background-color: ${(props) => props.theme.colors.primary50};
-  color: ${(props) => props.theme.colors.blackColor};
+  color: ${(props) => props.theme.colors.black};
   display: flex;
   justify-content: center;
   align-items: center;

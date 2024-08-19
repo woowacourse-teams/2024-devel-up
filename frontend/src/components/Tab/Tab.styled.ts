@@ -34,7 +34,7 @@ export const TabContainer = styled.div<{ $isSelected: boolean }>`
   background: ${({ $isSelected, theme }) =>
     $isSelected ? theme.colors.primary200 : theme.colors.grey50};
   font-size: 1.5rem;
-  color: ${(props) => props.theme.colors.blackColor};
+  color: ${(props) => props.theme.colors.black};
   border-radius: 3rem 3rem 0 0;
   flex: 1;
   transition:

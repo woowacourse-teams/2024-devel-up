@@ -33,8 +33,8 @@ export const theme: DefaultTheme = {
     grey800: '#2F2F2F',
     grey900: '#0E0E0E',
 
-    whiteColor: '#FFFFFF',
-    blackColor: '#000000',
+    white: '#FFFFFF',
+    black: '#000000',
   },
   font: {
     heading1: `

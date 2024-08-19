@@ -31,7 +31,7 @@ export const ThumbnailImg = styled.img`
 export const GradientOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0), ${(props) => props.theme.colors.blackColor});
+  background: linear-gradient(rgba(0, 0, 0, 0), ${(props) => props.theme.colors.black});
   opacity: 0.5;
   pointer-events: none; // 그라데이션이 클릭 이벤트를 방지하지 않도록 설정
 `;
@@ -41,7 +41,7 @@ export const Title = styled.h1`
   left: 2.1rem;
   bottom: 2.4rem;
   ${(props) => props.theme.font.heading1}
-  color: ${(props) => props.theme.colors.whiteColor};
+  color: ${(props) => props.theme.colors.white};
 `;
 
 export const JavaIcon = styled(javaIcon)``;

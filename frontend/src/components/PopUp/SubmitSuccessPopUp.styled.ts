@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 export const SubmitPopUpContainer = styled.div`
   width: 39rem;
   height: 32rem;
-  background: ${(props) => props.theme.colors.whiteColor};
+  background: ${(props) => props.theme.colors.white};
   box-shadow: ${(props) => props.theme.boxShadow.shadow08};
   border-radius: 0.5rem;
   position: relative;
@@ -22,7 +22,7 @@ export const PopUpMessageContainer = styled.div`
 
 export const PopUpMessage = styled.p`
   ${(props) => props.theme.font.body}
-  color: ${(props) => props.theme.colors.blackColor};
+  color: ${(props) => props.theme.colors.black};
 `;
 
 export const SubmitButtonContainer = styled.div`
@@ -35,7 +35,7 @@ export const SubmitButtonContainer = styled.div`
 
 export const SubmitButton = styled.button`
   padding: 1rem;
-  color: ${(props) => props.theme.colors.whiteColor};
+  color: ${(props) => props.theme.colors.white};
   ${(props) => props.theme.font.button}
   background: ${(props) => props.theme.colors.primary500};
   border-radius: 0.8rem;
