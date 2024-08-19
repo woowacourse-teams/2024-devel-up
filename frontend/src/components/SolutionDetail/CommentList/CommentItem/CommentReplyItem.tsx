@@ -1,17 +1,17 @@
 import * as S from '../CommentList.styled';
 import type { CommentReply } from '@/types';
-import CommentUserInfo from './CommentUserInfo';
+import CommentInfo from './CommentInfo';
 
 interface CommentReplyItemProps {
   commentReply: CommentReply;
 }
 
 export default function CommentReplyItem({ commentReply }: CommentReplyItemProps) {
-  const { member, content } = commentReply;
+  const { member, content, createdAt } = commentReply;
 
   return (
     <S.CommentReplyItemContainer>
-      <CommentUserInfo member={member} />
+      <CommentInfo member={member} createdAt={createdAt} />
       <S.CommentContent source={content} />
     </S.CommentReplyItemContainer>
   );

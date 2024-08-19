@@ -1,7 +1,7 @@
 import type { Comment } from '@/types';
 import * as S from '../CommentList.styled';
 import useUserInfo from '@/hooks/useUserInfo';
-import CommentUserInfo from './CommentUserInfo';
+import CommentInfo from './CommentInfo';
 import CommentReplySection from './CommentReplySection';
 
 interface CommentItemProps {
@@ -9,7 +9,7 @@ interface CommentItemProps {
 }
 
 export default function CommentItem({ comment }: CommentItemProps) {
-  const { content, member, isDeleted } = comment;
+  const { content, member, createdAt, isDeleted } = comment;
 
   const { data: userInfo } = useUserInfo();
 
@@ -20,7 +20,7 @@ export default function CommentItem({ comment }: CommentItemProps) {
           <S.DeletedComment>삭제된 댓글입니다.</S.DeletedComment>
         ) : (
           <>
-            <CommentUserInfo member={member} />
+            <CommentInfo member={member} createdAt={createdAt} />
             <S.CommentContent source={content} />
           </>
         )}

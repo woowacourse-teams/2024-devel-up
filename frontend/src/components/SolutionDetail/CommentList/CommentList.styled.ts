@@ -33,9 +33,8 @@ export const CommentReplyItemContainer = styled.div`
   }
 `;
 
-export const CommentUserInfoContainer = styled.div`
+export const CommentInfoContainer = styled.div`
   display: flex;
-  align-items: center;
 `;
 
 export const UserProfileImg = styled.img`
@@ -44,11 +43,11 @@ export const UserProfileImg = styled.img`
   border: 1px solid ${({ theme }) => theme.colors.grey400};
   border-radius: 10rem;
   object-fit: cover;
-  margin-right: 1rem;
 `;
 
 export const UserName = styled.div`
   color: ${({ theme }) => theme.colors.grey600};
+  margin-left: 1.8rem;
   ${({ theme }) => theme.font.body}
 `;
 
@@ -58,9 +57,17 @@ export const DeletedComment = styled.div`
   ${({ theme }) => theme.font.body}
 `;
 
+export const CommentCreatedAt = styled.div`
+  color: ${({ theme }) => theme.colors.grey500};
+  margin-top: 0.2rem;
+  margin-left: 1rem;
+  ${({ theme }) => theme.font.caption};
+`;
+
 export const CommentContent = styled(SanitizedMDPreview)`
   ${({ theme }) => theme.font.body}
-  margin-left: 5.2rem;
+  margin-top: -0.8rem;
+  margin-left: 6.2rem;
 `;
 
 export const CommentReplyListContainer = styled.div``;
@@ -76,7 +83,7 @@ export const CommentContentWrapper = styled.div`
 `;
 
 export const CommentReplySectionContainer = styled.section`
-  margin-left: 5.2rem;
+  margin-left: 6.2rem;
 `;
 
 export const CommentReplyFormWrapper = styled.div``;

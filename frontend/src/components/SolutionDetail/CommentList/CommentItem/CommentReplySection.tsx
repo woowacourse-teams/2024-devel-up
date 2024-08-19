@@ -23,7 +23,7 @@ export default function CommentReplySection({
 
   return (
     <S.CommentReplySectionContainer>
-      {!isLoggedIn && !isParentDeleted && (
+      {isLoggedIn && !isParentDeleted && (
         <>
           <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글</S.ReplyWriteButton>
           {isReplyFormOpen && (

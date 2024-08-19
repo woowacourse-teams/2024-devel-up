@@ -2,12 +2,14 @@ import type { UserInfo } from '@/types/user';
 import * as S from '../CommentList.styled';
 import type { SyntheticEvent } from 'react';
 import DefaultUserIcon from '@/assets/images/default-user.png';
+import { formatDateString } from '@/utils/formatDateString';
 
-interface CommentUserInfoProps {
+interface CommentInfoProps {
   member: UserInfo;
+  createdAt: string;
 }
 
-export default function CommentUserInfo({ member }: CommentUserInfoProps) {
+export default function CommentInfo({ member, createdAt }: CommentInfoProps) {
   const { imageUrl, name } = member;
 
   const handleImageError = ({ target }: SyntheticEvent<HTMLImageElement>) => {
@@ -17,9 +19,10 @@ export default function CommentUserInfo({ member }: CommentUserInfoProps) {
   };
 
   return (
-    <S.CommentUserInfoContainer>
+    <S.CommentInfoContainer>
       <S.UserProfileImg src={imageUrl} onError={handleImageError} />
       <S.UserName>{name}</S.UserName>
-    </S.CommentUserInfoContainer>
+      <S.CommentCreatedAt>{formatDateString(createdAt)}</S.CommentCreatedAt>
+    </S.CommentInfoContainer>
   );
 }
