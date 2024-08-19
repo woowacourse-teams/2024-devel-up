@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
@@ -76,6 +78,24 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> solutionCommentService.getComment(commentId))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 댓글입니다.");
+    }
+
+    @Test
+    @DisplayName("특정 회원이 작성한 댓글 목록을 조회한다.")
+    void getMyComments() {
+        Solution solution = createSolution();
+        Member member = createMember();
+        List<SolutionComment> solutionComments = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            SolutionComment solutionComment = createSolutionComment(solution, member);
+            solutionComments.add(solutionComment);
+        }
+        createSolutionComment();
+
+        List<MySolutionCommentResponse> myComments = solutionCommentService.getMyComments(member.getId());
+
+        assertThat(myComments)
+                .hasSize(solutionComments.size());
     }
 
     @Test
@@ -162,6 +182,22 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
                 .withSolution(solution)
                 .withMember(solution.getMember())
+                .build();
+        solutionCommentRepository.save(solutionComment);
+
+        return solutionComment;
+    }
+
+    private Member createMember() {
+        Member member = MemberTestData.defaultMember().build();
+
+        return memberRepository.save(member);
+    }
+
+    private SolutionComment createSolutionComment(Solution solution, Member member) {
+        SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
+                .withSolution(solution)
+                .withMember(member)
                 .build();
         solutionCommentRepository.save(solutionComment);
 
