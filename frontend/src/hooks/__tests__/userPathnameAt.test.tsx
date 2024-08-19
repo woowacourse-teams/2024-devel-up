@@ -9,9 +9,11 @@ const TestComponent = ({ index }: { index: number }) => {
 
 describe('usePathnameAt', () => {
   it('주어진 index(0)에 따라 올바른 pathname을 반환한다.', () => {
+    const INDEX = 0;
+
     const { getByTestId } = render(
       <MemoryRouter initialEntries={['/home/about/contact']}>
-        <TestComponent index={0} />
+        <TestComponent index={INDEX} />
       </MemoryRouter>,
     );
 
@@ -19,9 +21,11 @@ describe('usePathnameAt', () => {
   });
 
   it('주어진 index(양수)에 따라 올바른 pathname을 반환한다.', () => {
+    const INDEX = 1;
+
     const { getByTestId } = render(
       <MemoryRouter initialEntries={['/home/about/contact']}>
-        <TestComponent index={1} />
+        <TestComponent index={INDEX} />
       </MemoryRouter>,
     );
 
@@ -29,9 +33,11 @@ describe('usePathnameAt', () => {
   });
 
   it('주어진 index(음수)에 따라 올바른 pathname을 반환한다.', () => {
+    const INDEX = -1;
+
     const { getByTestId } = render(
       <MemoryRouter initialEntries={['/home/about/contact']}>
-        <TestComponent index={-1} />
+        <TestComponent index={INDEX} />
       </MemoryRouter>,
     );
 
@@ -39,9 +45,11 @@ describe('usePathnameAt', () => {
   });
 
   it('유효한 범위에서 벗어난 index(양수)일 경우 undefined를 반환한다.', () => {
+    const INDEX = 3;
+
     const { getByTestId } = render(
       <MemoryRouter initialEntries={['/home/about/contact']}>
-        <TestComponent index={3} />
+        <TestComponent index={INDEX} />
       </MemoryRouter>,
     );
 
@@ -49,9 +57,11 @@ describe('usePathnameAt', () => {
   });
 
   it('유효한 범위에서 벗어난 index(음수)일 경우 undefined를 반환한다.', () => {
+    const INDEX = -4;
+
     const { getByTestId } = render(
       <MemoryRouter initialEntries={['/home/about/contact']}>
-        <TestComponent index={-4} />
+        <TestComponent index={INDEX} />
       </MemoryRouter>,
     );
 
