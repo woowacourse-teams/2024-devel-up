@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import * as S from './Mission.styled';
 import { Link } from 'react-router-dom';
-import type { HashTag } from '@/types/mission';
+import type { HashTag } from '@/types';
 
 interface MissionProps extends PropsWithChildren {
   id: number;
