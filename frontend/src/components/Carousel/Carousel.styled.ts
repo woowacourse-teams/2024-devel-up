@@ -49,7 +49,7 @@ export const Button = styled.button`
   width: 4.7rem;
   height: 10rem;
   background: rgba(0, 0, 0, 0.1);
-  color: white;
+  color: ${(props) => props.theme.colors.white};
   cursor: pointer;
   position: absolute;
   border-radius: 0.8rem;

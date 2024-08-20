@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { UserInfo } from './user';
 
 export interface TabInfo {
   name: string;
@@ -48,4 +49,23 @@ export interface Submission {
   title: string;
   description: string;
   url: string;
+}
+
+export interface Comment {
+  id: number;
+  solutionId: number;
+  content: string;
+  member: UserInfo;
+  replies: CommentReply[];
+  createdAt: string;
+  isDeleted: boolean;
+}
+
+export interface CommentReply {
+  id: number;
+  solutionId: number;
+  parentCommentId: number;
+  content: string;
+  member: UserInfo;
+  createdAt: string;
 }

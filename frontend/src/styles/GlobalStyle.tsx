@@ -175,12 +175,11 @@ html,
 
 body {
   animation: fadeIn 0.2s ease-in-out;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
 }
 
-body::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
+
+::-webkit-scrollbar {
+  /* display: none;  Safari and Chrome */
 }
 
   li {
@@ -224,7 +223,6 @@ body::-webkit-scrollbar {
     --grey-700:#4C4C4C;
     --grey-800:#2F2F2F;
     --grey-900:#0E0E0E;
-
     --white-color: #FFFFFF;
     --black-color: #000000;
   }

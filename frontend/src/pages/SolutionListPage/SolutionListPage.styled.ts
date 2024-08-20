@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 export const SolutionTitle = styled.h2`
   margin-bottom: 3.5rem;
-  font-size: 2.8rem;
-  font-weight: bold;
+  ${(props) => props.theme.font.heading1}
 `;
 
 export const SolutionListPageContainer = styled.div`

@@ -17,9 +17,12 @@ import * as Sentry from '@sentry/react';
 import ErrorPage from './pages/ErrorPage';
 import SolutionListPage from './pages/SolutionListPage';
 import MissionListPage from './pages/MissionListPage';
+import SolutionDetailPage from './pages/SolutionDetailPage';
 import DashboardPage from './pages/DashboardPage';
 import DashBoardMissionInProgressPage from './pages/DashboardPage/MissionInProgress';
 import SubmittedSolutionList from './components/DashBoard/SubmittedSolutions';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './styles/theme';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -153,6 +156,16 @@ const routes = [
       },
     ],
   },
+  {
+    path: `${ROUTES.solutions}/:id`,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <SolutionDetailPage />
+        </Suspense>
+      </App>
+    ),
+  },
 ];
 
 export const router = createBrowserRouter(routes, {
@@ -191,8 +204,10 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <QueryErrorBoundary>
         <ErrorBoundary fallback={<div>에러에요!</div>}>
-          <GlobalStyle />
-          <RouterProvider router={router} />
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <RouterProvider router={router} />
+          </ThemeProvider>
         </ErrorBoundary>
       </QueryErrorBoundary>
     </QueryClientProvider>
