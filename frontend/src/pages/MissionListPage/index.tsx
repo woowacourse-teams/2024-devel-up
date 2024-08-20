@@ -3,10 +3,11 @@ import * as S from './MissionListPage.styled';
 import useMissions from '@/hooks/useMissions';
 import useHashTags from '@/hooks/useHashTags';
 import HashTagList from '@/components/HashTagList';
-import useToggleHashTag from '@/hooks/useToggleHashTag';
+import { useState } from 'react';
+import { HASHTAGS } from '@/constants/hashTags';
 
 export default function MissionListPage() {
-  const { selectedHashTag, setSelectedHashTag } = useToggleHashTag();
+  const [selectedHashTag, setSelectedHashTag] = useState(HASHTAGS.all);
   const { data: allMissions } = useMissions(selectedHashTag);
   const { data: allHashTags } = useHashTags();
 
