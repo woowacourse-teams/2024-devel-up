@@ -27,15 +27,6 @@ export interface MissionWithDescription extends Mission {
   description: string;
 }
 
-export interface Mission {
-  id: number;
-  title: string;
-  language: string;
-  descriptionUrl: string;
-  thumbnail: string;
-  url: string;
-  isStarted?: boolean;
-}
 // postSubmission에 관련된 타입 선언
 export interface SubmissionPayload {
   missionId: number;
