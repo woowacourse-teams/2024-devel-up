@@ -43,7 +43,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Test with Gradle
-        continue-on-error: true
         id: gradle_test
         working-directory: backend
         run: ./gradlew test
