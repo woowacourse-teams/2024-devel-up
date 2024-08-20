@@ -24,8 +24,7 @@ export const LogoImg = styled.img`
 `;
 
 export const Logo = styled.h1`
-  font-size: 3rem;
-  font-weight: 800;
+  ${(props) => props.theme.font.heading3}
 `;
 
 export const Spacer = styled.div`
@@ -46,7 +45,7 @@ export const RightPart = styled.div`
 export const LeftPart = styled.div``;
 
 export const LoginButton = styled.button`
-  font-size: 1.3rem;
+  ${(props) => props.theme.font.body}
 `;
 
 export const MenuWrapper = styled.div`
@@ -55,6 +54,6 @@ export const MenuWrapper = styled.div`
 `;
 
 export const MenuText = styled.p<{ $isActive?: boolean }>`
-  font-size: 1.6rem;
-  color: ${({ $isActive }) => ($isActive ? '' : 'var(--grey-400)')};
+  ${(props) => props.theme.font.body}
+  color: ${({ $isActive, theme }) => ($isActive ? '' : theme.colors.grey400)};
 `;
