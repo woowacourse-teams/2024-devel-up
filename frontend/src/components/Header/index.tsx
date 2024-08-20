@@ -1,19 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
 import * as S from './Header.styled';
 import { ROUTES } from '@/constants/routes';
+import NotiModal from './NotiModal';
 import { BASE_URL } from '@/apis/baseUrl';
 import { PATH } from '@/apis/paths';
 import useUserInfo from '@/hooks/useUserInfo';
 import HeaderMenu from './HeaderMenu';
-import { deleteLogout } from '@/apis/authAPI';
+import useLogoutMutation from '@/hooks/useLogoutMutation';
+import useModal from '@/hooks/useModal';
 
 export default function Header() {
   const { pathname } = useLocation();
   const { data: userInfo } = useUserInfo();
-
-  const handleUserLogout = async () => {
-    await deleteLogout();
-  };
+  const { handleUserLogout } = useLogoutMutation();
+  const { isModalOpen, handleModalClose, handleToggleModal } = useModal();
 
   return (
     <>
@@ -28,6 +28,10 @@ export default function Header() {
           <HeaderMenu name="솔루션" path={ROUTES.solutions} currentPath={pathname} />
         </S.MenuWrapper>
         <S.RightPart>
+          {userInfo && (
+            <HeaderMenu name="대시보드" path={ROUTES.dashboardHome} currentPath={pathname} />
+          )}
+          {userInfo && <S.BellIcon onClick={handleToggleModal} />}
           <HeaderMenu name="대시보드" path={ROUTES.dashboardHome} currentPath={pathname} />
           {!userInfo ? (
             <a href={`${BASE_URL.dev}${PATH.githubLogin}?next=${pathname}`}>
@@ -38,6 +42,7 @@ export default function Header() {
           )}
         </S.RightPart>
       </S.Container>
+      {isModalOpen && <NotiModal closeModal={handleModalClose} />}
       <S.Spacer />
     </>
   );
