@@ -12,7 +12,7 @@ const useLogoutMutation = () => {
     },
   });
 
-  const handleUserLogout = async () => {
+  const handleUserLogout = () => {
     userLogoutMutation();
   };
 

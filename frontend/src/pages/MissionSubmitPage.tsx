@@ -53,7 +53,7 @@ export default function MissionSubmitPage() {
           value={url}
           onChange={handleUrl}
           missionId={missionId}
-          danger={isUrlError && isMatchedMissionName}
+          danger={isUrlError || !isMatchedMissionName}
         />
         <OneWord
           danger={isDescriptionError}
