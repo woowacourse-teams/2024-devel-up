@@ -42,7 +42,7 @@ public class SolutionCommentApi {
     }
 
     @GetMapping("/solutions/comments/mine")
-    @Operation(summary = "내가 솔루션에 단 댓글 조회 API", description = "내가 솔루션에 단 댓글 목록을 조회합니다. 댓글 정보와 댓글이 달린 솔루션의 일부 정보를 조회합니다.")
+    @Operation(summary = "사용자가 솔루션에 단 댓글 조회 API", description = "사용자가 솔루션에 단 댓글 목록을 조회합니다. 댓글 정보와 댓글이 달린 솔루션의 일부 정보를 조회합니다.")
     public ResponseEntity<ApiResponse<List<MySolutionCommentResponse>>> getMyComments(@Auth Accessor accessor) {
         List<MySolutionCommentResponse> responses = solutionCommentService.getMyComments(accessor.id());
         return ResponseEntity.ok(new ApiResponse<>(responses));
