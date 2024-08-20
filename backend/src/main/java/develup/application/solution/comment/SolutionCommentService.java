@@ -7,6 +7,7 @@ import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
+import develup.domain.solution.comment.MySolutionComment;
 import develup.domain.solution.comment.SolutionComment;
 import develup.domain.solution.comment.SolutionCommentRepository;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,14 @@ public class SolutionCommentService {
         List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solutionId);
 
         return commentGroupingService.groupReplies(comments);
+    }
+
+    public List<MySolutionCommentResponse> getMyComments(Long memberId) {
+        List<MySolutionComment> mySolutionComments = solutionCommentRepository.findAllMySolutionComment(memberId);
+
+        return mySolutionComments.stream()
+                .map(MySolutionCommentResponse::from)
+                .toList();
     }
 
     public CreateSolutionCommentResponse addComment(Long solutionId, SolutionCommentRequest request, Long memberId) {
