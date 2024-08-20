@@ -13,6 +13,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Value("${client-host}")
     private String clientHost;
+    @Value("${api-host}")
+    private String apiHost;
 
     private final AuthArgumentResolver authArgumentResolver;
 
@@ -23,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(clientHost)
+                .allowedOrigins(clientHost, apiHost)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowCredentials(true);
     }
