@@ -1,19 +1,27 @@
 package develup.api.config;
 
+import java.util.List;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
+    @Value("${api-host}")
+    private String hostAddress;
 
     @Bean
     public OpenAPI openAPI() {
+        Server server = new Server();
+        server.setUrl(hostAddress);
         return new OpenAPI()
                 .components(new Components())
-                .info(info());
+                .info(info())
+                .servers(List.of(server));
     }
 
     private Info info() {
