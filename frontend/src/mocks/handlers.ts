@@ -3,12 +3,13 @@ import { BASE_URL } from '@/apis/baseUrl';
 import { PATH } from '@/apis/paths';
 import missions from './missions.json';
 import submittedSolutions from './SubmittedSolutions.json';
+import { HASHTAGS } from '@/constants/hashTags';
 
 export const handlers = [
   http.get(`${BASE_URL.dev}${PATH.missionList}`, ({ request }) => {
     const url = new URL(request.url);
     const hashTag = url.searchParams.get('hashTag');
-    if (hashTag === 'all') {
+    if (hashTag === HASHTAGS.all) {
       return HttpResponse.json({ data: missions });
     }
 

@@ -1,5 +1,6 @@
 import { develupAPIClient } from '@/apis/clients/develupClient';
 import { PATH } from '@/apis/paths';
+import { HASHTAGS } from '@/constants/hashTags';
 import SubmittedSolutions from '@/mocks/SubmittedSolutions.json';
 import type { HashTag } from '@/types';
 import type { Solution, SubmittedSolution } from '@/types/solution';
@@ -17,7 +18,9 @@ interface GetSolutionSummariesResponse {
   data: SolutionSummary[];
 }
 
-export const getSolutionSummaries = async (filter: string = 'all'): Promise<SolutionSummary[]> => {
+export const getSolutionSummaries = async (
+  filter: string = HASHTAGS.all,
+): Promise<SolutionSummary[]> => {
   const { data } = await develupAPIClient.get<GetSolutionSummariesResponse>(
     `${PATH.solutionSummaries}`,
     { hashTag: filter },
