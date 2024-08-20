@@ -61,7 +61,7 @@ jobs:
           merge-multiple: true
 
       - name: Move Build File
-        run: sudo cp ./frontend/dist/* /var/www/html
+        run: sudo cp -r ./frontend/dist/* /var/www/html
 
       - name: 🟢 Nginx Restart
         run: sudo service nginx restart
