@@ -1,0 +1,96 @@
+name: 🚛 Backend Dev CI
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches:
+      - dev
+
+jobs:
+  PATH_CHANGES:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      backend: ${{ steps.changes.outputs.backend }}
+
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+
+  BE_CI:
+    environment: dev
+    runs-on: ubuntu-latest
+    needs: PATH_CHANGES
+    if: ${{ needs.PATH_CHANGES.outputs.backend == 'true' }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Test with Gradle
+        continue-on-error: true
+        id: gradle_test
+        working-directory: backend
+        run: ./gradlew test
+
+  BE_SLACK_MESSAGE:
+    environment: dev
+    runs-on: ubuntu-latest
+    needs: BE_CI
+    if: ${{!cancelled() && needs.BE_CI.result != 'skipped'}}
+
+    env:
+      lilychoibb: ${{secrets.LILYCHOIBB_SLACK_ID}}
+      robinjoon: ${{secrets.ROBINJOON_SLACK_ID}}
+      brgndyy: ${{secrets.BRGNDYY_SLACK_ID}}
+      chosim-dvlpr: ${{secrets.CHOSIM_DVLPR_SLACK_ID}}
+      Minjoo522: ${{secrets.MINJOO522_SLACK_ID}}
+      alstn113: ${{secrets.ALSTN113_SLACK_ID}}
+      le2sky: ${{secrets.LE2SKY_SLACK_ID}}
+      Parkhanyoung: ${{secrets.PARKHANYOUNG_SLACK_ID}}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Get teamMember
+        id: teamMember
+        run: |
+          echo "SENDER_SLACK_ID=${{ env[github.event.sender.login] }}" >> $GITHUB_ENV
+
+      - name: Slack mention
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+                "text": "pr 테스트 결과",
+                "blocks": [
+                  {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "pr 테스트 ${{ needs.BE_CI.result }} \n • 링크: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}> \n • pr 담당자: <@${{ env.SENDER_SLACK_ID }}>"
+                      }
+                  }
+                ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
