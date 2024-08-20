@@ -10,5 +10,4 @@ public record MySolutionComment(
         String solutionTitle,
         Long solutionCommentCount
 ) {
-
 }
