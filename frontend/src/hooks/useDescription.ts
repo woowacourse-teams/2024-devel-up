@@ -9,10 +9,12 @@ const useDescription = () => {
   const [isDescriptionError, setIsDescriptionError] = useState(false);
 
   //TODO 코멘트 길이에 관한 최대 글자수가 정해져야할거 같아서 임시로 100자로 지정해둡니다. @버건디
-  const isValidDescription = validateMaxLength({
-    value: description ?? '',
-    maxLength: MAX_COMMENT_LENGTH,
-  });
+  const isValidDescription = description
+    ? validateMaxLength({
+        value: description,
+        maxLength: MAX_COMMENT_LENGTH,
+      })
+    : true;
 
   const handleDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;

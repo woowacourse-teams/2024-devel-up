@@ -6,6 +6,7 @@ import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
 import develup.application.solution.comment.CreateSolutionCommentResponse;
+import develup.application.solution.comment.MySolutionCommentResponse;
 import develup.application.solution.comment.SolutionCommentRepliesResponse;
 import develup.application.solution.comment.SolutionCommentRequest;
 import develup.application.solution.comment.SolutionCommentService;
@@ -37,6 +38,13 @@ public class SolutionCommentApi {
     ) {
         List<SolutionCommentRepliesResponse> responses = solutionCommentService.getCommentsWithReplies(solutionId);
 
+        return ResponseEntity.ok(new ApiResponse<>(responses));
+    }
+
+    @GetMapping("/solutions/comments/mine")
+    @Operation(summary = "사용자가 솔루션에 단 댓글 조회 API", description = "사용자가 솔루션에 단 댓글 목록을 조회합니다. 댓글 정보와 댓글이 달린 솔루션의 일부 정보를 조회합니다.")
+    public ResponseEntity<ApiResponse<List<MySolutionCommentResponse>>> getMyComments(@Auth Accessor accessor) {
+        List<MySolutionCommentResponse> responses = solutionCommentService.getMyComments(accessor.id());
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
 
