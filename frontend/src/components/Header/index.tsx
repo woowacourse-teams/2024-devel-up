@@ -28,11 +28,10 @@ export default function Header() {
           <HeaderMenu name="솔루션" path={ROUTES.solutions} currentPath={pathname} />
         </S.MenuWrapper>
         <S.RightPart>
+          {userInfo && <S.BellIcon onClick={handleToggleModal} />}
           {userInfo && (
             <HeaderMenu name="대시보드" path={ROUTES.dashboardHome} currentPath={pathname} />
           )}
-          {userInfo && <S.BellIcon onClick={handleToggleModal} />}
-          <HeaderMenu name="대시보드" path={ROUTES.dashboardHome} currentPath={pathname} />
           {!userInfo ? (
             <a href={`${BASE_URL.dev}${PATH.githubLogin}?next=${pathname}`}>
               <S.LoginButton>로그인</S.LoginButton>
