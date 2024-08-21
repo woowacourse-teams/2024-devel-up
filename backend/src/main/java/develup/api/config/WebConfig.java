@@ -1,5 +1,6 @@
 package develup.api.config;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import develup.api.auth.AuthArgumentResolver;
@@ -25,7 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        Set<String> clientHostSet = Set.of(clientHost, apiHost, "http://localhost:3000");
+        Set<String> clientHostSet = new HashSet<>(List.of(clientHost, apiHost, "http://localhost:3000"));
         String[] corsHosts = clientHostSet.toArray(new String[0]);
 
         registry.addMapping("/**")
