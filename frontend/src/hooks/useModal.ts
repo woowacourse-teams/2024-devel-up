@@ -11,7 +11,11 @@ const useModal = () => {
     setIsModalOpen(false);
   };
 
-  return { isModalOpen, handleModalClose, handleModalOpen };
+  const handleToggleModal = () => {
+    setIsModalOpen((prev) => !prev);
+  };
+
+  return { isModalOpen, handleModalClose, handleModalOpen, handleToggleModal };
 };
 
 export default useModal;

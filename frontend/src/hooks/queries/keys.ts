@@ -20,6 +20,10 @@ export const solutionKeys = {
   submitted: ['submitted solutions'],
 };
 
+export const hashTagsKeys = {
+  hashTags: ['hashTags'],
+};
+
 export const userKeys = {
   info: ['userInfo'],
 };
