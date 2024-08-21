@@ -11,4 +11,5 @@ export const ROUTES = {
   dashboardMissionInProgress: 'in-progress-mission',
   dashboardSubmittedSolution: 'submitted-solution',
   dashboardComments: 'comments',
+  about: '/about',
 } as const;

@@ -7,33 +7,44 @@ VALUES ('test1@gmail.com', 'GITHUB', '1234', '구름', 'https://avatars.githubus
         '2024-08-16 13:40:00');
 
 INSERT INTO mission (title, thumbnail, summary, url)
-VALUES ('루터회관 흡연 단속', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-smoking.png',
-        '담배피다 걸린 행성이를 위한 벌금 계산 미션', 'https://github.com/develup-mission/java-smoking'),
+VALUES ('주문', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-order.png',
+        '배달 주문을 받아보자', 'https://github.com/develup-mission/java-order'),
        ('숫자 맞추기 게임', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-guessing-number.png',
-        '숫자를 맞춰보자', 'https://github.com/develup-mission/java-guessing-number');
+        '숫자를 맞춰보자', 'https://github.com/develup-mission/java-guessing-number'),
+       ('미로 탈출', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-maze.png',
+        '미노타우로스를 피해 미로에서 탈출하세요!', 'https://github.com/develup-mission/java-maze'),
+       ('엘리베이터 시뮬레이션', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-elevator.png',
+        '엘리베이터를 만들어봐요.', 'https://github.com/develup-mission/java-elevator'),
+       ('단어 퍼즐 게임', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-word-puzzle.png',
+        '단어의 퍼즐들을 맞춰주세요!', 'https://github.com/develup-mission/java-word-puzzle'),
+       ('리액트 회원가입/로그인 폼', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/react-auth-form.png',
+        '리액트 회원가입/로그인 폼을 구현해봐요.', 'https://github.com/develup-mission/react-auth-form');
 
 INSERT INTO hash_tag (name)
 VALUES ('JAVA'),
        ('객체지향'),
-       ('TDD'),
        ('클린코드'),
-       ('레벨1'),
-       ('잠실캠퍼스'),
-       ('선릉캠퍼스');
+       ('TYPESCRIPT'),
+       ('REACT');
 
 INSERT INTO mission_hash_tag (mission_id, hash_tag_id)
 VALUES (1, 1),
        (1, 2),
        (1, 3),
-       (1, 4),
-       (1, 5),
-       (1, 6),
        (2, 1),
        (2, 2),
        (2, 3),
-       (2, 4),
-       (2, 5),
-       (2, 7);
+       (3, 1),
+       (3, 2),
+       (3, 3),
+       (4, 1),
+       (4, 2),
+       (4, 3),
+       (5, 1),
+       (5, 2),
+       (5, 3),
+       (6, 4),
+       (6, 5);
 
 INSERT INTO solution (mission_id, member_id, title, description, url, status, created_at)
 VALUES (1, 1, '릴리 미션 제출합니다.', '안녕하세요. 잘 부탁 드립니다.', 'https://github.com/develup/mission/pull/1', 'COMPLETED',
