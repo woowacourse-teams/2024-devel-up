@@ -23,6 +23,7 @@ import DashBoardMissionInProgressPage from './pages/DashboardPage/MissionInProgr
 import SubmittedSolutionList from './components/DashBoard/SubmittedSolutions';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
+import MyCommentsPage from './pages/DashboardPage/MyComments';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -150,7 +151,7 @@ const routes = [
         path: ROUTES.dashboardComments,
         element: (
           <Suspense fallback={<LoadingSpinner />}>
-            <div>comments</div>
+            <MyCommentsPage />
           </Suspense>
         ),
       },
