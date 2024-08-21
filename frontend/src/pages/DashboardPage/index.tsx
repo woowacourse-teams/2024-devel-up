@@ -5,7 +5,6 @@ import { ROUTES } from '@/constants/routes';
 export default function DashboardPage() {
   const location = useLocation();
 
-  console.log(location.pathname);
   if (location.pathname === '/dashboard') {
     return <Navigate to={ROUTES.dashboardMissionInProgress} />;
   }
