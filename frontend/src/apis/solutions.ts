@@ -29,6 +29,18 @@ export const getSolutionSummaries = async (
   return data;
 };
 
+interface GetSolutionResponse {
+  data: Solution;
+}
+
+export const getSolutionById = async (solutionId: number): Promise<Solution> => {
+  const { data } = await develupAPIClient.get<GetSolutionResponse>(
+    `${PATH.solutions}/${solutionId}`,
+  );
+
+  return data;
+};
+
 export interface PostSolutionResponse {
   data: Solution;
 }
