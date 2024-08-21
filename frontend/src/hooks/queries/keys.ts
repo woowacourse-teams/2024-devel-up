@@ -16,8 +16,13 @@ export const commentKeys = {
 
 export const solutionKeys = {
   all: ['solutions'],
+  detail: (id: number) => [...solutionKeys.all, id],
   summaries: ['solutionSummaries'],
   submitted: ['submitted solutions'],
+};
+
+export const hashTagsKeys = {
+  hashTags: ['hashTags'],
 };
 
 export const userKeys = {

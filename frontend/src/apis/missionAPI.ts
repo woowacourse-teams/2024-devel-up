@@ -1,9 +1,15 @@
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
-import type { Mission, SubmissionPayload, Submission, MissionWithDescription } from '@/types';
-// import type { MissionInProgress } from '@/types/mission';
+import type {
+  Mission,
+  MissionWithDescription,
+  SubmissionPayload,
+  Submission,
+  HashTag,
+} from '@/types';
 import MissionListInProgress from '@/mocks/missionInProgress.json';
 import { populateMissionDescription } from './utils/populateMissionDescription';
+import { HASHTAGS } from '@/constants/hashTags';
 
 interface getMissionByIdResponse {
   data: MissionWithDescription;
@@ -13,8 +19,14 @@ interface getAllMissionResponse {
   data: Mission[];
 }
 
-export const getAllMissions = async (): Promise<Mission[]> => {
-  const { data } = await develupAPIClient.get<getAllMissionResponse>(PATH.missionList);
+interface getHashTagsResponse {
+  data: HashTag[];
+}
+
+export const getMissions = async (filter: string = HASHTAGS.all): Promise<Mission[]> => {
+  const { data } = await develupAPIClient.get<getAllMissionResponse>(`${PATH.missionList}`, {
+    hashTag: filter,
+  });
 
   return data;
 };
@@ -46,6 +58,12 @@ export interface PostSubmissionResponse {
 
 export const postSubmission = async (payload: SubmissionPayload) => {
   const data = await develupAPIClient.post<PostSubmissionResponse>(PATH.submissions, payload);
+
+  return data;
+};
+
+export const getHashTags = async (): Promise<HashTag[]> => {
+  const { data } = await develupAPIClient.get<getHashTagsResponse>(PATH.hashTags);
 
   return data;
 };

@@ -25,8 +25,8 @@
     "url": "https://github.com/develup-mission/java-word-puzzle",
     "hashTags": [
       {
-        "id": 1,
-        "name": "111"
+        "id": 2,
+        "name": "222"
       }
     ]
   },
@@ -40,8 +40,8 @@
     "url": "https://github.com/develup-mission/java-guessing-number",
     "hashTags": [
       {
-        "id": 1,
-        "name": "111"
+        "id": 3,
+        "name": "333"
       }
     ]
   }

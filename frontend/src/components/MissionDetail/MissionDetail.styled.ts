@@ -62,7 +62,6 @@ export const HashTagWrapper = styled.ul`
 
 export const MissionDetailButtonsContainer = styled.div`
   display: flex;
-  gap: 2rem;
   justify-content: space-between;
   align-items: center;
 `;

@@ -10,7 +10,9 @@ export const PATH = {
   submitSolution: '/solutions/submit',
   startSolution: '/solutions/start',
   logout: '/auth/logout',
+  hashTags: '/hash-tags',
   missionInProgress: '/missions/in-progress',
+  solutions: '/solutions',
 };
 
 export const PATH_FORMATTER = {
