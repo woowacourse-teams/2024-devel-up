@@ -13,6 +13,7 @@ export const PATH = {
   logout: '/auth/logout',
   hashTags: '/hash-tags',
   missionInProgress: '/missions/in-progress',
+  solutions: '/solutions',
 };
 
 export const PATH_FORMATTER = {

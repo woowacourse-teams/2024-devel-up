@@ -1,10 +1,4 @@
-interface Mission {
-  id: number;
-  title: string;
-  thumbnail: string;
-  url: string;
-  descriptionUrl: string;
-}
+import type { Mission } from '.';
 
 interface Member {
   id: number;
