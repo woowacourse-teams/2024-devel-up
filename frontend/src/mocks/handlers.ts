@@ -1,12 +1,14 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '@/apis/baseUrl';
 import { PATH } from '@/apis/paths';
 import missions from './missions.json';
 import submittedSolutions from './SubmittedSolutions.json';
+import myComments from './myComments.json';
+import missionInProgress from './missionInProgress.json';
 import { HASHTAGS } from '@/constants/hashTags';
+import { API_URL } from '@/apis/clients/develupClient';
 
 export const handlers = [
-  http.get(`${BASE_URL.dev}${PATH.missionList}`, ({ request }) => {
+  http.get(`${API_URL}${PATH.missionList}`, ({ request }) => {
     const url = new URL(request.url);
     const hashTag = url.searchParams.get('hashTag');
     if (hashTag === HASHTAGS.all) {
@@ -18,7 +20,7 @@ export const handlers = [
     return HttpResponse.json({ data: filteredMissions });
   }),
 
-  http.get(`${BASE_URL.dev}${PATH.missionList}/:id`, ({ request }) => {
+  http.get(`${API_URL}${PATH.missionList}/:id`, ({ request }) => {
     const url = new URL(request.url);
     const id = Number(url.pathname.split('/').pop());
     const mission = missions.find((mission) => mission.id === id);
@@ -28,7 +30,7 @@ export const handlers = [
   //   return HttpResponse.json({ data: submission });
   // }),
 
-  http.get(`${BASE_URL.dev}${PATH.userInfo}`, () => {
+  http.get(`${API_URL}${PATH.userInfo}`, () => {
     return HttpResponse.json(
       {
         data: {
@@ -47,40 +49,17 @@ export const handlers = [
       },
     );
   }),
-  http.get(`${BASE_URL.dev}${PATH.missionInProgress}`, () => {
+  http.get(`${API_URL}${PATH.missionInProgress}`, () => {
     return HttpResponse.json({
-      data: [
-        {
-          id: 1,
-          title: '루터회관 흡연 단속',
-          language: 'JAVA',
-          summary: '루터회관 흡연 벌칙 프로그램을 구현한다.',
-          thumbnail:
-            'https://file.notion.so/f/f/d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48/38a7f41b-80d7-48ca-97c9-99ceda5c4dbd/smoking.png?id=60756a7a-c50f-4946-ab6e-4177598b926b&table=block&spaceId=d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48&expirationTimestamp=1721174400000&signature=todzUdb5cUyzW4ZQNaHvL-uiCngfMJJAl94RpE1TGEA&downloadName=smoking.png',
-          hashtag: ['java', 'backend', '문제', 'ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'],
-        },
-        {
-          id: 2,
-          title: '프론트엔드 숫자 야구 문제',
-          language: 'React',
-          summary: '프론트엔드 숫자 야구 문젤르 구현합니다',
-          thumbnail:
-            'https://file.notion.so/f/f/d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48/38a7f41b-80d7-48ca-97c9-99ceda5c4dbd/smoking.png?id=60756a7a-c50f-4946-ab6e-4177598b926b&table=block&spaceId=d5a9d2d0-0fab-48ee-9e8a-13a13de1ac48&expirationTimestamp=1721174400000&signature=todzUdb5cUyzW4ZQNaHvL-uiCngfMJJAl94RpE1TGEA&downloadName=smoking.png',
-          hashtag: ['react', 'javascript', 'frontend', 'ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'],
-        },
-      ],
+      data: missionInProgress,
     });
   }),
-  http.get(`${BASE_URL.dev}${PATH.submitSolution}`, () => {
+  http.get(`${API_URL}${PATH.submitSolution}`, () => {
     return HttpResponse.json({
       data: submittedSolutions,
     });
   }),
-  // http.post(`${BASE_URL.dev}${PATH.logout}`, () => {
-  //   return HttpResponse.json(null, {
-  //     headers: {
-  //       'Set-Cookie': 'token=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/',
-  //     },
-  //   });
-  // }),
+  http.get(`${API_URL}${PATH.myComments}`, () => {
+    return HttpResponse.json({ data: myComments });
+  }),
 ];

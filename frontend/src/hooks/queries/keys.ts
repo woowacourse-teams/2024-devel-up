@@ -12,6 +12,7 @@ export const missionKeys = {
 
 export const commentKeys = {
   all: (solutionId: number) => ['comments', solutionId],
+  mine: ['myComments'],
 };
 
 export const solutionKeys = {
