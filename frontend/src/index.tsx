@@ -23,6 +23,8 @@ import DashBoardMissionInProgressPage from './pages/DashboardPage/MissionInProgr
 import SubmittedSolutionList from './components/DashBoard/SubmittedSolutions';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
+import MyCommentsPage from './pages/DashboardPage/MyComments';
+import AboutPage from './pages/AboutPage/AboutPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -150,7 +152,7 @@ const routes = [
         path: ROUTES.dashboardComments,
         element: (
           <Suspense fallback={<LoadingSpinner />}>
-            <div>comments</div>
+            <MyCommentsPage />
           </Suspense>
         ),
       },
@@ -163,6 +165,14 @@ const routes = [
         <Suspense fallback={<LoadingSpinner />}>
           <SolutionDetailPage />
         </Suspense>
+      </App>
+    ),
+  },
+  {
+    path: ROUTES.about,
+    element: (
+      <App>
+        <AboutPage />
       </App>
     ),
   },
@@ -190,8 +200,10 @@ export const router = createBrowserRouter(routes, {
 //       <QueryClientProvider client={queryClient}>
 //         <QueryErrorBoundary>
 //           <ErrorBoundary fallback={<div>에러에요!</div>}>
-//             <GlobalStyle />
-//             <RouterProvider router={router} />
+//             <ThemeProvider theme={theme}>
+//               <GlobalStyle />
+//               <RouterProvider router={router} />
+//             </ThemeProvider>
 //           </ErrorBoundary>
 //         </QueryErrorBoundary>
 //       </QueryClientProvider>

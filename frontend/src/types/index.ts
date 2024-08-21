@@ -60,3 +60,12 @@ export interface CommentReply {
   member: UserInfo;
   createdAt: string;
 }
+
+export interface MyComments {
+  id: number;
+  solutionId: number;
+  content: string;
+  createdAt: string;
+  solutionTitle: string;
+  solutionCommentCount: number;
+}

@@ -7,9 +7,9 @@ import type {
   Submission,
   HashTag,
 } from '@/types';
-import MissionListInProgress from '@/mocks/missionInProgress.json';
 import { populateMissionDescription } from './utils/populateMissionDescription';
 import { HASHTAGS } from '@/constants/hashTags';
+import type { MissionInProgress } from '@/types/mission';
 
 interface getMissionByIdResponse {
   data: MissionWithDescription;
@@ -38,18 +38,14 @@ export const getMissionById = async (id: number): Promise<MissionWithDescription
   return mission;
 };
 
-// interface GetMissionInProgressResponse {
-//   data: MissionInProgress[];
-// }
+interface GetMissionInProgressResponse {
+  data: MissionInProgress[];
+}
 
-// TODO 실제 API 연결 아직 안했습니다.
 export const getMissionInProgress = async () => {
-  // const { data } = await develupAPIClient.get<GetMissionInProgressResponse>(PATH.missionInProgress);
+  const { data } = await develupAPIClient.get<GetMissionInProgressResponse>(PATH.missionInProgress);
 
-  // console.log('data : ', data);
-
-  return MissionListInProgress;
-  // return [];
+  return data;
 };
 
 export interface PostSubmissionResponse {
