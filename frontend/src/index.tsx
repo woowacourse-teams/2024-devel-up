@@ -21,7 +21,6 @@ import SolutionDetailPage from './pages/SolutionDetailPage';
 import DashboardPage from './pages/DashboardPage';
 import DashBoardMissionInProgressPage from './pages/DashboardPage/MissionInProgress';
 import SubmittedSolutionList from './components/DashBoard/SubmittedSolutions';
-import MyCommentsPage from './pages/DashboardPage/MyComments';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 
@@ -151,7 +150,7 @@ const routes = [
         path: ROUTES.dashboardComments,
         element: (
           <Suspense fallback={<LoadingSpinner />}>
-            <MyCommentsPage />
+            <div>comments</div>
           </Suspense>
         ),
       },
@@ -173,46 +172,44 @@ export const router = createBrowserRouter(routes, {
   basename: ROUTES.main,
 });
 
-async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
-    return;
-  }
+// async function enableMocking() {
+//   if (process.env.NODE_ENV !== 'development') {
+//     return;
+//   }
 
-  const { worker } = await import('./mocks/browser');
+//   const { worker } = await import('./mocks/browser');
 
-  // `worker.start()` returns a Promise that resolves
-  // once the Service Worker is up and ready to intercept requests.
-  return worker.start();
-}
+//   // `worker.start()` returns a Promise that resolves
+//   // once the Service Worker is up and ready to intercept requests.
+//   return worker.start();
+// }
 
-enableMocking().then(() => {
-  root.render(
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <QueryErrorBoundary>
-          <ErrorBoundary fallback={<div>에러에요!</div>}>
-            <ThemeProvider theme={theme}>
-              <GlobalStyle />
-              <RouterProvider router={router} />
-            </ThemeProvider>
-          </ErrorBoundary>
-        </QueryErrorBoundary>
-      </QueryClientProvider>
-    </React.StrictMode>,
-  );
-});
-
-// root.render(
-//   <React.StrictMode>
-//     <QueryClientProvider client={queryClient}>
-//       <QueryErrorBoundary>
-//         <ErrorBoundary fallback={<div>에러에요!</div>}>
-//           <ThemeProvider theme={theme}>
+// enableMocking().then(() => {
+//   root.render(
+//     <React.StrictMode>
+//       <QueryClientProvider client={queryClient}>
+//         <QueryErrorBoundary>
+//           <ErrorBoundary fallback={<div>에러에요!</div>}>
 //             <GlobalStyle />
 //             <RouterProvider router={router} />
-//           </ThemeProvider>
-//         </ErrorBoundary>
-//       </QueryErrorBoundary>
-//     </QueryClientProvider>
-//   </React.StrictMode>,
-// );
+//           </ErrorBoundary>
+//         </QueryErrorBoundary>
+//       </QueryClientProvider>
+//     </React.StrictMode>,
+//   );
+// });
+
+root.render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <QueryErrorBoundary>
+        <ErrorBoundary fallback={<div>에러에요!</div>}>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </ErrorBoundary>
+      </QueryErrorBoundary>
+    </QueryClientProvider>
+  </React.StrictMode>,
+);
