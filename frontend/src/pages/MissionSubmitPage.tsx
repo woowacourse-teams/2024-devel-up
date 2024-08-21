@@ -16,6 +16,8 @@ export default function MissionSubmitPage() {
   const { id } = useParams();
   const missionId = Number(id) || 0;
   const { data: mission } = useMission(missionId);
+  const missionName = new URL(mission.url).pathname.split('/').pop() ?? '';
+
   const {
     solutionTitle,
     url,
@@ -29,7 +31,8 @@ export default function MissionSubmitPage() {
     isUrlError,
     isDescriptionError,
     isSolutionTitleError,
-  } = useSubmitSolution({ missionId });
+    isMatchedMissionName,
+  } = useSubmitSolution({ missionId, missionName });
 
   return (
     <S.Container>
@@ -46,7 +49,12 @@ export default function MissionSubmitPage() {
           onChange={handleSolutionTitle}
           danger={isSolutionTitleError}
         />
-        <PRLink value={url} onChange={handleUrl} missionId={missionId} danger={isUrlError} />
+        <PRLink
+          value={url}
+          onChange={handleUrl}
+          missionId={missionId}
+          danger={isUrlError || !isMatchedMissionName}
+        />
         <OneWord
           danger={isDescriptionError}
           value={description ?? ''}

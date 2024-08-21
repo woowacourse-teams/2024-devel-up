@@ -18,4 +18,14 @@ describe('useMissions', () => {
 
     expect(result.current.data).toEqual<Mission[]>(missions);
   });
+
+  it('필터링을 할 수 있다.', async () => {
+    const filter = missions[0].hashTags[0].name;
+    const filteredMissions = missions.filter((mission) => mission.hashTags[0].name === filter);
+    const { result } = renderHook(() => useMissions(filter), { wrapper });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    expect(result.current.data).toEqual<Mission[]>(filteredMissions);
+  });
 });
