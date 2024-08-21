@@ -70,6 +70,7 @@ export const InfoMsgWrapper = styled.div`
   display: flex;
   gap: 0.4rem;
   align-items: center;
+  justify-content: center;
   border-radius: 0.8rem;
   padding: 0.3rem;
 
@@ -83,15 +84,13 @@ export const InfoMsgWrapper = styled.div`
   }
 `;
 
-export const InfoIcon = styled(infoIcon)`
-  height: 100%;
-`;
+export const InfoIcon = styled(infoIcon)``;
 
 export const ButtonWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 export const GithubIcon = styled(githubLogo)`
