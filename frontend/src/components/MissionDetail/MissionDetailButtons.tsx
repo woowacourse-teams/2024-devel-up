@@ -48,26 +48,31 @@ export default function MissionDetailButtons({
   return (
     <S.MissionDetailButtonsContainer>
       <S.ButtonWrapper>
-        {userInfo && !isMissionStarted && (
-          <Button variant="primary" size="half" onClick={handleMissionStart}>
-            미션 시작하기
-          </Button>
-        )}
-        {userInfo && isMissionStarted && (
-          <Button variant="primary" size="half" onClick={handleNavigateToSubmit}>
-            미션 제출하기
-          </Button>
-        )}
+        <Button onClick={handleNavigateToMission}>
+          <S.GithubIcon />
+          코드 보러 가기
+        </Button>
+
+        {userInfo &&
+          (!isMissionStarted ? (
+            <Button variant="primary" size="half" onClick={handleMissionStart}>
+              미션 시작하기
+            </Button>
+          ) : (
+            <Button variant="primary" size="half" onClick={handleNavigateToSubmit}>
+              미션 제출하기
+            </Button>
+          ))}
+
+        <S.InfoMsgWrapper onClick={handleModalOpen}>
+          <S.InfoIcon />
+          <S.Text>어떻게 참여하나요?</S.Text>
+        </S.InfoMsgWrapper>
 
         <Modal isModalOpen={isModalOpen}>
           <MissionProcess handleModalClose={handleModalClose} onClick={handleNavigateToMission} />
         </Modal>
       </S.ButtonWrapper>
-
-      <S.InfoMsgWrapper onClick={handleModalOpen}>
-        <S.InfoIcon />
-        <S.Text>어떻게 참여하나요?</S.Text>
-      </S.InfoMsgWrapper>
     </S.MissionDetailButtonsContainer>
   );
 }
