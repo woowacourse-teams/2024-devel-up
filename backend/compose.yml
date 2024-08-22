@@ -12,6 +12,8 @@ services:
       - /home/ubuntu/custom.conf:/etc/nginx/conf.d/default.conf
       - /etc/letsencrypt/live/api.devel-up.co.kr/fullchain.pem:/etc/letsencrypt/live/api.devel-up.co.kr/fullchain.pem
       - /etc/letsencrypt/live/api.devel-up.co.kr/privkey.pem:/etc/letsencrypt/live/api.devel-up.co.kr/privkey.pem
+      - /var/log/nginx:/var/log/nginx
+    container_name: nginx
 
   application:
     image: ${BACKEND_APP_IMAGE_NAME}
@@ -25,6 +27,24 @@ services:
       SPRING_PROFILE: dev
     restart: always
     container_name: develup-app
+
+  promtail-nginx:
+    image: grafana/promtail:3.0.0
+    volumes:
+      - /home/ubuntu/promtail/nginx-config.yml:/mnt/config/config.yml
+      - /var/log/nginx:/var/log
+    command:
+      - config.file=/mnt/config/config.yml
+    restart: unless-stopped
+
+  promtail-app:
+    image: grafana/promtail:3.0.0
+    volumes:
+      - /home/ubuntu/promtail/app-config.yml:/mnt/config/config.yml
+      - /var/log/app/logs:/var/log
+    command:
+      - config.file=/mnt/config/config.yml
+    restart: unless-stopped
 
 networks:
   nginx-app-net:
