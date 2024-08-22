@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import ContentBanner from '@/assets/images/ContentBanner.svg';
 
 export const MainPageContainer = styled.div`
   display: flex;
@@ -14,9 +13,4 @@ export const MissionListTitle = styled.h2`
   ${(props) => props.theme.font.heading1}
   margin-top: 6rem;
   margin-bottom: 3rem;
-`;
-
-export const BannerContent = styled(ContentBanner)`
-  width: 100%;
-  height: 100%;
 `;
