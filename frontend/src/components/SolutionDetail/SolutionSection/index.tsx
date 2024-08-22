@@ -13,7 +13,7 @@ export default function SolutionSection({ solution }: SolutionDetailProps) {
 
   return (
     <section>
-      <S.SolutionDetailTitle>📝 Solution</S.SolutionDetailTitle>
+      <S.SolutionDetailTitle>📝 Solutions</S.SolutionDetailTitle>
       <SolutionDetailHeader solution={solution} />
       <S.CodeViewButtonWrapper>
         <Link to={url} target="_blank">

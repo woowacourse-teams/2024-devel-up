@@ -7,7 +7,7 @@ export const CommentListContainer = styled.div`
 
 export const CommentItemContainer = styled.div`
   padding: 1.5rem 0;
-  border-bottom: 1px solid #c6b9ff;
+  border-bottom: 1px solid ${(props) => props.theme.colors.grey50};
 
   &:first-child {
     padding-top: 0;
@@ -20,8 +20,9 @@ export const CommentItemContainer = styled.div`
 `;
 
 export const CommentReplyItemContainer = styled.div`
+  padding: 3.2rem 0;
   padding: 1.5rem 0;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grey200};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grey50};
 
   &:first-child {
     padding-top: 0;

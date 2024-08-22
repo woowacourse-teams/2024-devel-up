@@ -13,6 +13,7 @@ export const CommentWrapper = styled(Link)`
   box-shadow: ${(props) => props.theme.boxShadow.shadow04};
   padding: 14px 34px 14px 34px;
   display: flex;
+  margin-top: 3rem;
   margin-bottom: 1.5rem;
   cursor: pointer;
 `;

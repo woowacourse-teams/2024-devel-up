@@ -1,16 +1,12 @@
 import styled, { keyframes } from 'styled-components';
 
 export const SolutionTitle = styled.h2`
-  margin-bottom: 3.5rem;
   ${(props) => props.theme.font.heading1}
 `;
 
 export const Subtitle = styled.p`
-  font-size: 1.6rem;
-  font-weight: 500;
-  font-family: inherit;
-
-  color: var(--grey-500);
+  ${(props) => props.theme.font.body}
+  color: ${(props) => props.theme.colors.grey500};
 `;
 
 export const TitleWrapper = styled.div`
