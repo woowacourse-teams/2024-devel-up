@@ -22,12 +22,12 @@ export default function AboutPage() {
 
   return (
     <S.Container>
-      <One width={'100%'} height={'100%'} />
-      <Two width={'100%'} height={'100%'} />
-      <Three width={'100%'} height={'100%'} />
-      <Four width={'100%'} height={'100%'} />
+      <One />
+      <Two />
+      <Three />
+      <Four />
       <S.ButtonWrapper>
-        <Five width={'100%'} height={'100%'} />
+        <Five />
         <Button
           variant="primary"
           style={{
@@ -40,7 +40,7 @@ export default function AboutPage() {
       </S.ButtonWrapper>
 
       <S.ButtonWrapper>
-        <Six width={'100%'} height={'100%'} />
+        <Six />
         <Button
           variant="primary"
           style={{
