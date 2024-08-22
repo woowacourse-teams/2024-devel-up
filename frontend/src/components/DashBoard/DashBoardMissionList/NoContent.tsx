@@ -9,9 +9,15 @@ interface NoContentProps {
 
 export default function NoContent({ type }: NoContentProps) {
   const navigate = useNavigate();
+  const route =
+    type === 'inProgress'
+      ? ROUTES.missionList
+      : type === 'submitted'
+        ? ROUTES.solutions
+        : ROUTES.solutions;
 
   const handleNavigateToMissionList = () => {
-    navigate(ROUTES.missionList);
+    navigate(route);
   };
 
   const mainText =
