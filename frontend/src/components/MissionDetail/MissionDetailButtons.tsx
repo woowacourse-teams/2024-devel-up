@@ -65,7 +65,7 @@ export default function MissionDetailButtons({
         )}
         <S.InfoMsgWrapper onClick={handleModalOpen}>
           <S.InfoIcon />
-          <S.Text>어떻게 참여하나요?</S.Text>
+          <S.Text>어떻게 진행하나요?</S.Text>
         </S.InfoMsgWrapper>
       </S.ButtonWrapper>
 
