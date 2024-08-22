@@ -11,7 +11,7 @@ interface UseSubmitSolutionParams {
   missionName: string;
 }
 
-const useSubmitSolution = ({ missionId, missionName }: UseSubmitSolutionParams) => {
+const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
   const { url, handleUrl, isValidUrl, isUrlError, setIsUrlError } = useUrl();
 
   //TODO 임시 주석 처리
