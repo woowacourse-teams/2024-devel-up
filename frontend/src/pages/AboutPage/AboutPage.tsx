@@ -1,9 +1,9 @@
-import One from '@/assets/images/1.svg';
-import Two from '@/assets/images/2.svg';
-import Three from '@/assets/images/3.svg';
-import Four from '@/assets/images/4.svg';
-import Five from '@/assets/images/5.svg';
-import Six from '@/assets/images/6.svg';
+import One from '@/assets/images/1.png';
+import Two from '@/assets/images/2.png';
+import Three from '@/assets/images/3.png';
+import Four from '@/assets/images/4.png';
+import Five from '@/assets/images/5.png';
+import Six from '@/assets/images/6.png';
 import * as S from './AboutPage.styled';
 import Button from '@/components/common/Button/Button';
 import { useNavigate } from 'react-router-dom';
@@ -22,12 +22,12 @@ export default function AboutPage() {
 
   return (
     <S.Container>
-      <One />
-      <Two />
-      <Three />
-      <Four />
+      <S.Image src={One} alt="banner-content" />
+      <S.Image src={Two} alt="banner-content" />
+      <S.Image src={Three} alt="banner-content" />
+      <S.Image src={Four} alt="banner-content" />
       <S.ButtonWrapper>
-        <Five />
+        <S.Image src={Five} alt="banner-content" />
         <Button
           variant="primary"
           style={{
@@ -40,7 +40,7 @@ export default function AboutPage() {
       </S.ButtonWrapper>
 
       <S.ButtonWrapper>
-        <Six />
+        <S.Image src={Six} alt="banner-content" />
         <Button
           variant="primary"
           style={{

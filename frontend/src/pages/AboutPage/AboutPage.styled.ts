@@ -15,3 +15,8 @@ export const ButtonWrapper = styled.div`
 export const Button = styled.button`
   position: absolute;
 `;
+
+export const Image = styled.img`
+  width: 100%;
+  height: 100%;
+`;
