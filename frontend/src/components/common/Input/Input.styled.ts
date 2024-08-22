@@ -50,22 +50,23 @@ export const Input = styled.input<InputProps>`
   ${(props) => sizeStyles[props.$width]}
   ${(props) => borderRadiusStyles[props.$width]}
   ${(props) => typeStyles[props.$type]}
+  ${(props) => props.theme.font.body}
   outline: none;
   padding: 2.3rem;
   border: none;
-  border-bottom: 0.15rem solid transparent;
-  font-weight: bold;
+  border: 0.15rem solid transparent;
+
   &::placeholder {
     color: rgba(0, 0, 0, 0.3);
   }
   ${(props) =>
     props.$danger
       ? css`
-          border-bottom-color: ${(props) => props.theme.colors.danger600};
+          border-color: ${(props) => props.theme.colors.danger600};
         `
       : css`
           &:focus {
-            border-bottom-color: ${(props) => props.theme.colors.primary500};
+            border-color: ${(props) => props.theme.colors.primary500};
           }
         `}
 `;

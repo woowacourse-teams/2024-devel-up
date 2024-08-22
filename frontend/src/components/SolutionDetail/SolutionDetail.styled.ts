@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const SolutionDetailPageContainer = styled.div`
-  padding: 0 22rem;
+  width: 100rem;
+  margin: 0 auto;
 `;
 
 export const CommentFormWrapper = styled.div`
