@@ -1,7 +1,6 @@
 import { develupAPIClient } from '@/apis/clients/develupClient';
 import { PATH } from '@/apis/paths';
 import { HASHTAGS } from '@/constants/hashTags';
-import SubmittedSolutions from '@/mocks/SubmittedSolutions.json';
 import type { HashTag } from '@/types';
 import type { Solution, SubmittedSolution } from '@/types/solution';
 
@@ -24,6 +23,18 @@ export const getSolutionSummaries = async (
   const { data } = await develupAPIClient.get<GetSolutionSummariesResponse>(
     `${PATH.solutionSummaries}`,
     { hashTag: filter },
+  );
+
+  return data;
+};
+
+interface GetSolutionResponse {
+  data: Solution;
+}
+
+export const getSolutionById = async (solutionId: number): Promise<Solution> => {
+  const { data } = await develupAPIClient.get<GetSolutionResponse>(
+    `${PATH.solutions}/${solutionId}`,
   );
 
   return data;
@@ -55,5 +66,7 @@ export interface GetSubmittedSolution {
 }
 
 export const getSubmittedSolution = async (): Promise<SubmittedSolution[]> => {
-  return SubmittedSolutions;
+  const { data } = await develupAPIClient.get<GetSubmittedSolution>(PATH.mySolutions);
+
+  return data;
 };

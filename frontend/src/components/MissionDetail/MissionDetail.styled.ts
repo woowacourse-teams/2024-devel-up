@@ -27,6 +27,7 @@ export const ThumbnailImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 0 20%;
 `;
 
 export const GradientOverlay = styled.div`
@@ -62,7 +63,6 @@ export const HashTagWrapper = styled.ul`
 
 export const MissionDetailButtonsContainer = styled.div`
   display: flex;
-  gap: 2rem;
   justify-content: space-between;
   align-items: center;
 `;
@@ -71,6 +71,7 @@ export const InfoMsgWrapper = styled.div`
   display: flex;
   gap: 0.4rem;
   align-items: center;
+  justify-content: center;
   border-radius: 0.8rem;
   padding: 0.3rem;
 
@@ -84,15 +85,13 @@ export const InfoMsgWrapper = styled.div`
   }
 `;
 
-export const InfoIcon = styled(infoIcon)`
-  height: 100%;
-`;
+export const InfoIcon = styled(infoIcon)``;
 
 export const ButtonWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 export const GithubIcon = styled(githubLogo)`
@@ -114,7 +113,6 @@ export const MissionDescription = styled.div`
   width: 100%;
   padding: 2rem;
 
-  background-color: ${(props) => props.theme.colors.grey50};
   border-radius: 0.8rem;
 `;
 

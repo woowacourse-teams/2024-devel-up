@@ -27,6 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
 
     // jwt
     implementation "io.jsonwebtoken:jjwt-api:${JJWT_VERSION}"

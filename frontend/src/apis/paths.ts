@@ -9,9 +9,12 @@ export const PATH = {
   solutionSummaries: '/solutions',
   submitSolution: '/solutions/submit',
   startSolution: '/solutions/start',
+  myComments: '/solutions/comments/mine',
   logout: '/auth/logout',
   hashTags: '/hash-tags',
   missionInProgress: '/missions/in-progress',
+  solutions: '/solutions',
+  mySolutions: '/solutions/mine',
 };
 
 export const PATH_FORMATTER = {
