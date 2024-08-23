@@ -4,19 +4,26 @@ import styled from 'styled-components';
 export const Container = styled.nav`
   z-index: 100;
   width: 100%;
+  min-width: 100rem;
   height: 6rem;
   position: fixed;
-  background: white;
+  background: ${(props) => props.theme.colors.white};
   top: 0;
   left: 0;
-  box-shadow:
-    2px 4px rgba(0, 0, 0, 0.08),
-    0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  white-space: nowrap;
+`;
+
+export const Wrapper = styled.div`
+  width: 100rem;
 
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 26rem;
 `;
 
 export const LogoImg = styled.img`
@@ -46,6 +53,12 @@ export const LeftPart = styled.div``;
 
 export const LoginButton = styled.button`
   ${(props) => props.theme.font.body}
+  padding: 0.5rem;
+  border-radius: 1rem;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.grey50};
+  }
 `;
 
 export const MenuWrapper = styled.div`
@@ -56,4 +69,10 @@ export const MenuWrapper = styled.div`
 export const MenuText = styled.p<{ $isActive?: boolean }>`
   ${(props) => props.theme.font.body}
   color: ${({ $isActive, theme }) => ($isActive ? '' : theme.colors.grey400)};
+  padding: 0.5rem;
+  border-radius: 1rem;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.grey50};
+  }
 `;

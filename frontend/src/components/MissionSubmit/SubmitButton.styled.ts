@@ -5,6 +5,8 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin-bottom: 3rem;
 `;
 
 export const Button = styled.button`
@@ -14,5 +16,9 @@ export const Button = styled.button`
   width: 100%;
   height: 5rem;
   ${(props) => props.theme.font.button}
-  margin-top: 10rem;
+  margin-top: 4rem;
+
+  &:hover {
+    background: ${(props) => props.theme.colors.grey900};
+  }
 `;

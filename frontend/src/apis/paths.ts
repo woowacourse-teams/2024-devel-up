@@ -14,6 +14,7 @@ export const PATH = {
   hashTags: '/hash-tags',
   missionInProgress: '/missions/in-progress',
   solutions: '/solutions',
+  mySolutions: '/solutions/mine',
 };
 
 export const PATH_FORMATTER = {

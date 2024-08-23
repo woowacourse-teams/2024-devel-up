@@ -1,8 +1,7 @@
-import { MyComments } from '@/types';
+import type { MyComments } from '@/types';
 import { formatDateString } from '@/utils/formatDateString';
 import * as S from './MyComments.styled';
 import CommentIcon from '@/assets/images/comment-count.svg';
-import { useNavigate } from 'react-router-dom';
 
 export default function MyComment({
   solutionId,

@@ -18,7 +18,7 @@ export default function PRLink({ missionId, value, onChange, danger }: PRLinkPro
         width="xlarge"
         danger={danger}
         dangerMessage={ERROR_MESSAGE.invalid_pr}
-        placeholder={`https://github.com/johndoe_dev/baseball-game/pull/${missionId}`}
+        placeholder={`https://github.com/develup-mission/baseball-game/pull/${missionId}`}
         value={value}
         onChange={onChange}
       />
