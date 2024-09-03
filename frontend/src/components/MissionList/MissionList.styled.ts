@@ -26,6 +26,8 @@ const show = keyframes`
 `;
 
 export const MissionList = styled.div`
+  flex-wrap: wrap;
+
   display: flex;
   width: 100rem;
   column-gap: 5rem;

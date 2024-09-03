@@ -1,7 +1,6 @@
 import { develupAPIClient } from '@/apis/clients/develupClient';
 import { PATH } from '@/apis/paths';
 import { HASHTAGS } from '@/constants/hashTags';
-import SubmittedSolutions from '@/mocks/SubmittedSolutions.json';
 import type { HashTag } from '@/types';
 import type { Solution, SubmittedSolution } from '@/types/solution';
 
@@ -67,5 +66,7 @@ export interface GetSubmittedSolution {
 }
 
 export const getSubmittedSolution = async (): Promise<SubmittedSolution[]> => {
-  return SubmittedSolutions;
+  const { data } = await develupAPIClient.get<GetSubmittedSolution>(PATH.mySolutions);
+
+  return data;
 };

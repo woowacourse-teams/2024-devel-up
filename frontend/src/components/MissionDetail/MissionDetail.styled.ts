@@ -27,6 +27,7 @@ export const ThumbnailImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 0 20%;
 `;
 
 export const GradientOverlay = styled.div`
@@ -112,7 +113,6 @@ export const MissionDescription = styled.div`
   width: 100%;
   padding: 2rem;
 
-  background-color: ${(props) => props.theme.colors.grey50};
   border-radius: 0.8rem;
 `;
 

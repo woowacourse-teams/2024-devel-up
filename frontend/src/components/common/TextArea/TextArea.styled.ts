@@ -22,8 +22,8 @@ const typeStyles = {
 export const TextArea = styled.textarea<TextAreaProps>`
   ${(props) => sizeStyles[props.$size]}
   ${(props) => typeStyles[props.$type]}
+  ${(props) => props.theme.font.body}
   outline: none;
-  font-weight: bold;
   padding: 1.5rem;
   min-height: 15rem;
   border-radius: 0.8rem;

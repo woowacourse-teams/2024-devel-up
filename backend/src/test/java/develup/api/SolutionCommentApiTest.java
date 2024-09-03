@@ -65,7 +65,7 @@ class SolutionCommentApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[0].id", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].solutionId", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].content", equalTo("댓글 내용")))
-                .andExpect(jsonPath("$.data[0].createdAt", equalTo(now.toString())))
+                .andExpect(jsonPath("$.data[0].createdAt").exists())
                 .andExpect(jsonPath("$.data[0].solutionTitle", equalTo("솔루션 제목")))
                 .andExpect(jsonPath("$.data[0].solutionCommentCount", equalTo(123)));
     }

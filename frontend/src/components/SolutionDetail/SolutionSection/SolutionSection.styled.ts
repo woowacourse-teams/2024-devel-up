@@ -13,6 +13,8 @@ export const MissionTitle = styled.div`
   background-color: ${({ theme }) => theme.colors.danger50};
   padding: 1rem 2rem;
   border-radius: 2rem;
+
+  ${(props) => props.theme.font.badge}
 `;
 
 export const HeaderUserName = styled.div`
