@@ -25,6 +25,8 @@ services:
     environment:
       TZ: "Asia/Seoul"
       SPRING_PROFILE: dev
+    volumes:
+      - /var/log/app/logs:/var/log/app/logs
     restart: always
     container_name: develup-app
 
