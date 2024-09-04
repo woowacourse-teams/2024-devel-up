@@ -76,7 +76,7 @@ public class SolutionService {
         return SolutionResponse.from(solution);
     }
 
-    public void remove(Long memberId, RemoveSolutionRequest request) {
+    public void delete(Long memberId, RemoveSolutionRequest request) {
         Solution solution = solutionRepository.findById(request.solutionId())
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
         validateSolutionOwner(memberId, solution);

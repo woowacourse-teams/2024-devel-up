@@ -244,7 +244,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
     @Test
     @DisplayName("사용자가 제출한 솔루션을 수정할 수 있다.")
-    void resubmit() {
+    void update() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         Solution solution = SolutionTestData.defaultSolution()
@@ -327,7 +327,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         solutionCommentRepository.saveAll(solutionComments);
         RemoveSolutionRequest removeSolutionRequest = new RemoveSolutionRequest(solution.getId());
 
-        solutionService.remove(member.getId(), removeSolutionRequest);
+        solutionService.delete(member.getId(), removeSolutionRequest);
 
         List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solution.getId());
         Optional<Solution> deletedSolution = solutionRepository.findById(solution.getId());
@@ -348,7 +348,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         solutionRepository.save(solution);
         RemoveSolutionRequest removeSolutionRequest = new RemoveSolutionRequest(solution.getId());
 
-        assertThatThrownBy(() -> solutionService.remove(other.getId(), removeSolutionRequest))
+        assertThatThrownBy(() -> solutionService.delete(other.getId(), removeSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("솔루션 작성자가 아닙니다.");
     }
