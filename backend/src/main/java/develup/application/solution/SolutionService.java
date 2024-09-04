@@ -76,6 +76,15 @@ public class SolutionService {
         return SolutionResponse.from(solution);
     }
 
+    public void remove(Long memberId, RemoveSolutionRequest request) {
+        Solution solution = solutionRepository.findById(request.solutionId())
+                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+        validateSolutionOwner(memberId, solution);
+
+        solutionRepository.deleteAllComments(solution.getId());
+        solutionRepository.delete(solution);
+    }
+
     public SolutionResponse update(Long memberId, UpdateSolutionRequest request) {
         Solution solution = solutionRepository.findById(request.solutionId())
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
@@ -103,14 +112,6 @@ public class SolutionService {
         if (!existsMissionRepositoryName(repositoryName)) {
             throw new DevelupException(ExceptionType.INVALID_URL);
         }
-    }
-
-    public void remove(Long memberId, RemoveSolutionRequest request) {
-        Solution solution = solutionRepository.findById(request.solutionId())
-                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
-
-        solutionRepository.deleteAllComments(solution.getId());
-        solutionRepository.delete(solution);
     }
 
     private boolean existsMissionRepositoryName(String repositoryName) {
