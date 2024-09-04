@@ -77,6 +77,20 @@ public class SolutionService {
         return SolutionResponse.from(solution);
     }
 
+    public SolutionResponse update(Long memberId, UpdateSolutionRequest updateSolutionRequest) {
+        Solution solution = solutionRepository.findById(updateSolutionRequest.solutionId())
+                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+        validatePullRequestUrl(updateSolutionRequest.url());
+        SolutionSubmit solutionSubmit = updateSolutionRequest.toSubmitPayload();
+        solution.update(solutionSubmit);
+
+        if (solution.isNotSubmittedBy(memberId)) {
+            throw new DevelupException(ExceptionType.SOLUTION_NOT_SUBMITTED_BY_MEMBER);
+        }
+
+        return SolutionResponse.from(solution);
+    }
+
     private void validatePullRequestUrl(String url) {
         Matcher matcher = PR_URL_PATTERN.matcher(url);
         if (!matcher.matches()) {

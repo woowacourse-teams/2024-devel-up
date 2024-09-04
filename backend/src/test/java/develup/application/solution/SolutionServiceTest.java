@@ -235,6 +235,77 @@ class SolutionServiceTest extends IntegrationTestSupport {
         assertThat(solutionService.getSubmittedSolutionsByMemberId(member.getId())).hasSize(1);
     }
 
+    @Test
+    @DisplayName("사용자가 제출한 솔루션을 수정할 수 있다.")
+    void resubmit() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+        UpdateSolutionRequest updateSolutionRequest = new UpdateSolutionRequest(solution.getId(),
+                "updated title",
+                "updated description",
+                "https://github.com/develup-mission/java-smoking/pull/1"
+        );
+
+        SolutionResponse solutionResponse = solutionService.update(member.getId(), updateSolutionRequest);
+
+        assertAll(
+                () -> assertEquals(solutionResponse.id(), 1L),
+                () -> assertEquals(solutionResponse.mission().id(), 1L),
+                () -> assertEquals(solutionResponse.member().id(), member.getId()),
+                () -> assertEquals(solutionResponse.title(), "updated title"),
+                () -> assertEquals(solutionResponse.description(), "updated description"),
+                () -> assertEquals(solutionResponse.url(), "https://github.com/develup-mission/java-smoking/pull/1")
+        );
+    }
+
+    @Test
+    @DisplayName("솔루션 업데이트 시 PR url 의 저장소가 올바르지 않은 경우 예외가 발생한다.")
+    void cantUpdate() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+        UpdateSolutionRequest updateSolutionRequest = new UpdateSolutionRequest(solution.getId(),
+                "updated title",
+                "updated description",
+                "invalid"
+        );
+
+        assertThatThrownBy(() -> solutionService.update(member.getId(), updateSolutionRequest))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("올바르지 않은 주소입니다.");
+    }
+
+    @Test
+    @DisplayName("사용자는 자신의 풀이만 수정할 수 있다.")
+    void updateWith() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Member other = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+        UpdateSolutionRequest updateSolutionRequest = new UpdateSolutionRequest(solution.getId(),
+                "updated title",
+                "updated description",
+                "https://github.com/develup-mission/java-smoking/pull/1"
+        );
+
+        assertThatThrownBy(() -> solutionService.update(other.getId(), updateSolutionRequest))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("작성자만 솔루션을 수정할 수 있습니다.");
+    }
+
     private SubmitSolutionRequest getSolutionRequest() {
         return new SubmitSolutionRequest(
                 1L,
