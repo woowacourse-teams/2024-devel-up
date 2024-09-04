@@ -86,6 +86,17 @@ public class SolutionCommentService {
         return solutionCommentRepository.save(rootComment);
     }
 
+    public UpdateSolutionCommentResponse updateComment(Long commentId, UpdateSolutionCommentRequest request, Long id) {
+        SolutionComment comment = getComment(commentId);
+        if (comment.isNotWrittenBy(id)) {
+            throw new DevelupException(ExceptionType.COMMENT_NOT_WRITTEN_BY_MEMBER);
+        }
+
+        comment.updateContent(request.content());
+
+        return UpdateSolutionCommentResponse.from(comment);
+    }
+
     public void deleteComment(Long commentId, Long memberId) {
         SolutionComment comment = getComment(commentId);
 
