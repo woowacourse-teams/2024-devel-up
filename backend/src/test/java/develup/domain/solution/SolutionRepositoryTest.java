@@ -13,13 +13,10 @@ import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionHashTag;
 import develup.domain.mission.MissionRepository;
-import develup.domain.solution.comment.SolutionComment;
-import develup.domain.solution.comment.SolutionCommentRepository;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
-import develup.support.data.SolutionCommentTestData;
 import develup.support.data.SolutionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,9 +26,6 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private SolutionRepository solutionRepository;
-
-    @Autowired
-    private SolutionCommentRepository solutionCommentRepository;
 
     @Autowired
     private MemberRepository memberRepository;
