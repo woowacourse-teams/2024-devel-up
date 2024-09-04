@@ -5,6 +5,7 @@ import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
 import develup.application.solution.MySolutionResponse;
+import develup.application.solution.RemoveSolutionRequest;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.SolutionService;
 import develup.application.solution.StartSolutionRequest;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,6 +66,17 @@ public class SolutionApi {
         SolutionResponse response = solutionService.update(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
+    }
+
+    @DeleteMapping("/solutions")
+    @Operation(summary = "솔루션 삭제 API", description = "솔루션을 삭제합니다.")
+    public ResponseEntity<ApiResponse<SolutionResponse>> deleteSolution(
+            @Auth Accessor accessor,
+            @Valid @RequestBody RemoveSolutionRequest request
+    ) {
+        solutionService.delete(accessor.id(), request);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/solutions")
