@@ -46,7 +46,7 @@ public class SolutionService {
         Mission mission = missionRepository.findById(request.missionId())
                 .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
 
-        return SolutionResponse.start(creatSolution(member, mission));
+        return SolutionResponse.start(createSolution(member, mission));
     }
 
     private void validateAlreadyStarted(Long memberId, Long missionId) {
@@ -57,7 +57,7 @@ public class SolutionService {
         }
     }
 
-    private Solution creatSolution(Member member, Mission mission) {
+    private Solution createSolution(Member member, Mission mission) {
         Solution solution = Solution.start(mission, member);
 
         return solutionRepository.save(solution);
