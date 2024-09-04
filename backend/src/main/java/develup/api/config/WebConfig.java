@@ -2,6 +2,7 @@ package develup.api.config;
 
 import java.util.List;
 import develup.api.auth.AuthArgumentResolver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -9,6 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Value("${client-host}")
+    private String clientHost;
+    @Value("${api-host}")
+    private String apiHost;
 
     private final AuthArgumentResolver authArgumentResolver;
 
@@ -19,9 +25,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://3.38.11.109", "https://www.devel-up.co.kr",
-                        "https://devel-up.co.kr")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                .allowedOrigins(clientHost, apiHost)
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowCredentials(true);
     }
 

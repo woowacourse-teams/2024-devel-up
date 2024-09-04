@@ -13,7 +13,7 @@ export const GithubIcon = styled(GithubLogo)`
   height: 2.2rem;
   display: flex;
   justify-content: center;
-  margin-right: 0.3rem;
+  margin-right: 0.9rem;
 `;
 
 export const BannerTitle = styled.h1`

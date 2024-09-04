@@ -1,34 +1,57 @@
 import { useState } from 'react';
-import * as S from './ModalProcess.styled';
+import * as S from './MissionProcess.styled';
 import LeftArrow from '@/assets/images/smallLeftArrow.svg';
 import RightArrow from '@/assets/images/smallRightArrow.svg';
-import ContentImage from '@/assets/images/contentImage.svg';
+import HowToLogin from '@/assets/images/howToLogin.svg';
+import HowToGoRepo from '@/assets/images/howToGoRepo.svg';
+import HowToReadDocs from '@/assets/images/howToReadDocs.svg';
+import HowToStart from '@/assets/images/howToStart.svg';
 import { GithubIcon } from '@/components/MissionSubmit/SubmitBanner.styled';
 import Button from '@/components/common/Button/Button';
+import ModalContent from '../index';
 
-const MOCK_CONTENT_LIST = [
+const CONTENT_LIST = [
   {
     id: 1,
-    image: '',
-    content: '미션 저장소로 이동해주세요',
+    image: <HowToLogin />,
+    content: `우측 상단 **[로그인]** 버튼을 클릭해서 로그인을 수행해주세요.\n
+로그인을 성공적으로 마치면 **[미션 시작하기]** 버튼을 클릭해서 미션을 시작할 수 있어요.`,
   },
-  { id: 2, image: '', content: '미션을 포크해주세요' },
-  { id: 3, image: '', content: '미션을 진행해주세요' },
-  { id: 4, image: '', content: '미션을 제출해주세요' },
+  {
+    id: 2,
+    image: <HowToGoRepo />,
+    content: `**[코드 보러 가기]** 버튼을 클릭해 풀고자하는 미션 저장소로 이동해주세요.`,
+  },
+  {
+    id: 3,
+    image: <HowToReadDocs />,
+    content: `미션 저장소에서 **[미션 진행 가이드 문서]**를 확인할 수 있어요. 가이드 문서를 확인하여 코드를 작성해주세요.`,
+  },
+  {
+    id: 4,
+    image: <HowToStart />,
+    content: `미션 구현이 완료되면 **[풀이 제출하기]** 버튼을 클릭하여 풀이를 제출해주세요.\n
+풀이 제출하기 버튼은 **[미션 시작하기]** 버튼을 누른 상태일때만 확인 가능해요.`,
+  },
 ];
 
 interface MissionProcessProps {
   handleModalClose: () => void;
   onClick: () => void;
+  onMission?: () => void;
 }
 
-export default function MissionProcess({ handleModalClose, onClick }: MissionProcessProps) {
+export default function MissionProcess({
+  handleModalClose,
+  onClick,
+  onMission,
+}: MissionProcessProps) {
   const [contentId, setContentId] = useState(1);
-  const currentContent = MOCK_CONTENT_LIST.find((content) => content.id === contentId);
-  const isEndContent = contentId === MOCK_CONTENT_LIST.length;
+  const currentContent = CONTENT_LIST.find((content) => content.id === contentId);
+  const isEndContent = contentId === CONTENT_LIST.length;
 
   const handleNextMissionProcess = () => {
-    setContentId((prev) => Math.min(prev + 1, MOCK_CONTENT_LIST.length));
+    setContentId((prev) => Math.min(prev + 1, CONTENT_LIST.length));
   };
 
   const handlePreviousMissionProcess = () => {
@@ -40,31 +63,40 @@ export default function MissionProcess({ handleModalClose, onClick }: MissionPro
       <S.CloseIconWrapper>
         <S.CloseIcon onClick={handleModalClose} />
       </S.CloseIconWrapper>
-      <S.Title>어떻게 진행하나요?</S.Title>
-      <ContentImage width={413} height={250} />
-      <S.Text>{currentContent?.content}</S.Text>
-      <S.ButtonWrapper>
-        {isEndContent ? (
-          <>
-            <Button variant="primary" onClick={onClick}>
-              <GithubIcon />
-              미션 코드 보러 가기
-            </Button>
-          </>
-        ) : (
-          <>
-            <S.ArrowButton onClick={handlePreviousMissionProcess}>
-              <LeftArrow />
-              Prev
-            </S.ArrowButton>
+      <S.ContentWrapper>
+        <S.Title>어떻게 진행하나요?</S.Title>
+        <ModalContent
+          contentImage={currentContent?.image}
+          content={currentContent?.content ?? ''}
+        />
+        <S.ButtonWrapper>
+          {isEndContent ? (
+            <>
+              <Button onClick={onClick}>
+                <GithubIcon />
+                미션 코드 보러 가기
+              </Button>
+              {onMission && (
+                <Button variant="primary" onClick={onMission}>
+                  미션 시작하기
+                </Button>
+              )}
+            </>
+          ) : (
+            <>
+              <S.ArrowButton onClick={handlePreviousMissionProcess}>
+                <LeftArrow />
+                Prev
+              </S.ArrowButton>
 
-            <S.ArrowButton onClick={handleNextMissionProcess}>
-              Next
-              <RightArrow />
-            </S.ArrowButton>
-          </>
-        )}
-      </S.ButtonWrapper>
+              <S.ArrowButton onClick={handleNextMissionProcess}>
+                Next
+                <RightArrow />
+              </S.ArrowButton>
+            </>
+          )}
+        </S.ButtonWrapper>
+      </S.ContentWrapper>
     </S.MissionProcessContentContainer>
   );
 }

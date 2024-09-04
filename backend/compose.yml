@@ -24,7 +24,7 @@ services:
       - "8082:8082"
     environment:
       TZ: "Asia/Seoul"
-      SPRING_PROFILE: dev
+      SPRING_PROFILE: prod
     volumes:
       - /var/log/app/logs:/var/log/app/logs
     restart: always

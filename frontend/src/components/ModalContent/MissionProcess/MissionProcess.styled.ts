@@ -4,12 +4,11 @@ import Button from '@/components/common/Button/Button';
 
 export const MissionProcessContentContainer = styled.div`
   width: 53rem;
-  height: 58rem;
   background: ${(props) => props.theme.colors.white};
   box-shadow: ${(props) => props.theme.boxShadow.shadow08};
-  border-radius: 0.5rem;
+  border-radius: 1.2rem;
   position: relative;
-  padding: 3.9rem;
+  padding: 7.8rem 5.6rem 4.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,14 +16,13 @@ export const MissionProcessContentContainer = styled.div`
 
 export const Title = styled.h1`
   ${(props) => props.theme.font.bodyBold}
-  margin-bottom: 2.4rem;
 `;
 
 export const CloseIconWrapper = styled.div`
   padding: 0.5rem;
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 2.1rem;
+  right: 2.6rem;
   cursor: pointer;
 `;
 
@@ -33,8 +31,10 @@ export const CloseIcon = styled(closeIcon)`
   height: 1.4rem;
 `;
 
-export const Text = styled.p`
-  ${(props) => props.theme.font.body}
+export const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
 `;
 
 // Prev Next 버튼
@@ -42,7 +42,6 @@ export const Text = styled.p`
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 5rem;
   gap: 0.8rem;
 `;
 

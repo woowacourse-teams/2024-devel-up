@@ -5,7 +5,8 @@
     "language": "JAVA",
     "summary": "루터회관 흡연 벌칙 프로그램을 구현한다.",
     "thumbnail": "https://www.arimetrics.com/wp-content/uploads/2020/01/mockup-1.png",
-    "hashTag": [
+    "url": "abcd",
+    "hashTags": [
       {
         "id": 1,
         "name": "JAVA"
@@ -30,7 +31,8 @@
     "language": "React",
     "summary": "프론트엔드 숫자 야구 문젤르 구현합니다",
     "thumbnail": "https://www.arimetrics.com/wp-content/uploads/2020/01/mockup-1.png",
-    "hashTag": [
+    "url": "abcd",
+    "hashTags": [
       {
         "id": 1,
         "name": "JAVA"
