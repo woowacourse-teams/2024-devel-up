@@ -105,6 +105,14 @@ public class SolutionService {
         }
     }
 
+    public void remove(Long memberId, RemoveSolutionRequest request) {
+        Solution solution = solutionRepository.findById(request.solutionId())
+                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+
+        solutionRepository.deleteAllComments(solution.getId());
+        solutionRepository.delete(solution);
+    }
+
     private boolean existsMissionRepositoryName(String repositoryName) {
         List<String> url = missionRepository.findUrl();
         return url.stream().map(MISSION_URL_PATTERN::matcher)
