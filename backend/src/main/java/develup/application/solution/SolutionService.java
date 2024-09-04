@@ -63,25 +63,25 @@ public class SolutionService {
         return solutionRepository.save(solution);
     }
 
-    public SolutionResponse submit(Long memberId, SubmitSolutionRequest submitSolutionRequest) {
+    public SolutionResponse submit(Long memberId, SubmitSolutionRequest request) {
         Solution solution = solutionRepository.findByMember_IdAndMission_IdAndStatus(
                         memberId,
-                        submitSolutionRequest.missionId(),
+                        request.missionId(),
                         SolutionStatus.IN_PROGRESS
                 )
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_STARTED));
-        validatePullRequestUrl(submitSolutionRequest.url());
-        SolutionSubmit solutionSubmit = submitSolutionRequest.toSubmitPayload();
+        validatePullRequestUrl(request.url());
+        SolutionSubmit solutionSubmit = request.toSubmitPayload();
         solution.submit(solutionSubmit);
 
         return SolutionResponse.from(solution);
     }
 
-    public SolutionResponse update(Long memberId, UpdateSolutionRequest updateSolutionRequest) {
-        Solution solution = solutionRepository.findById(updateSolutionRequest.solutionId())
+    public SolutionResponse update(Long memberId, UpdateSolutionRequest request) {
+        Solution solution = solutionRepository.findById(request.solutionId())
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
-        validatePullRequestUrl(updateSolutionRequest.url());
-        SolutionSubmit solutionSubmit = updateSolutionRequest.toSubmitPayload();
+        validatePullRequestUrl(request.url());
+        SolutionSubmit solutionSubmit = request.toSubmitPayload();
         solution.update(solutionSubmit);
 
         if (solution.isNotSubmittedBy(memberId)) {
