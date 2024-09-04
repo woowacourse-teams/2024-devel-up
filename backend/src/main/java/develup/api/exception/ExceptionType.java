@@ -13,7 +13,7 @@ public enum ExceptionType {
     MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 미션입니다."),
     SOLUTION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 솔루션입니다."),
     SOLUTION_NOT_STARTED(HttpStatus.BAD_REQUEST, "시작하지 않은 솔루션입니다."),
-    SOLUTION_NOT_SUBMITTED_BY_MEMBER(HttpStatus.FORBIDDEN, "솔루션 작성자가 아닙니다"),
+    SOLUTION_NOT_SUBMITTED_BY_MEMBER(HttpStatus.FORBIDDEN, "솔루션 작성자가 아닙니다."),
     SOLUTION_ALREADY_STARTED(HttpStatus.BAD_REQUEST, "이미 진행 중인 미션입니다."),
     SOLUTION_ALREADY_SUBMITTED(HttpStatus.BAD_REQUEST, "이미 제출한 미션입니다."),
     INVALID_URL(HttpStatus.BAD_REQUEST, "올바르지 않은 주소입니다."),

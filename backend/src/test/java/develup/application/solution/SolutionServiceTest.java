@@ -303,7 +303,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
         assertThatThrownBy(() -> solutionService.update(other.getId(), updateSolutionRequest))
                 .isInstanceOf(DevelupException.class)
-                .hasMessage("작성자만 솔루션을 수정할 수 있습니다.");
+                .hasMessage("솔루션 작성자가 아닙니다.");
     }
 
     private SubmitSolutionRequest getSolutionRequest() {
