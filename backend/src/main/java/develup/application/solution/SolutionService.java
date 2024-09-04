@@ -78,7 +78,7 @@ public class SolutionService {
         return SolutionResponse.from(solution);
     }
 
-    public void delete(Long memberId, RemoveSolutionRequest request) {
+    public void delete(Long memberId, DeleteSolutionRequest request) {
         Solution solution = getSolution(request.solutionId());
         validateSolutionOwner(memberId, solution);
 
