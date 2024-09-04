@@ -12,7 +12,6 @@ import develup.domain.mission.MissionRepository;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
-import develup.domain.solution.SolutionSubmit;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,8 +70,8 @@ public class SolutionService {
                 )
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_STARTED));
         validatePullRequestUrl(request.url());
-        SolutionSubmit solutionSubmit = request.toSubmitPayload();
-        solution.submit(solutionSubmit);
+
+        solution.submit(request.toSubmitPayload());
 
         return SolutionResponse.from(solution);
     }
@@ -80,15 +79,18 @@ public class SolutionService {
     public SolutionResponse update(Long memberId, UpdateSolutionRequest request) {
         Solution solution = solutionRepository.findById(request.solutionId())
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+        validateSolutionOwner(memberId, solution);
         validatePullRequestUrl(request.url());
-        SolutionSubmit solutionSubmit = request.toSubmitPayload();
-        solution.update(solutionSubmit);
 
+        solution.update(request.toSubmitPayload());
+
+        return SolutionResponse.from(solution);
+    }
+
+    private void validateSolutionOwner(Long memberId, Solution solution) {
         if (solution.isNotSubmittedBy(memberId)) {
             throw new DevelupException(ExceptionType.SOLUTION_NOT_SUBMITTED_BY_MEMBER);
         }
-
-        return SolutionResponse.from(solution);
     }
 
     private void validatePullRequestUrl(String url) {
