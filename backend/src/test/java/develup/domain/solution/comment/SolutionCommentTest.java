@@ -30,6 +30,31 @@ class SolutionCommentTest {
     }
 
     @Test
+    @DisplayName("댓글 내용을 수정할 수 있다.")
+    void updateContent() {
+        SolutionComment comment = SolutionCommentTestData.defaultSolutionComment().build();
+        String updatedContent = "수정된 댓글입니다.";
+
+        comment.updateContent(updatedContent);
+
+        assertThat(comment.getContent()).isEqualTo(updatedContent);
+    }
+
+    @Test
+    @DisplayName("삭제된 댓글의 내용을 수정할 수 없다.")
+    void updateContentFailedWhenAlreadyDeleted() {
+        SolutionComment comment = SolutionCommentTestData.defaultSolutionComment()
+                .withDeletedAt(LocalDateTime.now())
+                .build();
+        String updatedContent = "수정된 댓글입니다.";
+
+        assertThatThrownBy(() -> comment.updateContent(updatedContent))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("이미 삭제된 댓글입니다.");
+    }
+
+
+    @Test
     @DisplayName("댓글을 삭제할 수 있다.")
     void delete() {
         SolutionComment comment = SolutionCommentTestData.defaultSolutionComment().build();
