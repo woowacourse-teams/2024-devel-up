@@ -10,11 +10,13 @@ import develup.application.solution.SolutionService;
 import develup.application.solution.StartSolutionRequest;
 import develup.application.solution.SubmitSolutionRequest;
 import develup.application.solution.SummarizedSolutionResponse;
+import develup.application.solution.UpdateSolutionRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,6 +51,17 @@ public class SolutionApi {
             @Valid @RequestBody SubmitSolutionRequest request
     ) {
         SolutionResponse response = solutionService.submit(accessor.id(), request);
+
+        return ResponseEntity.ok(new ApiResponse<>(response));
+    }
+
+    @PatchMapping("/solutions")
+    @Operation(summary = "솔루션 수정 API", description = "솔루션을 수정합니다.")
+    public ResponseEntity<ApiResponse<SolutionResponse>> updateSolution(
+            @Auth Accessor accessor,
+            @Valid @RequestBody UpdateSolutionRequest request
+    ) {
+        SolutionResponse response = solutionService.update(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
