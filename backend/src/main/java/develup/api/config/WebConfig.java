@@ -1,6 +1,8 @@
 package develup.api.config;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import develup.api.auth.AuthArgumentResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +26,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        Set<String> clientHostSet = new HashSet<>(List.of(clientHost, apiHost, "http://localhost:3000"));
+        String[] corsHosts = clientHostSet.toArray(new String[0]);
+
         registry.addMapping("/**")
-                .allowedOrigins(clientHost, apiHost)
+                .allowedOrigins(corsHosts)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowCredentials(true);
     }

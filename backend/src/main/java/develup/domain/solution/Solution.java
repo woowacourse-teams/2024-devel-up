@@ -80,11 +80,20 @@ public class Solution extends CreatedAtAuditableEntity {
         if (!isInProgress()) {
             throw new DevelupException(ExceptionType.SOLUTION_ALREADY_SUBMITTED);
         }
-
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
         this.url = solutionSubmit.url();
         this.status = SolutionStatus.COMPLETED;
+    }
+
+    public void update(SolutionSubmit solutionSubmit) {
+        this.title = solutionSubmit.title();
+        this.description = solutionSubmit.description();
+        this.url = solutionSubmit.url();
+    }
+
+    public boolean isNotSubmittedBy(Long memberId) {
+        return !member.getId().equals(memberId);
     }
 
     public boolean isInProgress() {

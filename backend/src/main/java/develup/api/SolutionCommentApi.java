@@ -10,12 +10,15 @@ import develup.application.solution.comment.MySolutionCommentResponse;
 import develup.application.solution.comment.SolutionCommentRepliesResponse;
 import develup.application.solution.comment.SolutionCommentRequest;
 import develup.application.solution.comment.SolutionCommentService;
+import develup.application.solution.comment.UpdateSolutionCommentRequest;
+import develup.application.solution.comment.UpdateSolutionCommentResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,6 +63,18 @@ public class SolutionCommentApi {
         URI location = URI.create("/solutions/" + response.solutionId() + "/comments/" + response.id());
 
         return ResponseEntity.created(location).body(new ApiResponse<>(response));
+    }
+
+    @PatchMapping("/solutions/comments/{commentId}")
+    @Operation(summary = "솔루션 댓글 수정 API", description = "솔루션의 댓글을 수정합니다.")
+    public ResponseEntity<ApiResponse<UpdateSolutionCommentResponse>> updateComment(
+            @PathVariable Long commentId,
+            @Valid @RequestBody UpdateSolutionCommentRequest request,
+            @Auth Accessor accessor
+    ) {
+        UpdateSolutionCommentResponse response = solutionCommentService.updateComment(commentId, request, accessor.id());
+
+        return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
     @DeleteMapping("/solutions/comments/{commentId}")

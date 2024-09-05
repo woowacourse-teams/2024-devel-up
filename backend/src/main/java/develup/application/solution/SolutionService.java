@@ -12,7 +12,6 @@ import develup.domain.mission.MissionRepository;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
-import develup.domain.solution.SolutionSubmit;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +45,7 @@ public class SolutionService {
         Mission mission = missionRepository.findById(request.missionId())
                 .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
 
-        return SolutionResponse.start(creatSolution(member, mission));
+        return SolutionResponse.start(createSolution(member, mission));
     }
 
     private void validateAlreadyStarted(Long memberId, Long missionId) {
@@ -57,24 +56,41 @@ public class SolutionService {
         }
     }
 
-    private Solution creatSolution(Member member, Mission mission) {
+    private Solution createSolution(Member member, Mission mission) {
         Solution solution = Solution.start(mission, member);
 
         return solutionRepository.save(solution);
     }
 
-    public SolutionResponse submit(Long memberId, SubmitSolutionRequest submitSolutionRequest) {
+    public SolutionResponse submit(Long memberId, SubmitSolutionRequest request) {
         Solution solution = solutionRepository.findByMember_IdAndMission_IdAndStatus(
                         memberId,
-                        submitSolutionRequest.missionId(),
+                        request.missionId(),
                         SolutionStatus.IN_PROGRESS
                 )
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_STARTED));
-        validatePullRequestUrl(submitSolutionRequest.url());
-        SolutionSubmit solutionSubmit = submitSolutionRequest.toSubmitPayload();
-        solution.submit(solutionSubmit);
+        validatePullRequestUrl(request.url());
+
+        solution.submit(request.toSubmitPayload());
 
         return SolutionResponse.from(solution);
+    }
+
+    public SolutionResponse update(Long memberId, UpdateSolutionRequest request) {
+        Solution solution = solutionRepository.findById(request.solutionId())
+                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+        validateSolutionOwner(memberId, solution);
+        validatePullRequestUrl(request.url());
+
+        solution.update(request.toSubmitPayload());
+
+        return SolutionResponse.from(solution);
+    }
+
+    private void validateSolutionOwner(Long memberId, Solution solution) {
+        if (solution.isNotSubmittedBy(memberId)) {
+            throw new DevelupException(ExceptionType.SOLUTION_NOT_SUBMITTED_BY_MEMBER);
+        }
     }
 
     private void validatePullRequestUrl(String url) {
