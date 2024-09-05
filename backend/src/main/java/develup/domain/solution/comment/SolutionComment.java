@@ -84,6 +84,14 @@ public class SolutionComment extends CreatedAtAuditableEntity {
         return reply;
     }
 
+    public void updateContent(String content) {
+        if (this.isDeleted()) {
+            throw new DevelupException(ExceptionType.COMMENT_ALREADY_DELETED);
+        }
+
+        this.content = content;
+    }
+
     public void delete() {
         if (this.isDeleted()) {
             throw new DevelupException(ExceptionType.COMMENT_ALREADY_DELETED);
