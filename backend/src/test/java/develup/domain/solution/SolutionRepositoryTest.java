@@ -36,7 +36,6 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private HashTagRepository hashTagRepository;
 
-
     @Test
     @DisplayName("멤버 식별자와 미션 식별자와 특정 상태에 해당하는 솔루션이 존재하는지 확인한다. ")
     void exists() {
