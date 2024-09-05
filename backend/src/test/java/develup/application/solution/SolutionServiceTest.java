@@ -325,9 +325,8 @@ class SolutionServiceTest extends IntegrationTestSupport {
         solutionRepository.save(solution);
         List<SolutionComment> solutionComments = List.of(createSolutionComment(member, solution), createSolutionComment(member, solution));
         solutionCommentRepository.saveAll(solutionComments);
-        DeleteSolutionRequest deleteSolutionRequest = new DeleteSolutionRequest(solution.getId());
 
-        solutionService.delete(member.getId(), deleteSolutionRequest);
+        solutionService.delete(member.getId(), solution.getId());
 
         List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solution.getId());
         Optional<Solution> deletedSolution = solutionRepository.findById(solution.getId());
@@ -346,9 +345,8 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 .withMission(mission)
                 .build();
         solutionRepository.save(solution);
-        DeleteSolutionRequest deleteSolutionRequest = new DeleteSolutionRequest(solution.getId());
 
-        assertThatThrownBy(() -> solutionService.delete(other.getId(), deleteSolutionRequest))
+        assertThatThrownBy(() -> solutionService.delete(other.getId(), solution.getId()))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("솔루션 작성자가 아닙니다.");
     }

@@ -4,7 +4,6 @@ import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
-import develup.application.solution.DeleteSolutionRequest;
 import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.SolutionService;
@@ -68,13 +67,13 @@ public class SolutionApi {
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
-    @DeleteMapping("/solutions")
+    @DeleteMapping("/solutions/{solutionId}")
     @Operation(summary = "솔루션 삭제 API", description = "솔루션을 삭제합니다.")
     public ResponseEntity<ApiResponse<SolutionResponse>> deleteSolution(
             @Auth Accessor accessor,
-            @Valid @RequestBody DeleteSolutionRequest request
+            @PathVariable Long solutionId
     ) {
-        solutionService.delete(accessor.id(), request);
+        solutionService.delete(accessor.id(), solutionId);
 
         return ResponseEntity.noContent().build();
     }

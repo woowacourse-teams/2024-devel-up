@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
-import develup.application.solution.DeleteSolutionRequest;
 import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionResponse;
 import develup.application.solution.StartSolutionRequest;
@@ -148,14 +147,11 @@ class SolutionApiTest extends ApiTestSupport {
     @Test
     @DisplayName("솔루션을 삭제한다.")
     void deleteSolution() throws Exception {
-        DeleteSolutionRequest request = new DeleteSolutionRequest(1L);
         BDDMockito.doNothing()
                 .when(solutionService)
                 .delete(any(), any());
 
-        mockMvc.perform(delete("/solutions")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+        mockMvc.perform(delete("/solutions/{solutionId}", 1L))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }

@@ -78,8 +78,8 @@ public class SolutionService {
         return SolutionResponse.from(solution);
     }
 
-    public void delete(Long memberId, DeleteSolutionRequest request) {
-        Solution solution = getSolution(request.solutionId());
+    public void delete(Long memberId, Long solutionId) {
+        Solution solution = getSolution(solutionId);
         validateSolutionOwner(memberId, solution);
 
         solutionRepository.deleteAllComments(solution.getId());
