@@ -12,7 +12,7 @@ import develup.support.data.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class MissionHashTagsTest {
+class DiscussionHashTagsTest {
 
     @Test
     @DisplayName("중복된 해시태그로 생성할 수 없다.")

@@ -1,9 +1,12 @@
 package develup.domain.discussion;
 
+import java.util.List;
 import develup.domain.CreatedAtAuditableEntity;
+import develup.domain.hashtag.HashTag;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -19,12 +22,15 @@ public class Discussion extends CreatedAtAuditableEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "mission_id")
     private Mission mission;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    @Embedded
+    private DiscussionHashTags discussionHashTags;
 
     protected Discussion() {
     }
@@ -33,9 +39,10 @@ public class Discussion extends CreatedAtAuditableEntity {
             String title,
             String content,
             Mission mission,
-            Member member
+            Member member,
+            List<HashTag> hashTags
     ) {
-        this(null, title, content, mission, member);
+        this(null, title, content, mission, member, hashTags);
     }
 
     public Discussion(
@@ -43,13 +50,15 @@ public class Discussion extends CreatedAtAuditableEntity {
             String title,
             String content,
             Mission mission,
-            Member member
+            Member member,
+            List<HashTag> hashTags
     ) {
         super(id);
         this.title = title;
         this.content = content;
         this.mission = mission;
         this.member = member;
+        this.discussionHashTags = new DiscussionHashTags(this, hashTags);
     }
 
     public String getTitle() {
@@ -66,5 +75,9 @@ public class Discussion extends CreatedAtAuditableEntity {
 
     public Member getMember() {
         return member;
+    }
+
+    public List<DiscussionHashTag> getHashTags() {
+        return discussionHashTags.getHashTags();
     }
 }
