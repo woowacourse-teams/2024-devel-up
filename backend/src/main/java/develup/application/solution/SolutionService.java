@@ -40,17 +40,19 @@ public class SolutionService {
 
     public SolutionResponse startMission(Long memberId, StartSolutionRequest request) {
         validateAlreadyStarted(memberId, request.missionId());
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
-        Mission mission = missionRepository.findById(request.missionId())
-                .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
+        Member member = getMember(memberId);
+        Mission mission = getMission(request.missionId());
 
         return SolutionResponse.start(createSolution(member, mission));
     }
 
     private void validateAlreadyStarted(Long memberId, Long missionId) {
-        boolean alreadyStarted = solutionRepository.existsByMember_IdAndMission_IdAndStatus(memberId, missionId,
-                SolutionStatus.IN_PROGRESS);
+        boolean alreadyStarted = solutionRepository.existsByMember_IdAndMission_IdAndStatus(
+                memberId,
+                missionId,
+                SolutionStatus.IN_PROGRESS
+        );
+
         if (alreadyStarted) {
             throw new DevelupException(ExceptionType.SOLUTION_ALREADY_STARTED);
         }
@@ -76,9 +78,16 @@ public class SolutionService {
         return SolutionResponse.from(solution);
     }
 
+    public void delete(Long memberId, Long solutionId) {
+        Solution solution = getSolution(solutionId);
+        validateSolutionOwner(memberId, solution);
+
+        solutionRepository.deleteAllComments(solution.getId());
+        solutionRepository.delete(solution);
+    }
+
     public SolutionResponse update(Long memberId, UpdateSolutionRequest request) {
-        Solution solution = solutionRepository.findById(request.solutionId())
-                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+        Solution solution = getSolution(request.solutionId());
         validateSolutionOwner(memberId, solution);
         validatePullRequestUrl(request.url());
 
@@ -112,13 +121,6 @@ public class SolutionService {
                 .anyMatch(matcher -> matcher.group(1).equals(repositoryName));
     }
 
-    public SolutionResponse getById(Long id) {
-        Solution solution = solutionRepository.findById(id)
-                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
-
-        return SolutionResponse.from(solution);
-    }
-
     public List<SummarizedSolutionResponse> getCompletedSummaries(String hashTagName) {
         return solutionRepository.findAllCompletedSolutionByHashTagName(hashTagName).stream()
                 .map(SummarizedSolutionResponse::from)
@@ -130,5 +132,26 @@ public class SolutionService {
         return mySolutions.stream()
                 .map(MySolutionResponse::from)
                 .toList();
+    }
+
+    public SolutionResponse getById(Long id) {
+        Solution solution = getSolution(id);
+
+        return SolutionResponse.from(solution);
+    }
+
+    private Solution getSolution(Long solutionId) {
+        return solutionRepository.findById(solutionId)
+                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
+    }
+
+    private Member getMember(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
+    }
+
+    private Mission getMission(Long missionId) {
+        return missionRepository.findById(missionId)
+                .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
     }
 }

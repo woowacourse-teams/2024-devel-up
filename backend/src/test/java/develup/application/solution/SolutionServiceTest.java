@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
 import java.util.Optional;
 import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
@@ -14,9 +15,12 @@ import develup.domain.mission.MissionRepository;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
+import develup.domain.solution.comment.SolutionComment;
+import develup.domain.solution.comment.SolutionCommentRepository;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
+import develup.support.data.SolutionCommentTestData;
 import develup.support.data.SolutionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +33,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private SolutionRepository solutionRepository;
+
+    @Autowired
+    private SolutionCommentRepository solutionCommentRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -237,7 +244,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
     @Test
     @DisplayName("사용자가 제출한 솔루션을 수정할 수 있다.")
-    void resubmit() {
+    void update() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         Solution solution = SolutionTestData.defaultSolution()
@@ -285,8 +292,8 @@ class SolutionServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("사용자는 자신의 풀이만 수정할 수 있다.")
-    void updateWith() {
+    @DisplayName("자신의 솔루션만 수정할 수 있다.")
+    void notOwnerForUpdate() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Member other = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
@@ -304,6 +311,51 @@ class SolutionServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> solutionService.update(other.getId(), updateSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("솔루션 작성자가 아닙니다.");
+    }
+
+    @Test
+    @DisplayName("작성한 솔루션을 삭제한다.")
+    void delete() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+        List<SolutionComment> solutionComments = List.of(createSolutionComment(member, solution), createSolutionComment(member, solution));
+        solutionCommentRepository.saveAll(solutionComments);
+
+        solutionService.delete(member.getId(), solution.getId());
+
+        List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solution.getId());
+        Optional<Solution> deletedSolution = solutionRepository.findById(solution.getId());
+        assertThat(comments).isEmpty();
+        assertThat(deletedSolution).isEmpty();
+    }
+
+    @Test
+    @DisplayName("자신의 솔루션만 삭제할 수 있다.")
+    void notOwnerForDelete() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Member other = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+
+        assertThatThrownBy(() -> solutionService.delete(other.getId(), solution.getId()))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("솔루션 작성자가 아닙니다.");
+    }
+
+    private SolutionComment createSolutionComment(Member member, Solution solution) {
+        return SolutionCommentTestData.defaultSolutionComment()
+                .withMember(member)
+                .withSolution(solution)
+                .build();
     }
 
     private SubmitSolutionRequest getSolutionRequest() {
