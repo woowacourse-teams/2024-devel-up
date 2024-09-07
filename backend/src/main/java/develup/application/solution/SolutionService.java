@@ -1,7 +1,6 @@
 package develup.application.solution;
 
 import java.util.List;
-import java.util.regex.Pattern;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.member.Member;
@@ -17,11 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SolutionService {
-
-    private static final String PR_URL_REGEX = "https://github\\.com/develup-mission/([^/]+)/pull/([0-9]+)";
-    private static final Pattern PR_URL_PATTERN = Pattern.compile(PR_URL_REGEX);
-    private static final String MISSION_URL_REGEX = ".*/([^/?#]+)";
-    private static final Pattern MISSION_URL_PATTERN = Pattern.compile(MISSION_URL_REGEX);
 
     private final SolutionRepository solutionRepository;
     private final MissionRepository missionRepository;
