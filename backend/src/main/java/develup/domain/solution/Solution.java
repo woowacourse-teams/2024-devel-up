@@ -1,8 +1,6 @@
 package develup.domain.solution;
 
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.CreatedAtAuditableEntity;
@@ -21,9 +19,6 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Solution extends CreatedAtAuditableEntity {
 
-    private static final String PR_URL_REGEX = "https://github\\.com/develup-mission/([^/]+)/pull/([0-9]+)";
-    private static final Pattern PR_URL_PATTERN = Pattern.compile(PR_URL_REGEX);
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Mission mission;
@@ -38,8 +33,8 @@ public class Solution extends CreatedAtAuditableEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column
-    private String url;
+    @Embedded
+    private PullRequestUrl pullRequestUrl;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -53,10 +48,10 @@ public class Solution extends CreatedAtAuditableEntity {
             Member member,
             Title title,
             String description,
-            String url,
+            PullRequestUrl pullRequestUrl,
             SolutionStatus status
     ) {
-        this(null, mission, member, title, description, url, status);
+        this(null, mission, member, title, description, pullRequestUrl, status);
     }
 
     public Solution(
@@ -65,7 +60,7 @@ public class Solution extends CreatedAtAuditableEntity {
             Member member,
             Title title,
             String description,
-            String url,
+            PullRequestUrl pullRequestUrl,
             SolutionStatus status
     ) {
         super(id);
@@ -73,7 +68,7 @@ public class Solution extends CreatedAtAuditableEntity {
         this.member = member;
         this.title = title;
         this.description = description;
-        this.url = url;
+        this.pullRequestUrl = pullRequestUrl;
         this.status = status;
     }
 
@@ -87,27 +82,22 @@ public class Solution extends CreatedAtAuditableEntity {
         }
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
-        this.url = requireValidPullRequestUrl(solutionSubmit.url());
+        this.pullRequestUrl = createPullRequestUrl(solutionSubmit.url());
         this.status = SolutionStatus.COMPLETED;
     }
 
     public void update(SolutionSubmit solutionSubmit) {
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
-        this.url = requireValidPullRequestUrl(solutionSubmit.url());
+        this.pullRequestUrl = createPullRequestUrl(solutionSubmit.url());
     }
 
-    private String requireValidPullRequestUrl(String url) {
-        Matcher matcher = PR_URL_PATTERN.matcher(url);
-        if (!matcher.matches()) {
-            throw new DevelupException(ExceptionType.INVALID_URL);
-        }
-
+    private PullRequestUrl createPullRequestUrl(String url) {
         if (!mission.isValidPullRequestUrl(url)) {
             throw new DevelupException(ExceptionType.INVALID_URL);
         }
 
-        return url;
+        return new PullRequestUrl(url);
     }
 
     public boolean isNotSubmittedBy(Long memberId) {
@@ -135,7 +125,7 @@ public class Solution extends CreatedAtAuditableEntity {
     }
 
     public String getUrl() {
-        return url;
+        return pullRequestUrl.getValue();
     }
 
     public SolutionStatus getStatus() {

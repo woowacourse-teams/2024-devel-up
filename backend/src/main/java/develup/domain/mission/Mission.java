@@ -29,8 +29,8 @@ public class Mission extends IdentifiableEntity {
     protected Mission() {
     }
 
-    public Mission(String title, String thumbnail, String summary, MissionUrl url, List<HashTag> hashTags) {
-        this(null, title, thumbnail, summary, url, hashTags);
+    public Mission(String title, String thumbnail, String summary, MissionUrl missionUrl, List<HashTag> hashTags) {
+        this(null, title, thumbnail, summary, missionUrl, hashTags);
     }
 
     public Mission(Long id, String title, String thumbnail, String summary, MissionUrl missionUrl, List<HashTag> hashTags) {

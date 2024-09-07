@@ -23,7 +23,7 @@ public class MissionTestData {
         private String title;
         private String thumbnail;
         private String summary;
-        private String url;
+        private MissionUrl url;
         private List<HashTag> hashTags;
 
         public MissionBuilder withId(Long id) {
@@ -47,7 +47,7 @@ public class MissionTestData {
         }
 
         public MissionBuilder withUrl(String url) {
-            this.url = url;
+            this.url = new MissionUrl(url);
             return this;
         }
 
@@ -62,7 +62,7 @@ public class MissionTestData {
                     title,
                     thumbnail,
                     summary,
-                    new MissionUrl(url),
+                    url,
                     hashTags
             );
         }
