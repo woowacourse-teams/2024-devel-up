@@ -11,9 +11,6 @@ import jakarta.persistence.Entity;
 @Entity
 public class Mission extends IdentifiableEntity {
 
-    private static final String DESCRIPTION_BASE_URL_PREFIX = "https://raw.githubusercontent.com/develup-mission/";
-    private static final String DESCRIPTION_BASE_URL_SUFFIX = "/main/README.md";
-
     @Column(nullable = false)
     private String title;
 
@@ -23,8 +20,8 @@ public class Mission extends IdentifiableEntity {
     @Column(nullable = false)
     private String summary;
 
-    @Column(nullable = false)
-    private String url;
+    @Embedded
+    private MissionUrl missionUrl;
 
     @Embedded
     private MissionHashTags missionHashTags;
@@ -32,16 +29,16 @@ public class Mission extends IdentifiableEntity {
     protected Mission() {
     }
 
-    public Mission(String title, String thumbnail, String summary, String url, List<HashTag> hashTags) {
+    public Mission(String title, String thumbnail, String summary, MissionUrl url, List<HashTag> hashTags) {
         this(null, title, thumbnail, summary, url, hashTags);
     }
 
-    public Mission(Long id, String title, String thumbnail, String summary, String url, List<HashTag> hashTags) {
+    public Mission(Long id, String title, String thumbnail, String summary, MissionUrl missionUrl, List<HashTag> hashTags) {
         super(id);
         this.title = title;
         this.thumbnail = thumbnail;
         this.summary = summary;
-        this.url = url;
+        this.missionUrl = missionUrl;
         this.missionHashTags = new MissionHashTags(this, hashTags);
     }
 
@@ -49,10 +46,8 @@ public class Mission extends IdentifiableEntity {
         missionHashTags.addAll(this, tags);
     }
 
-    public String getDescriptionUrl() {
-        String[] split = url.split("/");
-
-        return DESCRIPTION_BASE_URL_PREFIX + split[split.length - 1] + DESCRIPTION_BASE_URL_SUFFIX;
+    public boolean isValidPullRequestUrl(String pullRequestUrl) {
+        return this.missionUrl.isValidPullRequestUrl(pullRequestUrl);
     }
 
     public String getTitle() {
@@ -68,7 +63,11 @@ public class Mission extends IdentifiableEntity {
     }
 
     public String getUrl() {
-        return url;
+        return missionUrl.getValue();
+    }
+
+    public String getDescriptionUrl() {
+        return missionUrl.getDescriptionUrl();
     }
 
     public Set<MissionHashTag> getHashTags() {
