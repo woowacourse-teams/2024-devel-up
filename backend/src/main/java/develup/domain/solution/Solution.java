@@ -1,6 +1,8 @@
 package develup.domain.solution;
 
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.CreatedAtAuditableEntity;
@@ -18,6 +20,11 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Solution extends CreatedAtAuditableEntity {
+
+    private static final String PR_URL_REGEX = "https://github\\.com/develup-mission/([^/]+)/pull/([0-9]+)";
+    private static final Pattern PR_URL_PATTERN = Pattern.compile(PR_URL_REGEX);
+    private static final String MISSION_URL_REGEX = ".*/([^/?#]+)";
+    private static final Pattern MISSION_URL_PATTERN = Pattern.compile(MISSION_URL_REGEX);
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
@@ -82,14 +89,37 @@ public class Solution extends CreatedAtAuditableEntity {
         }
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
-        this.url = solutionSubmit.url();
+        this.url = requireSameMissionUrl(solutionSubmit.url());
         this.status = SolutionStatus.COMPLETED;
     }
 
     public void update(SolutionSubmit solutionSubmit) {
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
-        this.url = solutionSubmit.url();
+        this.url = requireSameMissionUrl(solutionSubmit.url());
+    }
+
+    private String requireSameMissionUrl(String url) {
+        Matcher matcher = PR_URL_PATTERN.matcher(url);
+        if (!matcher.matches()) {
+            throw new DevelupException(ExceptionType.INVALID_URL);
+        }
+
+        String repositoryName = matcher.group(1);
+        if (!existsMissionRepositoryName(repositoryName)) {
+            throw new DevelupException(ExceptionType.INVALID_URL);
+        }
+
+        return url;
+    }
+
+    private boolean existsMissionRepositoryName(String repositoryName) {
+        Matcher matcher = MISSION_URL_PATTERN.matcher(mission.getUrl());
+        if (!matcher.find()) {
+            throw new DevelupException(ExceptionType.INVALID_URL);
+        }
+
+        return matcher.group(1).equals(repositoryName);
     }
 
     public boolean isNotSubmittedBy(Long memberId) {
