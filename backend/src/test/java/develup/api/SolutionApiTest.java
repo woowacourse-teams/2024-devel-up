@@ -3,6 +3,7 @@ package develup.api;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -141,6 +142,18 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
+    }
+
+    @Test
+    @DisplayName("솔루션을 삭제한다.")
+    void deleteSolution() throws Exception {
+        BDDMockito.doNothing()
+                .when(solutionService)
+                .delete(any(), any());
+
+        mockMvc.perform(delete("/solutions/{solutionId}", 1L))
+                .andDo(print())
+                .andExpect(status().isNoContent());
     }
 
     @Test
