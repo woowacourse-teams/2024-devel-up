@@ -7,8 +7,8 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class MissionUrl {
 
-    private static final String DESCRIPTION_BASE_URL_PREFIX = "https://raw.githubusercontent.com/develup-mission/";
-    private static final String DESCRIPTION_BASE_URL_SUFFIX = "/main/README.md";
+    private static final String DESCRIPTION_URL_FORMAT =
+            "https://raw.githubusercontent.com/develup-mission/%s/main/README.md";
 
     @Column(name = "url", nullable = false)
     private String value;
@@ -25,9 +25,10 @@ public class MissionUrl {
     }
 
     public String getDescriptionUrl() {
-        String[] split = value.split("/");
+        String[] parts = value.split("/");
+        String missionName = parts[parts.length - 1];
 
-        return DESCRIPTION_BASE_URL_PREFIX + split[split.length - 1] + DESCRIPTION_BASE_URL_SUFFIX;
+        return String.format(DESCRIPTION_URL_FORMAT, missionName);
     }
 
     public String getValue() {
