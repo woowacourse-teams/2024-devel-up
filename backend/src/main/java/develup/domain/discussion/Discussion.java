@@ -1,5 +1,6 @@
 package develup.domain.discussion;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import develup.domain.CreatedAtAuditableEntity;
@@ -80,6 +81,13 @@ public class Discussion extends CreatedAtAuditableEntity {
 
     public String getMissionTitle() {
         return mission.getTitle();
+    }
+
+    public List<HashTag> getHashTags() {
+        if (discussionHashTags == null || discussionHashTags.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return discussionHashTags.extractHashTags();
     }
 
     public Set<DiscussionHashTag> getDiscussionHashTags() {

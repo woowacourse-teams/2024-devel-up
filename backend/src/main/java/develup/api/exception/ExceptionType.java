@@ -24,6 +24,7 @@ public enum ExceptionType {
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 댓글입니다."),
     COMMENT_NOT_WRITTEN_BY_MEMBER(HttpStatus.FORBIDDEN, "댓글 작성자가 아닙니다."),
     DUPLICATED_HASHTAG(HttpStatus.BAD_REQUEST, "중복된 해시태그입니다."),
+    HASHTAG_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 해시태그입니다."),
 
     ;
 

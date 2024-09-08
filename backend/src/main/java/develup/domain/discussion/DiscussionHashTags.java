@@ -26,9 +26,22 @@ class DiscussionHashTags {
     }
 
     private Set<DiscussionHashTag> mapToDiscussionHashTag(Discussion target, List<HashTag> hashTags) {
+        if (hashTags == null) {
+            return new LinkedHashSet<>();
+        }
         return hashTags.stream()
                 .map(it -> new DiscussionHashTag(target, it))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    public boolean isEmpty() {
+        return hashTags.isEmpty();
+    }
+
+    public List<HashTag> extractHashTags() {
+        return hashTags.stream()
+                .map(DiscussionHashTag::getHashTag)
+                .toList();
     }
 
     public Set<DiscussionHashTag> getHashTags() {
