@@ -1,6 +1,7 @@
 package develup.domain.discussion.comment;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import develup.domain.CreatedAtAuditableEntity;
 import develup.domain.discussion.Discussion;
 import develup.domain.member.Member;
@@ -58,6 +59,14 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
         return new DiscussionComment(content, discussion, member, null, null);
     }
 
+    public boolean isRootComment() {
+        return parentComment == null;
+    }
+
+    public boolean isReplyFrom(DiscussionComment rootComment) {
+        return Objects.equals(rootComment, parentComment);
+    }
+
     public String getContent() {
         return content;
     }
@@ -66,12 +75,23 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
         return discussion;
     }
 
+    public Long getDiscussionId() {
+        return discussion.getId();
+    }
+
     public Member getMember() {
         return member;
     }
 
     public DiscussionComment getParentComment() {
         return parentComment;
+    }
+
+    public Long getParentCommentId() {
+        if (parentComment == null) {
+            return null;
+        }
+        return parentComment.getParentCommentId();
     }
 
     public LocalDateTime getDeletedAt() {
