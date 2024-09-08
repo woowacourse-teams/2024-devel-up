@@ -1,6 +1,7 @@
 package develup.domain.discussion;
 
 import java.util.List;
+import java.util.Set;
 import develup.domain.CreatedAtAuditableEntity;
 import develup.domain.hashtag.HashTag;
 import develup.domain.member.Member;
@@ -77,7 +78,7 @@ public class Discussion extends CreatedAtAuditableEntity {
         return member;
     }
 
-    public List<DiscussionHashTag> getHashTags() {
+    public Set<DiscussionHashTag> getDiscussionHashTags() {
         return discussionHashTags.getHashTags();
     }
 }
