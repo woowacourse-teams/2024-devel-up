@@ -72,6 +72,10 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
         return Objects.equals(rootComment, parentComment);
     }
 
+    public boolean isNotDeleted() {
+        return deletedAt == null;
+    }
+
     public String getContent() {
         return content;
     }

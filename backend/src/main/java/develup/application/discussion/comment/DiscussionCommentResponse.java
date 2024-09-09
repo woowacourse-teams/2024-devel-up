@@ -19,10 +19,18 @@ public record DiscussionCommentResponse(
         Long id = discussionComment.getId();
         Long discussionId = discussionComment.getDiscussionId();
         Long parentCommentId = discussionComment.getParentCommentId();
-        String content = discussionComment.getContent();
+        String content = maskingIfNeed(discussionComment);
         MemberResponse memberResponse = MemberResponse.from(discussionComment.getMember());
         LocalDateTime createdAt = discussionComment.getCreatedAt();
 
         return new DiscussionCommentResponse(id, discussionId, parentCommentId, content, memberResponse, createdAt);
+    }
+
+    private static String maskingIfNeed(DiscussionComment discussionComment) {
+        String content = "삭제된 댓글입니다.";
+        if (discussionComment.isNotDeleted()) {
+            content = discussionComment.getContent();
+        }
+        return content;
     }
 }
