@@ -82,10 +82,6 @@ public class Discussion extends CreatedAtAuditableEntity {
         return mission.getTitle();
     }
 
-    public String getMemberImageUrl() {
-        return member.getImageUrl();
-    }
-
     public Set<DiscussionHashTag> getDiscussionHashTags() {
         return discussionHashTags.getHashTags();
     }

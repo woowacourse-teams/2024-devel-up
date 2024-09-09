@@ -24,10 +24,10 @@ public class DiscussionApi {
     @GetMapping("/discussions")
     @Operation(summary = "디스커션 목록 조회 API", description = "디스커션 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<SummarizedDiscussionResponse>>> getDiscussions(
-            @RequestParam(defaultValue = "all") String missionTitle,
+            @RequestParam(defaultValue = "all") String mission,
             @RequestParam(defaultValue = "all") String hashTag
     ) {
-        List<SummarizedDiscussionResponse> responses = discussionService.getSummaries(missionTitle, hashTag);
+        List<SummarizedDiscussionResponse> responses = discussionService.getSummaries(mission, hashTag);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }

@@ -14,7 +14,7 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             JOIN FETCH d.discussionHashTags.hashTags dhts
             JOIN FETCH dhts.hashTag ht
             WHERE
-                (LOWER(:missionTitle) = 'all' OR m.title = :missionTitle)
+                (LOWER(:mission) = 'all' OR m.title = :mission)
                 AND
                 (LOWER(:hashTag) = 'all' OR EXISTS (
                     SELECT 1
@@ -24,8 +24,8 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
                     AND sht.name = :hashTag
                 ))
             """)
-    List<Discussion> findByMissionTitleAndHashTagName(
-            @Param("missionTitle") String missionTitle,
+    List<Discussion> findByMissionAndHashTagName(
+            @Param("mission") String mission,
             @Param("hashTag") String hashTagName
     );
 }

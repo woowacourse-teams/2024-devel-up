@@ -15,8 +15,8 @@ public class DiscussionService {
         this.discussionRepository = discussionRepository;
     }
 
-    public List<SummarizedDiscussionResponse> getSummaries(String missionTitle, String hashTagName) {
-        return discussionRepository.findByMissionTitleAndHashTagName(missionTitle, hashTagName).stream()
+    public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
+        return discussionRepository.findByMissionAndHashTagName(mission, hashTagName).stream()
                 .map(SummarizedDiscussionResponse::from)
                 .toList();
     }

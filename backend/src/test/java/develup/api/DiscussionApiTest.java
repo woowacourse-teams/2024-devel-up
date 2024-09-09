@@ -39,10 +39,10 @@ public class DiscussionApiTest extends ApiTestSupport {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속 구현에 대한 고찰")))
-                .andExpect(jsonPath("$.data[0].missionTitle", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data[0].mission", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data[0].hashTags[0].id", is(1)))
                 .andExpect(jsonPath("$.data[0].hashTags[0].name", equalTo("JAVA")))
-                .andExpect(jsonPath("$.data[0].memberImgUrl", equalTo("image.com/1.jpg")))
+                .andExpect(jsonPath("$.data[0].member.imageUrl", equalTo("image.com/1.jpg")))
                 .andExpect(jsonPath("$.data[0].commentCount", equalTo(100)))
                 .andExpect(jsonPath("$.data.length()", is(2)));
     }

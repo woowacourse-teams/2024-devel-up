@@ -2,16 +2,17 @@ package develup.application.discussion;
 
 import java.util.List;
 import develup.application.hashtag.HashTagResponse;
+import develup.application.member.MemberResponse;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionHashTag;
 
 public record SummarizedDiscussionResponse(
         Long id,
         String title,
-        String missionTitle,
+        String mission,
         List<HashTagResponse> hashTags,
-        String memberImgUrl,
-        Integer commentCount
+        MemberResponse member,
+        int commentCount
 ) {
 
     public static SummarizedDiscussionResponse from(Discussion discussion) {
@@ -25,7 +26,7 @@ public record SummarizedDiscussionResponse(
                 discussion.getTitle(),
                 discussion.getMissionTitle(),
                 hashTagResponses,
-                discussion.getMemberImageUrl(),
+                MemberResponse.from(discussion.getMember()),
                 100
         );
     }

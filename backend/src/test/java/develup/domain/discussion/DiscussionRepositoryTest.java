@@ -44,7 +44,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         createDiscussion(mission, hashTag);
         createDiscussion(mission, hashTag);
 
-        List<Discussion> actual = discussionRepository.findByMissionTitleAndHashTagName(
+        List<Discussion> actual = discussionRepository.findByMissionAndHashTagName(
                 "all",
                 "all"
         );
@@ -62,7 +62,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         createDiscussion(mission, hashTag1);
         createDiscussion(mission, hashTag2);
 
-        List<Discussion> discussions = discussionRepository.findByMissionTitleAndHashTagName(
+        List<Discussion> discussions = discussionRepository.findByMissionAndHashTagName(
                 "all",
                 "JAVA"
         );
@@ -84,7 +84,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         createDiscussion(mission1, hashTag);
         createDiscussion(mission2, hashTag);
 
-        List<Discussion> discussions = discussionRepository.findByMissionTitleAndHashTagName(
+        List<Discussion> discussions = discussionRepository.findByMissionAndHashTagName(
                 "루터회관 흡연단속",
                 "all"
         );
