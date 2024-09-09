@@ -33,8 +33,8 @@ public class Solution extends CreatedAtAuditableEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column
-    private String url;
+    @Embedded
+    private PullRequestUrl pullRequestUrl;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -48,10 +48,10 @@ public class Solution extends CreatedAtAuditableEntity {
             Member member,
             Title title,
             String description,
-            String url,
+            PullRequestUrl pullRequestUrl,
             SolutionStatus status
     ) {
-        this(null, mission, member, title, description, url, status);
+        this(null, mission, member, title, description, pullRequestUrl, status);
     }
 
     public Solution(
@@ -60,7 +60,7 @@ public class Solution extends CreatedAtAuditableEntity {
             Member member,
             Title title,
             String description,
-            String url,
+            PullRequestUrl pullRequestUrl,
             SolutionStatus status
     ) {
         super(id);
@@ -68,7 +68,7 @@ public class Solution extends CreatedAtAuditableEntity {
         this.member = member;
         this.title = title;
         this.description = description;
-        this.url = url;
+        this.pullRequestUrl = pullRequestUrl;
         this.status = status;
     }
 
@@ -82,14 +82,25 @@ public class Solution extends CreatedAtAuditableEntity {
         }
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
-        this.url = solutionSubmit.url();
+        this.pullRequestUrl = createPullRequestUrl(solutionSubmit.url());
         this.status = SolutionStatus.COMPLETED;
     }
 
     public void update(SolutionSubmit solutionSubmit) {
+        if (isInProgress()) {
+            throw new DevelupException(ExceptionType.SOLUTION_NOT_YET_SUBMITTED);
+        }
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
-        this.url = solutionSubmit.url();
+        this.pullRequestUrl = createPullRequestUrl(solutionSubmit.url());
+    }
+
+    private PullRequestUrl createPullRequestUrl(String url) {
+        if (!mission.isValidPullRequestUrl(url)) {
+            throw new DevelupException(ExceptionType.INVALID_URL);
+        }
+
+        return new PullRequestUrl(url);
     }
 
     public boolean isNotSubmittedBy(Long memberId) {
@@ -117,7 +128,7 @@ public class Solution extends CreatedAtAuditableEntity {
     }
 
     public String getUrl() {
-        return url;
+        return pullRequestUrl.getValue();
     }
 
     public SolutionStatus getStatus() {
