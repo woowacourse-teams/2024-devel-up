@@ -38,10 +38,9 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
             String content,
             Discussion discussion,
             Member member,
-            DiscussionComment parentComment,
-            LocalDateTime deletedAt
+            DiscussionComment parentComment
     ) {
-        this(null, content, discussion, member, parentComment, deletedAt);
+        this(null, content, discussion, member, parentComment, null);
     }
 
     public DiscussionComment(
@@ -58,10 +57,6 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
         this.member = member;
         this.parentComment = parentComment;
         this.deletedAt = deletedAt;
-    }
-
-    public static DiscussionComment create(String content, Discussion discussion, Member member) {
-        return new DiscussionComment(content, discussion, member, null, null);
     }
 
     public boolean isRootComment() {
