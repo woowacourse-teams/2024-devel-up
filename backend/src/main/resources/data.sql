@@ -77,40 +77,26 @@ VALUES (1, 1, '1', NULL, NULL, '2024-08-16 13:40:00'),
        (1, 1, '1-2', 1, NULL, '2024-08-16 13:40:00');
 
 
--- 'discussion' 테이블에 대한 테스트 데이터 삽입 SQL
--- Discussion 엔티티가 매핑되는 테이블 이름을 'discussion'로 가정합니다.
-
--- 테스트 데이터 삽입
-INSERT INTO discussion (
+INSERT INTO discussion ( -- 디스커션 도메인 개발 시 적절히 수정해야 합니다.
     title, content, mission_id, member_id, created_at
 ) VALUES
 ('First Discussion', 'This is the content of the first discussion.', 1, 1, '2023-09-01 09:00:00'),
 ('Second Discussion', 'This is the content of the second discussion.', 2, 2, '2023-09-01 09:15:00');
 
--- 'discussion_hashtag' 테이블을 통해 해시태그 연결
--- Discussion과 HashTag가 N:M 관계로 연결되는 것을 가정하고 작성
-
-INSERT INTO discussion_hash_tag (
+INSERT INTO discussion_hash_tag ( -- 디스커션 도메인 개발 시 적절히 수정해야 합니다.
     discussion_id, hash_tag_id
 ) VALUES
 (1, 1),
 (1, 2),
 (2, 3);
 
--- 'mission', 'member', 'hashtag' 테이블에는 미리 데이터가 존재한다고 가정합니다.
-
--- 'discussion_comment' 테이블을 가정한 테스트 데이터를 만드는 SQL 스크립트
--- DiscussionComment 엔티티가 매핑될 테이블 이름을 'discussion_comment'로 가정합니다.
-
 INSERT INTO discussion_comment (
     content, discussion_id, member_id, parent_comment_id, deleted_At, created_At
 ) VALUES
-('This is the root comment.', 1, 1, NULL, NULL, '2023-09-01 10:00:00'),
-('This is a reply to the root comment.', 1, 2, 1, NULL, '2023-09-01 10:05:00'),
-('This is another root comment.', 2, 1, NULL, NULL, '2023-09-02 11:00:00'),
-('This is a reply to the second root comment.', 2, 3, 3, NULL, '2023-09-02 11:10:00'),
-('This comment has been deleted.', 2, 2, NULL, '2023-09-02 12:00:00', '2023-09-02 11:50:00');
-
--- 각 discussion_id와 member_id가 실제 존재한다고 가정합니다.
--- createdAt은 각 댓글이 생성된 시간으로 설정되었습니다.
--- deletedAt이 NULL이 아닌 경우 해당 댓글이 삭제된 것으로 간주합니다.
+('루트 댓글', 1, 1, NULL, NULL, '2023-09-01 10:00:00'),
+('루트 댓글의 답글', 1, 2, 1, NULL, '2023-09-01 10:05:00'),
+('다른 루트 댓글', 1, 1, NULL, NULL, '2023-09-02 11:00:00'),
+('다른 루트 댓글의 댓글', 1, 3, 3, NULL, '2023-09-02 11:10:00'),
+('다른 루트 댓글의 삭제된 댓글', 1, 2, 3, '2023-09-02 12:00:00', '2023-09-02 11:50:00'), -- "삭제된 댓글입니다."라고 보여야 합니다.
+('삭제된 루트 댓글', 1, 2, NULL, '2023-09-02 12:00:00', '2023-09-02 11:50:00'), -- 아예 조회되지 않아야 합니다.
+('삭제된 루트 댓글의 댓글', 1, 2, 6, '2023-09-02 12:00:00', '2023-09-02 11:50:00'); -- 아예 조회되지 않아야 합니다.
