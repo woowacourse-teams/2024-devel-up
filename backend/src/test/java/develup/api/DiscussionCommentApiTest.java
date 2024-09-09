@@ -62,6 +62,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
     void createComment() throws Exception {
         LocalDateTime now = LocalDateTime.now();
         String nowString = now.toString();
+        nowString = nowString.substring(0, nowString.indexOf("."));
         DiscussionCommentResponse response = new DiscussionCommentResponse(1L, 1L, null, "루트", null, now);
         BDDMockito.given(discussionCommentService.createComment(any(), any(), any()))
                 .willReturn(response);
