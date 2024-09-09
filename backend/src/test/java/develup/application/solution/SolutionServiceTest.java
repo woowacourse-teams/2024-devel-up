@@ -87,11 +87,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         StartSolutionRequest request = new StartSolutionRequest(mission.getId());
-        Solution inProgressSolution = SolutionTestData.defaultSolution()
-                .withMission(mission)
-                .withMember(member)
-                .withStatus(SolutionStatus.IN_PROGRESS)
-                .build();
+        Solution inProgressSolution = Solution.start(mission, member);
         solutionRepository.save(inProgressSolution);
 
         assertThatThrownBy(() -> solutionService.startMission(member.getId(), request))
@@ -114,15 +110,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void create() {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
-        Solution solution = SolutionTestData.defaultSolution()
-                .withId(1L)
-                .withMission(mission)
-                .withMember(member)
-                .withDescription(null)
-                .withUrl(null)
-                .withStatus(SolutionStatus.IN_PROGRESS)
-                .build();
-
+        Solution solution = Solution.start(mission, member);
         solutionRepository.save(solution);
         SubmitSolutionRequest submitSolutionRequest = getSolutionRequest();
 
@@ -158,19 +146,14 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void createFailWhenWrongPRUrl() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
-        Solution solution = SolutionTestData.defaultSolution()
-                .withMember(member)
-                .withMission(mission)
-                .withStatus(SolutionStatus.IN_PROGRESS)
-                .build();
-
+        Solution solution = Solution.start(mission, member);
         solutionRepository.save(solution);
 
         SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
                 mission.getId(),
                 "value",
                 "description",
-                "url"
+                "https://github.com/develup-mission/java-smoking/invalid/format/pull/1"
         );
 
         assertThatThrownBy(() -> solutionService.submit(member.getId(), submitSolutionRequest))
@@ -183,12 +166,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void createFailWhenWrongPRUrlRepository() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
-        Solution solution = SolutionTestData.defaultSolution()
-                .withMember(member)
-                .withMission(mission)
-                .withStatus(SolutionStatus.IN_PROGRESS)
-                .build();
-
+        Solution solution = Solution.start(mission, member);
         solutionRepository.save(solution);
 
         SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
