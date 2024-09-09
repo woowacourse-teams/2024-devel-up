@@ -96,7 +96,7 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
         if (parentComment == null) {
             return null;
         }
-        return parentComment.getParentCommentId();
+        return parentComment.getId();
     }
 
     public LocalDateTime getDeletedAt() {
