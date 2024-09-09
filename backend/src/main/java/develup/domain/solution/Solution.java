@@ -87,6 +87,9 @@ public class Solution extends CreatedAtAuditableEntity {
     }
 
     public void update(SolutionSubmit solutionSubmit) {
+        if (isInProgress()) {
+            throw new DevelupException(ExceptionType.SOLUTION_NOT_YET_SUBMITTED);
+        }
         this.title = solutionSubmit.title();
         this.description = solutionSubmit.description();
         this.pullRequestUrl = createPullRequestUrl(solutionSubmit.url());

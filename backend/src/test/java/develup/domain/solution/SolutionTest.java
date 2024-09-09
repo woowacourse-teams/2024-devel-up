@@ -48,4 +48,21 @@ class SolutionTest {
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }
+
+    @Test
+    @DisplayName("제출된 솔루션만 수정 가능하다.")
+    void update() {
+        Solution solution = SolutionTestData.defaultSolution()
+                .withStatus(SolutionStatus.IN_PROGRESS)
+                .build();
+        SolutionSubmit solutionSubmit = new SolutionSubmit(
+                new Title("title"),
+                "description",
+                "https://github.com/develup-mission/java-smoking/pull/1"
+        );
+
+        assertThatThrownBy(() -> solution.update(solutionSubmit))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("아직 솔루션이 제출되지 않았습니다.");
+    }
 }
