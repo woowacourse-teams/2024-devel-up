@@ -27,9 +27,9 @@ public record DiscussionCommentResponse(
     }
 
     private static String maskingIfNeed(DiscussionComment discussionComment) {
-        String content = "삭제된 댓글입니다.";
-        if (discussionComment.isNotDeleted()) {
-            content = discussionComment.getContent();
+        String content = discussionComment.getContent();
+        if (discussionComment.isDeleted()) {
+            content = "삭제된 댓글입니다.";
         }
         return content;
     }

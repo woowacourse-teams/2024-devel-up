@@ -74,7 +74,7 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("삭제된 루트 댓글과 그 자식 댓글을 제외하고 조회한다")
+    @DisplayName("삭제된 루트 댓글의 자식 댓글이 없으면 제외하고 조회한다.")
     void getGroupingCommentsWithOutDeletedRoot() {
         Discussion discussion = createDiscussion();
         DiscussionComment rootComment = createDeletedRootComment(discussion);
@@ -82,7 +82,11 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
 
         var groupingComments = discussionCommentService.getGroupingComments(discussion.getId());
 
-        assertThat(groupingComments).hasSize(0);
+        assertAll(
+                () -> assertThat(groupingComments).hasSize(1),
+                () -> assertThat(groupingComments.getFirst().comment().content()).isEqualTo("삭제된 댓글입니다."),
+                () -> assertThat(groupingComments.getFirst().replies()).hasSize(1)
+        );
     }
 
     private DiscussionComment createDeletedRootComment(Discussion discussion) {

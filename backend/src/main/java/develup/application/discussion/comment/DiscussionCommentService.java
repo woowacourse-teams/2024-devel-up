@@ -37,20 +37,34 @@ public class DiscussionCommentService {
         List<DiscussionComment> allComments = commentRepository.findAllByDiscussion_IdOrderByCreatedAtAsc(discussionId);
         List<DiscussionComment> rootComments = allComments.stream()
                 .filter(DiscussionComment::isRootComment)
-                .filter(DiscussionComment::isNotDeleted)
                 .toList();
 
-        Map<DiscussionComment, List<DiscussionComment>> groupedComments = rootComments.stream()
+        Map<DiscussionComment, List<DiscussionComment>> groupedComments = groupingByRootComment(rootComments, allComments);
+
+        groupedComments = hideDeletedAndEmptyReplies(groupedComments);
+
+        return groupedComments.entrySet().stream()
+                .map(grouped -> GroupingDiscussionCommentResponse.of(grouped.getKey(), grouped.getValue()))
+                .toList();
+    }
+
+    private Map<DiscussionComment, List<DiscussionComment>> groupingByRootComment(List<DiscussionComment> rootComments, List<DiscussionComment> allComments) {
+        return rootComments.stream()
                 .collect(Collectors.toMap(
                         rootComment -> rootComment,
                         rootComment -> allComments.stream()
                                 .filter(comment -> comment.isReplyFrom(rootComment))
                                 .toList()
                 ));
+    }
 
+    private Map<DiscussionComment, List<DiscussionComment>> hideDeletedAndEmptyReplies(Map<DiscussionComment, List<DiscussionComment>> groupedComments) {
         return groupedComments.entrySet().stream()
-                .map(grouped -> GroupingDiscussionCommentResponse.of(grouped.getKey(), grouped.getValue()))
-                .toList();
+                .filter(entry -> {
+                    boolean needToHide = entry.getKey().isDeleted() && entry.getValue().isEmpty();
+                    return !needToHide;
+                })
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public DiscussionCommentResponse createComment(Long memberId, Long discussionId, DiscussionCommentCreateRequest commentCreateRequest) {
