@@ -13,8 +13,10 @@ import develup.domain.discussion.comment.DiscussionCommentRepository;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class DiscussionCommentService {
 
     private final DiscussionCommentRepository commentRepository;
