@@ -125,7 +125,7 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
     void createRootComment() {
         Member member = createMember();
         Discussion discussion = createDiscussion();
-        DiscussionCommentCreateRequest createRequest = new DiscussionCommentCreateRequest(null, "루트 댓글");
+        CreateDiscussionCommentRequest createRequest = new CreateDiscussionCommentRequest(null, "루트 댓글");
 
         discussionCommentService.createComment(member.getId(), discussion.getId(), createRequest);
 
@@ -142,7 +142,7 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
         Member member = createMember();
         Discussion discussion = createDiscussion();
         DiscussionComment rootComment = createRootComment(discussion);
-        DiscussionCommentCreateRequest createRequest = new DiscussionCommentCreateRequest(rootComment.getId(), "답글");
+        CreateDiscussionCommentRequest createRequest = new CreateDiscussionCommentRequest(rootComment.getId(), "답글");
 
         discussionCommentService.createComment(member.getId(), discussion.getId(), createRequest);
 
@@ -158,7 +158,7 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
     void createReplyCommentWithInvalidRoot() {
         Member member = createMember();
         Discussion discussion = createDiscussion();
-        DiscussionCommentCreateRequest createRequest = new DiscussionCommentCreateRequest(123L, "답글");
+        CreateDiscussionCommentRequest createRequest = new CreateDiscussionCommentRequest(123L, "답글");
 
         discussionCommentService.createComment(member.getId(), discussion.getId(), createRequest);
 

@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import develup.application.discussion.comment.DiscussionCommentCreateRequest;
+import develup.application.discussion.comment.CreateDiscussionCommentRequest;
 import develup.application.discussion.comment.DiscussionCommentResponse;
 import develup.application.discussion.comment.GroupingDiscussionCommentResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -70,7 +70,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
         mockMvc.perform(
                         post("/discussions/1/comments")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(new DiscussionCommentCreateRequest(null, "루트"))))
+                                .content(objectMapper.writeValueAsString(new CreateDiscussionCommentRequest(null, "루트"))))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id", equalTo(1)))

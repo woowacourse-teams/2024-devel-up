@@ -67,7 +67,7 @@ public class DiscussionCommentService {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public DiscussionCommentResponse createComment(Long memberId, Long discussionId, DiscussionCommentCreateRequest commentCreateRequest) {
+    public DiscussionCommentResponse createComment(Long memberId, Long discussionId, CreateDiscussionCommentRequest commentCreateRequest) {
         String content = commentCreateRequest.content();
         Discussion discussion = discussionRepository.findById(discussionId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
