@@ -26,9 +26,6 @@ class DiscussionHashTags {
     }
 
     private Set<DiscussionHashTag> mapToDiscussionHashTag(Discussion target, List<HashTag> hashTags) {
-        if (hashTags == null) {
-            return new LinkedHashSet<>();
-        }
         return hashTags.stream()
                 .map(it -> new DiscussionHashTag(target, it))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
