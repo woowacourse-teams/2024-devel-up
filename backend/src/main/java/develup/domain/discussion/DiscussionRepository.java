@@ -14,9 +14,9 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             JOIN FETCH d.discussionHashTags.hashTags dhts
             JOIN FETCH dhts.hashTag ht
             WHERE
-                (:missionTitle = 'all' OR m.title = :missionTitle)
+                (LOWER(:missionTitle) = 'all' OR m.title = :missionTitle)
                 AND
-                (:hashTag = 'all' OR EXISTS (
+                (LOWER(:hashTag) = 'all' OR EXISTS (
                     SELECT 1
                     FROM DiscussionHashTag dht
                     JOIN dht.hashTag sht
