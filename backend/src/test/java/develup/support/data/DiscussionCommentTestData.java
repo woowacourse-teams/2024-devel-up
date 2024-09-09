@@ -33,10 +33,6 @@ public class DiscussionCommentTestData {
         private DiscussionCommentBuilder() {
         }
 
-        public static DiscussionCommentBuilder create() {
-            return new DiscussionCommentBuilder();
-        }
-
         public DiscussionCommentBuilder withId(Long id) {
             this.id = id;
             return this;
