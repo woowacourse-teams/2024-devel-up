@@ -78,6 +78,14 @@ public class Discussion extends CreatedAtAuditableEntity {
         return member;
     }
 
+    public String getMissionTitle() {
+        return mission.getTitle();
+    }
+
+    public String getMemberImageUrl() {
+        return member.getImageUrl();
+    }
+
     public Set<DiscussionHashTag> getDiscussionHashTags() {
         return discussionHashTags.getHashTags();
     }
