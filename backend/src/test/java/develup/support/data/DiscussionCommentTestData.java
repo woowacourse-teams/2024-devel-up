@@ -30,16 +30,13 @@ public class DiscussionCommentTestData {
         private DiscussionComment parentComment;
         private LocalDateTime deletedAt;
 
-        // private 생성자로 외부에서 직접 Builder를 생성하지 못하도록 함
         private DiscussionCommentBuilder() {
         }
 
-        // static 메서드를 통해 Builder 객체를 생성
         public static DiscussionCommentBuilder create() {
             return new DiscussionCommentBuilder();
         }
 
-        // with prefix 메서드들
         public DiscussionCommentBuilder withId(Long id) {
             this.id = id;
             return this;
@@ -70,7 +67,6 @@ public class DiscussionCommentTestData {
             return this;
         }
 
-        // 최종적으로 DiscussionComment 객체를 빌드하여 반환
         public DiscussionComment build() {
             return new DiscussionComment(id, content, discussion, member, parentComment, deletedAt);
         }
