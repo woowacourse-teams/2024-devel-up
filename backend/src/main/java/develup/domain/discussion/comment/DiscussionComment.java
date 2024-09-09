@@ -6,10 +6,12 @@ import develup.domain.CreatedAtAuditableEntity;
 import develup.domain.discussion.Discussion;
 import develup.domain.member.Member;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+@Entity
 public class DiscussionComment extends CreatedAtAuditableEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -28,6 +30,9 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
 
     @Column
     private LocalDateTime deletedAt;
+
+    protected DiscussionComment() {
+    }
 
     public DiscussionComment(
             String content,
