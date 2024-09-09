@@ -70,10 +70,10 @@ class DiscussionServiceTest extends IntegrationTestSupport {
         Long missionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
         Long hashTagId = hashTagRepository.save(HashTagTestData.defaultHashTag().build()).getId();
 
-        SubmitDiscussionRequest request =
-                new SubmitDiscussionRequest("title", "content", missionId, List.of(hashTagId));
+        CreateDiscussionRequest request =
+                new CreateDiscussionRequest("title", "content", missionId, List.of(hashTagId));
 
-        DiscussionResponse response = discussionService.submit(memberId, request);
+        DiscussionResponse response = discussionService.create(memberId, request);
 
         assertAll(
                 () -> assertEquals(response.id(), 1L),
@@ -90,10 +90,10 @@ class DiscussionServiceTest extends IntegrationTestSupport {
         Long memberId = memberRepository.save(MemberTestData.defaultMember().build()).getId();
         Long hashTagId = hashTagRepository.save(HashTagTestData.defaultHashTag().build()).getId();
 
-        SubmitDiscussionRequest request =
-                new SubmitDiscussionRequest("title", "content", null, List.of(hashTagId));
+        CreateDiscussionRequest request =
+                new CreateDiscussionRequest("title", "content", null, List.of(hashTagId));
 
-        DiscussionResponse response = discussionService.submit(memberId, request);
+        DiscussionResponse response = discussionService.create(memberId, request);
 
         assertAll(
                 () -> assertEquals(response.id(), 1L),
@@ -110,10 +110,10 @@ class DiscussionServiceTest extends IntegrationTestSupport {
         Long memberId = memberRepository.save(MemberTestData.defaultMember().build()).getId();
         Long missionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
 
-        SubmitDiscussionRequest request =
-                new SubmitDiscussionRequest("title", "content", missionId, null);
+        CreateDiscussionRequest request =
+                new CreateDiscussionRequest("title", "content", missionId, null);
 
-        DiscussionResponse response = discussionService.submit(memberId, request);
+        DiscussionResponse response = discussionService.create(memberId, request);
 
         assertAll(
                 () -> assertEquals(response.id(), 1L),
@@ -126,45 +126,45 @@ class DiscussionServiceTest extends IntegrationTestSupport {
 
     @Test
     @DisplayName("존재하지 않는 사용자는 디스커션을 제출할 수 없다.")
-    void submitWithUnknownMember() {
+    void createWithUnknownMember() {
         Long unknownMemberId = -1L;
         Long missionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
         Long hashTagId = hashTagRepository.save(HashTagTestData.defaultHashTag().build()).getId();
 
-        SubmitDiscussionRequest request =
-                new SubmitDiscussionRequest("title", "content", missionId, List.of(hashTagId));
+        CreateDiscussionRequest request =
+                new CreateDiscussionRequest("title", "content", missionId, List.of(hashTagId));
 
-        assertThatThrownBy(() -> discussionService.submit(unknownMemberId, request))
+        assertThatThrownBy(() -> discussionService.create(unknownMemberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 회원입니다.");
     }
 
     @Test
     @DisplayName("존재하지 않는 미션을 디스커션에 태깅할 수 없다.")
-    void submitWithUnknownMission() {
+    void createWithUnknownMission() {
         Long unknownMissionId = -1L;
         Long memberId = memberRepository.save(MemberTestData.defaultMember().build()).getId();
         Long hashTagId = hashTagRepository.save(HashTagTestData.defaultHashTag().build()).getId();
 
-        SubmitDiscussionRequest request =
-                new SubmitDiscussionRequest("title", "content", unknownMissionId, List.of(hashTagId));
+        CreateDiscussionRequest request =
+                new CreateDiscussionRequest("title", "content", unknownMissionId, List.of(hashTagId));
 
-        assertThatThrownBy(() -> discussionService.submit(memberId, request))
+        assertThatThrownBy(() -> discussionService.create(memberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 미션입니다.");
     }
 
     @Test
     @DisplayName("존재하지 않는 해시태그를 디스커션에 태깅할 수 없다.")
-    void submitWithUnknownHashTag() {
+    void createWithUnknownHashTag() {
         Long unknownHashTagId = -1L;
         Long memberId = memberRepository.save(MemberTestData.defaultMember().build()).getId();
         Long missionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
 
-        SubmitDiscussionRequest request =
-                new SubmitDiscussionRequest("title", "content", missionId, List.of(unknownHashTagId));
+        CreateDiscussionRequest request =
+                new CreateDiscussionRequest("title", "content", missionId, List.of(unknownHashTagId));
 
-        assertThatThrownBy(() -> discussionService.submit(memberId, request))
+        assertThatThrownBy(() -> discussionService.create(memberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 해시태그입니다.");
     }

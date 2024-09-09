@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import develup.application.discussion.DiscussionResponse;
-import develup.application.discussion.SubmitDiscussionRequest;
 import develup.application.discussion.SummarizedDiscussionResponse;
+import develup.application.discussion.CreateDiscussionRequest;
 import develup.domain.discussion.Discussion;
 import develup.domain.hashtag.HashTag;
 import develup.domain.member.Member;
@@ -53,15 +53,15 @@ public class DiscussionApiTest extends ApiTestSupport {
 
     @Test
     @DisplayName("디스커션을 제출한다.")
-    void submitDiscussion() throws Exception {
+    void createNewDiscussion() throws Exception {
         DiscussionResponse response = DiscussionResponse.from(createDiscussion());
-        SubmitDiscussionRequest request = new SubmitDiscussionRequest(
+        CreateDiscussionRequest request = new CreateDiscussionRequest(
                 "루터회관 흡연단속 구현에 대한 고찰",
                 "루터회관 흡연단속을 구현하면서 느낀 점을 공유합니다.",
                 1L,
                 List.of(1L)
         );
-        BDDMockito.given(discussionService.submit(any(), any()))
+        BDDMockito.given(discussionService.create(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(

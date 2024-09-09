@@ -42,7 +42,7 @@ public class DiscussionService {
                 .toList();
     }
 
-    public DiscussionResponse submit(Long memberId, SubmitDiscussionRequest request) {
+    public DiscussionResponse create(Long memberId, CreateDiscussionRequest request) {
         Mission mission = getMission(request.missionId());
         Member member = getMember(memberId);
         List<HashTag> hashTags = getHashTags(request.hashTagIds());
@@ -61,6 +61,7 @@ public class DiscussionService {
         if (missionId == null) {
             return null;
         }
+
         return missionRepository.findById(missionId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
     }

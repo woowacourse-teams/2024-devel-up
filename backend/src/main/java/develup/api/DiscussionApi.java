@@ -4,9 +4,9 @@ import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
+import develup.application.discussion.CreateDiscussionRequest;
 import develup.application.discussion.DiscussionResponse;
 import develup.application.discussion.DiscussionService;
-import develup.application.discussion.SubmitDiscussionRequest;
 import develup.application.discussion.SummarizedDiscussionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,11 +41,11 @@ public class DiscussionApi {
 
     @PostMapping("/discussions/submit")
     @Operation(summary = "디스커션 제출 API", description = "디스커션을 제출합니다.")
-    public ResponseEntity<ApiResponse<DiscussionResponse>> submitDiscussion(
+    public ResponseEntity<ApiResponse<DiscussionResponse>> createDiscussion(
             @Auth Accessor accessor,
-            @Valid @RequestBody SubmitDiscussionRequest request
+            @Valid @RequestBody CreateDiscussionRequest request
     ) {
-        DiscussionResponse response = discussionService.submit(accessor.id(), request);
+        DiscussionResponse response = discussionService.create(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
