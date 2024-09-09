@@ -20,7 +20,7 @@ public class DiscussionCommentApi {
         this.discussionCommentService = discussionCommentService;
     }
 
-    @GetMapping("/discussions/{discussionId}/comment")
+    @GetMapping("/discussions/{discussionId}/comments")
     public ResponseEntity<ApiResponse<List<GroupingDiscussionCommentResponse>>> getGroupedComments(@PathVariable Long discussionId) {
         var responses = discussionCommentService.getGroupingComments(discussionId);
         return ResponseEntity.ok(new ApiResponse<>(responses));
