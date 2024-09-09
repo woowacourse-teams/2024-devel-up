@@ -18,7 +18,10 @@ public class DiscussionCommentService {
 
     public List<GroupingDiscussionCommentResponse> getGroupingComments(Long discussionId) {
         List<DiscussionComment> allComments = commentRepository.findAllByDiscussion_IdOrderByCreatedAtAsc(discussionId);
-        List<DiscussionComment> rootComments = allComments.stream().filter(DiscussionComment::isRootComment).toList();
+        List<DiscussionComment> rootComments = allComments.stream()
+                .filter(DiscussionComment::isRootComment)
+                .filter(DiscussionComment::isNotDeleted)
+                .toList();
 
         Map<DiscussionComment, List<DiscussionComment>> groupedComments = rootComments.stream()
                 .collect(Collectors.toMap(
