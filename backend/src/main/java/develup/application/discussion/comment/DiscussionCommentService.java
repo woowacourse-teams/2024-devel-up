@@ -69,15 +69,27 @@ public class DiscussionCommentService {
 
     public DiscussionCommentResponse createComment(Long memberId, Long discussionId, CreateDiscussionCommentRequest commentCreateRequest) {
         String content = commentCreateRequest.content();
-        Discussion discussion = discussionRepository.findById(discussionId)
-                .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
-        Member writer = memberRepository.findById(memberId)
-                .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
-        DiscussionComment parent = Optional.ofNullable(commentCreateRequest.parentCommentId())
-                .flatMap(commentRepository::findById)
-                .orElse(null);
+        Discussion discussion = findDiscussion(discussionId);
+        Member writer = findMember(memberId);
+        DiscussionComment parent = findMemberDefaultNull(commentCreateRequest);
 
         DiscussionComment comment = commentRepository.save(new DiscussionComment(content, discussion, writer, parent));
         return DiscussionCommentResponse.from(comment);
+    }
+
+    private Discussion findDiscussion(Long discussionId) {
+        return discussionRepository.findById(discussionId)
+                .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
+    }
+
+    private Member findMember(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
+    }
+
+    private DiscussionComment findMemberDefaultNull(CreateDiscussionCommentRequest commentCreateRequest) {
+        return Optional.ofNullable(commentCreateRequest.parentCommentId())
+                .flatMap(commentRepository::findById)
+                .orElse(null);
     }
 }
