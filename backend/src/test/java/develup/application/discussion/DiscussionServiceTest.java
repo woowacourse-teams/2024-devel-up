@@ -111,7 +111,7 @@ class DiscussionServiceTest extends IntegrationTestSupport {
         Long missionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
 
         CreateDiscussionRequest request =
-                new CreateDiscussionRequest("title", "content", missionId, null);
+                new CreateDiscussionRequest("title", "content", missionId, List.of());
 
         DiscussionResponse response = discussionService.create(memberId, request);
 

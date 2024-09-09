@@ -72,10 +72,6 @@ public class DiscussionService {
     }
 
     private List<HashTag> getHashTags(List<Long> hashTagIds) {
-        if (hashTagIds == null || hashTagIds.isEmpty()) {
-            return null;
-        }
-
         return hashTagIds.stream()
                 .map(id -> hashTagRepository.findById(id)
                         .orElseThrow(() -> new DevelupException(ExceptionType.HASHTAG_NOT_FOUND)))
