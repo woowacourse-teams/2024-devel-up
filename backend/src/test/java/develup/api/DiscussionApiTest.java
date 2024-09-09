@@ -1,4 +1,4 @@
-package develup;
+package develup.api;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
-import develup.api.ApiTestSupport;
 import develup.application.discussion.SummarizedDiscussionResponse;
 import develup.domain.discussion.Discussion;
 import develup.domain.hashtag.HashTag;
