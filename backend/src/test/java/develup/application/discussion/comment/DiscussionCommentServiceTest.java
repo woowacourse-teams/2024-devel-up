@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionRepository;
 import develup.domain.discussion.comment.DiscussionComment;
@@ -39,7 +40,9 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
         DiscussionComment rootComment = createRootComment(discussion);
         createReplyComment(discussion, rootComment);
 
-        var groupingComments = discussionCommentService.getGroupingComments(discussion.getId());
+        List<GroupingDiscussionCommentResponse> groupingComments = discussionCommentService.getGroupingComments(
+                discussion.getId()
+        );
 
         assertAll(
                 () -> assertThat(groupingComments).hasSize(1),
@@ -60,14 +63,14 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
     }
 
     private DiscussionComment createRootComment(Discussion discussion) {
-        var discussionComment = DiscussionCommentTestData.defaultRootDiscussionComment(discussion)
+        DiscussionComment discussionComment = DiscussionCommentTestData.defaultRootDiscussionComment(discussion)
                 .withMember(createMember())
                 .build();
         return discussionCommentRepository.save(discussionComment);
     }
 
     private void createReplyComment(Discussion discussion, DiscussionComment parent) {
-        var discussionComment = DiscussionCommentTestData.defaultReplyDiscussionComment(discussion, parent)
+        DiscussionComment discussionComment = DiscussionCommentTestData.defaultReplyDiscussionComment(discussion, parent)
                 .withMember(createMember())
                 .build();
         discussionCommentRepository.save(discussionComment);
@@ -80,7 +83,9 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
         DiscussionComment rootComment = createDeletedRootComment(discussion);
         createReplyComment(discussion, rootComment);
 
-        var groupingComments = discussionCommentService.getGroupingComments(discussion.getId());
+        List<GroupingDiscussionCommentResponse> groupingComments = discussionCommentService.getGroupingComments(
+                discussion.getId()
+        );
 
         assertAll(
                 () -> assertThat(groupingComments).hasSize(1),
@@ -90,7 +95,7 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
     }
 
     private DiscussionComment createDeletedRootComment(Discussion discussion) {
-        var discussionComment = DiscussionCommentTestData.defaultRootDiscussionComment(discussion)
+        DiscussionComment discussionComment = DiscussionCommentTestData.defaultRootDiscussionComment(discussion)
                 .withMember(createMember())
                 .withDeletedAt(LocalDateTime.now())
                 .build();
@@ -104,7 +109,9 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
         DiscussionComment rootComment = createRootComment(discussion);
         createDeletedReplyComment(discussion, rootComment);
 
-        var groupingComments = discussionCommentService.getGroupingComments(discussion.getId());
+        List<GroupingDiscussionCommentResponse> groupingComments = discussionCommentService.getGroupingComments(
+                discussion.getId()
+        );
 
         assertAll(
                 () -> assertThat(groupingComments).hasSize(1),
@@ -113,7 +120,7 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
     }
 
     private void createDeletedReplyComment(Discussion discussion, DiscussionComment parent) {
-        var discussionComment = DiscussionCommentTestData.defaultReplyDiscussionComment(discussion, parent)
+        DiscussionComment discussionComment = DiscussionCommentTestData.defaultReplyDiscussionComment(discussion, parent)
                 .withMember(createMember())
                 .withDeletedAt(LocalDateTime.now())
                 .build();
@@ -129,7 +136,9 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
 
         discussionCommentService.createComment(member.getId(), discussion.getId(), createRequest);
 
-        var groupingComments = discussionCommentService.getGroupingComments(discussion.getId());
+        List<GroupingDiscussionCommentResponse> groupingComments = discussionCommentService.getGroupingComments(
+                discussion.getId()
+        );
         assertAll(
                 () -> assertThat(groupingComments).hasSize(1),
                 () -> assertThat(groupingComments.getFirst().replies()).hasSize(0)
@@ -146,7 +155,9 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
 
         discussionCommentService.createComment(member.getId(), discussion.getId(), createRequest);
 
-        var groupingComments = discussionCommentService.getGroupingComments(discussion.getId());
+        List<GroupingDiscussionCommentResponse> groupingComments = discussionCommentService.getGroupingComments(
+                discussion.getId()
+        );
         assertAll(
                 () -> assertThat(groupingComments).hasSize(1),
                 () -> assertThat(groupingComments.getFirst().replies()).hasSize(1)
@@ -162,7 +173,9 @@ class DiscussionCommentServiceTest extends IntegrationTestSupport {
 
         discussionCommentService.createComment(member.getId(), discussion.getId(), createRequest);
 
-        var groupingComments = discussionCommentService.getGroupingComments(discussion.getId());
+        List<GroupingDiscussionCommentResponse> groupingComments = discussionCommentService.getGroupingComments(
+                discussion.getId()
+        );
         assertAll(
                 () -> assertThat(groupingComments).hasSize(1),
                 () -> assertThat(groupingComments.getFirst().replies()).hasSize(0)
