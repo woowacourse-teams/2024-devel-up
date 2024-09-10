@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +38,14 @@ public class DiscussionApi {
         List<SummarizedDiscussionResponse> responses = discussionService.getSummaries(mission, hashTag);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
+    }
+
+    @GetMapping("/discussions/{id}")
+    @Operation(summary = "디스커션 조회 API", description = "디스커션을 조회합니다.")
+    public ResponseEntity<ApiResponse<DiscussionResponse>> getDiscussion(@PathVariable Long id) {
+        DiscussionResponse response = discussionService.getById(id);
+
+        return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
     @PostMapping("/discussions/submit")
