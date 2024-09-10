@@ -29,9 +29,10 @@ public class DiscussionCommentApi {
 
     @GetMapping("/discussions/{discussionId}/comments")
     @Operation(summary = "디스커션 댓글 목록 조회 API", description = "디스커션 댓글 목록을 조회합니다.")
-    public ResponseEntity<ApiResponse<List<GroupingDiscussionCommentResponse>>> getGroupedComments(@PathVariable Long discussionId) {
-        var responses = discussionCommentService.getGroupingComments(discussionId);
-        return ResponseEntity.ok(new ApiResponse<>(responses));
+    public ResponseEntity<ApiResponse<List<GroupingDiscussionCommentResponse>>> getGroupedComments(
+            @PathVariable Long discussionId
+    ) {
+        return ResponseEntity.ok(new ApiResponse<>(discussionCommentService.getGroupingComments(discussionId)));
     }
 
     @PostMapping("/discussions/{discussionId}/comments")
@@ -41,7 +42,11 @@ public class DiscussionCommentApi {
             @PathVariable Long discussionId,
             @RequestBody CreateDiscussionCommentRequest commentCreateRequest
     ) {
-        var response = discussionCommentService.createComment(accessor.id(), discussionId, commentCreateRequest);
+        DiscussionCommentResponse response = discussionCommentService.createComment(
+                accessor.id(),
+                discussionId,
+                commentCreateRequest
+        );
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 }
