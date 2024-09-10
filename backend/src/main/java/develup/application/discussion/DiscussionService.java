@@ -72,10 +72,12 @@ public class DiscussionService {
     }
 
     private List<HashTag> getHashTags(List<Long> hashTagIds) {
-        return hashTagIds.stream()
-                .map(id -> hashTagRepository.findById(id)
-                        .orElseThrow(() -> new DevelupException(ExceptionType.HASHTAG_NOT_FOUND)))
-                .toList();
+        List<HashTag> hashTags = hashTagRepository.findByIdIn(hashTagIds);
+
+        if (hashTagIds.size() != hashTags.size()) {
+            throw new DevelupException(ExceptionType.HASHTAG_NOT_FOUND);
+        }
+        return hashTags;
     }
 
     private DiscussionResponse createDiscussionResponse(Discussion discussion) {
