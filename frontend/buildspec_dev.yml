@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - cd frontend
+      - npm install
+  build:
+    commands:
+      - echo Building the project...
+      - npm run start
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: frontend/dist
+  name: techcourse-project-2024/develup/frontend-deploy
