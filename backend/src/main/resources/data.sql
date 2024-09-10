@@ -87,3 +87,19 @@ VALUES (1, 1),
        (2, 1),
        (2, 2),
        (2, 3);
+
+-- root-1
+-- ㄴ root-1-1
+-- ㄴ root-1-2
+-- root-2 (deleted, view o)
+-- ㄴ root-2-1
+-- ㄴ root-2-2 (deleted, view x)
+-- root-3 (deleted, view x)
+INSERT INTO discussion_comment (discussion_id, member_id, content, parent_comment_id, deleted_at, created_at)
+VALUES (1, 1, '1', NULL, NULL, '2024-08-16 13:40:00'),
+       (1, 1, '2', NULL, '2024-08-12 13:40:00', '2024-08-16 13:40:00'),
+       (1, 1, '3', NULL, '2024-08-12 13:40:00', '2024-08-16 13:40:00'),
+       (1, 1, '2-1', 2, NULL, '2024-08-16 13:40:00'),
+       (1, 1, '1-1', 1, NULL, '2024-08-16 13:40:00'),
+       (1, 1, '2-2', 2, '2024-08-12 13:40:00', '2024-08-16 13:40:00'),
+       (1, 1, '1-2', 1, NULL, '2024-08-16 13:40:00');
