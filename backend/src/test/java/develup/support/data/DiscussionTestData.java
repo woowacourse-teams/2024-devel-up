@@ -3,6 +3,7 @@ package develup.support.data;
 import java.util.Collections;
 import java.util.List;
 import develup.domain.discussion.Discussion;
+import develup.domain.discussion.Title;
 import develup.domain.hashtag.HashTag;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
@@ -21,7 +22,7 @@ public class DiscussionTestData {
     public static class DiscussionBuilder {
 
         private Long id;
-        private String title;
+        private Title title;
         private String content;
         private Mission mission;
         private Member member;
@@ -33,7 +34,7 @@ public class DiscussionTestData {
         }
 
         public DiscussionBuilder withTitle(String title) {
-            this.title = title;
+            this.title = new Title(title);
             return this;
         }
 
