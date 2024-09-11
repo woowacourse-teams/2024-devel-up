@@ -12,6 +12,7 @@ import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import './styles/fonts.css';
+import DiscussionListPage from './pages/DiscussionListPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -186,6 +187,14 @@ const routes = [
     element: (
       <App>
         <DiscussionDetailPage />
+      </App>
+    ),
+  },
+  {
+    path: `${ROUTES.discussions}`,
+    element: (
+      <App>
+        <DiscussionListPage />
       </App>
     ),
   },

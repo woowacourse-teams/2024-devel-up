@@ -19,4 +19,6 @@ export const PATH = {
 
 export const PATH_FORMATTER = {
   comments: (solutionId: number) => `/solutions/${solutionId}/comments`,
+  discussions: (mission: string = 'all', hashTag: string = 'all') =>
+    `/discussions?mission=${mission}&hashTag=${hashTag}`,
 };
