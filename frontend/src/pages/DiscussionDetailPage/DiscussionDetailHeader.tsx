@@ -15,15 +15,17 @@ export default function DiscussionDetailHeader({ discussion }: SolutionDetailHea
         <S.HeaderLeftArea>
           {mission && <S.MissionTitle># {mission.title}</S.MissionTitle>}
           <S.Title>{title}</S.Title>
-          <S.HeaderUserInfo>
-            <S.HeaderProfileImg src={member.imageUrl} />
-            <S.HeaderUserName>{member.name}</S.HeaderUserName>
-          </S.HeaderUserInfo>
+          <S.DiscussionDetailInfo>
+            <S.HeaderUserInfo>
+              <S.HeaderProfileImg src={member.imageUrl} />
+              <S.HeaderUserName>{member.name}</S.HeaderUserName>
+            </S.HeaderUserInfo>
+            <S.HashTagWrapper>
+              {hashTags &&
+                hashTags.map((tag) => <HashTagButton key={tag.id}># {tag.name}</HashTagButton>)}
+            </S.HashTagWrapper>
+          </S.DiscussionDetailInfo>
         </S.HeaderLeftArea>
-        <S.HashTagWrapper>
-          {hashTags &&
-            hashTags.map((tag) => <HashTagButton key={tag.id}># {tag.name}</HashTagButton>)}
-        </S.HashTagWrapper>
       </S.ThumbnailWrapper>
     </S.DiscussionDetailHeaderContainer>
   );
