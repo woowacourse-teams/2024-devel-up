@@ -25,6 +25,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import MyCommentsPage from './pages/DashboardPage/MyComments';
 import AboutPage from './pages/AboutPage/AboutPage';
+import DiscussionDetailPage from './pages/DiscussionDetailPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -173,6 +174,14 @@ const routes = [
     element: (
       <App>
         <AboutPage />
+      </App>
+    ),
+  },
+  {
+    path: `${ROUTES.discussions}/:id`,
+    element: (
+      <App>
+        <DiscussionDetailPage />
       </App>
     ),
   },
