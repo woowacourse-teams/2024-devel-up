@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface MissionRepository extends JpaRepository<Mission, Long> {
 
-    @Query("SELECT m.url FROM Mission m")
-    List<String> findUrl();
-
     @Query("""
             SELECT DISTINCT m
             FROM Mission m
