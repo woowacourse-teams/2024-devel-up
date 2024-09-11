@@ -45,19 +45,6 @@ export const ThumbnailWrapper = styled.div`
   overflow: hidden;
 `;
 
-export const ThumbnailImg = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-export const GradientOverlay = styled.div`
-  inset: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0), ${(props) => props.theme.colors.black});
-  opacity: 0.5;
-  pointer-events: none;
-`;
-
 export const HeaderLeftArea = styled.div`
   bottom: 2.4rem;
   display: flex;
@@ -83,10 +70,6 @@ export const HashTagWrapper = styled.ul`
   position: absolute;
   right: 2.1rem;
   bottom: 2.4rem;
-`;
-
-export const CodeViewButtonWrapper = styled.div`
-  margin: 3rem 0;
 `;
 
 export const DiscussionDescription = styled(SanitizedMDPreview)`
