@@ -74,6 +74,9 @@ jobs:
   healthCheckA:
     name: 🙏 Server A Health Check
     needs: deployToA
+    defaults:
+      run:
+        working-directory: backend
     runs-on: [ self-hosted, devel-up-prod-a ] # 헬스 체크 방식 고민
     steps:
       - name: ♻️ Send Helth Check Request
@@ -106,6 +109,9 @@ jobs:
   healthCheckB:
     name: 🙏 Server B Health Check
     needs: deployToB
+    defaults:
+      run:
+        working-directory: backend
     runs-on: [ self-hosted, devel-up-prod-b ] # 헬스 체크 방식 고민
     steps:
       - name: ♻️ Send Helth Check Request
