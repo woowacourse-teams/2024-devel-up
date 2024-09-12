@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HealthController {
+public class HealthApi {
 
     @GetMapping("/health")
     public ResponseEntity<ApiResponse<String>> health() {
-        return ResponseEntity.ok(new ApiResponse<>("up"));
+        return ResponseEntity.status(400).body(new ApiResponse<>("up"));
     }
 }
