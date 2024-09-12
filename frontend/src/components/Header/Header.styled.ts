@@ -63,7 +63,7 @@ export const LoginButton = styled.button`
 
 export const MenuWrapper = styled.div`
   display: flex;
-  gap: 8rem;
+  gap: 4.2rem;
 `;
 
 export const MenuText = styled.p<{ $isActive?: boolean }>`
