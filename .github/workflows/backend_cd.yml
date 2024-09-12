@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - none_stop_deploy
     paths:
       - backend/**
 
@@ -48,10 +48,10 @@ jobs:
           tags: ${{ secrets.DOCKER_REPOSITORY_NAME }}:${{ github.sha }}
           platforms: linux/arm64
 
-  deploy:
-    name: 🚀 Server Deployment
+  deployToA:
+    name: 🚀 Server A Deployment
     needs: build
-    runs-on: [ self-hosted, develup ]
+    runs-on: [ self-hosted, devel-up-prod-a ]
     defaults:
       run:
         working-directory: backend
@@ -71,8 +71,69 @@ jobs:
       - name: 🐳 Docker Compose up
         run: docker compose -f compose.yml up -d
 
-      - name: 🐳 Clean Unused Image
-        run: docker image prune -af
+  healthCheckA:
+    name: 🙏 Server A Health Check
+    needs: deployToA
+    runs-on: [ self-hosted, devel-up-prod-a ] # 헬스 체크 방식 고민
+    steps:
+      - name: ♻️ Send Helth Check Request
+        run: |
+          for i in {1..10}; do
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/health)
+          echo "Attempt $i: Response Code $response"
+          
+          if [ "$i" -eq 10 ] && [ "$response" -ne 200 ]; then
+          echo "Health check failed after 10 attempts."
+          exit 1
+          fi
+          
+          sleep 10
+          done
+          echo "Health check passed."
+
+
+  deployToB:
+    name: 🚀 Server B Deployment
+    needs: healthCheckA
+    runs-on: [ self-hosted, devel-up-prod-b ]
+    defaults:
+      run:
+        working-directory: backend
+
+    env:
+      BACKEND_APP_IMAGE_NAME: ${{ secrets.DOCKER_REPOSITORY_NAME }}:${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🐳 Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 🐳 Docker Compose up
+        run: docker compose -f compose.yml up -d
+
+  healthCheckB:
+    name: 🙏 Server B Health Check
+    needs: deployToB
+    runs-on: [ self-hosted, devel-up-prod-b ] # 헬스 체크 방식 고민
+    steps:
+      - name: ♻️ Send Helth Check Request
+        run: |
+          for i in {1..10}; do
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/health)
+          echo "Attempt $i: Response Code $response"
+
+          if [ "$i" -eq 10 ] && [ "$response" -ne 200 ]; then
+          echo "Health check failed after 10 attempts."
+          exit 1
+          fi
+
+          sleep 10
+          done
+          echo "Health check passed."
 
   slack-notify_success:
     runs-on: ubuntu-latest
