@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": "첫번째 디스커션 제목",
+    "content": "이것에 대해 논의해보고 싶습니다.",
+    "mission": {
+      "id": 1,
+      "title": "루터회관 흡연 단속",
+      "language": "JAVA",
+      "url": "https://github.com/develup-mission/java-smoking"
+    },
+    "member": {
+      "id": 1,
+      "email": "phanyoung@naver.com",
+      "name": "박한영",
+      "imageUrl": "https://avatars.githubusercontent.com/u/80797824?v=4"
+    },
+    "hashTags": [
+      { "id": 1, "name": "해시태그 1" },
+      { "id": 2, "name": "해시태그 2" }
+    ],
+    "commentCount": 200
+  },
+  {
+    "id": 2,
+    "title": "두번째 디스커션 제목",
+    "content": "이것에 대해 논의해보고 싶습니다!@!@!@!@!@!@",
+    "mission": {
+      "id": 1,
+      "title": "숫자 야구 로또 자동차 경주",
+      "language": "JAVA",
+      "url": "https://github.com/develup-mission/java-smoking"
+    },
+    "member": {
+      "id": 1,
+      "email": "brgndyy@gmail.com",
+      "name": "전태헌",
+      "imageUrl": "https://avatars.githubusercontent.com/u/80797824?v=4"
+    },
+    "hashTags": [
+      { "id": 1, "name": "해시태그 1" },
+      { "id": 2, "name": "해시태그 2" }
+    ],
+    "commentCount": 51
+  }
+]

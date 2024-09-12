@@ -69,3 +69,12 @@ export interface MyComments {
   solutionTitle: string;
   solutionCommentCount: number;
 }
+
+export interface Comments {
+  id: number;
+  contentId: number;
+  content: string;
+  createdAt: string;
+  contentTitle: string;
+  contentCommentCount: number;
+}

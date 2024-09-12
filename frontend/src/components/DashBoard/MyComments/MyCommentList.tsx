@@ -18,11 +18,11 @@ export default function MyCommentList({ comments }: MyCommentListProps) {
             return (
               <MyComment
                 key={comment.id}
-                solutionId={comment.solutionId}
-                solutionTitle={comment.solutionTitle}
+                contentId={comment.solutionId}
+                contentTitle={comment.solutionTitle}
                 createdAt={comment.createdAt}
                 content={comment.content}
-                solutionCommentCount={comment.solutionCommentCount}
+                contentCommentCount={comment.solutionCommentCount}
               />
             );
           })}

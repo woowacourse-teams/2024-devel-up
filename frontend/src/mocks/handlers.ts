@@ -6,6 +6,8 @@ import myComments from './myComments.json';
 import missionInProgress from './missionInProgress.json';
 import { HASHTAGS } from '@/constants/hashTags';
 import { API_URL } from '@/apis/clients/develupClient';
+import dashboardDiscussions from './dashboardDiscussion.json';
+import dashboardDiscussionComments from './dashboardDiscussionComment.json';
 
 export const handlers = [
   http.get(`${API_URL}${PATH.missionList}`, ({ request }) => {
@@ -18,6 +20,29 @@ export const handlers = [
     const filteredMissions = missions.filter((mission) => mission.hashTags[0].name === hashTag);
 
     return HttpResponse.json({ data: filteredMissions });
+  }),
+  http.get(`${API_URL}${PATH.mySolutions}`, () => {
+    return HttpResponse.json({
+      data: submittedSolutions,
+    });
+  }),
+
+  http.get(`${API_URL}${PATH.missionInProgress}`, () => {
+    return HttpResponse.json({
+      data: missionInProgress,
+    });
+  }),
+
+  http.get(`${API_URL}${PATH.myComments}`, () => {
+    return HttpResponse.json({ data: myComments });
+  }),
+
+  http.get(`${API_URL}${PATH.dashboardDiscussion}`, () => {
+    return HttpResponse.json({ data: dashboardDiscussions });
+  }),
+
+  http.get(`${API_URL}${PATH.dashboardDiscussionComment}`, () => {
+    return HttpResponse.json({ data: dashboardDiscussionComments });
   }),
 
   http.get(`${API_URL}${PATH.missionList}/:id`, ({ request }) => {
@@ -48,18 +73,5 @@ export const handlers = [
         },
       },
     );
-  }),
-  http.get(`${API_URL}${PATH.missionInProgress}`, () => {
-    return HttpResponse.json({
-      data: missionInProgress,
-    });
-  }),
-  http.get(`${API_URL}${PATH.submitSolution}`, () => {
-    return HttpResponse.json({
-      data: submittedSolutions,
-    });
-  }),
-  http.get(`${API_URL}${PATH.myComments}`, () => {
-    return HttpResponse.json({ data: myComments });
   }),
 ];

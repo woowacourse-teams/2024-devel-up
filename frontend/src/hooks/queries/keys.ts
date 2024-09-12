@@ -29,3 +29,8 @@ export const hashTagsKeys = {
 export const userKeys = {
   info: ['userInfo'],
 };
+
+export const DashboardKeys = {
+  discussion: ['dashboardDiscussion'],
+  comments: ['dashboardComments'],
+};
