@@ -40,6 +40,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         saveRequestHeader(cachedRequest);
         printRequestLog();
 
+        addTraceIdToRespone(cachedResponse);
         saveResponseBody(cachedResponse);
         cachedResponse.copyBodyToResponse();
         saveResponseHeader(cachedResponse);
@@ -81,6 +82,10 @@ public class LoggingFilter extends OncePerRequestFilter {
                 .map(headerName -> headerName + " : " + request.getHeader(headerName))
                 .collect(Collectors.joining("\n"));
         MDC.put("requestHeaders", headers);
+    }
+
+    private void addTraceIdToRespone(HttpServletResponse response) {
+        response.addHeader("Trace-Id", MDC.get("traceId"));
     }
 
     private void saveResponseBody(ContentCachingResponseWrapper cachedResponse) {
