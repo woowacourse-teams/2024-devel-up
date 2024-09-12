@@ -1,4 +1,6 @@
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -31,7 +33,7 @@ module.exports = {
       },
       {
         test: /\.(css|scss)$/i,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
@@ -74,7 +76,12 @@ module.exports = {
       org: 'develupteam',
       project: 'javascript-react',
     }),
+    new MiniCssExtractPlugin(),
   ],
 
   devtool: 'source-map',
+  optimization: {
+    minimize: true,
+    minimizer: ['...', new CssMinimizerPlugin()],
+  },
 };
