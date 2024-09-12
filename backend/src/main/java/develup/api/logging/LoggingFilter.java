@@ -44,6 +44,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         cachedResponse.copyBodyToResponse();
         saveResponseHeader(cachedResponse);
         printResponseLog();
+        MDC.clear();
     }
 
     private void saveTraceId(HttpServletRequest request) {
