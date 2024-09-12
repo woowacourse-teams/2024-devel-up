@@ -11,6 +11,7 @@ import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
+import './styles/fonts.css';
 
 export const queryClient = new QueryClient({
   defaultOptions: {

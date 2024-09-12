@@ -7,17 +7,17 @@ VALUES ('test1@gmail.com', 'GITHUB', '1234', '구름', 'https://avatars.githubus
         '2024-08-16 13:40:00');
 
 INSERT INTO mission (title, thumbnail, summary, url)
-VALUES ('주문', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-order.png',
+VALUES ('주문', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-order.webp',
         '배달 주문을 받아보자', 'https://github.com/develup-mission/java-order'),
-       ('숫자 맞추기 게임', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-guessing-number.png',
+       ('숫자 맞추기 게임', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-guessing-number.webp',
         '숫자를 맞춰보자', 'https://github.com/develup-mission/java-guessing-number'),
-       ('미로 탈출', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-maze.png',
+       ('미로 탈출', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-maze.webp',
         '미노타우로스를 피해 미로에서 탈출하세요!', 'https://github.com/develup-mission/java-maze'),
-       ('엘리베이터 시뮬레이션', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-elevator.png',
+       ('엘리베이터 시뮬레이션', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-elevator.webp',
         '엘리베이터를 만들어봐요.', 'https://github.com/develup-mission/java-elevator'),
-       ('단어 퍼즐 게임', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-word-puzzle.png',
+       ('단어 퍼즐 게임', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-word-puzzle.webp',
         '단어의 퍼즐들을 맞춰주세요!', 'https://github.com/develup-mission/java-word-puzzle'),
-       ('리액트 회원가입/로그인 폼', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/react-auth-form.png',
+       ('리액트 회원가입/로그인 폼', 'https://raw.githubusercontent.com/develup-mission/docs/main/image/react-auth-form.webp',
         '리액트 회원가입/로그인 폼을 구현해봐요.', 'https://github.com/develup-mission/react-auth-form');
 
 INSERT INTO hash_tag (name)
