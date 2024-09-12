@@ -23,7 +23,6 @@ export const TitleWrapper = styled.div`
 export const Subtitle = styled.p`
   font-size: 1.6rem;
   font-weight: 500;
-  font-family: inherit;
 
   color: var(--grey-500);
 `;
