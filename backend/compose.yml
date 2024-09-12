@@ -6,6 +6,6 @@ services:
       - "8082:8082"
     environment:
       TZ: "Asia/Seoul"
-      SPRING_PROFILE: prod
+      SPRING_PROFILE: local
     restart: always
     container_name: develup-app
