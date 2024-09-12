@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class HealthControllerTest extends ApiTestSupport {
+class HealthApiTest extends ApiTestSupport {
 
     @Test
     @DisplayName("성공 응답을 반환한다")
