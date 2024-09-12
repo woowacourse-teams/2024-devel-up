@@ -1,8 +1,13 @@
 @font-face {
   font-family: 'Pretendard';
-  font-weight: 45 920;
+  font-weight: 400;
   font-display: swap;
-  src:
-    local('Pretendard Variable'),
-    url('../assets/fonts/PretendardVariable.woff2') format('woff2-variations');
+  src: url('../assets/fonts/Pretendard-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/Pretendard-Bold.woff2') format('woff2');
 }
