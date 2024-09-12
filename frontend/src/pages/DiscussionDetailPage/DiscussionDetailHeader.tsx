@@ -1,6 +1,6 @@
 import * as S from './DiscussionDetailPage.styled';
 import HashTagButton from '@/components/common/HashTagButton';
-import type discussionMock from './mock.json';
+import type discussionMock from './discussionMock.json';
 
 interface SolutionDetailHeaderProps {
   discussion: typeof discussionMock;

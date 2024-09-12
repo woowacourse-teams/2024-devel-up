@@ -3,6 +3,7 @@ import CommentForm from '../../CommentForm';
 import * as S from '../CommentList.styled';
 import CommentReplyList from './CommentReplyList';
 import type { Comment } from '@/types';
+import usePostCommentMutation from '@/hooks/usePostCommentMutation';
 
 interface CommentReplySectionProps {
   parentComment: Comment;
@@ -28,7 +29,11 @@ export default function CommentReplySection({
           <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글</S.ReplyWriteButton>
           {isReplyFormOpen && (
             <S.CommentReplyFormWrapper>
-              <CommentForm solutionId={solutionId} parentCommentId={parentId} />
+              <CommentForm
+                solutionId={solutionId}
+                parentCommentId={parentId}
+                usePostCommentMutation={usePostCommentMutation}
+              />
             </S.CommentReplyFormWrapper>
           )}
         </>

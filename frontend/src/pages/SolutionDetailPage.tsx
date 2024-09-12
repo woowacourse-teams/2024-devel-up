@@ -6,6 +6,7 @@ import useUserInfo from '@/hooks/useUserInfo';
 import { useComments } from '@/hooks/useComments';
 import useSolution from '@/hooks/useSolution';
 import SolutionSection from '@/components/SolutionDetail/SolutionSection';
+import usePostCommentMutation from '@/hooks/usePostCommentMutation';
 
 export default function SolutionDetailPage() {
   const { data: userInfo } = useUserInfo();
@@ -24,7 +25,7 @@ export default function SolutionDetailPage() {
       <CommentList comments={comments} />
       {isLoggedIn && (
         <S.CommentFormWrapper>
-          <CommentForm solutionId={solutionId} />
+          <CommentForm solutionId={solutionId} usePostCommentMutation={usePostCommentMutation} />
         </S.CommentFormWrapper>
       )}
     </S.SolutionDetailPageContainer>
