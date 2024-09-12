@@ -4,28 +4,13 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import MissionDetailPage from './pages/MissionDetailPage';
-import MainPage from './pages/MainPage';
-import MissionSubmitPage from './pages/MissionSubmitPage';
-import UserProfilePage from './pages/UserProfilePage';
-import GuidePage from './pages/GuidePage';
-import React, { Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { ErrorBoundary } from './components/common/Error/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
-import ErrorPage from './pages/ErrorPage';
-import SolutionListPage from './pages/SolutionListPage';
-import MissionListPage from './pages/MissionListPage';
-import SolutionDetailPage from './pages/SolutionDetailPage';
-import DashboardPage from './pages/DashboardPage';
-import DashBoardMissionInProgressPage from './pages/DashboardPage/MissionInProgress';
-import SubmittedSolutionList from './components/DashBoard/SubmittedSolutions';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
-import MyCommentsPage from './pages/DashboardPage/MyComments';
-import AboutPage from './pages/AboutPage/AboutPage';
-import DiscussionDetailPage from './pages/DiscussionDetailPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,6 +28,24 @@ Sentry.init({
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 });
+
+const MissionDetailPage = lazy(() => import('./pages/MissionDetailPage'));
+const MainPage = lazy(() => import('./pages/MainPage'));
+const MissionSubmitPage = lazy(() => import('./pages/MissionSubmitPage'));
+const UserProfilePage = lazy(() => import('./pages/UserProfilePage'));
+const GuidePage = lazy(() => import('./pages/GuidePage'));
+const ErrorPage = lazy(() => import('./pages/ErrorPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
+const DiscussionDetailPage = lazy(() => import('./pages/DiscussionDetailPage'));
+const SolutionListPage = lazy(() => import('./pages/SolutionListPage'));
+const MissionListPage = lazy(() => import('./pages/MissionListPage'));
+const SolutionDetailPage = lazy(() => import('./pages/SolutionDetailPage'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const DashBoardMissionInProgressPage = lazy(
+  () => import('./pages/DashboardPage/MissionInProgress'),
+);
+const MyCommentsPage = lazy(() => import('./pages/DashboardPage/MyComments'));
+const SubmittedSolutionList = lazy(() => import('./components/DashBoard/SubmittedSolutions'));
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

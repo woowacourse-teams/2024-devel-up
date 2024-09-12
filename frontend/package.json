@@ -10,7 +10,8 @@
     "lint": "eslint src/",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "node -r dotenv/config ./node_modules/.bin/chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
+    "chromatic": "node -r dotenv/config ./node_modules/.bin/chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
+    "analyze": "webpack --config webpack.prod.js --env analyze"
   },
   "keywords": [],
   "author": "",
@@ -82,6 +83,7 @@
     "undici": "^6.19.2",
     "util": "^0.12.5",
     "webpack": "^5.92.1",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4"
   },
