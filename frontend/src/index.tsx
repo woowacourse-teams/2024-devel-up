@@ -26,6 +26,7 @@ import { theme } from './styles/theme';
 import MyCommentsPage from './pages/DashboardPage/MyComments';
 import AboutPage from './pages/AboutPage/AboutPage';
 import DiscussionDetailPage from './pages/DiscussionDetailPage';
+import './styles/fonts.css';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
