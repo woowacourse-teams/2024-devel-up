@@ -44,6 +44,8 @@ export default function MissionProcess({
 }: MissionProcessProps) {
   const [contentId, setContentId] = useState(1);
   const currentContent = CONTENT_LIST.find((content) => content.id === contentId);
+  if (!currentContent) throw new Error();
+
   const isEndContent = contentId === CONTENT_LIST.length;
 
   const handleNextMissionProcess = () => {
@@ -61,10 +63,7 @@ export default function MissionProcess({
       </S.CloseIconWrapper>
       <S.ContentWrapper>
         <S.Title>어떻게 진행하나요?</S.Title>
-        <ModalContent
-          contentImage={currentContent?.image}
-          content={currentContent?.content ?? ''}
-        />
+        <ModalContent contentImage={currentContent.image} content={currentContent?.content ?? ''} />
         <S.ButtonWrapper>
           {isEndContent ? (
             <>
