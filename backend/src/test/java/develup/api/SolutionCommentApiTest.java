@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -18,6 +19,8 @@ import develup.application.solution.comment.MySolutionCommentResponse;
 import develup.application.solution.comment.SolutionCommentRepliesResponse;
 import develup.application.solution.comment.SolutionCommentRequest;
 import develup.application.solution.comment.SolutionReplyResponse;
+import develup.application.solution.comment.UpdateSolutionCommentRequest;
+import develup.application.solution.comment.UpdateSolutionCommentResponse;
 import develup.domain.member.Member;
 import develup.support.data.MemberTestData;
 import jakarta.servlet.http.Cookie;
@@ -98,6 +101,37 @@ class SolutionCommentApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.parentCommentId", equalTo(null)))
                 .andExpect(jsonPath("$.data.member.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.createdAt").exists());
+    }
+
+    @Test
+    @DisplayName("댓글 내용을 수정한다.")
+    void updateComment() throws Exception {
+        Member member = MemberTestData.defaultMember().withId(1L).build();
+        MemberResponse memberResponse = MemberResponse.from(member);
+        UpdateSolutionCommentRequest request = new UpdateSolutionCommentRequest("updated content");
+        UpdateSolutionCommentResponse response = new UpdateSolutionCommentResponse(
+                1L,
+                1L,
+                "updated content",
+                memberResponse,
+                LocalDateTime.now()
+        );
+
+        BDDMockito.given(solutionCommentService.updateComment(any(), any(), any()))
+                .willReturn(response);
+
+        mockMvc.perform(
+                        patch("/solutions/comments/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(request))
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.solutionId", equalTo(1)))
+                .andExpect(jsonPath("$.data.member.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.createdAt").exists())
+                .andExpect(jsonPath("$.data.content", equalTo("updated content")));
     }
 
     @Test

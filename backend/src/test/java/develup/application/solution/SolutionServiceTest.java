@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
 import java.util.Optional;
 import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
@@ -14,9 +15,12 @@ import develup.domain.mission.MissionRepository;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
+import develup.domain.solution.comment.SolutionComment;
+import develup.domain.solution.comment.SolutionCommentRepository;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
+import develup.support.data.SolutionCommentTestData;
 import develup.support.data.SolutionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +33,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private SolutionRepository solutionRepository;
+
+    @Autowired
+    private SolutionCommentRepository solutionCommentRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -80,11 +87,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         StartSolutionRequest request = new StartSolutionRequest(mission.getId());
-        Solution inProgressSolution = SolutionTestData.defaultSolution()
-                .withMission(mission)
-                .withMember(member)
-                .withStatus(SolutionStatus.IN_PROGRESS)
-                .build();
+        Solution inProgressSolution = Solution.start(mission, member);
         solutionRepository.save(inProgressSolution);
 
         assertThatThrownBy(() -> solutionService.startMission(member.getId(), request))
@@ -107,15 +110,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void create() {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
-        Solution solution = SolutionTestData.defaultSolution()
-                .withId(1L)
-                .withMission(mission)
-                .withMember(member)
-                .withDescription(null)
-                .withUrl(null)
-                .withStatus(SolutionStatus.IN_PROGRESS)
-                .build();
-
+        Solution solution = Solution.start(mission, member);
         solutionRepository.save(solution);
         SubmitSolutionRequest submitSolutionRequest = getSolutionRequest();
 
@@ -151,19 +146,14 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void createFailWhenWrongPRUrl() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
-        Solution solution = SolutionTestData.defaultSolution()
-                .withMember(member)
-                .withMission(mission)
-                .withStatus(SolutionStatus.IN_PROGRESS)
-                .build();
-
+        Solution solution = Solution.start(mission, member);
         solutionRepository.save(solution);
 
         SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
                 mission.getId(),
                 "value",
                 "description",
-                "url"
+                "https://github.com/develup-mission/java-smoking/invalid/format/pull/1"
         );
 
         assertThatThrownBy(() -> solutionService.submit(member.getId(), submitSolutionRequest))
@@ -176,12 +166,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
     void createFailWhenWrongPRUrlRepository() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
-        Solution solution = SolutionTestData.defaultSolution()
-                .withMember(member)
-                .withMission(mission)
-                .withStatus(SolutionStatus.IN_PROGRESS)
-                .build();
-
+        Solution solution = Solution.start(mission, member);
         solutionRepository.save(solution);
 
         SubmitSolutionRequest submitSolutionRequest = new SubmitSolutionRequest(
@@ -233,6 +218,122 @@ class SolutionServiceTest extends IntegrationTestSupport {
         solutionRepository.save(completed);
 
         assertThat(solutionService.getSubmittedSolutionsByMemberId(member.getId())).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("사용자가 제출한 솔루션을 수정할 수 있다.")
+    void update() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+        UpdateSolutionRequest updateSolutionRequest = new UpdateSolutionRequest(solution.getId(),
+                "updated title",
+                "updated description",
+                "https://github.com/develup-mission/java-smoking/pull/1"
+        );
+
+        SolutionResponse solutionResponse = solutionService.update(member.getId(), updateSolutionRequest);
+
+        assertAll(
+                () -> assertEquals(solutionResponse.id(), 1L),
+                () -> assertEquals(solutionResponse.mission().id(), 1L),
+                () -> assertEquals(solutionResponse.member().id(), member.getId()),
+                () -> assertEquals(solutionResponse.title(), "updated title"),
+                () -> assertEquals(solutionResponse.description(), "updated description"),
+                () -> assertEquals(solutionResponse.url(), "https://github.com/develup-mission/java-smoking/pull/1")
+        );
+    }
+
+    @Test
+    @DisplayName("솔루션 업데이트 시 PR url 의 저장소가 올바르지 않은 경우 예외가 발생한다.")
+    void cantUpdate() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+        UpdateSolutionRequest updateSolutionRequest = new UpdateSolutionRequest(solution.getId(),
+                "updated title",
+                "updated description",
+                "invalid"
+        );
+
+        assertThatThrownBy(() -> solutionService.update(member.getId(), updateSolutionRequest))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("올바르지 않은 주소입니다.");
+    }
+
+    @Test
+    @DisplayName("자신의 솔루션만 수정할 수 있다.")
+    void notOwnerForUpdate() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Member other = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+        UpdateSolutionRequest updateSolutionRequest = new UpdateSolutionRequest(solution.getId(),
+                "updated title",
+                "updated description",
+                "https://github.com/develup-mission/java-smoking/pull/1"
+        );
+
+        assertThatThrownBy(() -> solutionService.update(other.getId(), updateSolutionRequest))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("솔루션 작성자가 아닙니다.");
+    }
+
+    @Test
+    @DisplayName("작성한 솔루션을 삭제한다.")
+    void delete() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+        List<SolutionComment> solutionComments = List.of(createSolutionComment(member, solution), createSolutionComment(member, solution));
+        solutionCommentRepository.saveAll(solutionComments);
+
+        solutionService.delete(member.getId(), solution.getId());
+
+        List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solution.getId());
+        Optional<Solution> deletedSolution = solutionRepository.findById(solution.getId());
+        assertThat(comments).isEmpty();
+        assertThat(deletedSolution).isEmpty();
+    }
+
+    @Test
+    @DisplayName("자신의 솔루션만 삭제할 수 있다.")
+    void notOwnerForDelete() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Member other = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Solution solution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .build();
+        solutionRepository.save(solution);
+
+        assertThatThrownBy(() -> solutionService.delete(other.getId(), solution.getId()))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("솔루션 작성자가 아닙니다.");
+    }
+
+    private SolutionComment createSolutionComment(Member member, Solution solution) {
+        return SolutionCommentTestData.defaultSolutionComment()
+                .withMember(member)
+                .withSolution(solution)
+                .build();
     }
 
     private SubmitSolutionRequest getSolutionRequest() {

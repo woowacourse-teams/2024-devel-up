@@ -3,7 +3,9 @@ package develup.api;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -15,6 +17,7 @@ import develup.application.solution.SolutionResponse;
 import develup.application.solution.StartSolutionRequest;
 import develup.application.solution.SubmitSolutionRequest;
 import develup.application.solution.SummarizedSolutionResponse;
+import develup.application.solution.UpdateSolutionRequest;
 import develup.domain.hashtag.HashTag;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
@@ -107,6 +110,50 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
                 .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
                 .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
+    }
+
+    @Test
+    @DisplayName("솔루션을 수정한다.")
+    void updateSolution() throws Exception {
+        SolutionResponse response = SolutionResponse.from(createSolution());
+        UpdateSolutionRequest request = new UpdateSolutionRequest(
+                1L,
+                "value",
+                "description",
+                "https://github.com/develup/mission/pull/1");
+        BDDMockito.given(solutionService.update(any(), any()))
+                .willReturn(response);
+
+        mockMvc.perform(patch("/solutions")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.title", equalTo("루터회관 흡연단속 제출합니다.")))
+                .andExpect(jsonPath("$.data.description", equalTo("안녕하세요. 피드백 잘 부탁 드려요.")))
+                .andExpect(jsonPath("$.data.url", equalTo("https://github.com/develup/mission/pull/1")))
+                .andExpect(jsonPath("$.data.member.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.member.email", equalTo("email@email.com")))
+                .andExpect(jsonPath("$.data.member.name", equalTo("tester")))
+                .andExpect(jsonPath("$.data.member.imageUrl", equalTo("image.com/1.jpg")))
+                .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data.mission.summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
+                .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
+    }
+
+    @Test
+    @DisplayName("솔루션을 삭제한다.")
+    void deleteSolution() throws Exception {
+        BDDMockito.doNothing()
+                .when(solutionService)
+                .delete(any(), any());
+
+        mockMvc.perform(delete("/solutions/{solutionId}", 1L))
+                .andDo(print())
+                .andExpect(status().isNoContent());
     }
 
     @Test
