@@ -63,7 +63,7 @@ export default function MissionProcess({
       </S.CloseIconWrapper>
       <S.ContentWrapper>
         <S.Title>어떻게 진행하나요?</S.Title>
-        <ModalContent contentImage={currentContent.image} content={currentContent?.content ?? ''} />
+        <ModalContent contentImage={currentContent.image} content={currentContent.content} />
         <S.ButtonWrapper>
           {isEndContent ? (
             <>
