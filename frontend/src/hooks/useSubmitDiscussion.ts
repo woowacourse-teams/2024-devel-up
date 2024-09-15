@@ -5,9 +5,10 @@ import useSubmitDiscussionMutation from './useSubmitDiscussionMutation';
 
 interface useSubmitDiscussionProps {
   missionId: number;
+  hashTagIds: number[];
 }
 
-export const useSubmitDiscussion = ({ missionId }: useSubmitDiscussionProps) => {
+export const useSubmitDiscussion = ({ missionId, hashTagIds }: useSubmitDiscussionProps) => {
   const {
     discussionTitle,
     handleDiscussionTitle,
@@ -43,7 +44,7 @@ export const useSubmitDiscussion = ({ missionId }: useSubmitDiscussionProps) => 
       title: discussionTitle,
       content: description,
       missionId,
-      hashTagIds: [1, 2, 3],
+      hashTagIds,
     });
   };
 

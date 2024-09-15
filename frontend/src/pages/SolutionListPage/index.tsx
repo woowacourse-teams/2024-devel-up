@@ -9,9 +9,9 @@ import { HASHTAGS } from '@/constants/hashTags';
 import { useState } from 'react';
 
 export default function SolutionListPage() {
-  const [selectedHashTag, setSelectedHashTag] = useState(HASHTAGS.all);
+  const [selectedHashTag, setSelectedHashTag] = useState({ id: 0, name: HASHTAGS.all });
 
-  const { data: solutionSummaries } = useSolutionSummaries(selectedHashTag);
+  const { data: solutionSummaries } = useSolutionSummaries(selectedHashTag.name);
   const { data: allHashTags } = useHashTags();
 
   return (

@@ -1,5 +1,18 @@
 import { styled } from 'styled-components';
 
+export const DiscussionSubmitContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  margin: 0 8rem;
+`;
+
+export const DiscussionTagListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+`;
+
 export const DiscussionTitleContainer = styled.div`
   width: 100%;
   display: flex;

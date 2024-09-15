@@ -6,8 +6,18 @@ import useHashTags from '@/hooks/useHashTags';
 import { useState } from 'react';
 import useMissions from '@/hooks/useMissions';
 import TagMultipleList from '../common/TagMultipleList';
+import type { HashTag } from '@/types';
+import TagList from '../common/TagList';
+import * as S from './DiscussionSubmit.style';
 
 export default function DiscussionSubmit() {
+  const { data: allHashTags } = useHashTags();
+  const { data: allMissions } = useMissions();
+  const [selectedHashTags, setSelectedHashTags] = useState<HashTag[]>([]);
+  const [selectedMissions, setSelectedMissions] = useState({ id: 0, title: '' });
+
+  const hashTagIds = selectedHashTags.map((tag) => tag.id);
+
   const {
     discussionTitle,
     isDiscussionTitleError,
@@ -16,21 +26,28 @@ export default function DiscussionSubmit() {
     handleDescription,
     handleSubmitSolution,
   } = useSubmitDiscussion({
-    missionId: 1,
+    missionId: selectedMissions.id,
+    hashTagIds,
   });
 
-  const { data: allHashTags } = useHashTags();
-  const { data: allMissions } = useMissions();
-  const [selectedHashTags, setSelectedHashTags] = useState<{ id: number; title: string }[]>([]);
-
   return (
-    <div>
-      <TagMultipleList
-        tags={allMissions}
-        selectedTags={selectedHashTags}
-        setSelectedTags={setSelectedHashTags}
-        keyName="title"
-      />
+    <S.DiscussionSubmitContainer>
+      <S.DiscussionTagListWrapper>
+        <TagList
+          tags={allMissions}
+          selectedTag={selectedMissions}
+          setSelectedTag={setSelectedMissions}
+          variant="danger"
+          keyName="title"
+        />
+        <TagMultipleList
+          tags={allHashTags}
+          selectedTags={selectedHashTags}
+          setSelectedTags={setSelectedHashTags}
+          keyName="name"
+        />
+      </S.DiscussionTagListWrapper>
+
       <form onSubmit={handleSubmitSolution}>
         <DiscussionTitle
           value={discussionTitle}
@@ -44,6 +61,6 @@ export default function DiscussionSubmit() {
         />
         <SubmitButton />
       </form>
-    </div>
+    </S.DiscussionSubmitContainer>
   );
 }

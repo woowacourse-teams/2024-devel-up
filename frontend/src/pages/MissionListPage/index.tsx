@@ -7,8 +7,8 @@ import { useState } from 'react';
 import { HASHTAGS } from '@/constants/hashTags';
 
 export default function MissionListPage() {
-  const [selectedHashTag, setSelectedHashTag] = useState(HASHTAGS.all);
-  const { data: allMissions } = useMissions(selectedHashTag);
+  const [selectedHashTag, setSelectedHashTag] = useState({ id: 0, name: HASHTAGS.all });
+  const { data: allMissions } = useMissions(selectedHashTag.name);
   const { data: allHashTags } = useHashTags();
 
   return (
