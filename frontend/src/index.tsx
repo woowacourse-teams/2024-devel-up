@@ -38,6 +38,7 @@ const GuidePage = lazy(() => import('./pages/GuidePage'));
 const ErrorPage = lazy(() => import('./pages/ErrorPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
 const DiscussionDetailPage = lazy(() => import('./pages/DiscussionDetailPage'));
+const DiscussionSubmitPage = lazy(() => import('./pages/DiscussionSubmitPage'));
 const SolutionListPage = lazy(() => import('./pages/SolutionListPage'));
 const MissionListPage = lazy(() => import('./pages/MissionListPage'));
 const SolutionDetailPage = lazy(() => import('./pages/SolutionDetailPage'));
@@ -186,6 +187,16 @@ const routes = [
     element: (
       <App>
         <DiscussionDetailPage />
+      </App>
+    ),
+  },
+  {
+    path: `${ROUTES.submitDiscussion}`,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <DiscussionSubmitPage />
+        </Suspense>
       </App>
     ),
   },
