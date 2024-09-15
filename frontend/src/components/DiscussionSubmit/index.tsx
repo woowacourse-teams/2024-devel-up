@@ -5,7 +5,7 @@ import SubmitButton from '../MissionSubmit/SubmitButton';
 import useHashTags from '@/hooks/useHashTags';
 import { useState } from 'react';
 import useMissions from '@/hooks/useMissions';
-import TagMultipleList from '../HashTagMultipleList';
+import TagMultipleList from '../common/TagMultipleList';
 
 export default function DiscussionSubmit() {
   const {
