@@ -1,15 +1,15 @@
 import type { HTMLAttributes, PropsWithChildren } from 'react';
-import * as S from './HashTagButton.styled';
+import * as S from './TagButton.styled';
 
-interface HashTagButtonProps extends HTMLAttributes<HTMLButtonElement> {
+interface TagButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isSelected?: boolean;
 }
 
-export default function HashTagButton({
+export default function TagButton({
   isSelected = false,
   children,
   ...props
-}: PropsWithChildren<HashTagButtonProps>) {
+}: PropsWithChildren<TagButtonProps>) {
   return (
     <S.Button $isSelected={isSelected} {...props}>
       {children}

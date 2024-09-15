@@ -1,6 +1,6 @@
 import type { Solution } from '@/types/solution';
 import * as S from './SolutionSection.styled';
-import HashTagButton from '@/components/common/HashTagButton';
+import TagButton from '@/components/common/TagButton';
 
 interface SolutionDetailHeaderProps {
   solution: Solution;
@@ -24,7 +24,7 @@ export default function SolutionDetailHeader({ solution }: SolutionDetailHeaderP
         </S.HeaderLeftArea>
         <S.HashTagWrapper>
           {mission.hashTags &&
-            mission.hashTags.map((tag) => <HashTagButton key={tag.id}># {tag.name}</HashTagButton>)}
+            mission.hashTags.map((tag) => <TagButton key={tag.id}># {tag.name}</TagButton>)}
         </S.HashTagWrapper>
       </S.ThumbnailWrapper>
     </S.SolutionDetailHeaderContainer>
