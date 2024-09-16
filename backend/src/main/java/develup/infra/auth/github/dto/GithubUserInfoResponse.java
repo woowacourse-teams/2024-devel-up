@@ -2,7 +2,7 @@ package develup.infra.auth.github.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import develup.application.auth.OAuthUserInfo;
+import develup.application.auth.oauth.OAuthUserInfo;
 import jakarta.annotation.Nullable;
 
 @JsonNaming(SnakeCaseStrategy.class)

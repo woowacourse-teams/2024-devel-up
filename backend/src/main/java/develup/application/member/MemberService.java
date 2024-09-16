@@ -2,10 +2,10 @@ package develup.application.member;
 
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
-import develup.application.auth.OAuthUserInfo;
+import develup.application.auth.oauth.OAuthUserInfo;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
-import develup.domain.member.Provider;
+import develup.domain.member.OAuthProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class MemberService {
                 .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
     }
 
-    public MemberResponse findOrCreateMember(OAuthUserInfo userInfo, Provider provider) {
+    public MemberResponse findOrCreateMember(OAuthUserInfo userInfo, OAuthProvider provider) {
         Member member = memberRepository.findBySocialIdAndProvider(userInfo.id(), provider)
                 .orElseGet(() -> memberRepository.save(userInfo.toMember(provider)));
 

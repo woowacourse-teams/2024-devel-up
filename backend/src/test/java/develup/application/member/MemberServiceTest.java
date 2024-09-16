@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import develup.api.exception.DevelupException;
-import develup.application.auth.OAuthUserInfo;
+import develup.application.auth.oauth.OAuthUserInfo;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
-import develup.domain.member.Provider;
+import develup.domain.member.OAuthProvider;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import org.junit.jupiter.api.DisplayName;
@@ -67,7 +67,7 @@ class MemberServiceTest extends IntegrationTestSupport {
                 "alstn113@gmail.com",
                 "name"
         );
-        memberService.findOrCreateMember(userInfo, Provider.GITHUB);
+        memberService.findOrCreateMember(userInfo, OAuthProvider.GITHUB);
 
         assertThat(memberRepository.findAll()).hasSize(1);
     }

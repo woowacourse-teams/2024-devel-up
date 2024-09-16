@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 public enum ExceptionType {
 
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."),
+    OAUTH_PROVIDER_NOT_FOUND(HttpStatus.BAD_REQUEST, "지원하지 않는 OAuth 제공자입니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증되지 않는 요청입니다."),
     FORBIDDEN(HttpStatus.FORBIDDEN, "권한이 없는 요청입니다."),
     TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "토큰이 존재하지 않습니다."),
@@ -26,7 +27,6 @@ public enum ExceptionType {
     DUPLICATED_HASHTAG(HttpStatus.BAD_REQUEST, "중복된 해시태그입니다."),
     HASHTAG_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 해시태그입니다."),
     DISCUSSION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 디스커션입니다."),
-
     ;
 
     private final HttpStatus status;

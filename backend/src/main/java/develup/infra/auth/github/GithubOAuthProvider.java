@@ -1,6 +1,6 @@
 package develup.infra.auth.github;
 
-import develup.application.auth.OAuthUserInfo;
+import develup.application.auth.oauth.OAuthUserInfo;
 import develup.infra.auth.github.dto.GithubAccessTokenResponse;
 import develup.infra.auth.github.dto.GithubUserInfoResponse;
 import org.springframework.stereotype.Component;

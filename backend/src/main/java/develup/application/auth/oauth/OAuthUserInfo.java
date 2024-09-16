@@ -1,7 +1,7 @@
-package develup.application.auth;
+package develup.application.auth.oauth;
 
 import develup.domain.member.Member;
-import develup.domain.member.Provider;
+import develup.domain.member.OAuthProvider;
 import jakarta.annotation.Nullable;
 
 public record OAuthUserInfo(
@@ -18,7 +18,7 @@ public record OAuthUserInfo(
         }
     }
 
-    public Member toMember(Provider provider) {
+    public Member toMember(OAuthProvider provider) {
         return new Member(
                 email,
                 provider,
