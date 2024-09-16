@@ -1,11 +1,11 @@
-package develup.infra.auth.github;
+package develup.infra.auth.oauth.github;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-import develup.infra.auth.github.dto.GithubAccessTokenRequest;
-import develup.infra.auth.github.dto.GithubAccessTokenResponse;
-import develup.infra.auth.github.dto.GithubUserInfoResponse;
+import develup.infra.auth.oauth.github.dto.GithubAccessTokenRequest;
+import develup.infra.auth.oauth.github.dto.GithubAccessTokenResponse;
+import develup.infra.auth.oauth.github.dto.GithubUserInfoResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -15,12 +15,12 @@ public class GithubOAuthClient {
     private final GithubOAuthProperties properties;
     private final RestClient restClient;
 
-    public GithubOAuthClient(GithubOAuthProperties properties) {
+    public GithubOAuthClient(GithubOAuthProperties properties, RestClient.Builder restClientBuilder) {
         this.properties = properties;
-        this.restClient = RestClient.create();
+        this.restClient = restClientBuilder.build();
     }
 
-    public GithubAccessTokenResponse getAccessToken(String code) {
+    public GithubAccessTokenResponse fetchAccessToken(String code) {
         GithubAccessTokenRequest request = new GithubAccessTokenRequest(
                 code,
                 properties.clientId(),
@@ -36,7 +36,7 @@ public class GithubOAuthClient {
                 .body(GithubAccessTokenResponse.class);
     }
 
-    public GithubUserInfoResponse getUserInfo(String accessToken) {
+    public GithubUserInfoResponse fetchUserInfo(String accessToken) {
         return restClient.get()
                 .uri("https://api.github.com/user")
                 .header(AUTHORIZATION, String.format("Bearer %s", accessToken))

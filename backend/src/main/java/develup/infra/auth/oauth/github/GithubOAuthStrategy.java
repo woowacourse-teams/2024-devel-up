@@ -1,26 +1,26 @@
-package develup.infra.auth.github;
+package develup.infra.auth.oauth.github;
 
+import develup.application.auth.oauth.OAuthStrategy;
 import develup.application.auth.oauth.OAuthUserInfo;
-import develup.infra.auth.github.dto.GithubAccessTokenResponse;
-import develup.infra.auth.github.dto.GithubUserInfoResponse;
+import develup.domain.member.OAuthProvider;
+import develup.infra.auth.oauth.github.dto.GithubAccessTokenResponse;
+import develup.infra.auth.oauth.github.dto.GithubUserInfoResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-public class GithubOAuthProvider {
+public class GithubOAuthStrategy implements OAuthStrategy {
 
     private final GithubOAuthClient githubOAuthClient;
     private final GithubOAuthProperties properties;
 
-    public GithubOAuthProvider(
-            GithubOAuthClient githubOAuthClient,
-            GithubOAuthProperties properties
-    ) {
+    public GithubOAuthStrategy(GithubOAuthClient githubOAuthClient, GithubOAuthProperties properties) {
         this.githubOAuthClient = githubOAuthClient;
         this.properties = properties;
     }
 
-    public String getLoginUrl(String next) {
+    @Override
+    public String buildOAuthLoginUrl(String next) {
         String redirectUriWithNext = UriComponentsBuilder.fromHttpUrl(properties.redirectUri())
                 .queryParam("next", next)
                 .build()
@@ -34,22 +34,26 @@ public class GithubOAuthProvider {
                 .toUriString();
     }
 
-    public String getAccessToken(String code) {
-        GithubAccessTokenResponse response = githubOAuthClient.getAccessToken(code);
+    @Override
+    public OAuthUserInfo fetchOAuthUserInfo(String code) {
+        GithubAccessTokenResponse accessTokenResponse = githubOAuthClient.fetchAccessToken(code);
+        String accessToken = accessTokenResponse.accessToken();
 
-        return response.accessToken();
+        GithubUserInfoResponse userInfoResponse = githubOAuthClient.fetchUserInfo(accessToken);
+
+        return userInfoResponse.toOAuthUserInfo();
     }
 
-    public OAuthUserInfo getUserInfo(String accessToken) {
-        GithubUserInfoResponse githubUserInfoResponse = githubOAuthClient.getUserInfo(accessToken);
-
-        return githubUserInfoResponse.toOAuthUserInfo();
-    }
-
-    public String getClientRedirectUri(String next) {
+    @Override
+    public String buildClientRedirectUrl(String next) {
         return UriComponentsBuilder.fromHttpUrl(properties.clientUri())
                 .path(next)
                 .build()
                 .toUriString();
+    }
+
+    @Override
+    public OAuthProvider getProvider() {
+        return OAuthProvider.GITHUB;
     }
 }
