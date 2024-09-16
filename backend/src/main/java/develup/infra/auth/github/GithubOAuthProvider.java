@@ -1,6 +1,8 @@
 package develup.infra.auth.github;
 
 import develup.application.auth.OAuthUserInfo;
+import develup.infra.auth.github.dto.GithubAccessTokenResponse;
+import develup.infra.auth.github.dto.GithubUserInfoResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -39,9 +41,9 @@ public class GithubOAuthProvider {
     }
 
     public OAuthUserInfo getUserInfo(String accessToken) {
-        GithubUserInfo githubUserInfo = githubOAuthClient.getUserInfo(accessToken);
+        GithubUserInfoResponse githubUserInfoResponse = githubOAuthClient.getUserInfo(accessToken);
 
-        return githubUserInfo.toOAuthUserInfo();
+        return githubUserInfoResponse.toOAuthUserInfo();
     }
 
     public String getClientRedirectUri(String next) {

@@ -3,6 +3,9 @@ package develup.infra.auth.github;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
+import develup.infra.auth.github.dto.GithubAccessTokenRequest;
+import develup.infra.auth.github.dto.GithubAccessTokenResponse;
+import develup.infra.auth.github.dto.GithubUserInfoResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -33,12 +36,12 @@ public class GithubOAuthClient {
                 .body(GithubAccessTokenResponse.class);
     }
 
-    public GithubUserInfo getUserInfo(String accessToken) {
+    public GithubUserInfoResponse getUserInfo(String accessToken) {
         return restClient.get()
                 .uri("https://api.github.com/user")
                 .header(AUTHORIZATION, String.format("Bearer %s", accessToken))
                 .accept(APPLICATION_JSON)
                 .retrieve()
-                .body(GithubUserInfo.class);
+                .body(GithubUserInfoResponse.class);
     }
 }
