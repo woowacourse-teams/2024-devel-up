@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import develup.api.auth.AuthArgumentResolver;
+import develup.api.auth.OAuthProviderConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -19,9 +21,11 @@ public class WebConfig implements WebMvcConfigurer {
     private String apiHost;
 
     private final AuthArgumentResolver authArgumentResolver;
+    private final OAuthProviderConverter oauthProviderConverter;
 
-    public WebConfig(AuthArgumentResolver authArgumentResolver) {
+    public WebConfig(AuthArgumentResolver authArgumentResolver, OAuthProviderConverter oauthProviderConverter) {
         this.authArgumentResolver = authArgumentResolver;
+        this.oauthProviderConverter = oauthProviderConverter;
     }
 
     @Override
@@ -38,5 +42,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(authArgumentResolver);
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(oauthProviderConverter);
     }
 }

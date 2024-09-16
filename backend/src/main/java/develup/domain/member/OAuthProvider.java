@@ -1,6 +1,6 @@
 package develup.domain.member;
 
-import java.util.Optional;
+import java.util.Arrays;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 
@@ -10,9 +10,9 @@ public enum OAuthProvider {
     ;
 
     public static OAuthProvider from(String provider) {
-        return Optional.ofNullable(provider)
-                .map(String::toUpperCase)
-                .map(OAuthProvider::valueOf)
+        return Arrays.stream(values())
+                .filter(oauthProvider -> oauthProvider.name().equalsIgnoreCase(provider))
+                .findFirst()
                 .orElseThrow(() -> new DevelupException(ExceptionType.OAUTH_PROVIDER_NOT_FOUND));
     }
 }
