@@ -56,10 +56,8 @@ class AuthApiTest extends ApiTestSupport {
     @Test
     @DisplayName("로그아웃한다.")
     void logout() throws Exception {
-        mockMvc.perform(
-                        delete("/auth/logout")
-                                .cookie(new Cookie("token", "mock_token"))
-                )
+        mockMvc.perform(delete("/auth/logout")
+                        .cookie(new Cookie("token", "mock_token")))
                 .andDo(print())
                 .andExpect(status().isNoContent())
                 .andExpect(cookie().maxAge("token", 0));
