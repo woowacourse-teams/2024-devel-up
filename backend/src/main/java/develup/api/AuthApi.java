@@ -2,7 +2,6 @@ package develup.api;
 
 import java.io.IOException;
 import develup.api.common.CookieUtils;
-import develup.application.auth.AuthService;
 import develup.application.auth.oauth.OAuthService;
 import develup.domain.member.OAuthProvider;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "인증 API")
 public class AuthApi {
 
-    private final OAuthService oauthService;
+    private final OAuthService oAuthService;
 
-    public AuthApi(OAuthService oauthService) {
-        this.oauthService = oauthService;
+    public AuthApi(OAuthService oAuthService) {
+        this.oAuthService = oAuthService;
     }
 
     @GetMapping("/auth/social/redirect/{provider}")
@@ -32,7 +31,7 @@ public class AuthApi {
             @RequestParam(value = "next", defaultValue = "/") String next,
             HttpServletResponse response
     ) throws IOException {
-        String redirectUri = oauthService.getOAuthLoginUrl(provider, next);
+        String redirectUri = oAuthService.getOAuthLoginUrl(provider, next);
         response.sendRedirect(redirectUri);
     }
 
@@ -47,11 +46,11 @@ public class AuthApi {
             @RequestParam(value = "next", defaultValue = "/") String next,
             HttpServletResponse response
     ) throws IOException {
-        String token = oauthService.oauthLogin(provider, code);
+        String token = oAuthService.oauthLogin(provider, code);
 
         CookieUtils.setTokenCookie(response, token);
 
-        String redirectUri = oauthService.getClientRedirectUrl(provider, next);
+        String redirectUri = oAuthService.getClientRedirectUrl(provider, next);
         response.sendRedirect(redirectUri);
     }
 

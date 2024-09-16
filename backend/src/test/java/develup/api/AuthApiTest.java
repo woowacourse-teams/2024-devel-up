@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import develup.domain.member.OAuthProvider;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +18,10 @@ class AuthApiTest extends ApiTestSupport {
     @Test
     @DisplayName("github 로그인 페이지로 리다이렉트한다.")
     void githubRedirect() throws Exception {
+        OAuthProvider provider = OAuthProvider.GITHUB;
         String next = "/sub";
         String expectedRedirectUri = "https://github.com/test/?next=" + next;
-        BDDMockito.given(authService.getGithubOAuthLoginUrl(next))
+        BDDMockito.given(oAuthService.getOAuthLoginUrl(provider, next))
                 .willReturn(expectedRedirectUri);
 
         mockMvc.perform(get("/auth/social/redirect/github")
@@ -32,13 +34,14 @@ class AuthApiTest extends ApiTestSupport {
     @Test
     @DisplayName("github 로그인 콜백을 처리한다.")
     void githubCallback() throws Exception {
+        OAuthProvider provider = OAuthProvider.GITHUB;
         String code = "test_code";
         String token = "mock_token";
         String next = "/sub";
         String expectedRedirectUri = "https://example.com?next=" + next;
-        BDDMockito.given(authService.githubOAuthLogin(code))
+        BDDMockito.given(oAuthService.oauthLogin(provider, code))
                 .willReturn(token);
-        BDDMockito.given(authService.getClientRedirectUri(next))
+        BDDMockito.given(oAuthService.getClientRedirectUrl(provider, next))
                 .willReturn(expectedRedirectUri);
 
         mockMvc.perform(get("/auth/social/callback/github")
