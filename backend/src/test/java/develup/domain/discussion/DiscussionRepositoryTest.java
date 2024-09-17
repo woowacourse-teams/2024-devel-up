@@ -94,6 +94,25 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .contains(mission1);
     }
 
+    @Test
+    @DisplayName("디스커션을 식별자로 조회한다.")
+    @Transactional
+    void findFetchById() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .withMember(member)
+                .withHashTags(List.of(hashTag))
+                .build();
+        Discussion savedDiscussion = discussionRepository.save(discussion);
+
+        assertThat(discussionRepository.findFetchById(savedDiscussion.getId()))
+                .map(Discussion::getId)
+                .hasValue(savedDiscussion.getId());
+    }
+
     private void createDiscussion(Mission mission, HashTag hashTag) {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
 

@@ -87,7 +87,7 @@ public class DiscussionService {
     }
 
     private Discussion getDiscussion(Long discussionId) {
-        return discussionRepository.findById(discussionId)
+        return discussionRepository.findFetchById(discussionId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
     }
 

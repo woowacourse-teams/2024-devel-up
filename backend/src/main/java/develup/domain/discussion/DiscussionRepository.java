@@ -1,6 +1,7 @@
 package develup.domain.discussion;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,4 +29,16 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             @Param("mission") String mission,
             @Param("hashTag") String hashTagName
     );
+
+    @Query("""
+            SELECT d
+            FROM Discussion d
+            JOIN FETCH d.mission m
+            JOIN FETCH m.missionHashTags.hashTags mhts
+            JOIN FETCH d.member me
+            JOIN FETCH d.discussionHashTags.hashTags dhts
+            JOIN FETCH dhts.hashTag ht
+            WHERE d.id = :id
+            """)
+    Optional<Discussion> findFetchById(Long id);
 }
