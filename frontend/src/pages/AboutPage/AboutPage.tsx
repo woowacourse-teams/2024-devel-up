@@ -1,9 +1,3 @@
-import One from '@/assets/images/1.svg';
-import Two from '@/assets/images/2.svg';
-import Three from '@/assets/images/3.svg';
-import Four from '@/assets/images/4.svg';
-import Five from '@/assets/images/5.svg';
-import Six from '@/assets/images/6.svg';
 import * as S from './AboutPage.styled';
 import Button from '@/components/common/Button/Button';
 import { useNavigate } from 'react-router-dom';
@@ -22,12 +16,13 @@ export default function AboutPage() {
 
   return (
     <S.Container>
-      <One />
-      <Two />
-      <Three />
-      <Four />
+      <img src="https://dp71rnme1p14w.cloudfront.net/about-1.webp" />
+      <img src="https://dp71rnme1p14w.cloudfront.net/about-2.webp" />
+      <img src="https://dp71rnme1p14w.cloudfront.net/about-3.webp" />
+      <img src="https://dp71rnme1p14w.cloudfront.net/about-4.webp" />
+      <img src="https://dp71rnme1p14w.cloudfront.net/about-5.webp" />
       <S.ButtonWrapper>
-        <Five />
+        <img src="https://dp71rnme1p14w.cloudfront.net/about-6.webp" />
         <Button
           variant="primary"
           style={{
@@ -40,7 +35,7 @@ export default function AboutPage() {
       </S.ButtonWrapper>
 
       <S.ButtonWrapper>
-        <Six />
+        <img src="https://dp71rnme1p14w.cloudfront.net/about-7.webp" />
         <Button
           variant="primary"
           style={{
