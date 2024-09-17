@@ -60,7 +60,7 @@ public class DiscussionApi {
     }
 
     @GetMapping("/discussions/mine")
-    @Operation(summary = "나의 디스커션 목록 조회 API", description = "내가 제출한 디스커션 목록을 조회합니다.")
+    @Operation(summary = "나의 디스커션 목록 조회 API", description = "내가 작성한 디스커션 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<SummarizedDiscussionResponse>>> getMyDiscussions(@Auth Accessor accessor) {
         List<SummarizedDiscussionResponse> response = discussionService.getDiscussionsByMemberId(accessor.id());
 
