@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +25,12 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 public class LoggingFilter extends OncePerRequestFilter {
 
     private static final Logger log = LoggerFactory.getLogger(LoggingFilter.class);
+
+    private final ObjectMapper objectMapper;
+
+    public LoggingFilter(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -58,10 +67,18 @@ public class LoggingFilter extends OncePerRequestFilter {
 
     private void saveRequestBody(ContentCachingRequestWrapper cachedRequest) {
         String content = cachedRequest.getContentAsString();
-        if (content.isBlank()) {
-            content = "null";
+        String prettyJsonString = toPrettyJsonString(content);
+        MDC.put("requestBody", prettyJsonString);
+    }
+
+    private String toPrettyJsonString(String jsonString) {
+        try {
+            Object json = objectMapper.readValue(jsonString, Object.class);
+            ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
+            return writer.writeValueAsString(json);
+        } catch (JsonProcessingException e) {
+            return jsonString;
         }
-        MDC.put("requestBody", content);
     }
 
     private void saveRequestMethod(ContentCachingRequestWrapper cachedRequest) {
@@ -93,7 +110,8 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
 
     private void saveResponseBody(ContentCachingResponseWrapper cachedResponse) {
-        MDC.put("responseBody", new String(cachedResponse.getContentAsByteArray()));
+        String content = new String(cachedResponse.getContentAsByteArray());
+        MDC.put("responseBody", toPrettyJsonString(content));
     }
 
     private void saveResponseHeader(ContentCachingResponseWrapper cachedResponse) {
@@ -106,14 +124,12 @@ public class LoggingFilter extends OncePerRequestFilter {
 
     private void printRequestLog() {
         String template = """
-                                
                 Request
                 {} {}{}
                 Headers :
                 {}
                 Content :
                 {}
-                              
                 """;
         log.info(
                 template,
@@ -127,13 +143,11 @@ public class LoggingFilter extends OncePerRequestFilter {
 
     private void printResponseLog() {
         String responseLogTemplate = """
-                                
                 Response
-                Headers : 
+                Headers :
                 {}
-                Content : 
+                Content :
                 {}
-                                
                 """;
         log.info(responseLogTemplate, MDC.get("responseHeader"), MDC.get("responseBody"));
     }
