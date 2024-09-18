@@ -14,9 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 class OAuthServiceTest extends IntegrationTestSupport {
 
-    @MockBean
-    private OAuthContext oAuthContext;
-
     @Autowired
     private OAuthService oAuthService;
 
