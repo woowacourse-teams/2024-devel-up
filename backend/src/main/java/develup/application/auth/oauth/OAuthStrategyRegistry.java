@@ -14,8 +14,8 @@ public class OAuthStrategyRegistry {
 
     private final Map<OAuthProvider, OAuthStrategy> strategies;
 
-    public OAuthStrategyRegistry(Set<OAuthStrategy> providers) {
-        this.strategies = providers.stream()
+    public OAuthStrategyRegistry(Set<OAuthStrategy> strategies) {
+        this.strategies = strategies.stream()
                 .collect(toMap(OAuthStrategy::getProvider, Function.identity()));
     }
 
