@@ -46,7 +46,7 @@ public class AuthApi {
             @RequestParam(value = "next", defaultValue = "/") String next,
             HttpServletResponse response
     ) throws IOException {
-        String token = oAuthService.oauthLogin(provider, code);
+        String token = oAuthService.oAuthLogin(provider, code);
 
         CookieUtils.setTokenCookie(response, token);
 

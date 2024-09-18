@@ -3,14 +3,11 @@ package develup.application.auth.oauth;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
-import develup.application.auth.AuthService;
-import develup.application.member.MemberService;
 import develup.domain.member.OAuthProvider;
 import develup.support.IntegrationTestSupport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 class OAuthServiceTest extends IntegrationTestSupport {
 
@@ -32,7 +29,7 @@ class OAuthServiceTest extends IntegrationTestSupport {
 
     @Test
     @DisplayName("OAuth 로그인을 처리한다.")
-    void oauthLogin() {
+    void oAuthLogin() {
         OAuthProvider provider = OAuthProvider.GITHUB;
         OAuthUserInfo userInfo = new OAuthUserInfo(
                 1L,
@@ -44,7 +41,7 @@ class OAuthServiceTest extends IntegrationTestSupport {
         given(oAuthContext.getOAuthUserInfo(provider, "test_code"))
                 .willReturn(userInfo);
 
-        String result = oAuthService.oauthLogin(provider, "test_code");
+        String result = oAuthService.oAuthLogin(provider, "test_code");
         assertThat(result).isNotNull();
     }
 

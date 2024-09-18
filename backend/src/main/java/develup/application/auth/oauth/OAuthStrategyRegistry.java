@@ -19,7 +19,7 @@ public class OAuthStrategyRegistry {
                 .collect(toMap(OAuthStrategy::getProvider, Function.identity()));
     }
 
-    public Optional<OAuthStrategy> getProvider(OAuthProvider provider) {
+    public Optional<OAuthStrategy> getOAuthStrategy(OAuthProvider provider) {
         return Optional.ofNullable(strategies.get(provider));
     }
 }

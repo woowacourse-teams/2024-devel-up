@@ -9,27 +9,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class OAuthService {
 
-    private final OAuthContext oauthContext;
+    private final OAuthContext oAuthContext;
     private final MemberService memberService;
     private final TokenProvider tokenProvider;
 
-    public OAuthService(OAuthContext oauthContext, MemberService memberService, TokenProvider tokenProvider) {
-        this.oauthContext = oauthContext;
+    public OAuthService(OAuthContext oAuthContext, MemberService memberService, TokenProvider tokenProvider) {
+        this.oAuthContext = oAuthContext;
         this.memberService = memberService;
         this.tokenProvider = tokenProvider;
     }
 
     public String getOAuthLoginUrl(OAuthProvider provider, String next) {
-        return oauthContext.getOAuthLoginUrl(provider, next);
+        return oAuthContext.getOAuthLoginUrl(provider, next);
     }
 
-    public String oauthLogin(OAuthProvider provider, String code) {
-        OAuthUserInfo userInfo = oauthContext.getOAuthUserInfo(provider, code);
+    public String oAuthLogin(OAuthProvider provider, String code) {
+        OAuthUserInfo userInfo = oAuthContext.getOAuthUserInfo(provider, code);
         MemberResponse memberResponse = memberService.findOrCreateMember(userInfo, provider);
         return tokenProvider.createToken(memberResponse.id().toString());
     }
 
     public String getClientRedirectUrl(OAuthProvider provider, String next) {
-        return oauthContext.getClientRedirectUrl(provider, next);
+        return oAuthContext.getClientRedirectUrl(provider, next);
     }
 }

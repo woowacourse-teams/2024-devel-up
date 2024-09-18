@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class OAuthContext {
 
-    private final OAuthStrategyRegistry oauthStrategyRegistry;
+    private final OAuthStrategyRegistry oAuthStrategyRegistry;
 
-    public OAuthContext(OAuthStrategyRegistry oauthStrategyRegistry) {
-        this.oauthStrategyRegistry = oauthStrategyRegistry;
+    public OAuthContext(OAuthStrategyRegistry oAuthStrategyRegistry) {
+        this.oAuthStrategyRegistry = oAuthStrategyRegistry;
     }
 
     public String getOAuthLoginUrl(OAuthProvider provider, String next) {
@@ -30,7 +30,7 @@ public class OAuthContext {
     }
 
     private OAuthStrategy getOAuthStrategy(OAuthProvider provider) {
-        return oauthStrategyRegistry.getProvider(provider)
+        return oAuthStrategyRegistry.getOAuthStrategy(provider)
                 .orElseThrow(() -> new DevelupException(ExceptionType.OAUTH_PROVIDER_NOT_FOUND));
     }
 }

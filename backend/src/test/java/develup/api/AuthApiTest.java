@@ -39,7 +39,7 @@ class AuthApiTest extends ApiTestSupport {
         String token = "mock_token";
         String next = "/sub";
         String expectedRedirectUri = "https://example.com?next=" + next;
-        BDDMockito.given(oAuthService.oauthLogin(provider, code))
+        BDDMockito.given(oAuthService.oAuthLogin(provider, code))
                 .willReturn(token);
         BDDMockito.given(oAuthService.getClientRedirectUrl(provider, next))
                 .willReturn(expectedRedirectUri);

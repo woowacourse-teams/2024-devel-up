@@ -21,11 +21,11 @@ public class WebConfig implements WebMvcConfigurer {
     private String apiHost;
 
     private final AuthArgumentResolver authArgumentResolver;
-    private final OAuthProviderConverter oauthProviderConverter;
+    private final OAuthProviderConverter oAuthProviderConverter;
 
-    public WebConfig(AuthArgumentResolver authArgumentResolver, OAuthProviderConverter oauthProviderConverter) {
+    public WebConfig(AuthArgumentResolver authArgumentResolver, OAuthProviderConverter oAuthProviderConverter) {
         this.authArgumentResolver = authArgumentResolver;
-        this.oauthProviderConverter = oauthProviderConverter;
+        this.oAuthProviderConverter = oAuthProviderConverter;
     }
 
     @Override
@@ -46,6 +46,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(oauthProviderConverter);
+        registry.addConverter(oAuthProviderConverter);
     }
 }
