@@ -25,7 +25,7 @@ public class AuthApi {
     }
 
     @GetMapping("/auth/social/redirect/{provider}")
-    @Operation(summary = "깃허브 인증 API", description = "깃허브 로그인 페이지로 리다이렉트합니다.")
+    @Operation(summary = "OAuth 인증 API", description = "해당하는 OAuth 제공자의 로그인 페이지로 리다이렉트합니다.")
     public void githubRedirect(
             @PathVariable OAuthProvider provider,
             @RequestParam(value = "next", defaultValue = "/") String next,
@@ -37,8 +37,8 @@ public class AuthApi {
 
     @GetMapping("/auth/social/callback/{provider}")
     @Operation(
-            summary = "깃허브 인증 콜백 API",
-            description = "깃허브 인증 서버로부터 코드를 받고, 클라이언트에게 'token' 쿠키를 주고 주어진 경로로 리다이렉트합니다."
+            summary = "OAuth 인증 콜백 API",
+            description = "OAuth 인증 서버로부터 코드를 받고, 클라이언트에게 'token' 쿠키를 주고 주어진 경로로 리다이렉트합니다."
     )
     public void githubCallback(
             @PathVariable OAuthProvider provider,
