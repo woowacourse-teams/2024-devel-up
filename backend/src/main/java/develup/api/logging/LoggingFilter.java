@@ -73,7 +73,11 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
 
     private void saveQueryString(ContentCachingRequestWrapper cachedRequest) {
-        MDC.put("queryString", cachedRequest.getQueryString());
+        String queryString = "?" + cachedRequest.getQueryString();
+        if (queryString.equals("?null")) {
+            queryString = "";
+        }
+        MDC.put("queryString", queryString);
     }
 
     private void saveRequestHeader(HttpServletRequest request) {
@@ -104,7 +108,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         String template = """
                                 
                 Request
-                {} {}?{}
+                {} {}{}
                 Headers :
                 {}
                 Content :
