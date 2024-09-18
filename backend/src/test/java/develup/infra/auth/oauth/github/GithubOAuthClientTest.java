@@ -1,6 +1,7 @@
 package develup.infra.auth.oauth.github;
 
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
@@ -64,10 +65,10 @@ class GithubOAuthClientTest {
 
         GithubAccessTokenResponse response = githubOAuthClient.fetchAccessToken("code");
 
-        assertSoftly(softly -> {
-            softly.assertThat(response.accessToken()).isEqualTo("access-token");
-            softly.assertThat(response.tokenType()).isEqualTo("token-type");
-            softly.assertThat(response.scope()).isEqualTo("scope");
+        assertAll(() -> {
+            assertThat(response.accessToken()).isEqualTo("access-token");
+            assertThat(response.tokenType()).isEqualTo("token-type");
+            assertThat(response.scope()).isEqualTo("scope");
         });
     }
 
@@ -93,11 +94,11 @@ class GithubOAuthClientTest {
 
         GithubUserInfoResponse response = githubOAuthClient.fetchUserInfo(accessToken);
 
-        assertSoftly(softly -> {
-            softly.assertThat(response.login()).isEqualTo("login");
-            softly.assertThat(response.name()).isEqualTo("name");
-            softly.assertThat(response.email()).isEqualTo("alstn113@gmail.com");
-            softly.assertThat(response.avatarUrl()).isEqualTo("http://avatar.url");
+        assertAll(() -> {
+            assertThat(response.login()).isEqualTo("login");
+            assertThat(response.name()).isEqualTo("name");
+            assertThat(response.email()).isEqualTo("alstn113@gmail.com");
+            assertThat(response.avatarUrl()).isEqualTo("http://avatar.url");
         });
     }
 }
