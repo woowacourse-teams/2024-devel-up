@@ -121,7 +121,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         );
     }
 
-    private static void printResponseLog() {
+    private void printResponseLog() {
         String responseLogTemplate = """
                                 
                 Response
