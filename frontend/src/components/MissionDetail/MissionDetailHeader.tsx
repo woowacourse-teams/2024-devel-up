@@ -1,5 +1,5 @@
 import type { HashTag } from '@/types';
-import HashTagButton from '../common/HashTagButton';
+import TagButton from '../common/TagButton';
 import * as S from './MissionDetail.styled';
 
 interface MissionDetailHeaderProps {
@@ -23,7 +23,7 @@ export default function MissionDetailHeader({
         <S.HashTagWrapper>
           {hashTags &&
             hashTags.map((tag) => {
-              return <HashTagButton key={tag.id}># {tag.name}</HashTagButton>;
+              return <TagButton key={tag.id}># {tag.name}</TagButton>;
             })}
         </S.HashTagWrapper>
       </S.ThumbnailWrapper>

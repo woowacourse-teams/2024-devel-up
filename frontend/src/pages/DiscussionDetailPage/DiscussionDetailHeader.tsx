@@ -1,5 +1,5 @@
 import * as S from './DiscussionDetailPage.styled';
-import HashTagButton from '@/components/common/HashTagButton';
+import TagButton from '@/components/common/TagButton';
 import type discussionMock from './mock.json';
 
 interface SolutionDetailHeaderProps {
@@ -21,8 +21,7 @@ export default function DiscussionDetailHeader({ discussion }: SolutionDetailHea
           </S.HeaderUserInfo>
         </S.HeaderLeftArea>
         <S.HashTagWrapper>
-          {hashTags &&
-            hashTags.map((tag) => <HashTagButton key={tag.id}># {tag.name}</HashTagButton>)}
+          {hashTags && hashTags.map((tag) => <TagButton key={tag.id}># {tag.name}</TagButton>)}
         </S.HashTagWrapper>
       </S.ThumbnailWrapper>
     </S.DiscussionDetailHeaderContainer>
