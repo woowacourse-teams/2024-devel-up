@@ -100,6 +100,30 @@ public class DiscussionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 
+    @Test
+    @DisplayName("나의 디스커션 목록을 조회한다.")
+    void getMyDiscussions() throws Exception {
+        List<SummarizedDiscussionResponse> myDiscussions = List.of(
+                SummarizedDiscussionResponse.from(createDiscussion()),
+                SummarizedDiscussionResponse.from(createDiscussion())
+        );
+
+        BDDMockito.given(discussionService.getDiscussionsByMemberId(any()))
+                .willReturn(myDiscussions);
+
+        mockMvc.perform(get("/discussions/mine"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속 구현에 대한 고찰")))
+                .andExpect(jsonPath("$.data[0].mission", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data[0].hashTags[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.data[0].hashTags[0].name", equalTo("JAVA")))
+                .andExpect(jsonPath("$.data[0].member.id", equalTo(1)))
+                .andExpect(jsonPath("$.data[0].member.name", equalTo("tester")))
+                .andExpect(jsonPath("$.data[0].commentCount", equalTo(100)));
+    }
+
     private Discussion createDiscussion() {
         HashTag hashTag = HashTagTestData.defaultHashTag()
                 .withId(1L)
