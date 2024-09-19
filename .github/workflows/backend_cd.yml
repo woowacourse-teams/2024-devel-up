@@ -9,19 +9,20 @@ on:
       - backend/**
 
 jobs:
-  find_now_version:
+  findPreviousImageVersion:
+    name: 🔎Find Previous Docker Image Version
     runs-on: [ self-hosted, devel-up-prod-a ]
     outputs:
-      prev_image_version: ${{steps.find_version.outputs.name}}
+      previousImageVersion: ${{steps.find_version.outputs.name}}
     steps:
       - id: find_version
         run: |
           PREVIOUS_IMAGE_NAME=$(docker ps --format "{{.Image}}")
           echo "name=$PREVIOUS_IMAGE_NAME" >> $GITHUB_OUTPUT
+          echo $PREVIOUS_IMAGE_NAME
 
   build:
     name: 🏗️ Build Jar and Upload Docker Image
-    needs: find_now_version
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -89,7 +90,7 @@ jobs:
     defaults:
       run:
         working-directory: backend
-    runs-on: [ self-hosted, devel-up-prod-a ] # 헬스 체크 방식 고민
+    runs-on: [ self-hosted, devel-up-prod-a ]
     steps:
       - name: ♻️ Send Helth Check Request
         run: chmod u+x ./scripts/healthcheck.sh && ./scripts/healthcheck.sh
@@ -104,13 +105,9 @@ jobs:
         working-directory: backend
 
     env:
-      BACKEND_APP_IMAGE_NAME: ${{ needs.find_now_version.outputs.prev_image_version }}
+      BACKEND_APP_IMAGE_NAME: ${{ needs.find_now_version.outputs.previousImageVersion }}
 
     steps:
-      - run: |
-          echo ${{ needs.find_now_version.outputs.PREVIOUS_IMAGE_NAME }}
-          echo ${{env.BACKEND_APP_IMAGE_NAME}}
-          echo ${{env.name}}
       - uses: actions/checkout@v4
 
       - name: 🐳 Login to Docker Hub
@@ -125,11 +122,10 @@ jobs:
   healthCheckAAfterRollBack:
     name: 🙏 Server A Health Check After RollBack
     needs: rollBackA
-    if: success()
     defaults:
       run:
         working-directory: backend
-    runs-on: [ self-hosted, devel-up-prod-a ] # 헬스 체크 방식 고민
+    runs-on: [ self-hosted, devel-up-prod-a ]
     steps:
       - name: ♻️ Send Helth Check Request
         run: chmod u+x ./scripts/healthcheck.sh && ./scripts/healthcheck.sh
@@ -165,7 +161,7 @@ jobs:
     defaults:
       run:
         working-directory: backend
-    runs-on: [ self-hosted, devel-up-prod-b ] # 헬스 체크 방식 고민
+    runs-on: [ self-hosted, devel-up-prod-b ]
     steps:
       - name: ♻️ Send Helth Check Request
         run: chmod u+x ./scripts/healthcheck.sh && ./scripts/healthcheck.sh
