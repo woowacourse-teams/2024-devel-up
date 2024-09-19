@@ -12,26 +12,24 @@ export default function DiscussionCommentList({
 }: DiscussionCommentListProps) {
   return (
     <>
-      <>
-        {!discussionCommentList.length ? (
-          <NoContent type="comments" />
-        ) : (
-          <S.Container>
-            {discussionCommentList.map((discussionComment) => {
-              return (
-                <MyComment
-                  key={discussionComment.id}
-                  contentId={discussionComment.commentId}
-                  contentTitle={discussionComment.discussionTitle}
-                  createdAt={discussionComment.createdAt}
-                  content={discussionComment.content}
-                  contentCommentCount={discussionComment.discussionCommentCount}
-                />
-              );
-            })}
-          </S.Container>
-        )}
-      </>
+      {!discussionCommentList.length ? (
+        <NoContent type="comments" />
+      ) : (
+        <S.Container>
+          {discussionCommentList.map((discussionComment) => {
+            return (
+              <MyComment
+                key={discussionComment.id}
+                contentId={discussionComment.discussionId}
+                contentTitle={discussionComment.discussionTitle}
+                createdAt={discussionComment.createdAt}
+                content={discussionComment.content}
+                contentCommentCount={discussionComment.discussionCommentCount}
+              />
+            );
+          })}
+        </S.Container>
+      )}
     </>
   );
 }

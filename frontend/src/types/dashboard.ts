@@ -16,7 +16,7 @@ export interface DashboardDiscussion {
 
 export interface DiscussionComment {
   id: number;
-  commentId: number;
+  discussionId: number;
   content: string;
   createdAt: string;
   discussionTitle: string;
