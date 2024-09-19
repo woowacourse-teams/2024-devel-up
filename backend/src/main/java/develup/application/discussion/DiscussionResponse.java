@@ -5,6 +5,7 @@ import develup.application.hashtag.HashTagResponse;
 import develup.application.member.MemberResponse;
 import develup.application.mission.MissionResponse;
 import develup.domain.discussion.Discussion;
+import develup.domain.discussion.DiscussionHashTag;
 
 public record DiscussionResponse(
         Long id,
@@ -16,8 +17,8 @@ public record DiscussionResponse(
 ) {
 
     public static DiscussionResponse from(Discussion discussion) {
-        List<HashTagResponse> hashTagResponses = discussion.getHashTags()
-                .stream()
+        List<HashTagResponse> hashTagResponses = discussion.getDiscussionHashTags().stream()
+                .map(DiscussionHashTag::getHashTag)
                 .map(HashTagResponse::from)
                 .toList();
 

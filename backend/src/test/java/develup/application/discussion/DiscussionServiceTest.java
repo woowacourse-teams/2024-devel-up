@@ -169,6 +169,16 @@ class DiscussionServiceTest extends IntegrationTestSupport {
                 .hasMessage("존재하지 않는 해시태그입니다.");
     }
 
+    @Test
+    @DisplayName("존재하지 않는 디스커션은 불러올 수 없다.")
+    void getById() {
+        Long unknownId = -1L;
+
+        assertThatThrownBy(() -> discussionService.getById(unknownId))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("존재하지 않는 디스커션입니다.");
+    }
+
     private void createDiscussion(Mission mission, HashTag hashTag) {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
 

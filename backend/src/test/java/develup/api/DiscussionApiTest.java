@@ -10,9 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+import develup.application.discussion.CreateDiscussionRequest;
 import develup.application.discussion.DiscussionResponse;
 import develup.application.discussion.SummarizedDiscussionResponse;
-import develup.application.discussion.CreateDiscussionRequest;
 import develup.domain.discussion.Discussion;
 import develup.domain.hashtag.HashTag;
 import develup.domain.member.Member;
@@ -71,17 +71,33 @@ public class DiscussionApiTest extends ApiTestSupport {
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id", equalTo(1)));
+    }
+
+    @Test
+    @DisplayName("디스커션을 조회한다.")
+    void getSolution() throws Exception {
+        DiscussionResponse response = DiscussionResponse.from(createDiscussion());
+        BDDMockito.given(discussionService.getById(any()))
+                .willReturn(response);
+
+        mockMvc.perform(get("/discussions/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.title", equalTo("루터회관 흡연단속 구현에 대한 고찰")))
+                .andExpect(jsonPath("$.data.content", equalTo("루터회관 흡연단속을 구현하면서 느낀 점을 공유합니다.")))
                 .andExpect(jsonPath("$.data.member.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.member.email", equalTo("email@email.com")))
                 .andExpect(jsonPath("$.data.member.name", equalTo("tester")))
                 .andExpect(jsonPath("$.data.member.imageUrl", equalTo("image.com/1.jpg")))
-                .andExpect(jsonPath("$.data.title", equalTo("루터회관 흡연단속 구현에 대한 고찰")))
-                .andExpect(jsonPath("$.data.content", equalTo("루터회관 흡연단속을 구현하면서 느낀 점을 공유합니다.")))
+                .andExpect(jsonPath("$.data.hashTags[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.data.hashTags[0].name", equalTo("JAVA")))
+                .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
                 .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data.mission.summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
-                .andExpect(jsonPath("$.data.hashTags[0].id", equalTo(1)))
-                .andExpect(jsonPath("$.data.hashTags[0].name", equalTo("JAVA")));
+                .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")));
     }
 
     private Discussion createDiscussion() {

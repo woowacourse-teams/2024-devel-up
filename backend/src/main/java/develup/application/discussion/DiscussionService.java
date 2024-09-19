@@ -36,12 +36,6 @@ public class DiscussionService {
         this.hashTagRepository = hashTagRepository;
     }
 
-    public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
-        return discussionRepository.findByMissionAndHashTagName(mission, hashTagName).stream()
-                .map(SummarizedDiscussionResponse::from)
-                .toList();
-    }
-
     public DiscussionResponse create(Long memberId, CreateDiscussionRequest request) {
         Mission mission = getMission(request.missionId());
         Member member = getMember(memberId);
@@ -55,6 +49,18 @@ public class DiscussionService {
         ));
 
         return createDiscussionResponse(discussion);
+    }
+
+    public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
+        return discussionRepository.findByMissionAndHashTagName(mission, hashTagName).stream()
+                .map(SummarizedDiscussionResponse::from)
+                .toList();
+    }
+
+    public DiscussionResponse getById(Long id) {
+        Discussion discussion = getDiscussion(id);
+
+        return DiscussionResponse.from(discussion);
     }
 
     private Mission getMission(Long missionId) {
@@ -78,6 +84,11 @@ public class DiscussionService {
             throw new DevelupException(ExceptionType.HASHTAG_NOT_FOUND);
         }
         return hashTags;
+    }
+
+    private Discussion getDiscussion(Long discussionId) {
+        return discussionRepository.findFetchById(discussionId)
+                .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
     }
 
     private DiscussionResponse createDiscussionResponse(Discussion discussion) {
