@@ -12,15 +12,21 @@ jobs:
   find_now_version:
     runs-on: [ self-hosted, devel-up-prod-a ]
     outputs:
-      PREVIOUS_IMAGE_NAME: ${{steps.find_version.outputs.name}}
+      prev: ${{steps.find_version.outputs.name}}
     steps:
       - name: find_version
         run: |
           PREVIOUS_IMAGE_NAME=$(docker ps --format "{{.Image}}")
           echo "name=$PREVIOUS_IMAGE_NAME" >> $GITHUB_OUTPUT
           echo $PREVIOUS_IMAGE_NAME
-          echo aaaaaaaa
-          echo $name
+  testJob:
+    runs-on: [ self-hosted, devel-up-prod-a ]
+    needs: find_now_version
+    steps:
+      - name: aaaa
+        run: |
+          echo ${{ needs.find_now_version.outputs.prev }}
+          echo ${{ needs.find_now_version.outputs }}
 
   build:
     name: 🏗️ Build Jar and Upload Docker Image
@@ -107,7 +113,7 @@ jobs:
         working-directory: backend
 
     env:
-      BACKEND_APP_IMAGE_NAME: ${{ needs.find_now_version.outputs.PREVIOUS_IMAGE_NAME }}
+      BACKEND_APP_IMAGE_NAME: ${{ needs.find_now_version.outputs.prev }}
 
     steps:
       - run: |
