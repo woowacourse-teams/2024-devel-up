@@ -1,12 +1,12 @@
+import type { Discussion } from '@/types/discussion';
 import * as S from './DiscussionDetailPage.styled';
 import HashTagButton from '@/components/common/HashTagButton';
-import type discussionMock from './discussionMock.json';
 
-interface SolutionDetailHeaderProps {
-  discussion: typeof discussionMock;
+interface DiscussionDetailHeaderProps {
+  discussion: Discussion;
 }
 
-export default function DiscussionDetailHeader({ discussion }: SolutionDetailHeaderProps) {
+export default function DiscussionDetailHeader({ discussion }: DiscussionDetailHeaderProps) {
   const { mission, member, title, hashTags } = discussion;
 
   return (

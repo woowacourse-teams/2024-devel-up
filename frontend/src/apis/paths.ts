@@ -15,6 +15,7 @@ export const PATH = {
   missionInProgress: '/missions/in-progress',
   solutions: '/solutions',
   mySolutions: '/solutions/mine',
+  discussions: '/discussions',
 };
 
 export const PATH_FORMATTER = {

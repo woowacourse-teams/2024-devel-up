@@ -27,6 +27,11 @@ export const solutionKeys = {
   submitted: ['submitted solutions'],
 };
 
+export const discussionKeys = {
+  all: ['discussions'],
+  detail: (id: number) => [...discussionKeys.all, id],
+};
+
 export const hashTagsKeys = {
   hashTags: ['hashTags'],
 };
