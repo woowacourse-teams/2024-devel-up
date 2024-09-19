@@ -179,6 +179,24 @@ class DiscussionServiceTest extends IntegrationTestSupport {
                 .hasMessage("존재하지 않는 디스커션입니다.");
     }
 
+    @Test
+    @DisplayName("나의 디스커션 리스트를 조회한다.")
+    @Transactional
+    void getDiscussionsByMemberId() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().withId(1L).build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(List.of(hashTag))
+                .build();
+
+        discussionRepository.save(discussion);
+
+        assertThat(discussionService.getDiscussionsByMemberId(member.getId())).hasSize(1);
+    }
+
     private void createDiscussion(Mission mission, HashTag hashTag) {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
 
