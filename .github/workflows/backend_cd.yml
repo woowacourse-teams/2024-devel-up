@@ -122,6 +122,7 @@ jobs:
   healthCheckAAfterRollBack:
     name: 🙏 Server A Health Check After RollBack
     needs: rollBackA
+    if : ${{needs.rollBackA.result == 'success'}}
     defaults:
       run:
         working-directory: backend
