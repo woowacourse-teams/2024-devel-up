@@ -17,7 +17,7 @@ export default function DiscussionTitle({ danger, value, onChange }: DiscussionT
         width="xlarge"
         danger={danger}
         dangerMessage={ERROR_MESSAGE.invalid_title}
-        placeholder={'글 제목을 입력해주세요'}
+        placeholder='글 제목을 입력해주세요'
         value={value}
         onChange={onChange}
       />
