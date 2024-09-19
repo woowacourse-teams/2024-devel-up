@@ -9,6 +9,14 @@ on:
       - backend/**
 
 jobs:
+  find_now_version:
+    runs-on: [ self-hosted, devel-up-prod-a ]
+    steps:
+      - name: find version
+        run: |
+          PREVIOUS_IMAGE_NAME=$(docker ps --format "{{.Image}}")
+          echo "PREVIOUS_IMAGE_NAME=$PREVIOUS_IMAGE_NAME" >> $GITHUB_ENV
+
   build:
     name: 🏗️ Build Jar and Upload Docker Image
     runs-on: ubuntu-latest
@@ -74,6 +82,8 @@ jobs:
   healthCheckA:
     name: 🙏 Server A Health Check
     needs: deployToA
+    if: success()
+    continue-on-error: true
     defaults:
       run:
         working-directory: backend
@@ -82,10 +92,46 @@ jobs:
       - name: ♻️ Send Helth Check Request
         run: chmod u+x ./scripts/healthcheck.sh && ./scripts/healthcheck.sh
 
+  rollBackA:
+    name: 🚀 Server A Deployment
+    needs: healthCheckA
+    if: failure()
+    runs-on: [ self-hosted, devel-up-prod-a ]
+    defaults:
+      run:
+        working-directory: backend
+
+    env:
+      BACKEND_APP_IMAGE_NAME: ${{ env.PREVIOUS_IMAGE_NAME }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🐳 Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 🐳 Docker Compose up
+        run: docker compose -f compose.yml up -d
+
+  healthCheckAAfterRollBack:
+    name: 🙏 Server A Health Check
+    needs: rollBackA
+    if: success()
+    defaults:
+      run:
+        working-directory: backend
+    runs-on: [ self-hosted, devel-up-prod-a ] # 헬스 체크 방식 고민
+    steps:
+      - name: ♻️ Send Helth Check Request
+        run: chmod u+x ./scripts/healthcheck.sh && ./scripts/healthcheck.sh
 
   deployToB:
     name: 🚀 Server B Deployment
     needs: healthCheckA
+    if: success()
     runs-on: [ self-hosted, devel-up-prod-b ]
     defaults:
       run:
@@ -109,6 +155,7 @@ jobs:
   healthCheckB:
     name: 🙏 Server B Health Check
     needs: deployToB
+    if: success()
     defaults:
       run:
         working-directory: backend
