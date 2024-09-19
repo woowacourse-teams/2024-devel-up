@@ -203,7 +203,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - healthCheckB
-    if: ${{needs.healthCheckB.result == 'failure'}}
+    if: ${{failure() && needs.healthCheckB.result == 'failure'}}
     steps:
       - name: Extract Commit Title
         run: |
@@ -267,7 +267,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - healthCheckAAfterRollBack
-    if: ${{needs.healthCheckAAfterRollBack.result == 'failure'}}
+    if: ${{failure() && needs.healthCheckAAfterRollBack.result == 'failure'}}
     steps:
       - name: Extract Commit Title
         run: |
