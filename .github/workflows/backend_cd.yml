@@ -86,7 +86,7 @@ jobs:
   healthCheckA:
     name: 🙏 Server A Health Check
     needs: deployToA
-    if: success()
+    continue-on-error: true
     defaults:
       run:
         working-directory: backend
@@ -98,7 +98,7 @@ jobs:
   rollBackA:
     name: 🚀 Server A RollBack
     needs: [healthCheckA, findPreviousImageVersion]
-    if: failure()
+    if: ${{needs.healthCheckA.result == 'failure'}}
     runs-on: [ self-hosted, devel-up-prod-a ]
     defaults:
       run:
@@ -122,7 +122,7 @@ jobs:
   healthCheckAAfterRollBack:
     name: 🙏 Server A Health Check After RollBack
     needs: rollBackA
-    if : ${{needs.rollBackA.result == 'success'}}
+    continue-on-error: true
     defaults:
       run:
         working-directory: backend
@@ -134,7 +134,7 @@ jobs:
   deployToB:
     name: 🚀 Server B Deployment
     needs: healthCheckA
-    if: success()
+    if: ${{needs.healthCheckA.result == 'success'}}
     runs-on: [ self-hosted, devel-up-prod-b ]
     defaults:
       run:
@@ -158,7 +158,7 @@ jobs:
   healthCheckB:
     name: 🙏 Server B Health Check
     needs: deployToB
-    if: success()
+    continue-on-error: true
     defaults:
       run:
         working-directory: backend
