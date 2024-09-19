@@ -1,11 +1,10 @@
 import type { UserInfo } from './user';
-import type { Mission, HashTag } from './index';
+import type { HashTag } from './index';
 
 export interface Discussion {
   id: number;
   title: string;
-  content: string;
-  mission: Omit<Mission, 'hashTags, isStarted, descriptionUrl'>;
+  mission: string;
   member: Omit<UserInfo, 'description'>;
   hashTags: HashTag[];
   commentCount: number;

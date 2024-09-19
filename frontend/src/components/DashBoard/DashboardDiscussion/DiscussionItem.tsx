@@ -4,7 +4,7 @@ import CommentIcon from '@/assets/images/comment-count.svg';
 
 interface DiscussionItemProps {
   id: number;
-  content: string;
+  mission: string;
   hashTags: HashTag[];
   title: string;
   imageUrl: string;
@@ -13,7 +13,7 @@ interface DiscussionItemProps {
 
 export default function DiscussionItem({
   id,
-  content,
+  mission,
   hashTags,
   title,
   imageUrl,
@@ -23,12 +23,12 @@ export default function DiscussionItem({
     <S.DiscussionWrapper to={`/discussions/${id}`}>
       <S.TextWrapper>
         <S.HashTagWrapper>
-          <S.HashTag $isTitle>{title}</S.HashTag>
+          <S.HashTag $isTitle>{mission}</S.HashTag>
           {hashTags.map((hashTag) => {
             return <S.HashTag key={hashTag.id}>{hashTag.name}</S.HashTag>;
           })}
         </S.HashTagWrapper>
-        <S.CommentText>{content}</S.CommentText>
+        <S.CommentText>{title}</S.CommentText>
       </S.TextWrapper>
       <S.ImageCommentWrapper>
         <S.ImageWrapper>

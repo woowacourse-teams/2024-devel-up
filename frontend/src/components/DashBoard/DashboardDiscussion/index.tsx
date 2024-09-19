@@ -19,9 +19,9 @@ export default function DashBoardDiscussionList({ discussionList }: DashBoardDis
               <DiscussionItem
                 key={discussion.id}
                 id={discussion.id}
-                content={discussion.content}
                 hashTags={discussion.hashTags}
                 title={discussion.title}
+                mission={discussion.mission}
                 imageUrl={discussion.member.imageUrl}
                 commentCount={discussion.commentCount}
               />
