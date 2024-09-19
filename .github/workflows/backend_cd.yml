@@ -21,6 +21,7 @@ jobs:
 
   build:
     name: 🏗️ Build Jar and Upload Docker Image
+    needs: find_now_version
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -106,6 +107,9 @@ jobs:
       BACKEND_APP_IMAGE_NAME: ${{ needs.find_now_version.outputs.PREVIOUS_IMAGE_NAME }}
 
     steps:
+      - run: |
+          echo ${{ needs.find_now_version.outputs.PREVIOUS_IMAGE_NAME }}
+          echo ${{env.BACKEND_APP_IMAGE_NAME}}
       - uses: actions/checkout@v4
 
       - name: 🐳 Login to Docker Hub
