@@ -13,7 +13,7 @@ const useSubmitDiscussionMutation = () => {
     queryFn: postDiscussionSubmit,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['all'] }); // TODO: all, 필터링까지 캐시 무효화 잘 되는지 확인 필요 @프룬
-      navigate(`${ROUTES.discussions}`);
+      navigate(ROUTES.discussions);
     },
     onError: (error: Error) => {
       console.error(error.message);

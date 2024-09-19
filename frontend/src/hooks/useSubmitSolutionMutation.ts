@@ -24,7 +24,7 @@ const useSubmitSolutionMutation = ({
       onSuccessCallback();
       queryClient.invalidateQueries({ queryKey: missionKeys.detail(missionId) });
       queryClient.invalidateQueries({ queryKey: solutionKeys.summaries });
-      navigate(`${ROUTES.solutions}`);
+      navigate(ROUTES.solutions);
     },
     onError: (error: Error) => {
       console.error(error.message);

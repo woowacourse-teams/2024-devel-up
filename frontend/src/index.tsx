@@ -191,7 +191,7 @@ const routes = [
     ),
   },
   {
-    path: `${ROUTES.submitDiscussion}`,
+    path: ROUTES.submitDiscussion,
     element: (
       <App>
         <Suspense fallback={<LoadingSpinner />}>
