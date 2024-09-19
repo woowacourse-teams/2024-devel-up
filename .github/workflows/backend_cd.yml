@@ -18,6 +18,8 @@ jobs:
         run: |
           PREVIOUS_IMAGE_NAME=$(docker ps --format "{{.Image}}")
           echo "name=$PREVIOUS_IMAGE_NAME" >> $GITHUB_OUTPUT
+          echo $PREVIOUS_IMAGE_NAME
+          echo $name
 
   build:
     name: 🏗️ Build Jar and Upload Docker Image
@@ -110,6 +112,7 @@ jobs:
       - run: |
           echo ${{ needs.find_now_version.outputs.PREVIOUS_IMAGE_NAME }}
           echo ${{env.BACKEND_APP_IMAGE_NAME}}
+          echo ${{env.name}}
       - uses: actions/checkout@v4
 
       - name: 🐳 Login to Docker Hub
