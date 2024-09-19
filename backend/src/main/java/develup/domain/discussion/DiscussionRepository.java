@@ -25,7 +25,7 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
                     AND sht.name = :hashTag
                 ))
             """)
-    List<Discussion> findByMissionAndHashTagName(
+    List<Discussion> findAllByMissionAndHashTagName(
             @Param("mission") String mission,
             @Param("hashTag") String hashTagName
     );
@@ -41,4 +41,15 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             WHERE d.id = :id
             """)
     Optional<Discussion> findFetchById(Long id);
+
+    @Query("""
+            SELECT d
+            FROM Discussion d
+            JOIN FETCH d.mission m
+            JOIN FETCH d.member me
+            JOIN FETCH d.discussionHashTags.hashTags dhts
+            JOIN FETCH dhts.hashTag ht
+            WHERE me.id = :memberId
+            """)
+    List<Discussion> findAllByMember_Id(Long memberId);
 }

@@ -12,6 +12,7 @@ import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import './styles/fonts.css';
+import DiscussionListPage from './pages/DiscussionListPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,7 +35,7 @@ const MissionDetailPage = lazy(() => import('./pages/MissionDetailPage'));
 const MainPage = lazy(() => import('./pages/MainPage'));
 const MissionSubmitPage = lazy(() => import('./pages/MissionSubmitPage'));
 const UserProfilePage = lazy(() => import('./pages/UserProfilePage'));
-const GuidePage = lazy(() => import('./pages/GuidePage'));
+// const GuidePage = lazy(() => import('./pages/GuidePage'));
 const ErrorPage = lazy(() => import('./pages/ErrorPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
 const DiscussionDetailPage = lazy(() => import('./pages/DiscussionDetailPage'));
@@ -86,18 +87,22 @@ const routes = [
     path: ROUTES.profile,
     element: (
       <App>
-        <UserProfilePage />
+        <Suspense fallback={<LoadingSpinner />}>
+          <UserProfilePage />
+        </Suspense>
       </App>
     ),
   },
-  {
-    path: ROUTES.guide,
-    element: (
-      <App>
-        <GuidePage />
-      </App>
-    ),
-  },
+  // {
+  //   path: ROUTES.guide,
+  //   element: (
+  //     <App>
+  //       <Suspense fallback={<LoadingSpinner />}>
+  //         <GuidePage />
+  //       </Suspense>
+  //     </App>
+  //   ),
+  // },
   {
     path: ROUTES.missionList,
     element: (
@@ -178,7 +183,9 @@ const routes = [
     path: ROUTES.about,
     element: (
       <App>
-        <AboutPage />
+        <Suspense fallback={<LoadingSpinner />}>
+          <AboutPage />
+        </Suspense>
       </App>
     ),
   },
@@ -186,7 +193,19 @@ const routes = [
     path: `${ROUTES.discussions}/:id`,
     element: (
       <App>
-        <DiscussionDetailPage />
+        <Suspense fallback={<LoadingSpinner />}>
+          <DiscussionDetailPage />
+        </Suspense>
+      </App>
+    ),
+  },
+  {
+    path: `${ROUTES.discussions}`,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <DiscussionListPage />
+        </Suspense>
       </App>
     ),
   },
