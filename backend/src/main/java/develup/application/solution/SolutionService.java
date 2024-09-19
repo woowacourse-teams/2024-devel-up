@@ -1,8 +1,6 @@
 package develup.application.solution;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.member.Member;
@@ -18,11 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SolutionService {
-
-    private static final String PR_URL_REGEX = "https://github\\.com/develup-mission/([^/]+)/pull/([0-9]+)";
-    private static final Pattern PR_URL_PATTERN = Pattern.compile(PR_URL_REGEX);
-    private static final String MISSION_URL_REGEX = ".*/([^/?#]+)";
-    private static final Pattern MISSION_URL_PATTERN = Pattern.compile(MISSION_URL_REGEX);
 
     private final SolutionRepository solutionRepository;
     private final MissionRepository missionRepository;
@@ -71,7 +64,6 @@ public class SolutionService {
                         SolutionStatus.IN_PROGRESS
                 )
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_STARTED));
-        validatePullRequestUrl(request.url());
 
         solution.submit(request.toSubmitPayload());
 
@@ -89,7 +81,6 @@ public class SolutionService {
     public SolutionResponse update(Long memberId, UpdateSolutionRequest request) {
         Solution solution = getSolution(request.solutionId());
         validateSolutionOwner(memberId, solution);
-        validatePullRequestUrl(request.url());
 
         solution.update(request.toSubmitPayload());
 
@@ -100,25 +91,6 @@ public class SolutionService {
         if (solution.isNotSubmittedBy(memberId)) {
             throw new DevelupException(ExceptionType.SOLUTION_NOT_SUBMITTED_BY_MEMBER);
         }
-    }
-
-    private void validatePullRequestUrl(String url) {
-        Matcher matcher = PR_URL_PATTERN.matcher(url);
-        if (!matcher.matches()) {
-            throw new DevelupException(ExceptionType.INVALID_URL);
-        }
-
-        String repositoryName = matcher.group(1);
-        if (!existsMissionRepositoryName(repositoryName)) {
-            throw new DevelupException(ExceptionType.INVALID_URL);
-        }
-    }
-
-    private boolean existsMissionRepositoryName(String repositoryName) {
-        List<String> url = missionRepository.findUrl();
-        return url.stream().map(MISSION_URL_PATTERN::matcher)
-                .filter(Matcher::find)
-                .anyMatch(matcher -> matcher.group(1).equals(repositoryName));
     }
 
     public List<SummarizedSolutionResponse> getCompletedSummaries(String hashTagName) {

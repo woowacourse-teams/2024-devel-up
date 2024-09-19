@@ -16,8 +16,8 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Discussion extends CreatedAtAuditableEntity {
 
-    @Column(nullable = false)
-    private String title;
+    @Embedded
+    private Title title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -37,7 +37,7 @@ public class Discussion extends CreatedAtAuditableEntity {
     }
 
     public Discussion(
-            String title,
+            Title title,
             String content,
             Mission mission,
             Member member,
@@ -48,7 +48,7 @@ public class Discussion extends CreatedAtAuditableEntity {
 
     public Discussion(
             Long id,
-            String title,
+            Title title,
             String content,
             Mission mission,
             Member member,
@@ -63,7 +63,7 @@ public class Discussion extends CreatedAtAuditableEntity {
     }
 
     public String getTitle() {
-        return title;
+        return title.getValue();
     }
 
     public String getContent() {
@@ -76,6 +76,14 @@ public class Discussion extends CreatedAtAuditableEntity {
 
     public Member getMember() {
         return member;
+    }
+
+    public String getMissionTitle() {
+        return mission.getTitle();
+    }
+
+    public List<HashTag> getHashTags() {
+        return discussionHashTags.extractHashTags();
     }
 
     public Set<DiscussionHashTag> getDiscussionHashTags() {

@@ -2,6 +2,7 @@ package develup.support.data;
 
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
+import develup.domain.solution.PullRequestUrl;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionStatus;
 import develup.domain.solution.Title;
@@ -25,7 +26,7 @@ public class SolutionTestData {
         private Member member;
         private Title title;
         private String description;
-        private String url;
+        private PullRequestUrl url;
         private SolutionStatus status;
 
         public SolutionBuilder withId(Long id) {
@@ -53,9 +54,8 @@ public class SolutionTestData {
             return this;
         }
 
-
         public SolutionBuilder withUrl(String url) {
-            this.url = url;
+            this.url = new PullRequestUrl(url);
             return this;
         }
 

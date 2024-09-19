@@ -14,4 +14,5 @@ export const ROUTES = {
   dashboardDiscussions: 'discussions',
   dashboardDiscussionComments: 'discussion/comments',
   about: '/about',
+  discussions: '/discussions',
 } as const;

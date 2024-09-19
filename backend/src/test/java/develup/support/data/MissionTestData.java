@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import develup.domain.hashtag.HashTag;
 import develup.domain.mission.Mission;
+import develup.domain.mission.MissionUrl;
 
 public class MissionTestData {
 
@@ -22,7 +23,7 @@ public class MissionTestData {
         private String title;
         private String thumbnail;
         private String summary;
-        private String url;
+        private MissionUrl url;
         private List<HashTag> hashTags;
 
         public MissionBuilder withId(Long id) {
@@ -46,7 +47,7 @@ public class MissionTestData {
         }
 
         public MissionBuilder withUrl(String url) {
-            this.url = url;
+            this.url = new MissionUrl(url);
             return this;
         }
 

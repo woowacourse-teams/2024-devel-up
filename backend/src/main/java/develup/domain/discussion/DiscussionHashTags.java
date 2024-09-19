@@ -31,6 +31,16 @@ class DiscussionHashTags {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    public boolean isEmpty() {
+        return hashTags.isEmpty();
+    }
+
+    public List<HashTag> extractHashTags() {
+        return hashTags.stream()
+                .map(DiscussionHashTag::getHashTag)
+                .toList();
+    }
+
     public Set<DiscussionHashTag> getHashTags() {
         return Collections.unmodifiableSet(hashTags);
     }
