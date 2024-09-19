@@ -97,7 +97,7 @@ jobs:
 
   rollBackA:
     name: 🚀 Server A RollBack
-    needs: [healthCheckA, find_now_version]
+    needs: [healthCheckA, findPreviousImageVersion]
     if: failure()
     runs-on: [ self-hosted, devel-up-prod-a ]
     defaults:
