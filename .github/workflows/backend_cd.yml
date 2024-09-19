@@ -19,6 +19,7 @@ jobs:
           PREVIOUS_IMAGE_NAME=$(docker ps --format "{{.Image}}")
           echo "name=$PREVIOUS_IMAGE_NAME" >> $GITHUB_OUTPUT
           echo $PREVIOUS_IMAGE_NAME
+          echo aaaaaaaa
           echo $name
 
   build:
