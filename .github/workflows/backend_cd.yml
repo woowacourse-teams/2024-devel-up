@@ -85,7 +85,6 @@ jobs:
     name: 🙏 Server A Health Check
     needs: deployToA
     if: success()
-    continue-on-error: true
     defaults:
       run:
         working-directory: backend
@@ -95,7 +94,7 @@ jobs:
         run: chmod u+x ./scripts/healthcheck.sh && ./scripts/healthcheck.sh
 
   rollBackA:
-    name: 🚀 Server A Deployment
+    name: 🚀 Server A RollBack
     needs: [healthCheckA, find_now_version]
     if: failure()
     runs-on: [ self-hosted, devel-up-prod-a ]
@@ -119,7 +118,7 @@ jobs:
         run: docker compose -f compose.yml up -d
 
   healthCheckAAfterRollBack:
-    name: 🙏 Server A Health Check
+    name: 🙏 Server A Health Check After RollBack
     needs: rollBackA
     if: success()
     defaults:
