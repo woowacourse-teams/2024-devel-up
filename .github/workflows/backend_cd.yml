@@ -11,11 +11,13 @@ on:
 jobs:
   find_now_version:
     runs-on: [ self-hosted, devel-up-prod-a ]
+    outputs:
+      PREVIOUS_IMAGE_NAME: ${{steps.find_version.outputs.name}}
     steps:
-      - name: find version
+      - name: find_version
         run: |
           PREVIOUS_IMAGE_NAME=$(docker ps --format "{{.Image}}")
-          echo "PREVIOUS_IMAGE_NAME=$PREVIOUS_IMAGE_NAME" >> $GITHUB_ENV
+          echo "name=$PREVIOUS_IMAGE_NAME" >> $GITHUB_OUTPUT
 
   build:
     name: 🏗️ Build Jar and Upload Docker Image
@@ -94,7 +96,7 @@ jobs:
 
   rollBackA:
     name: 🚀 Server A Deployment
-    needs: healthCheckA
+    needs: [healthCheckA, find_now_version]
     if: failure()
     runs-on: [ self-hosted, devel-up-prod-a ]
     defaults:
@@ -102,7 +104,7 @@ jobs:
         working-directory: backend
 
     env:
-      BACKEND_APP_IMAGE_NAME: ${{ env.PREVIOUS_IMAGE_NAME }}
+      BACKEND_APP_IMAGE_NAME: ${{ needs.find_now_version.outputs.PREVIOUS_IMAGE_NAME }}
 
     steps:
       - uses: actions/checkout@v4
