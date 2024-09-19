@@ -1,4 +1,3 @@
-import type { Comments } from '@/types';
 import { formatDateString } from '@/utils/formatDateString';
 import * as S from './MyComments.styled';
 import CommentIcon from '@/assets/images/comment-count.svg';

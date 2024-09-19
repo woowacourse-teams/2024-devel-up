@@ -1,5 +1,5 @@
 import * as S from './DashBoardDiscussion.styled';
-import { HashTag } from '@/types';
+import type { HashTag } from '@/types';
 import CommentIcon from '@/assets/images/comment-count.svg';
 
 interface DiscussionItemProps {
