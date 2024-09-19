@@ -14,12 +14,14 @@ export default function DiscussionSubmit() {
   const { data: allHashTags } = useHashTags();
   const { data: allMissions } = useMissions();
   const [selectedHashTags, setSelectedHashTags] = useState<HashTag[]>([]);
-  const [selectedMission, setSelectedMission] = useState({ id: 0, title: '' });
+  const [selectedMission, setSelectedMission] = useState<{ id: number; title: string } | null>(
+    null,
+  );
 
   const hashTagIds = selectedHashTags.map((tag) => tag.id);
   const useSubmitDiscussionData = {
     hashTagIds,
-    ...(selectedMission.id !== 0 && { missionId: selectedMission.id }),
+    ...(selectedMission?.id && { missionId: selectedMission?.id }),
   };
 
   const {
