@@ -3,12 +3,14 @@ import * as S from '../CommentList.styled';
 import useUserInfo from '@/hooks/useUserInfo';
 import CommentInfo from './CommentInfo';
 import CommentReplySection from './CommentReplySection';
+import type { UsePostCommentMutation } from '../../CommentForm/types';
 
 interface CommentItemProps {
   comment: Comment;
+  usePostCommentMutation: UsePostCommentMutation;
 }
 
-export default function CommentItem({ comment }: CommentItemProps) {
+export default function CommentItem({ comment, usePostCommentMutation }: CommentItemProps) {
   const { content, member, createdAt, isDeleted } = comment;
 
   const { data: userInfo } = useUserInfo();
@@ -25,7 +27,11 @@ export default function CommentItem({ comment }: CommentItemProps) {
           </>
         )}
       </S.CommentContentWrapper>
-      <CommentReplySection parentComment={comment} isLoggedIn={Boolean(userInfo)} />
+      <CommentReplySection
+        parentComment={comment}
+        isLoggedIn={Boolean(userInfo)}
+        usePostCommentMutation={usePostCommentMutation}
+      />
     </S.CommentItemContainer>
   );
 }

@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { commentKeys } from './queries/keys';
-import { getMyComments } from '@/apis/commentAPI';
+import { solutionCommentKeys } from './queries/keys';
+import { getMyComments } from '@/apis/solutionCommentAPI';
 
 const useMyComments = () => {
   return useSuspenseQuery({
-    queryKey: commentKeys.mine,
+    queryKey: solutionCommentKeys.mine,
     queryFn: getMyComments,
   });
 };
