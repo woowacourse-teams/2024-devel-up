@@ -235,7 +235,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - healthCheckAAfterRollBack
-    if: ${{needs.healthCheckAAfterRollBack.result == 'success'}}
+    if: ${{failure() && needs.healthCheckAAfterRollBack.result == 'success'}}
     steps:
       - name: Extract Commit Title
         run: |
