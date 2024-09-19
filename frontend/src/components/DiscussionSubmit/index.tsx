@@ -14,12 +14,12 @@ export default function DiscussionSubmit() {
   const { data: allHashTags } = useHashTags();
   const { data: allMissions } = useMissions();
   const [selectedHashTags, setSelectedHashTags] = useState<HashTag[]>([]);
-  const [selectedMissions, setSelectedMissions] = useState({ id: 0, title: '' });
+  const [selectedMission, setSelectedMission] = useState({ id: 0, title: '' });
 
   const hashTagIds = selectedHashTags.map((tag) => tag.id);
   const useSubmitDiscussionData = {
     hashTagIds,
-    ...(selectedMissions.id !== 0 && { missionId: selectedMissions.id }),
+    ...(selectedMission.id !== 0 && { missionId: selectedMission.id }),
   };
 
   const {
@@ -36,8 +36,8 @@ export default function DiscussionSubmit() {
       <S.DiscussionTagListWrapper>
         <TagList
           tags={allMissions}
-          selectedTag={selectedMissions}
-          setSelectedTag={setSelectedMissions}
+          selectedTag={selectedMission}
+          setSelectedTag={setSelectedMission}
           variant="danger"
           keyName="title"
         />
