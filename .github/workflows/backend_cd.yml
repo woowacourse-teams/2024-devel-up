@@ -97,7 +97,7 @@ jobs:
   rollBackA:
     name: 🚀 Server A RollBack
     needs: [healthCheckA, findPreviousImageVersion]
-    if: ${{needs.healthCheckA.result == 'failure'}}
+    if: failure()
     runs-on: [ self-hosted, devel-up-prod-a ]
     defaults:
       run:
@@ -121,6 +121,7 @@ jobs:
   healthCheckAAfterRollBack:
     name: 🙏 Server A Health Check After RollBack
     needs: rollBackA
+    if : ${{always() && needs.rollBackA.result != 'skipped'}}
     defaults:
       run:
         working-directory: backend

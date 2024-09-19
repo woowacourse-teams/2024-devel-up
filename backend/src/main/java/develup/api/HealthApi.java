@@ -10,6 +10,8 @@ public class HealthApi {
 
     @GetMapping("/health")
     public ResponseEntity<ApiResponse<String>> health() {
+
+
         return ResponseEntity.status(400).body(new ApiResponse<>("up"));
     }
 }
