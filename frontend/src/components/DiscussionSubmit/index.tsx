@@ -17,6 +17,10 @@ export default function DiscussionSubmit() {
   const [selectedMissions, setSelectedMissions] = useState({ id: 0, title: '' });
 
   const hashTagIds = selectedHashTags.map((tag) => tag.id);
+  const useSubmitDiscussionData = {
+    hashTagIds,
+    ...(selectedMissions.id !== 0 && { missionId: selectedMissions.id }),
+  };
 
   const {
     discussionTitle,
@@ -25,10 +29,7 @@ export default function DiscussionSubmit() {
     isDescriptionError,
     handleDescription,
     handleSubmitSolution,
-  } = useSubmitDiscussion({
-    missionId: selectedMissions.id,
-    hashTagIds,
-  });
+  } = useSubmitDiscussion(useSubmitDiscussionData);
 
   return (
     <S.DiscussionSubmitContainer>

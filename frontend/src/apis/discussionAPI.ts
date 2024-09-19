@@ -14,7 +14,7 @@ export const getDiscussions = async (mission = 'all', hashTag = 'all'): Promise<
 export const postDiscussionSubmit = async (payload: {
   title: string;
   content: string;
-  missionId: number;
+  missionId?: number;
   hashTagIds: number[];
 }): Promise<Discussion> => {
   const { data } = await develupAPIClient.post<{ data: Discussion }>(

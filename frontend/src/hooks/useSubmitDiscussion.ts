@@ -4,7 +4,7 @@ import useDiscussionTitle from './useDiscussionTitle';
 import useSubmitDiscussionMutation from './useSubmitDiscussionMutation';
 
 interface useSubmitDiscussionProps {
-  missionId: number;
+  missionId?: number;
   hashTagIds: number[];
 }
 
