@@ -14,7 +14,7 @@ jobs:
     outputs:
       prev: ${{steps.find_version.outputs.name}}
     steps:
-      - name: find_version
+      - id: find_version
         run: |
           PREVIOUS_IMAGE_NAME=$(docker ps --format "{{.Image}}")
           echo "name=$PREVIOUS_IMAGE_NAME" >> $GITHUB_OUTPUT
