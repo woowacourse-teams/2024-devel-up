@@ -19,6 +19,7 @@ export const DiscussionItemContainer = styled.div`
   box-shadow: ${(props) => props.theme.boxShadow.shadow04};
   border-radius: 2.8rem;
   transition: transform 0.2s ease-in-out;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.01);
