@@ -18,6 +18,8 @@ export const DiscussionItemContainer = styled.div`
   box-sizing: border-box;
   box-shadow: ${(props) => props.theme.boxShadow.shadow04};
   border-radius: 2.8rem;
+
+  cursor: pointer;
 `;
 
 export const BadgeWrapper = styled.div`

@@ -10,9 +10,14 @@ export const missionKeys = {
   inProgress: ['inProgress'],
 } as const;
 
-export const commentKeys = {
-  all: (solutionId: number) => ['comments', solutionId],
-  mine: ['myComments'],
+export const solutionCommentKeys = {
+  all: (solutionId: number) => ['solutionComments', solutionId],
+  mine: ['mySolutionComments'],
+};
+
+export const discussionCommentKeys = {
+  all: (discussionId: number) => ['discussionComments', discussionId],
+  mine: ['myDiscussionComments'],
 };
 
 export const solutionKeys = {
@@ -20,6 +25,11 @@ export const solutionKeys = {
   detail: (id: number) => [...solutionKeys.all, id],
   summaries: ['solutionSummaries'],
   submitted: ['submitted solutions'],
+};
+
+export const discussionKeys = {
+  all: ['discussions'],
+  detail: (id: number) => [...discussionKeys.all, id],
 };
 
 export const hashTagsKeys = {

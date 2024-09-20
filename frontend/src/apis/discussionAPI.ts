@@ -1,12 +1,25 @@
 import type { Discussion } from '@/types';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
+import type { DiscussionDetail } from '@/types/discussion';
 
 export const getDiscussions = async (mission = 'all', hashTag = 'all'): Promise<Discussion[]> => {
   const { data } = await develupAPIClient.get<{ data: Discussion[] }>(PATH.discussions, {
     mission,
     hashTag,
   });
+
+  return data;
+};
+
+interface GetDiscussionResponse {
+  data: DiscussionDetail;
+}
+
+export const getDiscussionById = async (discussionId: number): Promise<DiscussionDetail> => {
+  const { data } = await develupAPIClient.get<GetDiscussionResponse>(
+    `${PATH.discussions}/${discussionId}`,
+  );
 
   return data;
 };
