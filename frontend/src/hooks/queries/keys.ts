@@ -31,6 +31,6 @@ export const userKeys = {
 };
 
 export const dashboardKeys = {
-  discussion: ['dashboardDiscussion'],
-  comments: ['dashboardComments'],
-};
+  discussion: ['discussions'],
+  comments: ['comments'],
+} as const;
