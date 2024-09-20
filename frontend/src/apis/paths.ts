@@ -17,6 +17,8 @@ export const PATH = {
   mySolutions: '/solutions/mine',
   dashboardDiscussion: '/discussions/mine',
   dashboardDiscussionComment: '/discussions/comments/mine',
+  discussions: '/discussions',
+  submitDiscussion: '/discussions/submit',
 };
 
 export const PATH_FORMATTER = {

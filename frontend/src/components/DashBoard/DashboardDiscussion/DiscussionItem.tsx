@@ -1,4 +1,4 @@
-import * as S from './DashBoardDiscussion.styled';
+import * as S from './DashboardDiscussion.styled';
 import type { HashTag } from '@/types';
 import CommentIcon from '@/assets/images/comment-count.svg';
 
