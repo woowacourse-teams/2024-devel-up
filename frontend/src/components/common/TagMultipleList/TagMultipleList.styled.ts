@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const HashTagListContainer = styled.ul`
+export const TagMultipleListContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1.5rem;

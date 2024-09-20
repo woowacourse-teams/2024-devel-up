@@ -21,7 +21,7 @@ export const getSolutionSummaries = async (
   filter: string = HASHTAGS.all,
 ): Promise<SolutionSummary[]> => {
   const { data } = await develupAPIClient.get<GetSolutionSummariesResponse>(
-    `${PATH.solutionSummaries}`,
+    PATH.solutionSummaries,
     { hashTag: filter },
   );
 

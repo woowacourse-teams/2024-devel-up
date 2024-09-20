@@ -15,4 +15,5 @@ export const ROUTES = {
   dashboardDiscussionComments: 'discussion/comments',
   about: '/about',
   discussions: '/discussions',
+  submitDiscussion: '/submit/discussion',
 } as const;

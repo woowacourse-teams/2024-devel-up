@@ -52,7 +52,15 @@ public class DiscussionService {
     }
 
     public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
-        return discussionRepository.findByMissionAndHashTagName(mission, hashTagName).stream()
+        return discussionRepository.findAllByMissionAndHashTagName(mission, hashTagName).stream()
+                .map(SummarizedDiscussionResponse::from)
+                .toList();
+    }
+
+    public List<SummarizedDiscussionResponse> getDiscussionsByMemberId(Long memberId) {
+        List<Discussion> myDiscussions = discussionRepository.findAllByMember_Id(memberId);
+
+        return myDiscussions.stream()
                 .map(SummarizedDiscussionResponse::from)
                 .toList();
     }
