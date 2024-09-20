@@ -41,5 +41,5 @@ export const userKeys = {
 };
 
 export const discussionsKeys = {
-  all: ['all'],
+  all: ['discussions'],
 };
