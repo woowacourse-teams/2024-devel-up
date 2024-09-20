@@ -1,6 +1,6 @@
 import type { Discussion } from '@/types/dashboard';
 import NoContent from '../DashBoardMissionList/NoContent';
-import * as S from './DashBoardDiscussion.styled';
+import * as S from './DashboardDiscussion.styled';
 import DiscussionItem from './DiscussionItem';
 
 interface DashBoardDiscussionListProps {
