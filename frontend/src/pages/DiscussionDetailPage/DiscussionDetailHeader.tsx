@@ -1,9 +1,9 @@
-import type { Discussion } from '@/types/discussion';
 import * as S from './DiscussionDetailPage.styled';
-import HashTagButton from '@/components/common/HashTagButton';
+import TagButton from '@/components/common/TagButton';
+import type { DiscussionDetail } from '@/types/discussion';
 
 interface DiscussionDetailHeaderProps {
-  discussion: Discussion;
+  discussion: DiscussionDetail;
 }
 
 export default function DiscussionDetailHeader({ discussion }: DiscussionDetailHeaderProps) {
@@ -21,11 +21,13 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
               <S.HeaderUserName>{member.name}</S.HeaderUserName>
             </S.HeaderUserInfo>
             <S.HashTagWrapper>
-              {hashTags &&
-                hashTags.map((tag) => <HashTagButton key={tag.id}># {tag.name}</HashTagButton>)}
+              {hashTags && hashTags.map((tag) => <TagButton key={tag.id}># {tag.name}</TagButton>)}
             </S.HashTagWrapper>
           </S.DiscussionDetailInfo>
         </S.HeaderLeftArea>
+        <S.HashTagWrapper>
+          {hashTags && hashTags.map((tag) => <TagButton key={tag.id}># {tag.name}</TagButton>)}
+        </S.HashTagWrapper>
       </S.ThumbnailWrapper>
     </S.DiscussionDetailHeaderContainer>
   );

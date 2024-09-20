@@ -8,3 +8,8 @@ export const BUTTON_SIZE = {
   half: 'half',
   full: 'full',
 } as const;
+
+export const TAG_BUTTON_VARIANTS = {
+  primary: 'primary',
+  danger: 'danger',
+} as const;

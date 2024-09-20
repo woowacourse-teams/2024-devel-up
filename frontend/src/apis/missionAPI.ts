@@ -24,7 +24,7 @@ interface getHashTagsResponse {
 }
 
 export const getMissions = async (filter: string = HASHTAGS.all): Promise<Mission[]> => {
-  const { data } = await develupAPIClient.get<getAllMissionResponse>(`${PATH.missionList}`, {
+  const { data } = await develupAPIClient.get<getAllMissionResponse>(PATH.missionList, {
     hashTag: filter,
   });
 

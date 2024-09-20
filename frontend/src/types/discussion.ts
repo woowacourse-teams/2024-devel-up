@@ -1,7 +1,7 @@
 import type { HashTag, Mission } from '.';
 import type { UserInfo } from './user';
 
-export interface Discussion {
+export interface DiscussionDetail {
   id: number;
   member: UserInfo;
   title: string;

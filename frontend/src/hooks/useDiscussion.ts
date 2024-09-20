@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { discussionKeys } from './queries/keys';
-import type { Discussion } from '@/types/discussion';
-import { getDiscussionById } from '@/apis/discussions';
+import type { DiscussionDetail } from '@/types/discussion';
+import { getDiscussionById } from '@/apis/discussionAPI';
 
 const useDiscussion = (discussionId: number) => {
-  return useSuspenseQuery<Discussion>({
+  return useSuspenseQuery<DiscussionDetail>({
     queryKey: discussionKeys.detail(discussionId),
     queryFn: () => getDiscussionById(discussionId),
   });

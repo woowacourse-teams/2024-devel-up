@@ -2,14 +2,14 @@ import React from 'react';
 import * as S from './ModalContent.styled';
 
 interface ModalContentProps {
-  contentImage: React.ReactNode;
+  contentImage: string;
   content: string;
 }
 
 export default function ModalContent({ contentImage, content }: ModalContentProps) {
   return (
     <>
-      {contentImage}
+      <img src={contentImage} />
       <S.Text>
         {content
           .split('**')

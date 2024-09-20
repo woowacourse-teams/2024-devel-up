@@ -1,6 +1,7 @@
 package develup.domain.discussion;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import java.util.function.Function;
@@ -44,7 +45,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         createDiscussion(mission, hashTag);
         createDiscussion(mission, hashTag);
 
-        List<Discussion> actual = discussionRepository.findByMissionAndHashTagName(
+        List<Discussion> actual = discussionRepository.findAllByMissionAndHashTagName(
                 "all",
                 "all"
         );
@@ -62,7 +63,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         createDiscussion(mission, hashTag1);
         createDiscussion(mission, hashTag2);
 
-        List<Discussion> discussions = discussionRepository.findByMissionAndHashTagName(
+        List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(
                 "all",
                 "JAVA"
         );
@@ -84,7 +85,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         createDiscussion(mission1, hashTag);
         createDiscussion(mission2, hashTag);
 
-        List<Discussion> discussions = discussionRepository.findByMissionAndHashTagName(
+        List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(
                 "루터회관 흡연단속",
                 "all"
         );
@@ -92,6 +93,57 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         assertThat(discussions)
                 .map(Discussion::getMission)
                 .contains(mission1);
+    }
+
+    @Test
+    @DisplayName("디스커션을 식별자로 조회한다.")
+    @Transactional
+    void findFetchById() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .withMember(member)
+                .withHashTags(List.of(hashTag))
+                .build();
+        Discussion savedDiscussion = discussionRepository.save(discussion);
+
+        assertThat(discussionRepository.findFetchById(savedDiscussion.getId()))
+                .map(Discussion::getId)
+                .hasValue(savedDiscussion.getId());
+    }
+
+    @Test
+    @DisplayName("멤버 식별자를 통해 디스커션을 조회한다.")
+    @Transactional
+    void findByMember_Id() {
+        Member member1 = memberRepository.save(MemberTestData.defaultMember().withId(1L).build());
+        Member member2 = memberRepository.save(MemberTestData.defaultMember().withId(2L).build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+
+        Discussion discussionByMember1 = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .withMember(member1)
+                .withHashTags(List.of(hashTag))
+                .build();
+        Discussion discussionByMember2 = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .withMember(member2)
+                .withHashTags(List.of(hashTag))
+                .build();
+
+        discussionRepository.save(discussionByMember1);
+        discussionRepository.save(discussionByMember2);
+
+        List<Discussion> discussionsByMember1 = discussionRepository.findAllByMember_Id(member1.getId());
+        List<Discussion> discussionsByMember2 = discussionRepository.findAllByMember_Id(member2.getId());
+
+        assertAll(
+                () -> assertThat(discussionsByMember1).hasSize(1),
+                () -> assertThat(discussionsByMember2).hasSize(1)
+        );
     }
 
     private void createDiscussion(Mission mission, HashTag hashTag) {

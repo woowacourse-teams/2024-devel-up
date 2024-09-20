@@ -39,3 +39,7 @@ export const hashTagsKeys = {
 export const userKeys = {
   info: ['userInfo'],
 };
+
+export const discussionsKeys = {
+  all: ['all'],
+};

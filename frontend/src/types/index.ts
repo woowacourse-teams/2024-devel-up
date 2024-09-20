@@ -78,3 +78,12 @@ export interface MyComments {
   solutionTitle: string;
   solutionCommentCount: number;
 }
+
+export interface Discussion {
+  id: number;
+  title: string;
+  mission: string;
+  hashTags: HashTag[];
+  member: Omit<UserInfo, 'description'>;
+  commentCount: number;
+}
