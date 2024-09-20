@@ -107,7 +107,8 @@ public class SolutionService {
     }
 
     public SolutionResponse getById(Long id) {
-        Solution solution = getSolution(id);
+        Solution solution = solutionRepository.findFetchById(id)
+                .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
 
         return SolutionResponse.from(solution);
     }

@@ -18,6 +18,7 @@ import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionTestData;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,39 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private HashTagRepository hashTagRepository;
+
+    @Test
+    @DisplayName("해시태그가 존재하는 미션에 대한 솔루션을 식별자로 조회한다.")
+    void findFetchById() {
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Mission hashTaggedMission = MissionTestData.defaultMission()
+                .withHashTags(List.of(hashTag))
+                .build();
+        Mission nonTaggedMission = MissionTestData.defaultMission().build();
+        missionRepository.saveAll(List.of(hashTaggedMission, nonTaggedMission));
+
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Solution hashTaggedSolution = SolutionTestData.defaultSolution()
+                .withMission(hashTaggedMission)
+                .withMember(member)
+                .build();
+        Solution nonTaggedSolution = SolutionTestData.defaultSolution()
+                .withMission(nonTaggedMission)
+                .withMember(member)
+                .build();
+        solutionRepository.saveAll(List.of(hashTaggedSolution, nonTaggedSolution));
+
+        Optional<Solution> hashTaggedFound = solutionRepository.findFetchById(hashTaggedSolution.getId());
+        Optional<Solution> noneTaggedFound = solutionRepository.findFetchById(nonTaggedSolution.getId());
+
+        Assertions.assertAll(
+                () -> assertThat(hashTaggedFound)
+                        .isPresent()
+                        .map(it -> it.getHashTags().size())
+                        .hasValue(1),
+                () -> assertThat(noneTaggedFound).isEmpty()
+        );
+    }
 
     @Test
     @DisplayName("멤버 식별자와 미션 식별자와 특정 상태에 해당하는 솔루션이 존재하는지 확인한다. ")
