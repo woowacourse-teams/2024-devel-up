@@ -20,6 +20,7 @@ export default function DiscussionCommentList({
             return (
               <MyComment
                 key={discussionComment.id}
+                type="discussions"
                 contentId={discussionComment.discussionId}
                 contentTitle={discussionComment.discussionTitle}
                 createdAt={discussionComment.createdAt}

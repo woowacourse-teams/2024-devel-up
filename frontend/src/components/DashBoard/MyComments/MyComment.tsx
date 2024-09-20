@@ -8,6 +8,7 @@ interface MyCommentProps {
   createdAt: string;
   contentTitle: string;
   contentCommentCount: number;
+  type: 'solutions' | 'discussions';
 }
 
 export default function MyComment({
@@ -16,11 +17,13 @@ export default function MyComment({
   createdAt,
   contentTitle,
   contentCommentCount,
+  type,
 }: MyCommentProps) {
   const commentDate = formatDateString(createdAt);
+  const linkUrl = `/${type}/${contentId}`;
 
   return (
-    <S.CommentWrapper to={`/discussions/${contentId}`}>
+    <S.CommentWrapper to={linkUrl}>
       <S.TextWrapper>
         <S.CommentText>{content}</S.CommentText>
         <S.SubText>{commentDate}</S.SubText>

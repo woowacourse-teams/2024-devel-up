@@ -18,6 +18,7 @@ export default function MyCommentList({ comments }: MyCommentListProps) {
             return (
               <MyComment
                 key={comment.id}
+                type={'solutions'}
                 contentId={comment.solutionId}
                 contentTitle={comment.solutionTitle}
                 createdAt={comment.createdAt}
