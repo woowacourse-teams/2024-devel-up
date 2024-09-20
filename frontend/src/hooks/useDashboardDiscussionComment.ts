@@ -5,7 +5,7 @@ import { dashboardKeys } from './queries/keys';
 const useDashboardDiscussionComment = () => {
   return useSuspenseQuery({
     queryFn: getDashboardDiscussionComments,
-    queryKey: dashboardKeys.comments,
+    queryKey: dashboardKeys.discussionComments(),
   });
 };
 

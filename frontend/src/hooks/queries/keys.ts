@@ -35,6 +35,8 @@ export const discussionsKeys = {
 };
 
 export const dashboardKeys = {
-  discussion: ['dashboard', 'discussions'],
-  comments: ['dashboard', 'comments'],
+  default: ['dashboard'],
+  discussion: () => [...dashboardKeys.default, 'discussions'],
+  discussionComments: () => [...dashboardKeys.default, 'discussion', 'comments'],
+  solutionComments: () => [...dashboardKeys.default, 'solution', 'comments'],
 } as const;
