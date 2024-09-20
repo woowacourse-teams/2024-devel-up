@@ -18,6 +18,7 @@ export default function DiscussionList() {
           hashTags={discussion.hashTags}
           member={discussion.member}
           commentCount={discussion.commentCount}
+          id={discussion.id}
         />
       ))}
     </S.DiscussionListContainer>
