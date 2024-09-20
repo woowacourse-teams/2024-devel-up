@@ -30,6 +30,10 @@ export const userKeys = {
   info: ['userInfo'],
 };
 
+export const discussionsKeys = {
+  all: ['all'],
+};
+
 export const dashboardKeys = {
   discussion: ['discussions'],
   comments: ['comments'],

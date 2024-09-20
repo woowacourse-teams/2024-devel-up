@@ -4,8 +4,8 @@ import DiscussionListItem from './DiscussionListItem';
 import { useState } from 'react';
 
 export default function DiscussionList() {
-  const [mission, setMission] = useState<string>('all');
-  const [hashTag, setHashTag] = useState<string>('all');
+  const [mission] = useState<string>('all');
+  const [hashTag] = useState<string>('all');
 
   const { data: discussions } = useDiscussions(mission, hashTag);
   return (
