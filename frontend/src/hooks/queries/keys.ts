@@ -30,7 +30,7 @@ export const userKeys = {
   info: ['userInfo'],
 };
 
-export const DashboardKeys = {
+export const dashboardKeys = {
   discussion: ['dashboardDiscussion'],
   comments: ['dashboardComments'],
 };

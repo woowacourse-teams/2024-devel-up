@@ -1,11 +1,11 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getDashboardDiscussion } from '@/apis/dashboardAPI';
-import { DashboardKeys } from './queries/keys';
+import { dashboardKeys } from './queries/keys';
 
 const useDashboardDiscussion = () => {
   return useSuspenseQuery({
     queryFn: getDashboardDiscussion,
-    queryKey: DashboardKeys.discussion,
+    queryKey: dashboardKeys.discussion,
   });
 };
 
