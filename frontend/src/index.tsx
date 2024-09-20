@@ -12,7 +12,8 @@ import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import './styles/fonts.css';
-import DiscussionListPage from './pages/DiscussionListPage';
+import DashboardDiscussionPage from './pages/DashboardPage/Discussion';
+import DashboardDiscussionCommentPage from './pages/DashboardPage/DiscussionComment';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -164,6 +165,22 @@ const routes = [
         element: (
           <Suspense fallback={<LoadingSpinner />}>
             <MyCommentsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.dashboardDiscussions,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DashboardDiscussionPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.dashboardDiscussionComments,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DashboardDiscussionCommentPage />
           </Suspense>
         ),
       },

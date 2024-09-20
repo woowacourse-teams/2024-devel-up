@@ -70,11 +70,11 @@ export interface MyComments {
   solutionCommentCount: number;
 }
 
-export interface Discussion {
+export interface Comments {
   id: number;
-  title: string;
-  mission: string;
-  hashTags: HashTag[];
-  member: Omit<UserInfo, 'description'>;
-  commentCount: number;
+  contentId: number;
+  content: string;
+  createdAt: string;
+  contentTitle: string;
+  contentCommentCount: number;
 }
