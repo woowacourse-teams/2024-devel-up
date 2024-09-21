@@ -23,18 +23,21 @@ export default function DiscussionListPage() {
   return (
     <S.DiscussionListPageContainer>
       <S.DiscussionListTitle>💬 Discussion</S.DiscussionListTitle>
-      <TagList
-        tags={allMissions}
-        setSelectedTag={setSelectedMission}
-        selectedTag={selectedMission}
-        keyName="title"
-      />
-      <TagList
-        tags={allHashTags}
-        setSelectedTag={setSelectedHashTag}
-        selectedTag={selectedHashTag}
-        keyName="name"
-      />
+      <S.TagListWrapper>
+        <TagList
+          tags={allMissions}
+          setSelectedTag={setSelectedMission}
+          selectedTag={selectedMission}
+          keyName="title"
+          variant="danger"
+        />
+        <TagList
+          tags={allHashTags}
+          setSelectedTag={setSelectedHashTag}
+          selectedTag={selectedHashTag}
+          keyName="name"
+        />
+      </S.TagListWrapper>
       <DiscussionList discussions={discussions} />
     </S.DiscussionListPageContainer>
   );
