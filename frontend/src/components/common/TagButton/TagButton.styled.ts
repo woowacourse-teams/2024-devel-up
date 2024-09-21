@@ -9,7 +9,7 @@ interface ButtonProps {
 
 const getColorStyles = (variant: TagButtonVariant, isSelected: boolean, theme: DefaultTheme) => {
   const variantColorMap = {
-    primary: {
+    default: {
       default: isSelected ? theme.colors.primary100 : theme.colors.primary50,
       hover: isSelected ? theme.colors.primary200 : theme.colors.primary100,
     },
