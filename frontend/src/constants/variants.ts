@@ -13,3 +13,8 @@ export const TAG_BUTTON_VARIANTS = {
   default: 'primary',
   danger: 'danger',
 } as const;
+
+export const BADGE_VARIANTS = {
+  default: 'primary',
+  danger: 'danger',
+} as const;
