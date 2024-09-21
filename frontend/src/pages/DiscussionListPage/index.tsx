@@ -18,7 +18,7 @@ export default function DiscussionListPage() {
 
   const { data: discussions } = useDiscussions(selectedMission?.title, selectedHashTag?.name);
   const { data: allHashTags } = useHashTags();
-  const { data: allMissions } = useMissions(selectedHashTag?.name); // TODO: 미션 필터링용 미션 리스트 API 나오면 변경 필요
+  const { data: allMissions } = useMissions(); // TODO: 미션 필터링용 미션 리스트 API 나오면 변경 필요
 
   return (
     <S.DiscussionListPageContainer>
