@@ -12,17 +12,20 @@ const getColorStyles = (variant: TagButtonVariant, isSelected: boolean, theme: D
     default: {
       default: isSelected ? theme.colors.primary100 : theme.colors.primary50,
       hover: isSelected ? theme.colors.primary200 : theme.colors.primary100,
+      color: theme.colors.black,
     },
     danger: {
       default: isSelected ? theme.colors.danger100 : theme.colors.danger50,
       hover: isSelected ? theme.colors.danger200 : theme.colors.danger100,
+      color: theme.colors.black,
     },
   };
 
-  const { default: defaultColor, hover: hoverColor } = variantColorMap[variant];
+  const { default: defaultColor, hover: hoverColor, color } = variantColorMap[variant];
 
   return css`
     background-color: ${defaultColor};
+    color: ${color};
     &:hover {
       background-color: ${hoverColor};
     }
@@ -31,7 +34,6 @@ const getColorStyles = (variant: TagButtonVariant, isSelected: boolean, theme: D
 
 export const Button = styled.button<ButtonProps>`
   ${(props) => getColorStyles(props.$variant, props.$isSelected, props.theme)}
-  color: var(--black-color);
   transition: 0.2s;
 
   padding: 1rem 1.6rem;
