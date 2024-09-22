@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -14,6 +15,7 @@ import java.util.List;
 import develup.application.discussion.CreateDiscussionRequest;
 import develup.application.discussion.DiscussionResponse;
 import develup.application.discussion.SummarizedDiscussionResponse;
+import develup.application.discussion.UpdateDiscussionRequest;
 import develup.application.hashtag.HashTagResponse;
 import develup.application.member.MemberResponse;
 import develup.domain.discussion.Discussion;
@@ -140,6 +142,37 @@ public class DiscussionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[0].member.name", equalTo("tester")))
                 .andExpect(jsonPath("$.data[0].commentCount", equalTo(100)))
                 .andExpect(jsonPath("$.data[0].createdAt").exists());
+    }
+
+    @Test
+    @DisplayName("디스커션을 수정한다.")
+    void updateDiscussion() throws Exception {
+        DiscussionResponse response = DiscussionResponse.from(createDiscussion());
+        UpdateDiscussionRequest request = new UpdateDiscussionRequest(
+                1L,
+                "title",
+                "content",
+                1L,
+                List.of(1L)
+        );
+        BDDMockito.given(discussionWriteService.update(any(), any()))
+                .willReturn(response);
+
+        mockMvc.perform(patch("/discussions")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.title", equalTo("루터회관 흡연단속 구현에 대한 고찰")))
+                .andExpect(jsonPath("$.data.content", equalTo("루터회관 흡연단속을 구현하면서 느낀 점을 공유합니다.")))
+                .andExpect(jsonPath("$.data.mission.id", equalTo(1)))
+                .andExpect(jsonPath("$.data.mission.title", equalTo("루터회관 흡연단속")))
+                .andExpect(jsonPath("$.data.mission.summary", equalTo("담배피다 걸린 행성이를 위한 벌금 계산 미션")))
+                .andExpect(jsonPath("$.data.mission.thumbnail", equalTo("https://thumbnail.com/1.png")))
+                .andExpect(jsonPath("$.data.mission.url", equalTo("https://github.com/develup-mission/java-smoking")))
+                .andExpect(jsonPath("$.data.hashTags[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.data.hashTags[0].name", equalTo("JAVA")));
     }
 
     private Discussion createDiscussion() {
