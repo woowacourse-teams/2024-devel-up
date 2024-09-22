@@ -8,21 +8,32 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 import develup.api.exception.DevelupException;
+import develup.application.hashtag.HashTagResponse;
+import develup.domain.discussion.Discussion;
+import develup.domain.discussion.DiscussionRepository;
+import develup.domain.hashtag.HashTag;
 import develup.domain.hashtag.HashTagRepository;
+import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
+import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.support.IntegrationTestSupport;
+import develup.support.data.DiscussionTestData;
 import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 class DiscussionWriteServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private DiscussionWriteService discussionWriteService;
+
+    @Autowired
+    private DiscussionRepository discussionRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -137,5 +148,91 @@ class DiscussionWriteServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> discussionWriteService.create(memberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 해시태그입니다.");
+    }
+
+    @Test
+    @DisplayName("디스커션을 수정한다.")
+    @Transactional
+    void updateDiscussion() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = discussionRepository.save(DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(List.of(hashTag))
+                .build());
+
+        Long newMissionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
+        Long newHashTagId = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("hashTag").build()).getId();
+
+        UpdateDiscussionRequest request =
+                new UpdateDiscussionRequest(discussion.getId(), "title", "content", newMissionId, List.of(newHashTagId));
+
+        DiscussionResponse response = discussionWriteService.update(member.getId(), request);
+
+        assertAll(
+                () -> assertThat(response.id()).isEqualTo(discussion.getId()),
+                () -> assertThat(response.title()).isEqualTo("title"),
+                () -> assertThat(response.content()).isEqualTo("content"),
+                () -> assertThat(response.mission().id()).isEqualTo(newMissionId),
+                () -> assertThat(response.hashTags()).containsExactly(new HashTagResponse(newHashTagId, "hashTag"))
+        );
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 디스커션을 수정 시도하면 예외가 발생한다.")
+    @Transactional
+    void updateDiscussionWithUnknownDiscussion() {
+        Long unknownDiscussionId = 100L;
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        discussionRepository.save(DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(List.of(hashTag))
+                .build());
+
+        UpdateDiscussionRequest request =
+                new UpdateDiscussionRequest(unknownDiscussionId, "title", "content", mission.getId(), List.of(hashTag.getId()));
+
+        assertThatThrownBy(() -> discussionWriteService.update(member.getId(), request))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("존재하지 않는 디스커션입니다.");
+    }
+
+    @Test
+    @DisplayName("디스커션 작성자가 아닌 사용자가 디스커션을 수정하면 예외가 발생한다.")
+    @Transactional
+    void updateDiscussionWithNotOwner() {
+        Long unknownMemberId = -1L;
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = discussionRepository.save(DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(List.of(hashTag))
+                .build());
+
+        UpdateDiscussionRequest request =
+                new UpdateDiscussionRequest(discussion.getId(), "title", "content", 1L, List.of(1L));
+
+        assertThatThrownBy(() -> discussionWriteService.update(unknownMemberId, request))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("디스커션 작성자가 아닙니다.");
+    }
+
+    private void createDiscussion(Mission mission, HashTag hashTag) {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .withMember(member)
+                .withHashTags(List.of(hashTag))
+                .build();
+
+        discussionRepository.save(discussion);
     }
 }
