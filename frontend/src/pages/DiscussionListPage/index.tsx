@@ -1,5 +1,6 @@
-import DiscussionList from '@/components/DiscussionList';
+import DiscussionListContent from '@/components/DiscussionList/DiscussionListContent';
 import * as S from './DiscussionListPage.styled';
+import DiscussionListHeader from '@/components/DiscussionList/DiscussionListHeader';
 import { useState } from 'react';
 import useDiscussions from '@/hooks/useDiscussions';
 import TagList from '@/components/common/TagList';
@@ -22,7 +23,7 @@ export default function DiscussionListPage() {
 
   return (
     <S.DiscussionListPageContainer>
-      <S.DiscussionListTitle>💬 Discussion</S.DiscussionListTitle>
+      <DiscussionListHeader />
       <S.TagListWrapper>
         <TagList
           tags={allMissions}
@@ -38,7 +39,7 @@ export default function DiscussionListPage() {
           keyName="name"
         />
       </S.TagListWrapper>
-      <DiscussionList discussions={discussions} />
+      <DiscussionListContent discussions={discussions} />
     </S.DiscussionListPageContainer>
   );
 }

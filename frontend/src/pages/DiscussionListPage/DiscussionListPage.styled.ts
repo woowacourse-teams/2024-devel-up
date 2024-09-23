@@ -9,10 +9,6 @@ export const DiscussionListPageContainer = styled.div`
   max-width: 100rem;
 `;
 
-export const DiscussionListTitle = styled.h1`
-  ${(props) => props.theme.font.heading1}
-`;
-
 export const TagListWrapper = styled.div`
   display: flex;
   flex-direction: column;

@@ -3,13 +3,13 @@ import DiscussionListItem from './DiscussionListItem';
 import { Link } from 'react-router-dom';
 import type { Discussion } from '@/types';
 
-interface DiscussionListProps {
+interface DiscussionListContentProps {
   discussions: Discussion[];
 }
 
-export default function DiscussionList({ discussions }: DiscussionListProps) {
+export default function DiscussionListContent({ discussions }: DiscussionListContentProps) {
   return (
-    <S.DiscussionListContainer>
+    <S.ContentContainer>
       {discussions.map((discussion) => (
         <Link key={discussion.id} to={`/discussions/${discussion.id}`}>
           <DiscussionListItem
@@ -21,6 +21,6 @@ export default function DiscussionList({ discussions }: DiscussionListProps) {
           />
         </Link>
       ))}
-    </S.DiscussionListContainer>
+    </S.ContentContainer>
   );
 }

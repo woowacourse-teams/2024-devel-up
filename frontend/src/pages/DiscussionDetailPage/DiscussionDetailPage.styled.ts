@@ -10,6 +10,7 @@ export const DiscussionDetailTitle = styled.h2`
   margin: 4.5rem 0;
   ${({ theme }) => theme.font.heading1}
   width: fit-content;
+  cursor: pointer;
 `;
 
 export const MissionTitle = styled.div`
@@ -51,6 +52,12 @@ export const HeaderLeftArea = styled.div`
   bottom: 2.4rem;
   display: flex;
   flex-direction: column;
+`;
+
+export const MissionActionHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const DiscussionDetailInfo = styled.div`

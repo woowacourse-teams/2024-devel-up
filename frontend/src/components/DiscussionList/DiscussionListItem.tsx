@@ -10,7 +10,7 @@ export default function DiscussionListItem({
   commentCount,
 }: Omit<Discussion, 'id'>) {
   return (
-    <S.DiscussionItemContainer>
+    <S.ItemContainer>
       <S.ContentWrapper>
         <S.BadgeWrapper>
           <Badge text={mission} variant="danger" />
@@ -21,13 +21,13 @@ export default function DiscussionListItem({
         <S.Title>{title}</S.Title>
       </S.ContentWrapper>
 
-      <S.DiscussionRight>
+      <S.ItemRight>
         <S.WriterImg src={member.imageUrl} />
         <S.CommentWrapper>
           <S.CommentCountIcon />
           <p>{commentCount}</p>
         </S.CommentWrapper>
-      </S.DiscussionRight>
-    </S.DiscussionItemContainer>
+      </S.ItemRight>
+    </S.ItemContainer>
   );
 }

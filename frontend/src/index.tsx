@@ -12,8 +12,6 @@ import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import './styles/fonts.css';
-import DashboardDiscussionPage from './pages/DashboardPage/Discussion';
-import DashboardDiscussionCommentPage from './pages/DashboardPage/DiscussionComment';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,24 +30,40 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
 });
 
-const MissionDetailPage = lazy(() => import('./pages/MissionDetailPage'));
+// 메인
 const MainPage = lazy(() => import('./pages/MainPage'));
-const MissionSubmitPage = lazy(() => import('./pages/MissionSubmitPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
 const UserProfilePage = lazy(() => import('./pages/UserProfilePage'));
 // const GuidePage = lazy(() => import('./pages/GuidePage'));
-const ErrorPage = lazy(() => import('./pages/ErrorPage'));
-const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
+
+// 미션
+const MissionDetailPage = lazy(() => import('./pages/MissionDetailPage'));
+const MissionSubmitPage = lazy(() => import('./pages/MissionSubmitPage'));
+const MissionListPage = lazy(() => import('./pages/MissionListPage'));
+
+// 풀이 (솔루션)
+const SolutionListPage = lazy(() => import('./pages/SolutionListPage'));
+const SolutionDetailPage = lazy(() => import('./pages/SolutionDetailPage'));
+
+// 디스커션
 const DiscussionDetailPage = lazy(() => import('./pages/DiscussionDetailPage'));
 const DiscussionSubmitPage = lazy(() => import('./pages/DiscussionSubmitPage'));
-const SolutionListPage = lazy(() => import('./pages/SolutionListPage'));
-const MissionListPage = lazy(() => import('./pages/MissionListPage'));
-const SolutionDetailPage = lazy(() => import('./pages/SolutionDetailPage'));
+const DiscussionListPage = lazy(() => import('./pages/DiscussionListPage'));
+
+// 대시보드
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const DashboardDiscussionPage = lazy(() => import('./pages/DashboardPage/Discussion'));
+const DashboardDiscussionCommentPage = lazy(
+  () => import('./pages/DashboardPage/DiscussionComment'),
+);
 const DashBoardMissionInProgressPage = lazy(
   () => import('./pages/DashboardPage/MissionInProgress'),
 );
 const MyCommentsPage = lazy(() => import('./pages/DashboardPage/MyComments'));
 const SubmittedSolutionList = lazy(() => import('./components/DashBoard/SubmittedSolutions'));
+
+// 기타
+const ErrorPage = lazy(() => import('./pages/ErrorPage'));
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -226,52 +240,62 @@ const routes = [
       </App>
     ),
   },
+  {
+    path: ROUTES.discussions,
+    element: (
+      <App>
+        <Suspense fallback={<LoadingSpinner />}>
+          <DiscussionListPage />
+        </Suspense>
+      </App>
+    ),
+  },
 ];
 
 export const router = createBrowserRouter(routes, {
   basename: ROUTES.main,
 });
 
-async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
-    return;
-  }
+// async function enableMocking() {
+//   if (process.env.NODE_ENV !== 'development') {
+//     return;
+//   }
 
-  const { worker } = await import('./mocks/browser');
+//   const { worker } = await import('./mocks/browser');
 
-  // `worker.start()` returns a Promise that resolves
-  // once the Service Worker is up and ready to intercept requests.
-  return worker.start();
-}
+//   // `worker.start()` returns a Promise that resolves
+//   // once the Service Worker is up and ready to intercept requests.
+//   return worker.start();
+// }
 
-enableMocking().then(() => {
-  root.render(
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <QueryErrorBoundary>
-          <ErrorBoundary fallback={<div>에러에요!</div>}>
-            <ThemeProvider theme={theme}>
-              <GlobalStyle />
-              <RouterProvider router={router} />
-            </ThemeProvider>
-          </ErrorBoundary>
-        </QueryErrorBoundary>
-      </QueryClientProvider>
-    </React.StrictMode>,
-  );
-});
+// enableMocking().then(() => {
+//   root.render(
+//     <React.StrictMode>
+//       <QueryClientProvider client={queryClient}>
+//         <QueryErrorBoundary>
+//           <ErrorBoundary fallback={<div>에러에요!</div>}>
+//             <ThemeProvider theme={theme}>
+//               <GlobalStyle />
+//               <RouterProvider router={router} />
+//             </ThemeProvider>
+//           </ErrorBoundary>
+//         </QueryErrorBoundary>
+//       </QueryClientProvider>
+//     </React.StrictMode>,
+//   );
+// });
 
-// root.render(
-//   <React.StrictMode>
-//     <QueryClientProvider client={queryClient}>
-//       <QueryErrorBoundary>
-//         <ErrorBoundary fallback={<div>에러에요!</div>}>
-//           <ThemeProvider theme={theme}>
-//             <GlobalStyle />
-//             <RouterProvider router={router} />
-//           </ThemeProvider>
-//         </ErrorBoundary>
-//       </QueryErrorBoundary>
-//     </QueryClientProvider>
-//   </React.StrictMode>,
-// );
+root.render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <QueryErrorBoundary>
+        <ErrorBoundary fallback={<div>에러에요!</div>}>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </ErrorBoundary>
+      </QueryErrorBoundary>
+    </QueryClientProvider>
+  </React.StrictMode>,
+);
