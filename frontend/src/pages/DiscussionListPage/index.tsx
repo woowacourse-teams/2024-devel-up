@@ -1,11 +1,12 @@
-import DiscussionList from '@/components/DiscussionList';
+import DiscussionListContent from '@/components/DiscussionList/DiscussionListContent';
 import * as S from './DiscussionListPage.styled';
+import DiscussionListHeader from '@/components/DiscussionList/DiscussionListHeader';
 
 export default function DiscussionListPage() {
   return (
     <S.DiscussionListPageContainer>
-      <S.DiscussionListTitle>💬 Discussion</S.DiscussionListTitle>
-      <DiscussionList />
+      <DiscussionListHeader />
+      <DiscussionListContent />
     </S.DiscussionListPageContainer>
   );
 }

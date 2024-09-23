@@ -8,7 +8,3 @@ export const DiscussionListPageContainer = styled.div`
   width: 100%;
   max-width: 100rem;
 `;
-
-export const DiscussionListTitle = styled.h1`
-  ${(props) => props.theme.font.heading1}
-`;

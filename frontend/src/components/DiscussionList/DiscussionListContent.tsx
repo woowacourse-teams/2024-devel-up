@@ -4,13 +4,13 @@ import DiscussionListItem from './DiscussionListItem';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function DiscussionList() {
+export default function DiscussionListContent() {
   const [mission] = useState<string>('all');
   const [hashTag] = useState<string>('all');
 
   const { data: discussions } = useDiscussions(mission, hashTag);
   return (
-    <S.DiscussionListContainer>
+    <S.ContentContainer>
       {discussions.map((discussion) => (
         <Link key={discussion.id} to={`/discussions/${discussion.id}`}>
           <DiscussionListItem
@@ -22,6 +22,6 @@ export default function DiscussionList() {
           />
         </Link>
       ))}
-    </S.DiscussionListContainer>
+    </S.ContentContainer>
   );
 }
