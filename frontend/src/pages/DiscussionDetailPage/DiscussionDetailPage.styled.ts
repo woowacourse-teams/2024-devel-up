@@ -10,6 +10,7 @@ export const DiscussionDetailTitle = styled.h2`
   margin: 4.5rem 0;
   ${({ theme }) => theme.font.heading1}
   width: fit-content;
+  cursor: pointer;
 `;
 
 export const MissionTitle = styled.div`
