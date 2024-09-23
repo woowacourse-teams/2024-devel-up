@@ -15,6 +15,8 @@ export const PATH = {
   missionInProgress: '/missions/in-progress',
   solutions: '/solutions',
   mySolutions: '/solutions/mine',
+  dashboardDiscussion: '/discussions/mine',
+  dashboardDiscussionComment: '/discussions/comments/mine',
   discussions: '/discussions',
   submitDiscussion: '/discussions/submit',
 };
