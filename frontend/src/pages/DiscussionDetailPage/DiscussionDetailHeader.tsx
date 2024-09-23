@@ -14,7 +14,7 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
 
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
+  const handleToSubmitDiscussion = () => {
     navigate(ROUTES.submitDiscussion);
   };
 
@@ -24,7 +24,7 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
         <S.HeaderLeftArea>
           <S.MissionActionHeader>
             {mission && <S.MissionTitle># {mission.title}</S.MissionTitle>}
-            <Button variant="primary" onClick={handleNavigate}>
+            <Button variant="primary" onClick={handleToSubmitDiscussion}>
               작성하기
             </Button>
           </S.MissionActionHeader>

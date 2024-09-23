@@ -6,14 +6,14 @@ import { ROUTES } from '@/constants/routes';
 export default function DiscussionListHeader() {
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
+  const handleToSubmitDiscussion = () => {
     navigate(ROUTES.submitDiscussion);
   };
 
   return (
     <S.HeaderTitleWrapper>
       <S.HeaderTitle>💬 Discussion</S.HeaderTitle>
-      <Button variant="primary" onClick={handleNavigate}>
+      <Button variant="primary" onClick={handleToSubmitDiscussion}>
         작성하기
       </Button>
     </S.HeaderTitleWrapper>
