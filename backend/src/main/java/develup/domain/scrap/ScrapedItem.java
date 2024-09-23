@@ -8,7 +8,7 @@ import jakarta.persistence.Enumerated;
 @Embeddable
 public class ScrapedItem {
 
-    @Column(nullable = false, name = "item_id")
+    @Column(name = "item_id", nullable = false)
     private Long id;
 
     @Column(nullable = false)
