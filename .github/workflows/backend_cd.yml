@@ -9,7 +9,7 @@ on:
       - backend/**
 
 jobs:
-  findPreviousImageVersion:
+  find_previous_image_version:
     name: 🔎Find Previous Docker Image Version
     runs-on: [ self-hosted, devel-up-prod-a ]
     outputs:
@@ -60,7 +60,7 @@ jobs:
           tags: ${{ secrets.DOCKER_REPOSITORY_NAME }}:${{ github.sha }}
           platforms: linux/arm64
 
-  deployToA:
+  deploy_to_a:
     name: 🚀 Server A Deployment
     needs: build
     runs-on: [ self-hosted, devel-up-prod-a ]
@@ -83,9 +83,9 @@ jobs:
       - name: 🐳 Docker Compose up
         run: docker compose -f compose.yml up -d
 
-  healthCheckA:
+  health_check_a:
     name: 🙏 Server A Health Check
-    needs: deployToA
+    needs: deploy_to_a
     defaults:
       run:
         working-directory: backend
@@ -94,9 +94,9 @@ jobs:
       - name: ♻️ Send Helth Check Request
         run: chmod u+x ./scripts/healthcheck.sh && ./scripts/healthcheck.sh
 
-  rollBackA:
+  roll-back_a:
     name: 🚀 Server A RollBack
-    needs: [healthCheckA, findPreviousImageVersion]
+    needs: [health_check_a, find_previous_image_version]
     if: failure()
     runs-on: [ self-hosted, devel-up-prod-a ]
     defaults:
@@ -104,7 +104,7 @@ jobs:
         working-directory: backend
 
     env:
-      BACKEND_APP_IMAGE_NAME: ${{ needs.findPreviousImageVersion.outputs.previousImageVersion }}
+      BACKEND_APP_IMAGE_NAME: ${{ needs.find_previous_image_version.outputs.previousImageVersion }}
 
     steps:
       - uses: actions/checkout@v4
@@ -118,10 +118,10 @@ jobs:
       - name: 🐳 Docker Compose up
         run: docker compose -f compose.yml up -d
 
-  healthCheckAAfterRollBack:
+  health_check_a_after_roll-back:
     name: 🙏 Server A Health Check After RollBack
-    needs: rollBackA
-    if : ${{always() && needs.rollBackA.result != 'skipped'}}
+    needs: roll-back_a
+    if : ${{always() && needs.roll-back_a.result != 'skipped'}}
     defaults:
       run:
         working-directory: backend
@@ -130,10 +130,10 @@ jobs:
       - name: ♻️ Send Helth Check Request
         run: chmod u+x ./scripts/healthcheck.sh && ./scripts/healthcheck.sh
 
-  deployToB:
+  deploy_to_b:
     name: 🚀 Server B Deployment
-    needs: healthCheckA
-    if: ${{needs.healthCheckA.result == 'success'}}
+    needs: health_check_a
+    if: ${{needs.health_check_a.result == 'success'}}
     runs-on: [ self-hosted, devel-up-prod-b ]
     defaults:
       run:
@@ -154,9 +154,9 @@ jobs:
       - name: 🐳 Docker Compose up
         run: docker compose -f compose.yml up -d
 
-  healthCheckB:
+  health_check_b:
     name: 🙏 Server B Health Check
-    needs: deployToB
+    needs: deploy_to_b
     defaults:
       run:
         working-directory: backend
@@ -165,13 +165,13 @@ jobs:
       - name: ♻️ Send Helth Check Request
         run: chmod u+x ./scripts/healthcheck.sh && ./scripts/healthcheck.sh
 
-  deploySuccessNotifiy:
+  deploy_success_notify:
     name: 📢Send Deploy Success Notification
     runs-on: ubuntu-latest
     needs:
-      - healthCheckA
-      - healthCheckB
-    if: ${{needs.healthCheckA.result == 'success' && needs.healthCheckB.result == 'success'}}
+      - health_check_a
+      - health_check_b
+    if: ${{needs.health_check_a.result == 'success' && needs.health_check_b.result == 'success'}}
     steps:
       - name: Extract Commit Title
         run: |
@@ -198,12 +198,12 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
-  deployToBFailNotifiy:
+  deploy_to_b_fail_notify:
     name: 📢Send Deploy To Server B Fail Notification
     runs-on: ubuntu-latest
     needs:
-      - healthCheckB
-    if: ${{failure() && needs.healthCheckB.result == 'failure'}}
+      - health_check_b
+    if: ${{failure() && needs.health_check_b.result == 'failure'}}
     steps:
       - name: Extract Commit Title
         run: |
@@ -230,12 +230,12 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
-  rollBackSuccessNotifiy:
+  roll-back_a_success_notifiy:
     name: 📢Send Server A RollBack Success Notification
     runs-on: ubuntu-latest
     needs:
-      - healthCheckAAfterRollBack
-    if: ${{failure() && needs.healthCheckAAfterRollBack.result == 'success'}}
+      - health_check_a_after_roll-back
+    if: ${{failure() && needs.health_check_a_after_roll-back.result == 'success'}}
     steps:
       - name: Extract Commit Title
         run: |
@@ -262,12 +262,12 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
-  rollBackFailNotifiy:
+  roll-back_a_fail_notifiy:
     name: 📢Send Server A RollBack Fail Notification
     runs-on: ubuntu-latest
     needs:
-      - healthCheckAAfterRollBack
-    if: ${{failure() && needs.healthCheckAAfterRollBack.result == 'failure'}}
+      - health_check_a_after_roll-back
+    if: ${{failure() && needs.health_check_a_after_roll-back.result == 'failure'}}
     steps:
       - name: Extract Commit Title
         run: |
