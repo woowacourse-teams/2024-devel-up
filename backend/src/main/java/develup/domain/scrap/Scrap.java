@@ -1,15 +1,20 @@
 package develup.domain.scrap;
 
 import develup.domain.IdentifiableEntity;
+import develup.domain.member.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Scrap extends IdentifiableEntity {
 
-    @Column(nullable = false)
-    private Long ownerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Member member;
 
     @Embedded
     private ScrapedItem item;
@@ -20,14 +25,14 @@ public class Scrap extends IdentifiableEntity {
     protected Scrap() {
     }
 
-    public Scrap(Long ownerId, ScrapedItem item) {
-        this(null, ownerId, item, true);
+    public Scrap(Member member, ScrapedItem item) {
+        this(null, member, item, true);
     }
 
-    public Scrap(Long id, Long ownerId, ScrapedItem item, boolean isScrapped) {
+    public Scrap(Long id, Member member, ScrapedItem item, boolean isScrapped) {
         super(id);
         this.id = id;
-        this.ownerId = ownerId;
+        this.member = member;
         this.item = item;
         this.isScrapped = isScrapped;
     }
