@@ -80,6 +80,15 @@ export interface MyComments {
   solutionCommentCount: number;
 }
 
+export interface Comments {
+  id: number;
+  contentId: number;
+  content: string;
+  createdAt: string;
+  contentTitle: string;
+  contentCommentCount: number;
+}
+
 export interface Discussion {
   id: number;
   title: string;

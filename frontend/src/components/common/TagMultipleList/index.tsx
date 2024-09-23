@@ -13,7 +13,7 @@ export default function TagMultipleList<T extends { id: number }>({
   tags,
   selectedTags,
   setSelectedTags,
-  variant = 'primary',
+  variant = 'default',
   keyName,
 }: TagMultipleListProps<T>) {
   const handleSelectedTags = (tag: T) => {

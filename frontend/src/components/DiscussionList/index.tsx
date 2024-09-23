@@ -1,14 +1,13 @@
 import * as S from './DiscussionList.styled';
-import useDiscussions from '@/hooks/useDiscussions';
 import DiscussionListItem from './DiscussionListItem';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import type { Discussion } from '@/types';
 
-export default function DiscussionList() {
-  const [mission] = useState<string>('all');
-  const [hashTag] = useState<string>('all');
+interface DiscussionListProps {
+  discussions: Discussion[];
+}
 
-  const { data: discussions } = useDiscussions(mission, hashTag);
+export default function DiscussionList({ discussions }: DiscussionListProps) {
   return (
     <S.DiscussionListContainer>
       {discussions.map((discussion) => (
