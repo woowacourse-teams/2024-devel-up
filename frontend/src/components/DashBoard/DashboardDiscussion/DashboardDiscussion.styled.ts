@@ -1,12 +1,37 @@
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 
+export const HashTagWrapper = styled.div`
+  display: flex;
+  margin-bottom: 0.5rem;
+`;
+
+export const HashTag = styled.span<{ $isTitle?: boolean }>`
+  padding: 0.5rem 0.8rem;
+  border-radius: 2rem;
+  margin-right: 0.7rem;
+  background-color: ${(props) => (props.$isTitle ? 'var(--danger-50)' : 'var(--primary-50)')};
+`;
+
+export const ImageWrapper = styled.div`
+  width: 4.2rem;
+  height: 4.2rem;
+  border: 0.1rem solid var(--grey-400);
+  border-radius: 50%;
+`;
+
+export const Image = styled.img`
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+`;
+
 export const Container = styled.div`
   width: 67.4rem;
   height: 100%;
 `;
 
-export const CommentWrapper = styled(Link)`
+export const DiscussionWrapper = styled(Link)`
   height: 8.5rem;
   border-radius: 2.8rem;
   background: ${(props) => props.theme.colors.white};
@@ -25,10 +50,16 @@ export const CommentCountWrapper = styled.div`
   align-items: center;
 `;
 
+export const ImageCommentWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 54rem;
+  min-width: 50rem;
 `;
 
 export const CommentText = styled.span`

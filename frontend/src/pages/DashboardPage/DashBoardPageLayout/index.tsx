@@ -14,7 +14,15 @@ const PATH_INFO = [
   },
   {
     name: '/dashboard/comments',
-    text: '작성한 댓글',
+    text: '작성한 솔루션 댓글',
+  },
+  {
+    name: '/dashboard/discussions',
+    text: '제출한 디스커션',
+  },
+  {
+    name: '/dashboard/discussion/comments',
+    text: '작성한 디스커션 댓글',
   },
 ];
 
