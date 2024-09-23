@@ -17,7 +17,7 @@ public class Scrap extends IdentifiableEntity {
     private Member member;
 
     @Embedded
-    private ScrapedItem item;
+    private ScrappedItem item;
 
     @Column(nullable = false)
     private boolean isScrapped;
@@ -25,11 +25,11 @@ public class Scrap extends IdentifiableEntity {
     protected Scrap() {
     }
 
-    public Scrap(Member member, ScrapedItem item) {
+    public Scrap(Member member, ScrappedItem item) {
         this(null, member, item, true);
     }
 
-    public Scrap(Long id, Member member, ScrapedItem item, boolean isScrapped) {
+    public Scrap(Long id, Member member, ScrappedItem item, boolean isScrapped) {
         super(id);
         this.id = id;
         this.member = member;

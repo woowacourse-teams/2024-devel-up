@@ -1,6 +1,6 @@
 package develup.domain.scrap;
 
-public enum ScrapedItemType {
+public enum ScrappedItemType {
 
     DISCUSSION,
     SOLUTION,

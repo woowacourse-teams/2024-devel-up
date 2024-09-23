@@ -6,19 +6,19 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 @Embeddable
-public class ScrapedItem {
+public class ScrappedItem {
 
     @Column(name = "item_id", nullable = false)
     private Long id;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ScrapedItemType itemType;
+    private ScrappedItemType itemType;
 
-    protected ScrapedItem() {
+    protected ScrappedItem() {
     }
 
-    public ScrapedItem(Long id, ScrapedItemType itemType) {
+    public ScrappedItem(Long id, ScrappedItemType itemType) {
         this.id = id;
         this.itemType = itemType;
     }
