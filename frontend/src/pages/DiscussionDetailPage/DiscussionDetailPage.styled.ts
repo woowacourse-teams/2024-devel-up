@@ -53,6 +53,12 @@ export const HeaderLeftArea = styled.div`
   flex-direction: column;
 `;
 
+export const MissionActionHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 export const DiscussionDetailInfo = styled.div`
   display: flex;
   width: 100%;
