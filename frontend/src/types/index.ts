@@ -20,6 +20,7 @@ export interface Mission {
   thumbnail: string;
   url: string;
   isStarted?: boolean;
+  summary: string;
   hashTags: HashTag[];
 }
 
@@ -42,15 +43,24 @@ export interface Submission {
   url: string;
 }
 
-export interface Comment {
+interface BaseComment {
   id: number;
-  solutionId: number;
   content: string;
   member: UserInfo;
   replies: CommentReply[];
   createdAt: string;
   isDeleted: boolean;
 }
+
+export interface SolutionComment extends BaseComment {
+  solutionId: number;
+}
+
+export interface DiscussionComment extends BaseComment {
+  discussionId: number;
+}
+
+export type Comment = SolutionComment | DiscussionComment;
 
 export interface CommentReply {
   id: number;
@@ -68,6 +78,15 @@ export interface MyComments {
   createdAt: string;
   solutionTitle: string;
   solutionCommentCount: number;
+}
+
+export interface Comments {
+  id: number;
+  contentId: number;
+  content: string;
+  createdAt: string;
+  contentTitle: string;
+  contentCommentCount: number;
 }
 
 export interface Discussion {

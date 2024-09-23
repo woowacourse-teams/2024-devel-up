@@ -32,6 +32,17 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
 
     List<Solution> findAllByMember_IdAndStatus(Long memberId, SolutionStatus status);
 
+    @Query("""
+            SELECT DISTINCT s
+            FROM Solution s
+            JOIN FETCH s.member mem
+            JOIN FETCH s.mission m
+            JOIN FETCH m.missionHashTags.hashTags mhts
+            JOIN FETCH mhts.hashTag ht
+            WHERE s.id = :solutionId
+            """)
+    Optional<Solution> findFetchById(Long solutionId);
+
     Optional<Solution> findByMember_IdAndMission_IdAndStatus(Long memberId, Long missionId, SolutionStatus status);
 
     @Query("""

@@ -28,7 +28,7 @@ export const CommentCountWrapper = styled.div`
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 53rem;
+  min-width: 54rem;
 `;
 
 export const CommentText = styled.span`

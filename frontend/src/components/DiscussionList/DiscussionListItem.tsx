@@ -10,11 +10,10 @@ export default function DiscussionListItem({
   commentCount,
 }: Omit<Discussion, 'id'>) {
   return (
-    <S.DiscussionItemContainer>
+    <S.ItemContainer>
       <S.ContentWrapper>
         <S.BadgeWrapper>
-          {/* TODO: Badge 색상 변경 필요 @프룬 */}
-          <Badge text={mission} />
+          <Badge text={mission} variant="danger" />
           {hashTags.map((hashTag) => (
             <Badge key={hashTag.id} text={`# ${hashTag.name}`} />
           ))}
@@ -22,13 +21,13 @@ export default function DiscussionListItem({
         <S.Title>{title}</S.Title>
       </S.ContentWrapper>
 
-      <S.DiscussionRight>
+      <S.ItemRight>
         <S.WriterImg src={member.imageUrl} />
         <S.CommentWrapper>
           <S.CommentCountIcon />
           <p>{commentCount}</p>
         </S.CommentWrapper>
-      </S.DiscussionRight>
-    </S.DiscussionItemContainer>
+      </S.ItemRight>
+    </S.ItemContainer>
   );
 }

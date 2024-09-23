@@ -4,42 +4,50 @@ import { ROUTES } from '@/constants/routes';
 import Button from '@/components/common/Button/Button';
 
 interface NoContentProps {
-  type: 'submitted' | 'inProgress' | 'comments';
+  type: 'submitted' | 'inProgress' | 'comments' | 'dashboardDiscussion';
 }
+
+const NO_CONTENT_INFO = {
+  inProgress: {
+    route: ROUTES.missionList,
+    mainText: '진행 중인 미션이 없어요',
+    subText: '새로운 미션을 찾으러 가볼까요?',
+    buttonText: '미션 둘러보기',
+  },
+  submitted: {
+    route: ROUTES.solutions,
+    mainText: '제출한 솔루션이 없어요',
+    subText: '참여할 수 있는 미션을 찾아보러 가볼까요?',
+    buttonText: '미션 둘러보기',
+  },
+  comments: {
+    route: ROUTES.solutions,
+    mainText: '제출한 댓글이 없어요',
+    subText: '댓글을 달아볼까요?',
+    buttonText: '솔루션 둘러보기',
+  },
+  dashboardDiscussion: {
+    route: '/discussion',
+    mainText: '제출한 디스커션이 없어요',
+    subText: '다른 사람들이 작성한 디스커션을 보러 가볼까요?',
+    buttonText: '디스커션 둘러보기',
+  },
+};
 
 export default function NoContent({ type }: NoContentProps) {
   const navigate = useNavigate();
-  const route =
-    type === 'inProgress'
-      ? ROUTES.missionList
-      : type === 'submitted'
-        ? ROUTES.solutions
-        : ROUTES.solutions;
+  const { route, mainText, subText, buttonText } = NO_CONTENT_INFO[type];
 
-  const handleNavigateToMissionList = () => {
+  const handleNavigate = () => {
     navigate(route);
   };
-
-  const mainText =
-    type === 'inProgress'
-      ? '진행 중인 미션이 없어요'
-      : type === 'submitted'
-        ? '제출한 솔루션이 없어요'
-        : '제출한 댓글이 없어요';
-  const subText =
-    type === 'inProgress'
-      ? '새로운 미션을 찾으러 가볼까요?'
-      : type === 'submitted'
-        ? '참여할 수 있는 미션을 찾아보러 가볼까요?'
-        : '댓글을 달아볼까요?';
-  const buttonText = type === 'comments' ? '솔루션 둘러보기' : '미션 둘러보기';
 
   return (
     <S.Container>
       <S.NoContent />
       <S.MainText>{mainText}</S.MainText>
       <S.SubText>{subText}</S.SubText>
-      <Button onClick={handleNavigateToMissionList}>{buttonText}</Button>
+      <Button onClick={handleNavigate}>{buttonText}</Button>
       {/* <S.Button onClick={handleNavigateToMissionList}>{buttonText}</S.Button> */}
     </S.Container>
   );

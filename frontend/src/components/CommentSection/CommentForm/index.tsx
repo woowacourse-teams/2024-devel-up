@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import usePostCommentMutation from '@/hooks/usePostCommentMutation';
 import * as S from './CommentForm.styled';
 import { commands } from '@uiw/react-md-editor';
+import type { UsePostCommentMutation } from './types';
 
 interface CommentFormProps {
-  solutionId: number;
+  postId: number;
   parentCommentId?: number;
+  usePostCommentMutation: UsePostCommentMutation;
 }
 
-export default function CommentForm({ solutionId, parentCommentId }: CommentFormProps) {
+export default function CommentForm({
+  postId,
+  parentCommentId,
+  usePostCommentMutation,
+}: CommentFormProps) {
   const [comment, setComment] = useState('');
 
   const resetComment = () => setComment('');
@@ -17,7 +22,7 @@ export default function CommentForm({ solutionId, parentCommentId }: CommentForm
 
   const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postCommentMutation({ solutionId, body: { content: comment, parentCommentId } });
+    postCommentMutation({ postId, body: { content: comment, parentCommentId } });
   };
 
   return (

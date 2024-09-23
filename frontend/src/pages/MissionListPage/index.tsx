@@ -4,9 +4,10 @@ import useMissions from '@/hooks/useMissions';
 import useHashTags from '@/hooks/useHashTags';
 import TagList from '@/components/common/TagList';
 import { useState } from 'react';
+import type { HashTag } from '@/types';
 
 export default function MissionListPage() {
-  const [selectedHashTag, setSelectedHashTag] = useState<{ id: number, name: string }|null>(null);
+  const [selectedHashTag, setSelectedHashTag] = useState<HashTag | null>(null);
   const { data: allMissions } = useMissions(selectedHashTag?.name);
   const { data: allHashTags } = useHashTags();
 

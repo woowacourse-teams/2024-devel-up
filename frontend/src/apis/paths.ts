@@ -15,10 +15,13 @@ export const PATH = {
   missionInProgress: '/missions/in-progress',
   solutions: '/solutions',
   mySolutions: '/solutions/mine',
+  dashboardDiscussion: '/discussions/mine',
+  dashboardDiscussionComment: '/discussions/comments/mine',
   discussions: '/discussions',
   submitDiscussion: '/discussions/submit',
 };
 
 export const PATH_FORMATTER = {
-  comments: (solutionId: number) => `/solutions/${solutionId}/comments`,
+  solutionComments: (solutionId: number) => `/solutions/${solutionId}/comments`,
+  discussionComments: (discussionId: number) => `/discussions/${discussionId}/comments`,
 };
