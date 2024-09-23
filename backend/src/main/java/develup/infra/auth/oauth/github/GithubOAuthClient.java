@@ -3,9 +3,13 @@ package develup.infra.auth.oauth.github;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
+import java.time.Duration;
 import develup.infra.auth.oauth.github.dto.GithubAccessTokenRequest;
 import develup.infra.auth.oauth.github.dto.GithubAccessTokenResponse;
 import develup.infra.auth.oauth.github.dto.GithubUserInfoResponse;
+import org.springframework.boot.web.client.ClientHttpRequestFactories;
+import org.springframework.boot.web.client.ClientHttpRequestFactorySettings;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -17,7 +21,19 @@ public class GithubOAuthClient {
 
     public GithubOAuthClient(GithubOAuthProperties properties, RestClient.Builder restClientBuilder) {
         this.properties = properties;
-        this.restClient = restClientBuilder.build();
+        this.restClient = createRestClient(restClientBuilder);
+    }
+
+    private RestClient createRestClient(RestClient.Builder restClientBuilder) {
+        return restClientBuilder.requestFactory(clientHttpRequestFactory()).build();
+    }
+
+    private ClientHttpRequestFactory clientHttpRequestFactory() {
+        ClientHttpRequestFactorySettings settings = ClientHttpRequestFactorySettings.DEFAULTS
+                .withConnectTimeout(Duration.ofSeconds(5))
+                .withReadTimeout(Duration.ofSeconds(5));
+
+        return ClientHttpRequestFactories.get(settings);
     }
 
     public GithubAccessTokenResponse fetchAccessToken(String code) {
