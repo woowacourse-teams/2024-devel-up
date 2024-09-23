@@ -31,7 +31,7 @@ public class GithubOAuthClient {
     private ClientHttpRequestFactory clientHttpRequestFactory() {
         ClientHttpRequestFactorySettings settings = ClientHttpRequestFactorySettings.DEFAULTS
                 .withConnectTimeout(Duration.ofSeconds(5))
-                .withReadTimeout(Duration.ofSeconds(5));
+                .withReadTimeout(Duration.ofSeconds(10));
 
         return ClientHttpRequestFactories.get(settings);
     }
