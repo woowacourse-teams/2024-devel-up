@@ -11,7 +11,7 @@ interface TagButtonProps extends HTMLAttributes<HTMLButtonElement> {
 
 export default function TagButton({
   isSelected = false,
-  variant = 'primary',
+  variant = 'default',
   children,
   ...props
 }: PropsWithChildren<TagButtonProps>) {
