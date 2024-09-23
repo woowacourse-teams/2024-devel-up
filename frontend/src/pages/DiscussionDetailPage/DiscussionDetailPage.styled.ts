@@ -2,12 +2,14 @@ import styled from 'styled-components';
 import SanitizedMDPreview from '@/components/common/SanitizedMDPreview';
 
 export const DiscussionDetailPageContainer = styled.div`
-  padding: 0 22rem;
+  margin: 0 auto;
+  width: fit-content;
 `;
 
 export const DiscussionDetailTitle = styled.h2`
   margin: 4.5rem 0;
   ${({ theme }) => theme.font.heading1}
+  width: fit-content;
 `;
 
 export const MissionTitle = styled.div`
@@ -31,8 +33,8 @@ export const HeaderUserInfo = styled.div`
 `;
 
 export const DiscussionDetailHeaderContainer = styled.div`
-  width: 100%;
-  margin: 0 auto;
+  width: 100rem;
+
   display: flex;
   flex-direction: column;
   position: relative;
@@ -51,6 +53,12 @@ export const HeaderLeftArea = styled.div`
   flex-direction: column;
 `;
 
+export const DiscussionDetailInfo = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
 export const HeaderProfileImg = styled.img`
   width: 4.2rem;
   border-radius: 10rem;
@@ -66,13 +74,10 @@ export const HashTagWrapper = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 1.1rem;
-
-  position: absolute;
-  right: 2.1rem;
-  bottom: 2.4rem;
 `;
 
 export const DiscussionDescription = styled(SanitizedMDPreview)`
+  width: fit-content;
   margin-top: 6.4rem;
   ${({ theme }) => theme.font.body}
 `;

@@ -42,15 +42,24 @@ export interface Submission {
   url: string;
 }
 
-export interface Comment {
+interface BaseComment {
   id: number;
-  solutionId: number;
   content: string;
   member: UserInfo;
   replies: CommentReply[];
   createdAt: string;
   isDeleted: boolean;
 }
+
+export interface SolutionComment extends BaseComment {
+  solutionId: number;
+}
+
+export interface DiscussionComment extends BaseComment {
+  discussionId: number;
+}
+
+export type Comment = SolutionComment | DiscussionComment;
 
 export interface CommentReply {
   id: number;

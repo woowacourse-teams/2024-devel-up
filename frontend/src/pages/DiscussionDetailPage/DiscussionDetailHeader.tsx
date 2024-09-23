@@ -1,12 +1,12 @@
 import * as S from './DiscussionDetailPage.styled';
 import TagButton from '@/components/common/TagButton';
-import type discussionMock from './mock.json';
+import type { DiscussionDetail } from '@/types/discussion';
 
-interface SolutionDetailHeaderProps {
-  discussion: typeof discussionMock;
+interface DiscussionDetailHeaderProps {
+  discussion: DiscussionDetail;
 }
 
-export default function DiscussionDetailHeader({ discussion }: SolutionDetailHeaderProps) {
+export default function DiscussionDetailHeader({ discussion }: DiscussionDetailHeaderProps) {
   const { mission, member, title, hashTags } = discussion;
 
   return (
@@ -15,10 +15,15 @@ export default function DiscussionDetailHeader({ discussion }: SolutionDetailHea
         <S.HeaderLeftArea>
           {mission && <S.MissionTitle># {mission.title}</S.MissionTitle>}
           <S.Title>{title}</S.Title>
-          <S.HeaderUserInfo>
-            <S.HeaderProfileImg src={member.imageUrl} />
-            <S.HeaderUserName>{member.name}</S.HeaderUserName>
-          </S.HeaderUserInfo>
+          <S.DiscussionDetailInfo>
+            <S.HeaderUserInfo>
+              <S.HeaderProfileImg src={member.imageUrl} />
+              <S.HeaderUserName>{member.name}</S.HeaderUserName>
+            </S.HeaderUserInfo>
+            <S.HashTagWrapper>
+              {hashTags && hashTags.map((tag) => <TagButton key={tag.id}># {tag.name}</TagButton>)}
+            </S.HashTagWrapper>
+          </S.DiscussionDetailInfo>
         </S.HeaderLeftArea>
         <S.HashTagWrapper>
           {hashTags && hashTags.map((tag) => <TagButton key={tag.id}># {tag.name}</TagButton>)}
