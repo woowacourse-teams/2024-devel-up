@@ -43,3 +43,10 @@ export const userKeys = {
 export const discussionsKeys = {
   all: ['discussions'],
 };
+
+export const dashboardKeys = {
+  default: ['dashboard'],
+  discussions: () => [...dashboardKeys.default, 'discussions'],
+  discussionComments: () => [...dashboardKeys.default, 'discussion', 'comments'],
+  solutionComments: () => [...dashboardKeys.default, 'solution', 'comments'],
+} as const;
