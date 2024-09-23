@@ -13,8 +13,7 @@ export default function DiscussionListItem({
     <S.ItemContainer>
       <S.ContentWrapper>
         <S.BadgeWrapper>
-          {/* TODO: Badge 색상 변경 필요 @프룬 */}
-          <Badge text={mission} />
+          <Badge text={mission} variant="danger" />
           {hashTags.map((hashTag) => (
             <Badge key={hashTag.id} text={`# ${hashTag.name}`} />
           ))}

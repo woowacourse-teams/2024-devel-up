@@ -1,21 +1,14 @@
 import type { HTMLAttributes } from 'react';
 import * as S from './Badge.styled';
+import type { BADGE_VARIANTS } from '@/constants/variants';
+
+export type BadgeVariant = keyof typeof BADGE_VARIANTS;
 
 interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
   text: string;
-  fontColor?: string;
-  backgroundColor?: string;
+  variant?: BadgeVariant;
 }
 
-export default function Badge({
-  text,
-  fontColor = 'black',
-  // backgroundColor = 'var(--primary-100)',
-  backgroundColor = '#C4C9ED', // 임시입니다 @프룬
-}: BadgeProps) {
-  return (
-    <S.BadgeContainer $fontColor={fontColor} $backgroundColor={backgroundColor}>
-      {text}
-    </S.BadgeContainer>
-  );
+export default function Badge({ text, variant = 'default' }: BadgeProps) {
+  return <S.BadgeContainer $variant={variant}>{text}</S.BadgeContainer>;
 }

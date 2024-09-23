@@ -20,6 +20,7 @@ export interface Mission {
   thumbnail: string;
   url: string;
   isStarted?: boolean;
+  summary: string;
   hashTags: HashTag[];
 }
 

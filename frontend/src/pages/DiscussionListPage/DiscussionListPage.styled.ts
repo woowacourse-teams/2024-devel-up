@@ -8,3 +8,9 @@ export const DiscussionListPageContainer = styled.div`
   width: 100%;
   max-width: 100rem;
 `;
+
+export const TagListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+`;
