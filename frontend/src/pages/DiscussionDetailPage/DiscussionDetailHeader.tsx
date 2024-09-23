@@ -25,9 +25,6 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
             </S.HashTagWrapper>
           </S.DiscussionDetailInfo>
         </S.HeaderLeftArea>
-        <S.HashTagWrapper>
-          {hashTags && hashTags.map((tag) => <TagButton key={tag.id}># {tag.name}</TagButton>)}
-        </S.HashTagWrapper>
       </S.ThumbnailWrapper>
     </S.DiscussionDetailHeaderContainer>
   );
