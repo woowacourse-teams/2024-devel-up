@@ -10,6 +10,7 @@ services:
       - "443:443"
     volumes:
       - /home/ubuntu/custom.conf:/etc/nginx/conf.d/default.conf
+      - /home/ubuntu/nginx.conf:/etc/nginx/nginx.conf
       - /etc/letsencrypt/live/dev.api.devel-up.co.kr/fullchain.pem:/etc/letsencrypt/live/dev.api.devel-up.co.kr/fullchain.pem
       - /etc/letsencrypt/live/dev.api.devel-up.co.kr/privkey.pem:/etc/letsencrypt/live/dev.api.devel-up.co.kr/privkey.pem
       - /var/log/nginx:/var/log/nginx
