@@ -44,9 +44,6 @@
         <root level="INFO">
             <appender-ref ref="LOKI"/>
         </root>
-        <root level="INFO">
-            <appender-ref ref="Console"/>
-        </root>
     </springProfile>
 
     <springProfile name="prod">
