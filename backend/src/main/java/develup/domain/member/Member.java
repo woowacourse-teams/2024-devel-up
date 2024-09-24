@@ -14,7 +14,7 @@ public class Member extends CreatedAtAuditableEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Provider provider;
+    private OAuthProvider provider;
 
     @Column(nullable = false)
     private Long socialId;
@@ -28,11 +28,11 @@ public class Member extends CreatedAtAuditableEntity {
     protected Member() {
     }
 
-    public Member(String email, Provider provider, Long socialId, String name, String imageUrl) {
+    public Member(String email, OAuthProvider provider, Long socialId, String name, String imageUrl) {
         this(null, email, provider, socialId, name, imageUrl);
     }
 
-    public Member(Long id, String email, Provider provider, Long socialId, String name, String imageUrl) {
+    public Member(Long id, String email, OAuthProvider provider, Long socialId, String name, String imageUrl) {
         super(id);
         this.id = id;
         this.email = email;
@@ -46,7 +46,7 @@ public class Member extends CreatedAtAuditableEntity {
         return email;
     }
 
-    public Provider getProvider() {
+    public OAuthProvider getProvider() {
         return provider;
     }
 
