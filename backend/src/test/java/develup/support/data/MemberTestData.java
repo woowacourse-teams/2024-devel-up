@@ -1,14 +1,14 @@
 package develup.support.data;
 
 import develup.domain.member.Member;
-import develup.domain.member.Provider;
+import develup.domain.member.OAuthProvider;
 
 public class MemberTestData {
 
     public static MemberBuilder defaultMember() {
         return new MemberBuilder()
                 .withEmail("email@email.com")
-                .withProvider(Provider.GITHUB)
+                .withProvider(OAuthProvider.GITHUB)
                 .withSocialId(1234L)
                 .withName("tester")
                 .withImageUrl("image.com/1.jpg");
@@ -18,7 +18,7 @@ public class MemberTestData {
 
         private Long id;
         private String email;
-        private Provider provider;
+        private OAuthProvider provider;
         private Long socialId;
         private String name;
         private String imageUrl;
@@ -33,7 +33,7 @@ public class MemberTestData {
             return this;
         }
 
-        public MemberBuilder withProvider(Provider provider) {
+        public MemberBuilder withProvider(OAuthProvider provider) {
             this.provider = provider;
             return this;
         }

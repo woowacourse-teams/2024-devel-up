@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import develup.api.auth.AuthArgumentResolver;
 import develup.api.auth.CookieAuthorizationExtractor;
 import develup.application.auth.AuthService;
+import develup.application.auth.oauth.OAuthService;
 import develup.application.discussion.DiscussionService;
 import develup.application.discussion.comment.DiscussionCommentService;
 import develup.application.hashtag.HashTagService;
@@ -27,6 +28,9 @@ public class ApiTestSupport {
 
     @MockBean
     protected AuthService authService;
+
+    @MockBean
+    protected OAuthService oAuthService;
 
     @MockBean
     protected MemberService memberService;
