@@ -17,11 +17,13 @@ services:
 
   promtail-nginx:
     image: grafana/promtail:3.0.0
+    depends_on:
+      - nginx
     volumes:
       - /home/ubuntu/promtail/nginx-config.yml:/etc/promtail/config.yml
-      - /home/ubuntu/promtail/logs:/logs
+      - /home/ubuntu/promtail/logs:/var/log/nginx
     command:
-      - config.file=/mnt/config/config.yml
+      - '--config.file=/etc/promtail/config.yml'
     restart: unless-stopped
 
   application:
