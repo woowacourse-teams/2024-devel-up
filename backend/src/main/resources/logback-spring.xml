@@ -47,7 +47,7 @@
 
     <springProfile name="prod">
         <root level="INFO">
-            <appender-ref ref="Console"/>
+            <appender-ref ref="LOKI"/>
         </root>
     </springProfile>
 
