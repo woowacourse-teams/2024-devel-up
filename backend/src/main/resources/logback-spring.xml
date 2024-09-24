@@ -18,11 +18,11 @@
         <format>
             <label>
                 <pattern>
-                    %d{yyyy-MM-dd HH:mm:ss.SSS} | %t | traceId=%X{traceId} | %highlight(%-5p) | %cyan(%logger{36}) | app=${appName} | host=${HOSTNAME} | %m%n
+                    app=${name},host=${HOSTNAME},level=%level
                 </pattern>
             </label>
             <message>
-                <pattern>${FILE_LOG_PATTERN}</pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %t | traceId=%X{traceId} | %highlight(%-5p) | %cyan(%logger{36}) | %m%n</pattern>
             </message>
             <sortByTime>true</sortByTime>
         </format>
