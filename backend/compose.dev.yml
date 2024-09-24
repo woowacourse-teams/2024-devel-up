@@ -18,8 +18,8 @@ services:
   promtail-nginx:
     image: grafana/promtail:3.0.0
     volumes:
-      - /home/ubuntu/promtail/nginx-config.yml:/mnt/config/config.yml
-      - /var/log/nginx:/var/log
+      - /home/ubuntu/promtail/nginx-config.yml:/etc/promtail/config.yml
+      - /home/ubuntu/promtail/logs:/logs
     command:
       - config.file=/mnt/config/config.yml
     restart: unless-stopped
