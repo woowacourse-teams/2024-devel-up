@@ -64,6 +64,7 @@ jobs:
       MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
       MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
       MYSQL_ROOT_HOST: ${{ secrets.MYSQL_ROOT_HOST }}
+      HOST_NAME: 'DEV_SERVER'
 
     steps:
       - uses: actions/checkout@v4
