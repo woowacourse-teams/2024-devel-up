@@ -21,7 +21,7 @@ services:
       - nginx
     volumes:
       - /home/ubuntu/promtail/nginx-config.yml:/etc/promtail/config.yml
-      - /home/ubuntu/promtail/logs:/var/log/nginx
+      - /var/log/nginx:/var/log/nginx
     command:
       - '--config.file=/etc/promtail/config.yml'
     restart: unless-stopped
