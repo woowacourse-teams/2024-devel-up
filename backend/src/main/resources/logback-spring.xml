@@ -45,4 +45,10 @@
         </root>
     </springProfile>
 
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="Console"/>
+        </root>
+    </springProfile>
+
 </configuration>
