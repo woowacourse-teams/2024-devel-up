@@ -8,7 +8,7 @@ import develup.application.auth.oauth.OAuthService;
 import develup.application.discussion.DiscussionReadService;
 import develup.application.discussion.DiscussionWriteService;
 import develup.application.discussion.comment.DiscussionCommentService;
-import develup.application.hashtag.HashTagService;
+import develup.application.hashtag.HashTagReadService;
 import develup.application.member.MemberService;
 import develup.application.mission.MissionService;
 import develup.application.solution.SolutionService;
@@ -46,7 +46,7 @@ public class ApiTestSupport {
     protected SolutionCommentService solutionCommentService;
 
     @MockBean
-    protected HashTagService hashTagService;
+    protected HashTagReadService hashTagReadService;
 
     @MockBean
     protected DiscussionWriteService discussionWriteService;
