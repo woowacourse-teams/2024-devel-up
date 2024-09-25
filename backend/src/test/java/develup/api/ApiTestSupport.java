@@ -5,7 +5,8 @@ import develup.api.auth.AuthArgumentResolver;
 import develup.api.auth.CookieAuthorizationExtractor;
 import develup.application.auth.AuthService;
 import develup.application.auth.oauth.OAuthService;
-import develup.application.discussion.DiscussionService;
+import develup.application.discussion.DiscussionReadService;
+import develup.application.discussion.DiscussionWriteService;
 import develup.application.discussion.comment.DiscussionCommentService;
 import develup.application.hashtag.HashTagService;
 import develup.application.member.MemberService;
@@ -48,7 +49,10 @@ public class ApiTestSupport {
     protected HashTagService hashTagService;
 
     @MockBean
-    protected DiscussionService discussionService;
+    protected DiscussionWriteService discussionWriteService;
+
+    @MockBean
+    protected DiscussionReadService discussionReadService;
 
     @MockBean
     protected DiscussionCommentService discussionCommentService;

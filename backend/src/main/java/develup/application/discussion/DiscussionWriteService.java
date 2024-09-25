@@ -17,14 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class DiscussionService {
+public class DiscussionWriteService {
 
     private final DiscussionRepository discussionRepository;
     private final MemberRepository memberRepository;
     private final MissionRepository missionRepository;
     private final HashTagRepository hashTagRepository;
 
-    public DiscussionService(
+    public DiscussionWriteService(
             DiscussionRepository discussionRepository,
             MemberRepository memberRepository,
             MissionRepository missionRepository,
@@ -51,26 +51,6 @@ public class DiscussionService {
         return createDiscussionResponse(discussion);
     }
 
-    public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
-        return discussionRepository.findAllByMissionAndHashTagName(mission, hashTagName).stream()
-                .map(SummarizedDiscussionResponse::from)
-                .toList();
-    }
-
-    public List<SummarizedDiscussionResponse> getDiscussionsByMemberId(Long memberId) {
-        List<Discussion> myDiscussions = discussionRepository.findAllByMember_Id(memberId);
-
-        return myDiscussions.stream()
-                .map(SummarizedDiscussionResponse::from)
-                .toList();
-    }
-
-    public DiscussionResponse getById(Long id) {
-        Discussion discussion = getDiscussion(id);
-
-        return DiscussionResponse.from(discussion);
-    }
-
     private Mission getMission(Long missionId) {
         if (missionId == null) {
             return null;
@@ -92,11 +72,6 @@ public class DiscussionService {
             throw new DevelupException(ExceptionType.HASHTAG_NOT_FOUND);
         }
         return hashTags;
-    }
-
-    private Discussion getDiscussion(Long discussionId) {
-        return discussionRepository.findFetchById(discussionId)
-                .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
     }
 
     private DiscussionResponse createDiscussionResponse(Discussion discussion) {
