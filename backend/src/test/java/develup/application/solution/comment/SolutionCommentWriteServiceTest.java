@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.time.LocalDateTime;
 import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
@@ -23,10 +22,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class SolutionCommentServiceTest extends IntegrationTestSupport {
+class SolutionCommentWriteServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    private SolutionCommentService solutionCommentService;
+    private SolutionCommentWriteService solutionCommentWriteService;
 
     @Autowired
     private SolutionCommentRepository solutionCommentRepository;
@@ -41,44 +40,6 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
     private MissionRepository missionRepository;
 
     @Test
-    @DisplayName("댓글을 조회한다.")
-    void getComment() {
-        SolutionComment solutionComment = createSolutionComment();
-
-        SolutionComment foundSolutionComment = solutionCommentService.getComment(solutionComment.getId());
-
-        assertThat(foundSolutionComment).isEqualTo(solutionComment);
-    }
-
-    @Test
-    @DisplayName("댓글 조회 시 존재하지 않는 경우 예외가 발생한다.")
-    void getComment_notFound() {
-        Long unknownId = -1L;
-
-        assertThatThrownBy(() -> solutionCommentService.getComment(unknownId))
-                .isInstanceOf(DevelupException.class)
-                .hasMessage("존재하지 않는 댓글입니다.");
-    }
-
-    @Test
-    @DisplayName("댓글 조회 시 삭제된 댓글일 경우 예외가 발생한다.")
-    void getCommentFailedWhenDeleted() {
-        Solution solution = createSolution();
-        Member member = solution.getMember();
-        SolutionComment deletedComment = SolutionCommentTestData.defaultSolutionComment()
-                .withSolution(solution)
-                .withMember(member)
-                .withDeletedAt(LocalDateTime.now())
-                .build();
-        solutionCommentRepository.save(deletedComment);
-
-        Long commentId = deletedComment.getId();
-        assertThatThrownBy(() -> solutionCommentService.getComment(commentId))
-                .isInstanceOf(DevelupException.class)
-                .hasMessage("존재하지 않는 댓글입니다.");
-    }
-
-    @Test
     @DisplayName("댓글을 추가한다.")
     void addComment() {
         Solution solution = createSolution();
@@ -90,7 +51,7 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
                 "댓글입니다.",
                 null
         );
-        CreateSolutionCommentResponse response = solutionCommentService.addComment(solutionId, request, memberId);
+        CreateSolutionCommentResponse response = solutionCommentWriteService.addComment(solutionId, request, memberId);
 
         assertAll(
                 () -> assertThat(solutionCommentRepository.findAll()).hasSize(1),
@@ -111,7 +72,7 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
                 "답글입니다.",
                 solutionComment.getId()
         );
-        CreateSolutionCommentResponse response = solutionCommentService.addComment(solutionId, request, memberId);
+        CreateSolutionCommentResponse response = solutionCommentWriteService.addComment(solutionId, request, memberId);
 
         assertAll(
                 () -> assertThat(solutionCommentRepository.findAll()).hasSize(2),
@@ -129,7 +90,7 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         Long memberId = member.getId();
         String updatedContent = "수정된 댓글입니다.";
         UpdateSolutionCommentRequest request = new UpdateSolutionCommentRequest(updatedContent);
-        UpdateSolutionCommentResponse response = solutionCommentService.updateComment(commentId, request, memberId);
+        UpdateSolutionCommentResponse response = solutionCommentWriteService.updateComment(commentId, request, memberId);
 
         assertAll(
                 () -> assertThat(response.content()).isEqualTo(updatedContent),
@@ -149,7 +110,7 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         String updatedContent = "수정된 댓글입니다.";
         UpdateSolutionCommentRequest request = new UpdateSolutionCommentRequest(updatedContent);
 
-        assertThatThrownBy(() -> solutionCommentService.updateComment(commentId, request, nonWriterId))
+        assertThatThrownBy(() -> solutionCommentWriteService.updateComment(commentId, request, nonWriterId))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("댓글 작성자가 아닙니다.");
     }
@@ -165,9 +126,9 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         String updatedContent = "수정된 댓글입니다.";
         UpdateSolutionCommentRequest request = new UpdateSolutionCommentRequest(updatedContent);
 
-        solutionCommentService.deleteComment(commentId, memberId);
+        solutionCommentWriteService.deleteComment(commentId, memberId);
 
-        assertThatThrownBy(() -> solutionCommentService.updateComment(commentId, request, memberId))
+        assertThatThrownBy(() -> solutionCommentWriteService.updateComment(commentId, request, memberId))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 댓글입니다.");
     }
@@ -180,7 +141,7 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
 
         Long memberId = solutionComment.getMember().getId();
         Long commentId = solutionComment.getId();
-        solutionCommentService.deleteComment(commentId, memberId);
+        solutionCommentWriteService.deleteComment(commentId, memberId);
 
         assertThat(solutionCommentRepository.findById(commentId))
                 .map(SolutionComment::isDeleted)
@@ -195,7 +156,7 @@ class SolutionCommentServiceTest extends IntegrationTestSupport {
         Long nonWriterId = -1L;
         Long commentId = solutionComment.getId();
 
-        assertThatThrownBy(() -> solutionCommentService.deleteComment(commentId, nonWriterId))
+        assertThatThrownBy(() -> solutionCommentWriteService.deleteComment(commentId, nonWriterId))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("댓글 작성자가 아닙니다.");
     }

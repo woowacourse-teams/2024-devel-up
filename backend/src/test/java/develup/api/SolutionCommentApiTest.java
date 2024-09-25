@@ -38,7 +38,7 @@ class SolutionCommentApiTest extends ApiTestSupport {
         List<SolutionReplyResponse> replyResponses = List.of(replyResponse);
         List<SolutionCommentRepliesResponse> responses = List.of(createRootCommentResponse(replyResponses));
 
-        BDDMockito.given(solutionCommentService.getCommentsWithReplies(any()))
+        BDDMockito.given(solutionCommentReadService.getCommentsWithReplies(any()))
                 .willReturn(responses);
 
         mockMvc.perform(
@@ -58,7 +58,7 @@ class SolutionCommentApiTest extends ApiTestSupport {
         MySolutionCommentResponse mySolutionCommentResponse = new MySolutionCommentResponse(1L, 1L, "댓글 내용", now, "솔루션 제목", 123L);
         List<MySolutionCommentResponse> responses = List.of(mySolutionCommentResponse);
 
-        BDDMockito.given(solutionCommentService.getMyComments(any()))
+        BDDMockito.given(solutionCommentReadService.getMyComments(any()))
                 .willReturn(responses);
 
         mockMvc.perform(
@@ -86,7 +86,7 @@ class SolutionCommentApiTest extends ApiTestSupport {
                 memberResponse,
                 LocalDateTime.now()
         );
-        BDDMockito.given(solutionCommentService.addComment(any(), any(), any()))
+        BDDMockito.given(solutionCommentWriteService.addComment(any(), any(), any()))
                 .willReturn(response);
 
         SolutionCommentRequest request = new SolutionCommentRequest("content", null);
@@ -117,7 +117,7 @@ class SolutionCommentApiTest extends ApiTestSupport {
                 LocalDateTime.now()
         );
 
-        BDDMockito.given(solutionCommentService.updateComment(any(), any(), any()))
+        BDDMockito.given(solutionCommentWriteService.updateComment(any(), any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(
@@ -138,7 +138,7 @@ class SolutionCommentApiTest extends ApiTestSupport {
     @DisplayName("댓글을 삭제한다.")
     void deleteComment() throws Exception {
         BDDMockito.doNothing()
-                .when(solutionCommentService)
+                .when(solutionCommentWriteService)
                 .deleteComment(any(), any());
 
         mockMvc.perform(

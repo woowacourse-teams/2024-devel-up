@@ -15,7 +15,8 @@ import develup.application.member.MemberWriteService;
 import develup.application.mission.MissionReadService;
 import develup.application.solution.SolutionReadService;
 import develup.application.solution.SolutionWriteService;
-import develup.application.solution.comment.SolutionCommentService;
+import develup.application.solution.comment.SolutionCommentReadService;
+import develup.application.solution.comment.SolutionCommentWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -52,7 +53,10 @@ public class ApiTestSupport {
     protected SolutionReadService solutionReadService;
 
     @MockBean
-    protected SolutionCommentService solutionCommentService;
+    protected SolutionCommentWriteService solutionCommentWriteService;
+
+    @MockBean
+    protected SolutionCommentReadService solutionCommentReadService;
 
     @MockBean
     protected HashTagReadService hashTagReadService;

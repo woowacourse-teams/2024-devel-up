@@ -39,7 +39,7 @@ public class SolutionReadService {
                 .toList();
     }
 
-    protected Solution getSolution(Long solutionId) {
+    public Solution getSolution(Long solutionId) {
         return solutionRepository.findById(solutionId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
     }
