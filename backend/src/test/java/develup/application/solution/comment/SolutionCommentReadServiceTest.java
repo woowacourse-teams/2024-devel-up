@@ -41,27 +41,27 @@ class SolutionCommentReadServiceTest extends IntegrationTestSupport {
 
     @Test
     @DisplayName("댓글을 조회한다.")
-    void getComment() {
+    void getById() {
         SolutionComment solutionComment = createSolutionComment();
 
-        SolutionComment foundSolutionComment = solutionCommentReadService.getComment(solutionComment.getId());
+        SolutionComment foundSolutionComment = solutionCommentReadService.getById(solutionComment.getId());
 
         assertThat(foundSolutionComment).isEqualTo(solutionComment);
     }
 
     @Test
     @DisplayName("댓글 조회 시 존재하지 않는 경우 예외가 발생한다.")
-    void getComment_notFound() {
+    void getById_notFound() {
         Long unknownId = -1L;
 
-        assertThatThrownBy(() -> solutionCommentReadService.getComment(unknownId))
+        assertThatThrownBy(() -> solutionCommentReadService.getById(unknownId))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 댓글입니다.");
     }
 
     @Test
     @DisplayName("댓글 조회 시 삭제된 댓글일 경우 예외가 발생한다.")
-    void getCommentFailedWhenDeleted() {
+    void getByIdFailedWhenDeleted() {
         Solution solution = createSolution();
         Member member = solution.getMember();
         SolutionComment deletedComment = SolutionCommentTestData.defaultSolutionComment()
@@ -72,7 +72,7 @@ class SolutionCommentReadServiceTest extends IntegrationTestSupport {
         solutionCommentRepository.save(deletedComment);
 
         Long commentId = deletedComment.getId();
-        assertThatThrownBy(() -> solutionCommentReadService.getComment(commentId))
+        assertThatThrownBy(() -> solutionCommentReadService.getById(commentId))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 댓글입니다.");
     }

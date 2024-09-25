@@ -47,7 +47,7 @@ public class SolutionCommentWriteService {
     }
 
     private SolutionComment createReply(SolutionCommentRequest request, Member member) {
-        SolutionComment parentComment = solutionCommentReadService.getComment(request.parentCommentId());
+        SolutionComment parentComment = solutionCommentReadService.getById(request.parentCommentId());
         SolutionComment reply = parentComment.reply(request.content(), member);
 
         return solutionCommentRepository.save(reply);
@@ -60,7 +60,7 @@ public class SolutionCommentWriteService {
     }
 
     public UpdateSolutionCommentResponse updateComment(Long commentId, UpdateSolutionCommentRequest request, Long id) {
-        SolutionComment comment = solutionCommentReadService.getComment(commentId);
+        SolutionComment comment = solutionCommentReadService.getById(commentId);
         if (comment.isNotWrittenBy(id)) {
             throw new DevelupException(ExceptionType.COMMENT_NOT_WRITTEN_BY_MEMBER);
         }
@@ -71,7 +71,7 @@ public class SolutionCommentWriteService {
     }
 
     public void deleteComment(Long commentId, Long memberId) {
-        SolutionComment comment = solutionCommentReadService.getComment(commentId);
+        SolutionComment comment = solutionCommentReadService.getById(commentId);
 
         if (comment.isNotWrittenBy(memberId)) {
             throw new DevelupException(ExceptionType.COMMENT_NOT_WRITTEN_BY_MEMBER);

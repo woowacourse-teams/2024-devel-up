@@ -56,7 +56,7 @@ class MissionApiTest extends ApiTestSupport {
     void getMission() throws Exception {
         Mission mission = createMission();
         MissionWithStartedResponse response = MissionWithStartedResponse.of(mission, false);
-        BDDMockito.given(missionReadService.getMission(any(), any()))
+        BDDMockito.given(missionReadService.getById(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(get("/missions/1"))

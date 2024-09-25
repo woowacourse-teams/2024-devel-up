@@ -39,7 +39,7 @@ public class MissionReadService {
                 .toList();
     }
 
-    public MissionWithStartedResponse getMission(Accessor accessor, Long missionId) {
+    public MissionWithStartedResponse getById(Accessor accessor, Long missionId) {
         Mission mission = missionRepository.findHashTaggedMissionById(missionId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
 
@@ -52,7 +52,7 @@ public class MissionReadService {
         return MissionWithStartedResponse.of(mission, isStarted);
     }
 
-    public Mission findById(Long id) {
+    public Mission getMission(Long id) {
         return missionRepository.findById(id)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
     }

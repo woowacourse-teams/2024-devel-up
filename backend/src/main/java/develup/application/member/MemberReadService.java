@@ -19,7 +19,7 @@ public class MemberReadService {
         this.memberRepository = memberRepository;
     }
 
-    public MemberResponse getMemberById(Long id) {
+    public MemberResponse getById(Long id) {
         return memberRepository.findById(id)
                 .map(MemberResponse::from)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));

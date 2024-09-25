@@ -21,7 +21,7 @@ public class SolutionCommentReadService {
         this.solutionCommentRepository = solutionCommentRepository;
     }
 
-    public SolutionComment getComment(Long commentId) {
+    public SolutionComment getById(Long commentId) {
         SolutionComment comment = solutionCommentRepository.findById(commentId)
                 .orElseThrow(() -> new DevelupException(ExceptionType.COMMENT_NOT_FOUND));
 

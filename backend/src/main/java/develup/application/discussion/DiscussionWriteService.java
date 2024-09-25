@@ -56,7 +56,7 @@ public class DiscussionWriteService {
             return null;
         }
 
-        return missionReadService.findById(missionId);
+        return missionReadService.getMission(missionId);
     }
 
     private List<HashTag> getHashTags(List<Long> hashTagIds) {

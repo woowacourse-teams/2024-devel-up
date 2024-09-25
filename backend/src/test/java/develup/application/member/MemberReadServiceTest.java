@@ -22,10 +22,10 @@ class MemberReadServiceTest extends IntegrationTestSupport {
 
     @Test
     @DisplayName("멤버 식별자로 멤버를 조회한다.")
-    void getMemberById() {
+    void getById() {
         Member member = createMember();
 
-        MemberResponse response = memberReadService.getMemberById(member.getId());
+        MemberResponse response = memberReadService.getById(member.getId());
 
         assertThat(response).isEqualTo(MemberResponse.from(member));
     }
@@ -33,7 +33,7 @@ class MemberReadServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("존재하지 않는 멤버 식별자로 멤버 조회시 예외가 발생한다.")
     void getMemberByUndefinedId() {
-        assertThatThrownBy(() -> memberReadService.getMemberById(-1L))
+        assertThatThrownBy(() -> memberReadService.getById(-1L))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 회원입니다.");
     }

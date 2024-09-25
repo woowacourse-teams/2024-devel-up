@@ -52,7 +52,7 @@ public class MissionApi {
             @PathVariable Long missionId,
             @Auth(required = false) Accessor accessor
     ) {
-        MissionWithStartedResponse response = missionReadService.getMission(accessor, missionId);
+        MissionWithStartedResponse response = missionReadService.getById(accessor, missionId);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }

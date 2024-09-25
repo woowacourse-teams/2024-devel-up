@@ -24,7 +24,7 @@ public class MemberApi {
     @GetMapping("/members/mine")
     @Operation(summary = "내 정보 조회 API", description = "'token' 쿠키를 이용해서 내 정보를 조회합니다.")
     public ResponseEntity<ApiResponse<MemberResponse>> getMyInfo(@Auth Accessor accessor) {
-        MemberResponse response = memberReadService.getMemberById(accessor.id());
+        MemberResponse response = memberReadService.getById(accessor.id());
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }

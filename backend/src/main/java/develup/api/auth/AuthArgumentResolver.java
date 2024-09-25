@@ -9,7 +9,6 @@ import develup.application.auth.Accessor;
 import develup.application.auth.AuthService;
 import develup.application.member.MemberReadService;
 import develup.application.member.MemberResponse;
-import develup.application.member.MemberWriteService;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -84,7 +83,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
     private Accessor handleToken(String token, HttpServletResponse response) {
         try {
             Long memberId = authService.getMemberIdByToken(token);
-            MemberResponse memberResponse = memberReadService.getMemberById(memberId);
+            MemberResponse memberResponse = memberReadService.getById(memberId);
 
             return new Accessor(memberResponse.id());
         } catch (DevelupException e) {
