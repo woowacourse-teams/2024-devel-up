@@ -7,7 +7,8 @@ import develup.application.auth.AuthService;
 import develup.application.auth.oauth.OAuthService;
 import develup.application.discussion.DiscussionReadService;
 import develup.application.discussion.DiscussionWriteService;
-import develup.application.discussion.comment.DiscussionCommentService;
+import develup.application.discussion.comment.DiscussionCommentReadService;
+import develup.application.discussion.comment.DiscussionCommentWriteService;
 import develup.application.hashtag.HashTagReadService;
 import develup.application.member.MemberReadService;
 import develup.application.member.MemberWriteService;
@@ -63,7 +64,10 @@ public class ApiTestSupport {
     protected DiscussionReadService discussionReadService;
 
     @MockBean
-    protected DiscussionCommentService discussionCommentService;
+    protected DiscussionCommentWriteService discussionCommentWriteService;
+
+    @MockBean
+    protected DiscussionCommentReadService discussionCommentReadService;
 
     @MockBean
     protected AuthArgumentResolver argumentResolver;

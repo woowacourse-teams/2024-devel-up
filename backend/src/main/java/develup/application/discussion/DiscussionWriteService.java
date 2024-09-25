@@ -38,7 +38,7 @@ public class DiscussionWriteService {
 
     public DiscussionResponse create(Long memberId, CreateDiscussionRequest request) {
         Mission mission = getMission(request.missionId());
-        Member member = memberReadService.findById(memberId);
+        Member member = memberReadService.getMember(memberId);
         List<HashTag> hashTags = getHashTags(request.hashTagIds());
         Discussion discussion = discussionRepository.save(new Discussion(
                 new Title(request.title()),

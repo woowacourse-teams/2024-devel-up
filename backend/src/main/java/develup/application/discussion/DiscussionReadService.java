@@ -38,8 +38,8 @@ public class DiscussionReadService {
         return DiscussionResponse.from(discussion);
     }
 
-    private Discussion getDiscussion(Long discussionId) {
-        return discussionRepository.findFetchById(discussionId)
+    public Discussion getDiscussion(Long id) {
+        return discussionRepository.findById(id)
                 .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
     }
 }

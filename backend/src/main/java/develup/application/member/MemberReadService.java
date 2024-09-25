@@ -25,7 +25,7 @@ public class MemberReadService {
                 .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
     }
 
-    public Member findById(Long id) {
+    public Member getMember(Long id) {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
     }

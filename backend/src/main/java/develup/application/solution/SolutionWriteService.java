@@ -34,7 +34,7 @@ public class SolutionWriteService {
 
     public SolutionResponse startMission(Long memberId, StartSolutionRequest request) {
         validateAlreadyStarted(memberId, request.missionId());
-        Member member = memberReadService.findById(memberId);
+        Member member = memberReadService.getMember(memberId);
         Mission mission = missionReadService.findById(request.missionId());
 
         return SolutionResponse.start(createSolution(member, mission));
