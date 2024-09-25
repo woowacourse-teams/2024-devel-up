@@ -23,7 +23,7 @@ class MemberApiTest extends ApiTestSupport {
                 "example",
                 "https://example.com/image.png"
         );
-        BDDMockito.given(memberService.getMemberById(any()))
+        BDDMockito.given(memberReadService.getMemberById(any()))
                 .willReturn(response);
 
         mockMvc.perform(get("/members/mine"))

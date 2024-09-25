@@ -1,8 +1,8 @@
 package develup.application.member;
 
+import java.util.Optional;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
-import develup.application.auth.oauth.OAuthUserInfo;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
 import develup.domain.member.OAuthProvider;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
-public class MemberService {
+@Transactional(readOnly = true)
+public class MemberReadService {
 
     private final MemberRepository memberRepository;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberReadService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
@@ -25,10 +25,12 @@ public class MemberService {
                 .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
     }
 
-    public MemberResponse findOrCreateMember(OAuthUserInfo userInfo, OAuthProvider provider) {
-        Member member = memberRepository.findBySocialIdAndProvider(userInfo.id(), provider)
-                .orElseGet(() -> memberRepository.save(userInfo.toMember(provider)));
+    public Member findById(Long id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new DevelupException(ExceptionType.MEMBER_NOT_FOUND));
+    }
 
-        return MemberResponse.from(member);
+    protected Optional<Member> findBySocialIdAndProvider(Long socialId, OAuthProvider provider) {
+        return memberRepository.findBySocialIdAndProvider(socialId, provider);
     }
 }

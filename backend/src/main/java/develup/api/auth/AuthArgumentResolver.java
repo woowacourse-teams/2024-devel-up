@@ -7,8 +7,9 @@ import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.application.auth.Accessor;
 import develup.application.auth.AuthService;
+import develup.application.member.MemberReadService;
 import develup.application.member.MemberResponse;
-import develup.application.member.MemberService;
+import develup.application.member.MemberWriteService;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,16 +26,16 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final CookieAuthorizationExtractor authorizationExtractor;
     private final AuthService authService;
-    private final MemberService memberService;
+    private final MemberReadService memberReadService;
 
     public AuthArgumentResolver(
             CookieAuthorizationExtractor authorizationExtractor,
             AuthService authService,
-            MemberService memberService
+            MemberReadService memberReadService
     ) {
         this.authorizationExtractor = authorizationExtractor;
         this.authService = authService;
-        this.memberService = memberService;
+        this.memberReadService = memberReadService;
     }
 
     @Override
@@ -83,7 +84,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
     private Accessor handleToken(String token, HttpServletResponse response) {
         try {
             Long memberId = authService.getMemberIdByToken(token);
-            MemberResponse memberResponse = memberService.getMemberById(memberId);
+            MemberResponse memberResponse = memberReadService.getMemberById(memberId);
 
             return new Accessor(memberResponse.id());
         } catch (DevelupException e) {

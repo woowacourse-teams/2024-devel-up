@@ -9,7 +9,8 @@ import develup.application.discussion.DiscussionReadService;
 import develup.application.discussion.DiscussionWriteService;
 import develup.application.discussion.comment.DiscussionCommentService;
 import develup.application.hashtag.HashTagReadService;
-import develup.application.member.MemberService;
+import develup.application.member.MemberReadService;
+import develup.application.member.MemberWriteService;
 import develup.application.mission.MissionService;
 import develup.application.solution.SolutionService;
 import develup.application.solution.comment.SolutionCommentService;
@@ -34,7 +35,10 @@ public class ApiTestSupport {
     protected OAuthService oAuthService;
 
     @MockBean
-    protected MemberService memberService;
+    protected MemberWriteService memberWriteService;
+
+    @MockBean
+    protected MemberReadService memberReadService;
 
     @MockBean
     protected MissionService missionService;
