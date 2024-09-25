@@ -14,7 +14,6 @@ import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
-import develup.domain.solution.SolutionStatus;
 import develup.domain.solution.comment.SolutionComment;
 import develup.domain.solution.comment.SolutionCommentRepository;
 import develup.support.IntegrationTestSupport;
@@ -26,10 +25,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class SolutionServiceTest extends IntegrationTestSupport {
+class SolutionWriteServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    private SolutionService solutionService;
+    private SolutionWriteService solutionWriteService;
 
     @Autowired
     private SolutionRepository solutionRepository;
@@ -49,7 +48,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         StartSolutionRequest request = new StartSolutionRequest(Long.MAX_VALUE);
         Long memberId = memberRepository.save(MemberTestData.defaultMember().build()).getId();
 
-        assertThatThrownBy(() -> solutionService.startMission(memberId, request))
+        assertThatThrownBy(() -> solutionWriteService.startMission(memberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 미션입니다.");
     }
@@ -61,7 +60,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         Long missionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
         StartSolutionRequest request = new StartSolutionRequest(missionId);
 
-        assertThatThrownBy(() -> solutionService.startMission(unknownMemberId, request))
+        assertThatThrownBy(() -> solutionWriteService.startMission(unknownMemberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 회원입니다.");
     }
@@ -73,7 +72,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         StartSolutionRequest request = new StartSolutionRequest(mission.getId());
 
-        SolutionResponse response = solutionService.startMission(member.getId(), request);
+        SolutionResponse response = solutionWriteService.startMission(member.getId(), request);
 
         Optional<Solution> found = solutionRepository.findById(response.id());
         assertThat(found)
@@ -90,19 +89,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
         Solution inProgressSolution = Solution.start(mission, member);
         solutionRepository.save(inProgressSolution);
 
-        assertThatThrownBy(() -> solutionService.startMission(member.getId(), request))
+        assertThatThrownBy(() -> solutionWriteService.startMission(member.getId(), request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("이미 진행 중인 미션입니다.");
-    }
-
-    @Test
-    @DisplayName("존재하지 않는 솔루션은 불러올 수 없다.")
-    void getById() {
-        Long unknownId = -1L;
-
-        assertThatThrownBy(() -> solutionService.getById(unknownId))
-                .isInstanceOf(DevelupException.class)
-                .hasMessage("존재하지 않는 솔루션입니다.");
     }
 
     @Test
@@ -114,7 +103,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         solutionRepository.save(solution);
         SubmitSolutionRequest submitSolutionRequest = getSolutionRequest();
 
-        SolutionResponse solutionResponse = solutionService.submit(member.getId(), submitSolutionRequest);
+        SolutionResponse solutionResponse = solutionWriteService.submit(member.getId(), submitSolutionRequest);
 
         assertAll(
                 () -> assertEquals(solutionResponse.id(), 1L),
@@ -137,7 +126,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "https://github.com/develup-mission/java-smoking/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.submit(member.getId(), submitSolutionRequest))
+        assertThatThrownBy(() -> solutionWriteService.submit(member.getId(), submitSolutionRequest))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -156,7 +145,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "https://github.com/develup-mission/java-smoking/invalid/format/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.submit(member.getId(), submitSolutionRequest))
+        assertThatThrownBy(() -> solutionWriteService.submit(member.getId(), submitSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }
@@ -176,48 +165,9 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "https://github.com/develup-mission/java-undefinedMission/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.submit(member.getId(), submitSolutionRequest))
+        assertThatThrownBy(() -> solutionWriteService.submit(member.getId(), submitSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
-    }
-
-    @Test
-    @DisplayName("나의 솔루션 리스트를 조회한다.")
-    void getSubmittedSolutionsByMemberId() {
-        Member member = memberRepository.save(MemberTestData.defaultMember().build());
-        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
-        Solution solution = SolutionTestData.defaultSolution()
-                .withMember(member)
-                .withMission(mission)
-                .withStatus(SolutionStatus.COMPLETED)
-                .build();
-
-        solutionRepository.save(solution);
-
-        assertThat(solutionService.getSubmittedSolutionsByMemberId(member.getId())).hasSize(1);
-    }
-
-    @Test
-    @DisplayName("나의 솔루션 리스트 조회 시, 제출 완료 상태가 아닌 솔루션은 조회되지 않는다.")
-    void shouldNotRetrieveSolutionsThatAreNotCompleted() {
-        Member member = memberRepository.save(MemberTestData.defaultMember().build());
-        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
-        Solution inProgress = SolutionTestData.defaultSolution()
-                .withMember(member)
-                .withMission(mission)
-                .withStatus(SolutionStatus.IN_PROGRESS)
-                .build();
-
-        Solution completed = SolutionTestData.defaultSolution()
-                .withMember(member)
-                .withMission(mission)
-                .withStatus(SolutionStatus.COMPLETED)
-                .build();
-
-        solutionRepository.save(inProgress);
-        solutionRepository.save(completed);
-
-        assertThat(solutionService.getSubmittedSolutionsByMemberId(member.getId())).hasSize(1);
     }
 
     @Test
@@ -236,7 +186,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "https://github.com/develup-mission/java-smoking/pull/1"
         );
 
-        SolutionResponse solutionResponse = solutionService.update(member.getId(), updateSolutionRequest);
+        SolutionResponse solutionResponse = solutionWriteService.update(member.getId(), updateSolutionRequest);
 
         assertAll(
                 () -> assertEquals(solutionResponse.id(), 1L),
@@ -264,7 +214,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "invalid"
         );
 
-        assertThatThrownBy(() -> solutionService.update(member.getId(), updateSolutionRequest))
+        assertThatThrownBy(() -> solutionWriteService.update(member.getId(), updateSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("올바르지 않은 주소입니다.");
     }
@@ -286,7 +236,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 "https://github.com/develup-mission/java-smoking/pull/1"
         );
 
-        assertThatThrownBy(() -> solutionService.update(other.getId(), updateSolutionRequest))
+        assertThatThrownBy(() -> solutionWriteService.update(other.getId(), updateSolutionRequest))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("솔루션 작성자가 아닙니다.");
     }
@@ -304,7 +254,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
         List<SolutionComment> solutionComments = List.of(createSolutionComment(member, solution), createSolutionComment(member, solution));
         solutionCommentRepository.saveAll(solutionComments);
 
-        solutionService.delete(member.getId(), solution.getId());
+        solutionWriteService.delete(member.getId(), solution.getId());
 
         List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solution.getId());
         Optional<Solution> deletedSolution = solutionRepository.findById(solution.getId());
@@ -324,7 +274,7 @@ class SolutionServiceTest extends IntegrationTestSupport {
                 .build();
         solutionRepository.save(solution);
 
-        assertThatThrownBy(() -> solutionService.delete(other.getId(), solution.getId()))
+        assertThatThrownBy(() -> solutionWriteService.delete(other.getId(), solution.getId()))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("솔루션 작성자가 아닙니다.");
     }
