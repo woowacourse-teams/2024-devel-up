@@ -11,7 +11,7 @@ import develup.application.discussion.comment.DiscussionCommentService;
 import develup.application.hashtag.HashTagReadService;
 import develup.application.member.MemberReadService;
 import develup.application.member.MemberWriteService;
-import develup.application.mission.MissionService;
+import develup.application.mission.MissionReadService;
 import develup.application.solution.SolutionService;
 import develup.application.solution.comment.SolutionCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class ApiTestSupport {
     protected MemberReadService memberReadService;
 
     @MockBean
-    protected MissionService missionService;
+    protected MissionReadService missionReadService;
 
     @MockBean
     protected SolutionService solutionService;

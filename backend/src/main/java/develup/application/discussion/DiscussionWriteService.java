@@ -4,6 +4,7 @@ import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.application.member.MemberReadService;
+import develup.application.mission.MissionReadService;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionRepository;
 import develup.domain.discussion.Title;
@@ -11,7 +12,6 @@ import develup.domain.hashtag.HashTag;
 import develup.domain.hashtag.HashTagRepository;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
-import develup.domain.mission.MissionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,18 +21,18 @@ public class DiscussionWriteService {
 
     private final DiscussionRepository discussionRepository;
     private final MemberReadService memberReadService;
-    private final MissionRepository missionRepository;
+    private final MissionReadService missionReadService;
     private final HashTagRepository hashTagRepository;
 
     public DiscussionWriteService(
             DiscussionRepository discussionRepository,
             MemberReadService memberReadService,
-            MissionRepository missionRepository,
+            MissionReadService missionReadService,
             HashTagRepository hashTagRepository
     ) {
         this.discussionRepository = discussionRepository;
         this.memberReadService = memberReadService;
-        this.missionRepository = missionRepository;
+        this.missionReadService = missionReadService;
         this.hashTagRepository = hashTagRepository;
     }
 
@@ -56,8 +56,7 @@ public class DiscussionWriteService {
             return null;
         }
 
-        return missionRepository.findById(missionId)
-                .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
+        return missionReadService.findById(missionId);
     }
 
     private List<HashTag> getHashTags(List<Long> hashTagIds) {

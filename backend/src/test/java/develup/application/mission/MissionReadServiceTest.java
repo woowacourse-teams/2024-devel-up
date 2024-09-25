@@ -24,10 +24,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class MissionServiceTest extends IntegrationTestSupport {
+class MissionReadServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    private MissionService missionService;
+    private MissionReadService missionReadService;
 
     @Autowired
     private MissionRepository missionRepository;
@@ -47,7 +47,7 @@ class MissionServiceTest extends IntegrationTestSupport {
         createMission();
         createMission();
 
-        List<MissionResponse> responses = missionService.getMissions("all");
+        List<MissionResponse> responses = missionReadService.getMissions("all");
 
         assertThat(responses).hasSize(2);
     }
@@ -55,7 +55,7 @@ class MissionServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("존재하지 않는 미션 식별자로 미션 조회 시 예외가 발생한다.")
     void getMissionFailWhenInvalidMissionId() {
-        assertThatThrownBy(() -> missionService.getMission(Accessor.GUEST, -1L))
+        assertThatThrownBy(() -> missionReadService.getMission(Accessor.GUEST, -1L))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 미션입니다.");
     }
@@ -65,7 +65,7 @@ class MissionServiceTest extends IntegrationTestSupport {
     void getMission_guest() {
         Mission mission = createMission();
 
-        MissionWithStartedResponse response = missionService.getMission(Accessor.GUEST, mission.getId());
+        MissionWithStartedResponse response = missionReadService.getMission(Accessor.GUEST, mission.getId());
 
         assertThat(response.isStarted()).isFalse();
     }
@@ -77,7 +77,7 @@ class MissionServiceTest extends IntegrationTestSupport {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Accessor accessor = new Accessor(member.getId());
 
-        MissionWithStartedResponse response = missionService.getMission(accessor, mission.getId());
+        MissionWithStartedResponse response = missionReadService.getMission(accessor, mission.getId());
 
         assertThat(response.isStarted()).isFalse();
     }
@@ -95,7 +95,7 @@ class MissionServiceTest extends IntegrationTestSupport {
         solutionRepository.save(solution);
         Accessor accessor = new Accessor(member.getId());
 
-        MissionWithStartedResponse response = missionService.getMission(accessor, mission.getId());
+        MissionWithStartedResponse response = missionReadService.getMission(accessor, mission.getId());
 
         assertThat(response.isStarted()).isTrue();
     }
@@ -120,7 +120,7 @@ class MissionServiceTest extends IntegrationTestSupport {
                 .build();
 
         solutionRepository.saveAll(List.of(solution, otherSolution));
-        List<MissionResponse> inProgressMissions = missionService.getInProgressMissions(member.getId());
+        List<MissionResponse> inProgressMissions = missionReadService.getInProgressMissions(member.getId());
 
         assertThat(inProgressMissions).hasSize(2);
     }

@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
-public class MissionService {
+@Transactional(readOnly = true)
+public class MissionReadService {
 
     private final MissionRepository missionRepository;
     private final SolutionRepository solutionRepository;
 
-    public MissionService(MissionRepository missionRepository, SolutionRepository solutionRepository) {
+    public MissionReadService(MissionRepository missionRepository, SolutionRepository solutionRepository) {
         this.missionRepository = missionRepository;
         this.solutionRepository = solutionRepository;
     }
@@ -50,5 +50,10 @@ public class MissionService {
         boolean isStarted = solutionRepository
                 .existsByMember_IdAndMission_IdAndStatus(accessor.id(), missionId, SolutionStatus.IN_PROGRESS);
         return MissionWithStartedResponse.of(mission, isStarted);
+    }
+
+    public Mission findById(Long id) {
+        return missionRepository.findById(id)
+                .orElseThrow(() -> new DevelupException(ExceptionType.MISSION_NOT_FOUND));
     }
 }
