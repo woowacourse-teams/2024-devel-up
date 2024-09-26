@@ -35,8 +35,8 @@ public class DiscussionApiTest extends ApiTestSupport {
     @DisplayName("디스커션 목록을 조회한다.")
     void getSolutions() throws Exception {
         List<SummarizedDiscussionResponse> responses = List.of(
-                SummarizedDiscussionResponse.from(createDiscussion()),
-                SummarizedDiscussionResponse.from(createDiscussion())
+                SummarizedDiscussionResponse.of(createDiscussion(), 100L),
+                SummarizedDiscussionResponse.of(createDiscussion(), 100L)
         );
         BDDMockito.given(discussionReadService.getSummaries(any(), any()))
                 .willReturn(responses);
@@ -120,7 +120,7 @@ public class DiscussionApiTest extends ApiTestSupport {
                         "루터회관 흡연단속",
                         hashTags,
                         memberResponse,
-                        100,
+                        100L,
                         now
                 )
         );

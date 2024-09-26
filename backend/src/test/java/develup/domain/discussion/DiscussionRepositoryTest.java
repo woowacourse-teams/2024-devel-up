@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import java.util.function.Function;
+import develup.domain.discussion.comment.DiscussionComment;
+import develup.domain.discussion.comment.DiscussionCommentCounts;
+import develup.domain.discussion.comment.DiscussionCommentRepository;
 import develup.domain.hashtag.HashTag;
 import develup.domain.hashtag.HashTagRepository;
 import develup.domain.member.Member;
@@ -12,6 +15,7 @@ import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionRepository;
 import develup.support.IntegrationTestSupport;
+import develup.support.data.DiscussionCommentTestData;
 import develup.support.data.DiscussionTestData;
 import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
@@ -25,6 +29,9 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private DiscussionRepository discussionRepository;
+
+    @Autowired
+    private DiscussionCommentRepository discussionCommentRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -156,5 +163,40 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .build();
 
         discussionRepository.save(discussion);
+    }
+
+    @Test
+    @DisplayName("디스커션에 달린 댓글의 개수를 조회한다.")
+    @Transactional
+    void findDiscussionCommentCounts() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+
+        Discussion savedDiscussion = getSavedDiscussion(mission, member, hashTag);
+
+        saveDiscussionComment(savedDiscussion, member);
+
+        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(discussionRepository.findDiscussionCommentCounts());
+        Long count = discussionCommentCounts.getCount(savedDiscussion);
+
+        assertThat(count).isEqualTo(1);
+    }
+
+    private Discussion getSavedDiscussion(Mission mission, Member member, HashTag hashTag) {
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .withMember(member)
+                .withHashTags(List.of(hashTag))
+                .build();
+        return discussionRepository.save(discussion);
+    }
+
+    private void saveDiscussionComment(Discussion savedDiscussion, Member member) {
+        DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
+                .withDiscussion(savedDiscussion)
+                .withMember(member)
+                .build();
+        discussionCommentRepository.save(discussionComment);
     }
 }
