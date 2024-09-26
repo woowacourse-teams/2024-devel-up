@@ -9,5 +9,5 @@ interface PrivateRouteProps extends PropsWithChildren {
 export default function PrivateRoute({ redirectTo, children }: PrivateRouteProps) {
   const { data: userInfo } = useUserInfo();
 
-  return userInfo ? children : <Navigate to={redirectTo} />;
+  return userInfo ? <>{children}</> : <Navigate to={redirectTo} />;
 }
