@@ -1,9 +1,9 @@
 export interface HTTPErrorInfo {
   message?: string;
   payload: {
-    HEADING: string;
-    BODY: string;
-    BUTTON: string;
+    heading: string;
+    body: string;
+    button: string;
   };
 }
 
@@ -12,7 +12,7 @@ class HTTPError extends Error {
   information: HTTPErrorInfo;
 
   constructor(statusCode: number, errorInfo: HTTPErrorInfo) {
-    super(errorInfo.message ?? errorInfo.payload?.HEADING);
+    super(errorInfo.message ?? errorInfo.payload?.heading);
 
     this.name = 'HTTPError';
     this.statusCode = statusCode;

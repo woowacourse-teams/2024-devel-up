@@ -2,7 +2,7 @@
 import buildURL from './buildURL';
 import { HTTP_METHOD } from '@/constants/api';
 import * as Sentry from '@sentry/react';
-import handleAPIError from './handleAPIError';
+import throwAPIError from './throwAPIError';
 import HTTPError from '../error/HTTPError';
 
 interface APIClientType {
@@ -59,7 +59,7 @@ export default class APIClient implements APIClientType {
       });
 
       if (!response.ok) {
-        handleAPIError(response.status);
+        throwAPIError(response.status);
       }
 
       const data = response.status === 204 ? null : await response.json();
