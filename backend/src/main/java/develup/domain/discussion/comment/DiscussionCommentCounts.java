@@ -7,12 +7,10 @@ import develup.domain.discussion.Discussion;
 
 public class DiscussionCommentCounts {
 
-    private final List<DiscussionCommentCount> discussionCommentCounts;
-    private final Map<Long, Long> discussionCommentCountsMap;
+    private final Map<Long, Long> discussionCommentCounts;
 
     public DiscussionCommentCounts(List<DiscussionCommentCount> discussionCommentCounts) {
-        this.discussionCommentCounts = discussionCommentCounts;
-        this.discussionCommentCountsMap = toMap(discussionCommentCounts);
+        this.discussionCommentCounts = toMap(discussionCommentCounts);
     }
 
     private Map<Long, Long> toMap(List<DiscussionCommentCount> discussionCommentCounts) {
@@ -21,6 +19,6 @@ public class DiscussionCommentCounts {
     }
 
     public Long getCount(Discussion discussion) {
-        return discussionCommentCountsMap.getOrDefault(discussion.getId(), 0L);
+        return discussionCommentCounts.getOrDefault(discussion.getId(), 0L);
     }
 }
