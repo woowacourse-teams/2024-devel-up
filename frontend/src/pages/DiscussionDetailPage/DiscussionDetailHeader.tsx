@@ -4,6 +4,7 @@ import TagButton from '@/components/common/TagButton';
 import type { DiscussionDetail } from '@/types/discussion';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import useUserInfo from '@/hooks/useUserInfo';
 
 interface DiscussionDetailHeaderProps {
   discussion: DiscussionDetail;
@@ -11,6 +12,7 @@ interface DiscussionDetailHeaderProps {
 
 export default function DiscussionDetailHeader({ discussion }: DiscussionDetailHeaderProps) {
   const { mission, member, title, hashTags } = discussion;
+  const { data: userInfo } = useUserInfo();
 
   const navigate = useNavigate();
 
@@ -24,9 +26,11 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
         <S.HeaderLeftArea>
           <S.MissionActionHeader>
             {mission && <S.MissionTitle># {mission.title}</S.MissionTitle>}
-            <Button variant="primary" onClick={handleToSubmitDiscussion}>
-              작성하기
-            </Button>
+            {userInfo && (
+              <Button variant="primary" onClick={handleToSubmitDiscussion}>
+                작성하기
+              </Button>
+            )}
           </S.MissionActionHeader>
           <S.Title>{title}</S.Title>
           <S.DiscussionDetailInfo>
