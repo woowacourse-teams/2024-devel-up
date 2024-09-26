@@ -5,13 +5,15 @@ import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
-import { ErrorBoundary } from './components/common/Error/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import './styles/fonts.css';
+import NotFoundPage from './pages/404Page';
+import NeedToLoginPage from './pages/LoginPage/LoginPage';
+import PrivateRoute from './components/common/PrivateRoute';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -72,9 +74,11 @@ const routes = [
     path: ROUTES.main,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <MainPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <MainPage />
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -83,7 +87,9 @@ const routes = [
     element: (
       <App>
         <Suspense fallback={<LoadingSpinner />}>
-          <MissionSubmitPage />
+          <PrivateRoute redirectTo="/login">
+            <MissionSubmitPage />
+          </PrivateRoute>
         </Suspense>
       </App>
     ),
@@ -103,7 +109,9 @@ const routes = [
     element: (
       <App>
         <Suspense fallback={<LoadingSpinner />}>
-          <UserProfilePage />
+          <PrivateRoute redirectTo="/login">
+            <UserProfilePage />
+          </PrivateRoute>
         </Suspense>
       </App>
     ),
@@ -153,7 +161,9 @@ const routes = [
     element: (
       <App>
         <Suspense fallback={<LoadingSpinner />}>
-          <DashboardPage />
+          <PrivateRoute redirectTo="/login">
+            <DashboardPage />
+          </PrivateRoute>
         </Suspense>
       </App>
     ),
@@ -235,7 +245,9 @@ const routes = [
     element: (
       <App>
         <Suspense fallback={<LoadingSpinner />}>
-          <DiscussionSubmitPage />
+          <PrivateRoute redirectTo="/login">
+            <DiscussionSubmitPage />
+          </PrivateRoute>
         </Suspense>
       </App>
     ),
@@ -247,6 +259,22 @@ const routes = [
         <Suspense fallback={<LoadingSpinner />}>
           <DiscussionListPage />
         </Suspense>
+      </App>
+    ),
+  },
+  {
+    path: '/login',
+    element: (
+      <App>
+        <NeedToLoginPage />
+      </App>
+    ),
+  },
+  {
+    path: '*',
+    element: (
+      <App>
+        <NotFoundPage />
       </App>
     ),
   },
@@ -272,14 +300,10 @@ export const router = createBrowserRouter(routes, {
 //   root.render(
 //     <React.StrictMode>
 //       <QueryClientProvider client={queryClient}>
-//         <QueryErrorBoundary>
-//           <ErrorBoundary fallback={<div>에러에요!</div>}>
-//             <ThemeProvider theme={theme}>
-//               <GlobalStyle />
-//               <RouterProvider router={router} />
-//             </ThemeProvider>
-//           </ErrorBoundary>
-//         </QueryErrorBoundary>
+//         <ThemeProvider theme={theme}>
+//           <GlobalStyle />
+//           <RouterProvider router={router} />
+//         </ThemeProvider>
 //       </QueryClientProvider>
 //     </React.StrictMode>,
 //   );
@@ -289,12 +313,10 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <QueryErrorBoundary>
-        <ErrorBoundary fallback={<div>에러에요!</div>}>
-          <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <RouterProvider router={router} />
-          </ThemeProvider>
-        </ErrorBoundary>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </QueryErrorBoundary>
     </QueryClientProvider>
   </React.StrictMode>,
