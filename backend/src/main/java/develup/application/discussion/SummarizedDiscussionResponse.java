@@ -1,5 +1,6 @@
 package develup.application.discussion;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import develup.application.hashtag.HashTagResponse;
 import develup.application.member.MemberResponse;
@@ -12,7 +13,8 @@ public record SummarizedDiscussionResponse(
         String mission,
         List<HashTagResponse> hashTags,
         MemberResponse member,
-        int commentCount
+        int commentCount,
+        LocalDateTime createdAt
 ) {
 
     public static SummarizedDiscussionResponse from(Discussion discussion) {
@@ -27,7 +29,8 @@ public record SummarizedDiscussionResponse(
                 discussion.getMissionTitle(),
                 hashTagResponses,
                 MemberResponse.from(discussion.getMember()),
-                100
+                100,
+                discussion.getCreatedAt()
         );
     }
 }
