@@ -55,13 +55,13 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
     List<Discussion> findAllByMember_Id(Long memberId);
 
     @Query("""
-                SELECT new develup.domain.discussion.comment.DiscussionCommentCount(
-                    d.id, count(dc)
-                )
-                FROM Discussion d
-                JOIN FETCH DiscussionComment dc
-                ON dc.discussion.id = d.id
-                GROUP BY d.id
+            SELECT new develup.domain.discussion.comment.DiscussionCommentCount(
+                d.id, count(dc)
+            )
+            FROM Discussion d
+            JOIN FETCH DiscussionComment dc
+            ON dc.discussion.id = d.id
+            GROUP BY d.id
             """)
     List<DiscussionCommentCount> findDiscussionCommentCounts();
 }
