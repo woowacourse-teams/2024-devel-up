@@ -5,6 +5,7 @@ import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionRepository;
+import develup.domain.discussion.comment.DiscussionCommentCounts;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,16 +20,30 @@ public class DiscussionReadService {
     }
 
     public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
-        return discussionRepository.findAllByMissionAndHashTagName(mission, hashTagName).stream()
-                .map(SummarizedDiscussionResponse::from)
+        List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(mission, hashTagName);
+        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
+                discussionRepository.findDiscussionCommentCounts()
+        );
+
+        return discussions.stream()
+                .map(discussion -> SummarizedDiscussionResponse.of(
+                        discussion,
+                        discussionCommentCounts.getCount(discussion))
+                )
                 .toList();
     }
 
     public List<SummarizedDiscussionResponse> getDiscussionsByMemberId(Long memberId) {
         List<Discussion> myDiscussions = discussionRepository.findAllByMember_Id(memberId);
+        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
+                discussionRepository.findDiscussionCommentCounts()
+        );
 
         return myDiscussions.stream()
-                .map(SummarizedDiscussionResponse::from)
+                .map(discussion -> SummarizedDiscussionResponse.of(
+                        discussion,
+                        discussionCommentCounts.getCount(discussion))
+                )
                 .toList();
     }
 

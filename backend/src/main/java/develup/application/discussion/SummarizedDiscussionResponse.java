@@ -13,11 +13,10 @@ public record SummarizedDiscussionResponse(
         String mission,
         List<HashTagResponse> hashTags,
         MemberResponse member,
-        int commentCount,
+        Long commentCount,
         LocalDateTime createdAt
 ) {
-
-    public static SummarizedDiscussionResponse from(Discussion discussion) {
+    public static SummarizedDiscussionResponse of(Discussion discussion, Long count) {
         List<HashTagResponse> hashTagResponses = discussion.getDiscussionHashTags().stream()
                 .map(DiscussionHashTag::getHashTag)
                 .map(HashTagResponse::from)
@@ -29,7 +28,7 @@ public record SummarizedDiscussionResponse(
                 discussion.getMissionTitle(),
                 hashTagResponses,
                 MemberResponse.from(discussion.getMember()),
-                100,
+                count,
                 discussion.getCreatedAt()
         );
     }
