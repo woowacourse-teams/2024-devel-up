@@ -60,8 +60,8 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
                 )
                 FROM Discussion d
                 JOIN FETCH DiscussionComment dc
-                on dc.discussion.id = d.id
-                group by d.id
+                ON dc.discussion.id = d.id
+                GROUP BY d.id
             """)
     List<DiscussionCommentCount> findDiscussionCommentCounts();
 }
