@@ -268,34 +268,34 @@ async function enableMocking() {
   return worker.start();
 }
 
-enableMocking().then(() => {
-  root.render(
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <QueryErrorBoundary>
-          <ErrorBoundary fallback={<div>에러에요!</div>}>
-            <ThemeProvider theme={theme}>
-              <GlobalStyle />
-              <RouterProvider router={router} />
-            </ThemeProvider>
-          </ErrorBoundary>
-        </QueryErrorBoundary>
-      </QueryClientProvider>
-    </React.StrictMode>,
-  );
-});
+// enableMocking().then(() => {
+//   root.render(
+//     <React.StrictMode>
+//       <QueryClientProvider client={queryClient}>
+//         <QueryErrorBoundary>
+//           <ErrorBoundary fallback={<div>에러에요!</div>}>
+//             <ThemeProvider theme={theme}>
+//               <GlobalStyle />
+//               <RouterProvider router={router} />
+//             </ThemeProvider>
+//           </ErrorBoundary>
+//         </QueryErrorBoundary>
+//       </QueryClientProvider>
+//     </React.StrictMode>,
+//   );
+// });
 
-// root.render(
-//   <React.StrictMode>
-//     <QueryClientProvider client={queryClient}>
-//       <QueryErrorBoundary>
-//         <ErrorBoundary fallback={<div>에러에요!</div>}>
-//           <ThemeProvider theme={theme}>
-//             <GlobalStyle />
-//             <RouterProvider router={router} />
-//           </ThemeProvider>
-//         </ErrorBoundary>
-//       </QueryErrorBoundary>
-//     </QueryClientProvider>
-//   </React.StrictMode>,
-// );
+root.render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <QueryErrorBoundary>
+        <ErrorBoundary fallback={<div>에러에요!</div>}>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </ErrorBoundary>
+      </QueryErrorBoundary>
+    </QueryClientProvider>
+  </React.StrictMode>,
+);
