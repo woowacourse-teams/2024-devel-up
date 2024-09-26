@@ -12,7 +12,7 @@ export default function DiscussionListHeader() {
 
   return (
     <S.HeaderTitleWrapper>
-      <S.HeaderTitle>💬 Discussion</S.HeaderTitle>
+      <S.HeaderTitle>💬 디스커션</S.HeaderTitle>
       <Button variant="primary" onClick={handleToSubmitDiscussion}>
         작성하기
       </Button>
