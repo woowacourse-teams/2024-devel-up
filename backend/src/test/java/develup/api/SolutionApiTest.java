@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionResponse;
@@ -189,9 +190,10 @@ class SolutionApiTest extends ApiTestSupport {
     @Test
     @DisplayName("나의 솔루션 목록을 조회한다.")
     void getMySolutions() throws Exception {
+        LocalDateTime now = LocalDateTime.now();
         List<MySolutionResponse> mySolutions = List.of(
-                new MySolutionResponse(1L, "thumbnail", "title"),
-                new MySolutionResponse(2L, "thumbnail", "title")
+                new MySolutionResponse(1L, "thumbnail", "title", now),
+                new MySolutionResponse(2L, "thumbnail", "title", now)
         );
         BDDMockito.given(solutionService.getSubmittedSolutionsByMemberId(any()))
                 .willReturn(mySolutions);
@@ -202,9 +204,11 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[0].id", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].thumbnail", equalTo("thumbnail")))
                 .andExpect(jsonPath("$.data[0].title", equalTo("title")))
+                .andExpect(jsonPath("$.data[0].createdAt").exists())
                 .andExpect(jsonPath("$.data[1].id", equalTo(2)))
                 .andExpect(jsonPath("$.data[1].thumbnail", equalTo("thumbnail")))
-                .andExpect(jsonPath("$.data[1].title", equalTo("title")));
+                .andExpect(jsonPath("$.data[1].title", equalTo("title")))
+                .andExpect(jsonPath("$.data[1].createdAt").exists());
     }
 
     private Solution createSolution() {
