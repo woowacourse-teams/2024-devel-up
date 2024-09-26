@@ -24,6 +24,7 @@ export default function DashBoardDiscussionList({ discussionList }: DashBoardDis
                 mission={discussion.mission}
                 imageUrl={discussion.member.imageUrl}
                 commentCount={discussion.commentCount}
+                createdAt={discussion.createdAt}
               />
             );
           })}

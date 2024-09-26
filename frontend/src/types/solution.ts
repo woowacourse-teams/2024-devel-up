@@ -20,4 +20,5 @@ export interface SubmittedSolution {
   id: number;
   thumbnail: string;
   title: string;
+  createdAt: string;
 }
