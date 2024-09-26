@@ -2,6 +2,7 @@ import NoContent from '../DashBoardMissionList/NoContent';
 import Mission from '@/components/Mission';
 import * as S from '@/components/Mission/Mission.styled';
 import useSubmittedSolutions from '@/hooks/useSubmittedSolutions';
+import { formatDateString } from '@/utils/formatDateString';
 
 export default function SubmittedSolutionList() {
   const { data: submittedSolutionList } = useSubmittedSolutions();
@@ -18,7 +19,7 @@ export default function SubmittedSolutionList() {
                 <Mission.Thumbnail thumbnail={mission.thumbnail} />
                 <Mission.InfoWrapper>
                   <Mission.Title>{mission.title}</Mission.Title>
-                  <Mission.Summary>{mission.createdAt}</Mission.Summary>
+                  <Mission.Summary>{formatDateString(mission.createdAt)}</Mission.Summary>
                 </Mission.InfoWrapper>
               </Mission>
             );
