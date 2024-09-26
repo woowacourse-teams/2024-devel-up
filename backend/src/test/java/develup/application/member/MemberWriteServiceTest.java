@@ -1,9 +1,7 @@
 package develup.application.member;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import develup.api.exception.DevelupException;
 import develup.application.auth.oauth.OAuthUserInfo;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
@@ -14,31 +12,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class MemberServiceTest extends IntegrationTestSupport {
+class MemberWriteServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    private MemberService memberService;
+    private MemberWriteService memberWriteService;
 
     @Autowired
     private MemberRepository memberRepository;
-
-    @Test
-    @DisplayName("멤버 식별자로 멤버를 조회한다.")
-    void getMemberById() {
-        Member member = createMember();
-
-        MemberResponse response = memberService.getMemberById(member.getId());
-
-        assertThat(response).isEqualTo(MemberResponse.from(member));
-    }
-
-    @Test
-    @DisplayName("존재하지 않는 멤버 식별자로 멤버 조회시 예외가 발생한다.")
-    void getMemberByUndefinedId() {
-        assertThatThrownBy(() -> memberService.getMemberById(-1L))
-                .isInstanceOf(DevelupException.class)
-                .hasMessage("존재하지 않는 회원입니다.");
-    }
 
     @Test
     @DisplayName("이미 존재하는 소셜 로그인 회원일 경우 회원을 찾는다.")
@@ -52,7 +32,7 @@ class MemberServiceTest extends IntegrationTestSupport {
                 member.getName()
         );
 
-        MemberResponse response = memberService.findOrCreateMember(userInfo, member.getProvider());
+        MemberResponse response = memberWriteService.findOrCreateMember(userInfo, member.getProvider());
 
         assertThat(response).isEqualTo(MemberResponse.from(member));
     }
@@ -67,7 +47,7 @@ class MemberServiceTest extends IntegrationTestSupport {
                 "alstn113@gmail.com",
                 "name"
         );
-        memberService.findOrCreateMember(userInfo, OAuthProvider.GITHUB);
+        memberWriteService.findOrCreateMember(userInfo, OAuthProvider.GITHUB);
 
         assertThat(memberRepository.findAll()).hasSize(1);
     }

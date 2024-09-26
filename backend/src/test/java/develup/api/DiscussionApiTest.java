@@ -35,7 +35,7 @@ public class DiscussionApiTest extends ApiTestSupport {
                 SummarizedDiscussionResponse.from(createDiscussion()),
                 SummarizedDiscussionResponse.from(createDiscussion())
         );
-        BDDMockito.given(discussionService.getSummaries(any(), any()))
+        BDDMockito.given(discussionReadService.getSummaries(any(), any()))
                 .willReturn(responses);
 
         mockMvc.perform(get("/discussions"))
@@ -61,7 +61,7 @@ public class DiscussionApiTest extends ApiTestSupport {
                 1L,
                 List.of(1L)
         );
-        BDDMockito.given(discussionService.create(any(), any()))
+        BDDMockito.given(discussionWriteService.create(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(
@@ -78,7 +78,7 @@ public class DiscussionApiTest extends ApiTestSupport {
     @DisplayName("디스커션을 조회한다.")
     void getSolution() throws Exception {
         DiscussionResponse response = DiscussionResponse.from(createDiscussion());
-        BDDMockito.given(discussionService.getById(any()))
+        BDDMockito.given(discussionReadService.getById(any()))
                 .willReturn(response);
 
         mockMvc.perform(get("/discussions/1"))
@@ -108,7 +108,7 @@ public class DiscussionApiTest extends ApiTestSupport {
                 SummarizedDiscussionResponse.from(createDiscussion())
         );
 
-        BDDMockito.given(discussionService.getDiscussionsByMemberId(any()))
+        BDDMockito.given(discussionReadService.getDiscussionsByMemberId(any()))
                 .willReturn(myDiscussions);
 
         mockMvc.perform(get("/discussions/mine"))

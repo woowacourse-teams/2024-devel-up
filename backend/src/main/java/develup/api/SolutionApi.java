@@ -5,8 +5,9 @@ import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
 import develup.application.solution.MySolutionResponse;
+import develup.application.solution.SolutionReadService;
 import develup.application.solution.SolutionResponse;
-import develup.application.solution.SolutionService;
+import develup.application.solution.SolutionWriteService;
 import develup.application.solution.StartSolutionRequest;
 import develup.application.solution.SubmitSolutionRequest;
 import develup.application.solution.SummarizedSolutionResponse;
@@ -28,10 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "솔루션 API")
 public class SolutionApi {
 
-    private final SolutionService solutionService;
+    private final SolutionWriteService solutionWriteService;
+    private final SolutionReadService solutionReadService;
 
-    public SolutionApi(SolutionService solutionService) {
-        this.solutionService = solutionService;
+    public SolutionApi(SolutionWriteService solutionWriteService, SolutionReadService solutionReadService) {
+        this.solutionWriteService = solutionWriteService;
+        this.solutionReadService = solutionReadService;
     }
 
     @PostMapping("/solutions/start")
@@ -40,7 +43,7 @@ public class SolutionApi {
             @Valid @RequestBody StartSolutionRequest request,
             @Auth Accessor accessor
     ) {
-        SolutionResponse response = solutionService.startMission(accessor.id(), request);
+        SolutionResponse response = solutionWriteService.startMission(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
@@ -51,7 +54,7 @@ public class SolutionApi {
             @Auth Accessor accessor,
             @Valid @RequestBody SubmitSolutionRequest request
     ) {
-        SolutionResponse response = solutionService.submit(accessor.id(), request);
+        SolutionResponse response = solutionWriteService.submit(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
@@ -62,7 +65,7 @@ public class SolutionApi {
             @Auth Accessor accessor,
             @Valid @RequestBody UpdateSolutionRequest request
     ) {
-        SolutionResponse response = solutionService.update(accessor.id(), request);
+        SolutionResponse response = solutionWriteService.update(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
@@ -73,7 +76,7 @@ public class SolutionApi {
             @Auth Accessor accessor,
             @PathVariable Long solutionId
     ) {
-        solutionService.delete(accessor.id(), solutionId);
+        solutionWriteService.delete(accessor.id(), solutionId);
 
         return ResponseEntity.noContent().build();
     }
@@ -83,7 +86,7 @@ public class SolutionApi {
     public ResponseEntity<ApiResponse<List<SummarizedSolutionResponse>>> getSolutions(
             @RequestParam(defaultValue = "all") String hashTag
     ) {
-        List<SummarizedSolutionResponse> responses = solutionService.getCompletedSummaries(hashTag);
+        List<SummarizedSolutionResponse> responses = solutionReadService.getCompletedSummaries(hashTag);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
@@ -91,7 +94,7 @@ public class SolutionApi {
     @GetMapping("/solutions/{id}")
     @Operation(summary = "솔루션 조회 API", description = "솔루션을 조회합니다.")
     public ResponseEntity<ApiResponse<SolutionResponse>> getSolution(@PathVariable Long id) {
-        SolutionResponse response = solutionService.getById(id);
+        SolutionResponse response = solutionReadService.getById(id);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
@@ -99,7 +102,7 @@ public class SolutionApi {
     @GetMapping("/solutions/mine")
     @Operation(summary = "나의 솔루션 목록 조회 API", description = "내가 제출한 솔루션 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<MySolutionResponse>>> getMySolutions(@Auth Accessor accessor) {
-        List<MySolutionResponse> response = solutionService.getSubmittedSolutionsByMemberId(accessor.id());
+        List<MySolutionResponse> response = solutionReadService.getSubmittedSolutionsByMemberId(accessor.id());
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }

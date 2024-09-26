@@ -29,7 +29,7 @@ class MissionApiTest extends ApiTestSupport {
                 MissionResponse.from(mission),
                 MissionResponse.from(mission)
         );
-        BDDMockito.given(missionService.getMissions(any()))
+        BDDMockito.given(missionReadService.getMissions(any()))
                 .willReturn(responses);
 
         mockMvc.perform(get("/missions"))
@@ -56,7 +56,7 @@ class MissionApiTest extends ApiTestSupport {
     void getMission() throws Exception {
         Mission mission = createMission();
         MissionWithStartedResponse response = MissionWithStartedResponse.of(mission, false);
-        BDDMockito.given(missionService.getMission(any(), any()))
+        BDDMockito.given(missionReadService.getById(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(get("/missions/1"))
@@ -80,7 +80,7 @@ class MissionApiTest extends ApiTestSupport {
                 MissionResponse.from(MissionTestData.defaultMission().build()),
                 MissionResponse.from(MissionTestData.defaultMission().build())
         );
-        BDDMockito.given(missionService.getInProgressMissions(any()))
+        BDDMockito.given(missionReadService.getInProgressMissions(any()))
                 .willReturn(responses);
 
         mockMvc.perform(get("/missions/in-progress"))
