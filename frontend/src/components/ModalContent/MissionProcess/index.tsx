@@ -34,14 +34,9 @@ const CONTENT_LIST = [
 interface MissionProcessProps {
   handleModalClose: () => void;
   onClick: () => void;
-  onMission?: () => void;
 }
 
-export default function MissionProcess({
-  handleModalClose,
-  onClick,
-  onMission,
-}: MissionProcessProps) {
+export default function MissionProcess({ handleModalClose, onClick }: MissionProcessProps) {
   const [contentId, setContentId] = useState(1);
   const currentContent = CONTENT_LIST.find((content) => content.id === contentId);
   if (!currentContent) throw new Error();
@@ -71,11 +66,6 @@ export default function MissionProcess({
                 <GithubIcon />
                 미션 코드 보러 가기
               </Button>
-              {onMission && (
-                <Button variant="primary" onClick={onMission}>
-                  미션 시작하기
-                </Button>
-              )}
             </>
           ) : (
             <>

@@ -70,13 +70,7 @@ export default function MissionDetailButtons({
       </S.ButtonWrapper>
 
       <Modal isModalOpen={isModalOpen}>
-        <MissionProcess
-          handleModalClose={handleModalClose}
-          onClick={handleNavigateToMission}
-          onMission={
-            userInfo ? (isMissionStarted ? handleNavigateToSubmit : handleMissionStart) : undefined
-          }
-        />
+        <MissionProcess handleModalClose={handleModalClose} onClick={handleNavigateToMission} />
       </Modal>
     </S.MissionDetailButtonsContainer>
   );
