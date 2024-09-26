@@ -10,11 +10,11 @@ const PATH_INFO = [
   },
   {
     name: '/dashboard/submitted-solution',
-    text: '제출한 솔루션',
+    text: '제출한 풀이',
   },
   {
     name: '/dashboard/comments',
-    text: '작성한 솔루션 댓글',
+    text: '작성한 풀이 댓글',
   },
   {
     name: '/dashboard/discussions',

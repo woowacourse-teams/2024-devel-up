@@ -27,7 +27,7 @@ export default function DiscussionDetailPage() {
   return (
     <S.DiscussionDetailPageContainer>
       <S.DiscussionDetailTitle onClick={handleToDiscussionList}>
-        💬 Discussion
+        💬 디스커션
       </S.DiscussionDetailTitle>
       <DiscussionDetailHeader discussion={discussion} />
       <S.DiscussionDescription source={discussion.content} />
