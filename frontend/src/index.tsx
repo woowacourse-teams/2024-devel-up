@@ -172,9 +172,7 @@ const routes = [
       <App>
         <QueryErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
-            <PrivateRoute redirectTo={ROUTES.login}>
-              <DashboardPage />
-            </PrivateRoute>
+            <DashboardPage />
           </Suspense>
         </QueryErrorBoundary>
       </App>

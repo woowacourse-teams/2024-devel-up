@@ -1,6 +1,7 @@
 import { Outlet, useLocation, Navigate } from 'react-router-dom';
 import DashboardPageLayout from './DashBoardPageLayout';
 import { ROUTES } from '@/constants/routes';
+import PrivateRoute from '@/components/common/PrivateRoute';
 
 export default function DashboardPage() {
   const location = useLocation();
@@ -10,8 +11,10 @@ export default function DashboardPage() {
   }
 
   return (
-    <DashboardPageLayout>
-      <Outlet />
-    </DashboardPageLayout>
+    <PrivateRoute redirectTo={ROUTES.login}>
+      <DashboardPageLayout>
+        <Outlet />
+      </DashboardPageLayout>
+    </PrivateRoute>
   );
 }
