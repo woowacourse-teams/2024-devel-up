@@ -8,6 +8,7 @@ export interface Discussion {
   member: Omit<UserInfo, 'description'>;
   hashTags: HashTag[];
   commentCount: number;
+  createdAt: string;
 }
 
 export interface DashboardDiscussion {

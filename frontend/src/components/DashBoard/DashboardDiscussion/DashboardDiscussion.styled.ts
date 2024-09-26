@@ -32,7 +32,7 @@ export const Container = styled.div`
 `;
 
 export const DiscussionWrapper = styled(Link)`
-  height: 8.5rem;
+  height: 9.7rem;
   border-radius: 2.8rem;
   background: ${(props) => props.theme.colors.white};
   box-shadow: ${(props) => props.theme.boxShadow.shadow04};

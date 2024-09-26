@@ -44,7 +44,8 @@
         "name": "클린코드"
       }
     ],
-    "commentCount": 0
+    "commentCount": 0,
+    "createdAt": "2024.09.26"
   },
   {
     "id": 2,
@@ -91,6 +92,7 @@
         "name": "클린코드"
       }
     ],
-    "commentCount": 200
+    "commentCount": 200,
+    "createdAt": "2024.09.26"
   }
 ]

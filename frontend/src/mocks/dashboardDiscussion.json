@@ -23,7 +23,8 @@
       "name": "구름",
       "imageUrl": "https://avatars.githubusercontent.com/u/75781414?v=4"
     },
-    "commentCount": 100
+    "commentCount": 100,
+    "createdAt": "2024.09.26"
   },
   {
     "id": 2,
@@ -49,6 +50,7 @@
       "name": "리브",
       "imageUrl": "https://avatars.githubusercontent.com/u/131349867?v=4"
     },
-    "commentCount": 100
+    "commentCount": 100,
+    "createdAt": "2024.09.26"
   }
 ]

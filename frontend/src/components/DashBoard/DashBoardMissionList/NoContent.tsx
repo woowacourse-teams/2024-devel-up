@@ -27,7 +27,7 @@ const NO_CONTENT_INFO = {
     buttonText: '풀이 둘러보기',
   },
   dashboardDiscussion: {
-    route: '/discussion',
+    route: ROUTES.discussions,
     mainText: '제출한 디스커션이 없어요',
     subText: '다른 사람들이 작성한 디스커션을 보러 가볼까요?',
     buttonText: '디스커션 둘러보기',
