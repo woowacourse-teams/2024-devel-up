@@ -50,11 +50,19 @@ public class DiscussionReadService {
     public DiscussionResponse getById(Long id) {
         Discussion discussion = getDiscussion(id);
 
-        return DiscussionResponse.from(discussion);
+        return createDiscussionResponse(discussion);
     }
 
     public Discussion getDiscussion(Long id) {
         return discussionRepository.findById(id)
                 .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
+    }
+
+    private DiscussionResponse createDiscussionResponse(Discussion discussion) {
+        if (discussion.getMission() == null) {
+            return DiscussionResponse.createWithoutMission(discussion);
+        }
+
+        return DiscussionResponse.from(discussion);
     }
 }
