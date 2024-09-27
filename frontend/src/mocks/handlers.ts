@@ -11,16 +11,15 @@ import dashboardDiscussionComments from './dashboardDiscussionComment.json';
 
 export const handlers = [
   http.get(`${API_URL}${PATH.missionList}`, ({ request }) => {
-    // const url = new URL(request.url);
-    // const hashTag = url.searchParams.get('hashTag');
-    // if (hashTag === HASHTAGS.all) {
-    //   return HttpResponse.json({ data: missions });
-    // }
+    const url = new URL(request.url);
+    const hashTag = url.searchParams.get('hashTag');
+    if (hashTag === HASHTAGS.all) {
+      return HttpResponse.json({ data: missions });
+    }
 
-    // const filteredMissions = missions.filter((mission) => mission.hashTags[0].name === hashTag);
+    const filteredMissions = missions.filter((mission) => mission.hashTags[0].name === hashTag);
 
-    // return HttpResponse.json({ data: filteredMissions });
-    return HttpResponse.json({ data: null }, { status: 404 });
+    return HttpResponse.json({ data: filteredMissions });
   }),
   http.get(`${API_URL}${PATH.mySolutions}`, () => {
     return HttpResponse.json({
