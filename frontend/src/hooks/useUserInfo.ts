@@ -8,6 +8,7 @@ const useUserInfo = () => {
     queryKey: userKeys.info,
     queryFn: getUserInfo,
     retry: false,
+    throwOnError: false,
   });
 };
 
