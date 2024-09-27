@@ -11,11 +11,13 @@ import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import './styles/fonts.css';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       throwOnError: true,
+      gcTime: 20000,
     },
   },
 });
@@ -73,53 +75,53 @@ const routes = [
   {
     path: ROUTES.main,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <MainPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: `${ROUTES.submitSolution}/:id`,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <PrivateRoute redirectTo={ROUTES.login}>
               <MissionSubmitPage />
             </PrivateRoute>
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: `${ROUTES.missionDetail}/:id`,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <MissionDetailPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.profile,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <PrivateRoute redirectTo={ROUTES.login}>
               <UserProfilePage />
             </PrivateRoute>
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   // {
@@ -135,13 +137,13 @@ const routes = [
   {
     path: ROUTES.missionList,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <MissionListPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
@@ -157,25 +159,25 @@ const routes = [
   {
     path: ROUTES.solutions,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <SolutionListPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.dashboardHome,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <DashboardPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
     children: [
       {
@@ -223,80 +225,72 @@ const routes = [
   {
     path: `${ROUTES.solutions}/:id`,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <SolutionDetailPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.about,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <AboutPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: `${ROUTES.discussions}/:id`,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <DiscussionDetailPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.submitDiscussion,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <PrivateRoute redirectTo={ROUTES.login}>
               <DiscussionSubmitPage />
             </PrivateRoute>
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.discussions,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <DiscussionListPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: '/login',
-    element: (
-      <App>
-        <NeedToLoginPage />
-      </App>
-    ),
+    element: <NeedToLoginPage />,
   },
   {
     path: '*',
-    element: (
-      <App>
-        <NotFoundPage />
-      </App>
-    ),
+    element: <NotFoundPage />,
   },
 ];
 
@@ -321,6 +315,7 @@ export const router = createBrowserRouter(routes, {
 //     <React.StrictMode>
 //       <QueryClientProvider client={queryClient}>
 //         <ThemeProvider theme={theme}>
+//           <ReactQueryDevtools initialIsOpen={false} />
 //           <GlobalStyle />
 //           <RouterProvider router={router} />
 //         </ThemeProvider>
