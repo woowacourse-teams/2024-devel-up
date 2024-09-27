@@ -4,7 +4,7 @@ import DiscussionSubmit from '@/components/DiscussionSubmit';
 export default function DiscussionSubmitPage() {
   return (
     <S.DiscussionSubmitPageContainer>
-      <S.DiscussionSubmitTitle>💬 Discussion</S.DiscussionSubmitTitle>
+      <S.DiscussionSubmitTitle>💬 디스커션</S.DiscussionSubmitTitle>
       <DiscussionSubmit />
     </S.DiscussionSubmitPageContainer>
   );

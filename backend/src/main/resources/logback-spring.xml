@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <springProperty scope="context" name="appName" source="spring.application.name"/>
+    <springProperty scope="context" name="hostName" source="logging.host"/>
 
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -13,16 +14,16 @@
 
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
-            <url>http://10.0.0.35:3100/loki/api/v1/push</url>
+            <url>http://10.0.20.166:3100/loki/api/v1/push</url>
         </http>
         <format>
             <label>
                 <pattern>
-                    %d{yyyy-MM-dd HH:mm:ss.SSS} | %t | traceId=%X{traceId} | %highlight(%-5p) | %cyan(%logger{36}) | app=${appName} | host=${HOSTNAME} | %m%n
+                    app=${appName},host=${hostName},level=%level
                 </pattern>
             </label>
             <message>
-                <pattern>${FILE_LOG_PATTERN}</pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %t | traceId=%X{traceId} | %highlight(%-5p) | %cyan(%logger{36}) | %m%n</pattern>
             </message>
             <sortByTime>true</sortByTime>
         </format>
@@ -47,7 +48,7 @@
 
     <springProfile name="prod">
         <root level="INFO">
-            <appender-ref ref="Console"/>
+            <appender-ref ref="LOKI"/>
         </root>
     </springProfile>
 

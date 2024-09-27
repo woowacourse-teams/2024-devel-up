@@ -24,10 +24,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class MissionServiceTest extends IntegrationTestSupport {
+class MissionReadServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    private MissionService missionService;
+    private MissionReadService missionReadService;
 
     @Autowired
     private MissionRepository missionRepository;
@@ -47,44 +47,44 @@ class MissionServiceTest extends IntegrationTestSupport {
         createMission();
         createMission();
 
-        List<MissionResponse> responses = missionService.getMissions("all");
+        List<MissionResponse> responses = missionReadService.getMissions("all");
 
         assertThat(responses).hasSize(2);
     }
 
     @Test
     @DisplayName("존재하지 않는 미션 식별자로 미션 조회 시 예외가 발생한다.")
-    void getMissionFailWhenInvalidMissionId() {
-        assertThatThrownBy(() -> missionService.getMission(Accessor.GUEST, -1L))
+    void getMissionFailWhenInvalidByIdId() {
+        assertThatThrownBy(() -> missionReadService.getById(Accessor.GUEST, -1L))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("존재하지 않는 미션입니다.");
     }
 
     @Test
     @DisplayName("비로그인 사용자가 미션 조회 시 시작 상태는 false이다.")
-    void getMission_guest() {
+    void getById_guest() {
         Mission mission = createMission();
 
-        MissionWithStartedResponse response = missionService.getMission(Accessor.GUEST, mission.getId());
+        MissionWithStartedResponse response = missionReadService.getById(Accessor.GUEST, mission.getId());
 
         assertThat(response.isStarted()).isFalse();
     }
 
     @Test
     @DisplayName("미션을 시작하지 않은 로그인 사용자가 미션 조회 시 시작 상태는 false이다.")
-    void getMission_notStarted() {
+    void getById_notStarted() {
         Mission mission = createMission();
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Accessor accessor = new Accessor(member.getId());
 
-        MissionWithStartedResponse response = missionService.getMission(accessor, mission.getId());
+        MissionWithStartedResponse response = missionReadService.getById(accessor, mission.getId());
 
         assertThat(response.isStarted()).isFalse();
     }
 
     @Test
     @DisplayName("미션을 시작한 로그인 사용자가 미션 조회 시 시작 상태는 true이다.")
-    void getMission_started() {
+    void getById_started() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = createMission();
         Solution solution = SolutionTestData.defaultSolution()
@@ -95,7 +95,7 @@ class MissionServiceTest extends IntegrationTestSupport {
         solutionRepository.save(solution);
         Accessor accessor = new Accessor(member.getId());
 
-        MissionWithStartedResponse response = missionService.getMission(accessor, mission.getId());
+        MissionWithStartedResponse response = missionReadService.getById(accessor, mission.getId());
 
         assertThat(response.isStarted()).isTrue();
     }
@@ -120,7 +120,7 @@ class MissionServiceTest extends IntegrationTestSupport {
                 .build();
 
         solutionRepository.saveAll(List.of(solution, otherSolution));
-        List<MissionResponse> inProgressMissions = missionService.getInProgressMissions(member.getId());
+        List<MissionResponse> inProgressMissions = missionReadService.getInProgressMissions(member.getId());
 
         assertThat(inProgressMissions).hasSize(2);
     }

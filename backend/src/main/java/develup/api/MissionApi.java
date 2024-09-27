@@ -4,8 +4,8 @@ import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
+import develup.application.mission.MissionReadService;
 import develup.application.mission.MissionResponse;
-import develup.application.mission.MissionService;
 import develup.application.mission.MissionWithStartedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "미션 API")
 public class MissionApi {
 
-    private final MissionService missionService;
+    private final MissionReadService missionReadService;
 
-    public MissionApi(MissionService missionService) {
-        this.missionService = missionService;
+    public MissionApi(MissionReadService missionReadService) {
+        this.missionReadService = missionReadService;
     }
 
     @GetMapping("/missions")
@@ -30,7 +30,7 @@ public class MissionApi {
     public ResponseEntity<ApiResponse<List<MissionResponse>>> getMissions(
             @RequestParam(defaultValue = "all") String hashTag
     ) {
-        List<MissionResponse> responses = missionService.getMissions(hashTag);
+        List<MissionResponse> responses = missionReadService.getMissions(hashTag);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
@@ -38,7 +38,7 @@ public class MissionApi {
     @GetMapping("/missions/in-progress")
     @Operation(summary = "사용자가 시작한 미션 목록 조회 API", description = "사용자가 시작한 미션 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<MissionResponse>>> getInProgressMissions(@Auth Accessor accessor) {
-        List<MissionResponse> responses = missionService.getInProgressMissions(accessor.id());
+        List<MissionResponse> responses = missionReadService.getInProgressMissions(accessor.id());
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
@@ -52,7 +52,7 @@ public class MissionApi {
             @PathVariable Long missionId,
             @Auth(required = false) Accessor accessor
     ) {
-        MissionWithStartedResponse response = missionService.getMission(accessor, missionId);
+        MissionWithStartedResponse response = missionReadService.getById(accessor, missionId);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }

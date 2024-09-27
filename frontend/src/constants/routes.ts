@@ -16,4 +16,5 @@ export const ROUTES = {
   about: '/about',
   discussions: '/discussions',
   submitDiscussion: '/submit/discussion',
+  login: '/login',
 } as const;

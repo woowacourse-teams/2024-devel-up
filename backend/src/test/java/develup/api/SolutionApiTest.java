@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionResponse;
@@ -40,7 +41,7 @@ class SolutionApiTest extends ApiTestSupport {
                 SummarizedSolutionResponse.from(createSolution()),
                 SummarizedSolutionResponse.from(createSolution())
         );
-        BDDMockito.given(solutionService.getCompletedSummaries(any()))
+        BDDMockito.given(solutionReadService.getCompletedSummaries(any()))
                 .willReturn(responses);
 
         mockMvc.perform(get("/solutions"))
@@ -59,7 +60,7 @@ class SolutionApiTest extends ApiTestSupport {
     @DisplayName("솔루션을 조회한다.")
     void getSolution() throws Exception {
         SolutionResponse response = SolutionResponse.from(createSolution());
-        BDDMockito.given(solutionService.getById(any()))
+        BDDMockito.given(solutionReadService.getById(any()))
                 .willReturn(response);
 
         mockMvc.perform(get("/solutions/1"))
@@ -89,7 +90,7 @@ class SolutionApiTest extends ApiTestSupport {
                 "value",
                 "description",
                 "https://github.com/develup/mission/pull/1");
-        BDDMockito.given(solutionService.submit(any(), any()))
+        BDDMockito.given(solutionWriteService.submit(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(post("/solutions/submit")
@@ -121,7 +122,7 @@ class SolutionApiTest extends ApiTestSupport {
                 "value",
                 "description",
                 "https://github.com/develup/mission/pull/1");
-        BDDMockito.given(solutionService.update(any(), any()))
+        BDDMockito.given(solutionWriteService.update(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(patch("/solutions")
@@ -148,7 +149,7 @@ class SolutionApiTest extends ApiTestSupport {
     @DisplayName("솔루션을 삭제한다.")
     void deleteSolution() throws Exception {
         BDDMockito.doNothing()
-                .when(solutionService)
+                .when(solutionWriteService)
                 .delete(any(), any());
 
         mockMvc.perform(delete("/solutions/{solutionId}", 1L))
@@ -160,7 +161,7 @@ class SolutionApiTest extends ApiTestSupport {
     @DisplayName("솔루션을 시작한다.")
     void startSolution() throws Exception {
         SolutionResponse response = SolutionResponse.start(createSolution());
-        BDDMockito.given(solutionService.startMission(any(), any()))
+        BDDMockito.given(solutionWriteService.startMission(any(), any()))
                 .willReturn(response);
         StartSolutionRequest request = new StartSolutionRequest(1L);
 
@@ -189,11 +190,12 @@ class SolutionApiTest extends ApiTestSupport {
     @Test
     @DisplayName("나의 솔루션 목록을 조회한다.")
     void getMySolutions() throws Exception {
+        LocalDateTime now = LocalDateTime.now();
         List<MySolutionResponse> mySolutions = List.of(
-                new MySolutionResponse(1L, "thumbnail", "title"),
-                new MySolutionResponse(2L, "thumbnail", "title")
+                new MySolutionResponse(1L, "thumbnail", "title", now),
+                new MySolutionResponse(2L, "thumbnail", "title", now)
         );
-        BDDMockito.given(solutionService.getSubmittedSolutionsByMemberId(any()))
+        BDDMockito.given(solutionReadService.getSubmittedSolutionsByMemberId(any()))
                 .willReturn(mySolutions);
 
         mockMvc.perform(get("/solutions/mine"))
@@ -202,9 +204,11 @@ class SolutionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[0].id", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].thumbnail", equalTo("thumbnail")))
                 .andExpect(jsonPath("$.data[0].title", equalTo("title")))
+                .andExpect(jsonPath("$.data[0].createdAt").exists())
                 .andExpect(jsonPath("$.data[1].id", equalTo(2)))
                 .andExpect(jsonPath("$.data[1].thumbnail", equalTo("thumbnail")))
-                .andExpect(jsonPath("$.data[1].title", equalTo("title")));
+                .andExpect(jsonPath("$.data[1].title", equalTo("title")))
+                .andExpect(jsonPath("$.data[1].createdAt").exists());
     }
 
     private Solution createSolution() {

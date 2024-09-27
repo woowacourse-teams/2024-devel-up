@@ -7,5 +7,6 @@ services:
     environment:
       TZ: "Asia/Seoul"
       SPRING_PROFILE: prod
+      HOSTNAME: ${HOST_NAME}
     restart: always
     container_name: develup-app

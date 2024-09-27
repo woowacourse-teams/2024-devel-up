@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import buildURL from './buildURL';
-import HTTP_METHOD from './httpMethod';
+import { HTTP_METHOD } from '@/constants/api';
 import * as Sentry from '@sentry/react';
+import throwAPIError from './throwAPIError';
+import HTTPError from '../error/HTTPError';
 
 interface APIClientType {
   get<T>(path: string, queryParams?: Record<string, string>): Promise<T>;
@@ -57,13 +59,17 @@ export default class APIClient implements APIClientType {
       });
 
       if (!response.ok) {
-        throw new Error(response.statusText);
+        throwAPIError(response.status);
       }
 
       const data = response.status === 204 ? null : await response.json();
 
       return data;
     } catch (err) {
+      if (err instanceof HTTPError) {
+        console.error(`HTTP Error ${err.statusCode}: ${err.information.message}`);
+      }
+
       Sentry.withScope((scope: Sentry.Scope) => {
         scope.setLevel('error');
         scope.setTag('url', window.location.href);

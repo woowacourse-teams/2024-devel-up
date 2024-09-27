@@ -10,8 +10,22 @@ services:
       - "443:443"
     volumes:
       - /home/ubuntu/custom.conf:/etc/nginx/conf.d/default.conf
+      - /home/ubuntu/nginx.conf:/etc/nginx/nginx.conf
       - /etc/letsencrypt/live/dev.api.devel-up.co.kr/fullchain.pem:/etc/letsencrypt/live/dev.api.devel-up.co.kr/fullchain.pem
       - /etc/letsencrypt/live/dev.api.devel-up.co.kr/privkey.pem:/etc/letsencrypt/live/dev.api.devel-up.co.kr/privkey.pem
+      - /var/log/nginx:/var/log/nginx
+    container_name: nginx
+
+  promtail-nginx:
+    image: grafana/promtail:3.0.0
+    depends_on:
+      - nginx
+    volumes:
+      - /home/ubuntu/promtail/nginx-config.yml:/etc/promtail/config.yml
+      - /var/log/nginx:/var/log/nginx
+    command:
+      - '--config.file=/etc/promtail/config.yml'
+    restart: unless-stopped
 
   application:
     image: ${BACKEND_APP_IMAGE_NAME}
@@ -22,9 +36,11 @@ services:
       - app-mysql-net
     ports:
       - "8080:8080"
+      - "8082:8082"
     environment:
       TZ: "Asia/Seoul"
       SPRING_PROFILE: dev
+      HOSTNAME: ${HOST_NAME}
     restart: always
     container_name: develup-app
 

@@ -5,7 +5,6 @@ import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
-import { ErrorBoundary } from './components/common/Error/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
@@ -64,6 +63,9 @@ const SubmittedSolutionList = lazy(() => import('./components/DashBoard/Submitte
 
 // 기타
 const ErrorPage = lazy(() => import('./pages/ErrorPage'));
+const NotFoundPage = lazy(() => import('./pages/404Page'));
+const NeedToLoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
+const PrivateRoute = lazy(() => import('./components/common/PrivateRoute'));
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -72,9 +74,11 @@ const routes = [
     path: ROUTES.main,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <MainPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <MainPage />
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -82,9 +86,13 @@ const routes = [
     path: `${ROUTES.submitSolution}/:id`,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <MissionSubmitPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <PrivateRoute redirectTo={ROUTES.login}>
+              <MissionSubmitPage />
+            </PrivateRoute>
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -92,9 +100,11 @@ const routes = [
     path: `${ROUTES.missionDetail}/:id`,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <MissionDetailPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <MissionDetailPage />
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -102,9 +112,13 @@ const routes = [
     path: ROUTES.profile,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <UserProfilePage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <PrivateRoute redirectTo={ROUTES.login}>
+              <UserProfilePage />
+            </PrivateRoute>
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -122,9 +136,11 @@ const routes = [
     path: ROUTES.missionList,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <MissionListPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <MissionListPage />
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -142,9 +158,11 @@ const routes = [
     path: ROUTES.solutions,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <SolutionListPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <SolutionListPage />
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -152,9 +170,11 @@ const routes = [
     path: ROUTES.dashboardHome,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <DashboardPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <DashboardPage />
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
     children: [
@@ -204,9 +224,11 @@ const routes = [
     path: `${ROUTES.solutions}/:id`,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <SolutionDetailPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <SolutionDetailPage />
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -214,9 +236,11 @@ const routes = [
     path: ROUTES.about,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <AboutPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <AboutPage />
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -224,9 +248,11 @@ const routes = [
     path: `${ROUTES.discussions}/:id`,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <DiscussionDetailPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <DiscussionDetailPage />
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -234,9 +260,13 @@ const routes = [
     path: ROUTES.submitDiscussion,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <DiscussionSubmitPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <PrivateRoute redirectTo={ROUTES.login}>
+              <DiscussionSubmitPage />
+            </PrivateRoute>
+          </Suspense>
+        </QueryErrorBoundary>
       </App>
     ),
   },
@@ -244,9 +274,27 @@ const routes = [
     path: ROUTES.discussions,
     element: (
       <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <DiscussionListPage />
-        </Suspense>
+        <QueryErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <DiscussionListPage />
+          </Suspense>
+        </QueryErrorBoundary>
+      </App>
+    ),
+  },
+  {
+    path: '/login',
+    element: (
+      <App>
+        <NeedToLoginPage />
+      </App>
+    ),
+  },
+  {
+    path: '*',
+    element: (
+      <App>
+        <NotFoundPage />
       </App>
     ),
   },
@@ -272,14 +320,10 @@ export const router = createBrowserRouter(routes, {
 //   root.render(
 //     <React.StrictMode>
 //       <QueryClientProvider client={queryClient}>
-//         <QueryErrorBoundary>
-//           <ErrorBoundary fallback={<div>에러에요!</div>}>
-//             <ThemeProvider theme={theme}>
-//               <GlobalStyle />
-//               <RouterProvider router={router} />
-//             </ThemeProvider>
-//           </ErrorBoundary>
-//         </QueryErrorBoundary>
+//         <ThemeProvider theme={theme}>
+//           <GlobalStyle />
+//           <RouterProvider router={router} />
+//         </ThemeProvider>
 //       </QueryClientProvider>
 //     </React.StrictMode>,
 //   );
@@ -288,14 +332,10 @@ export const router = createBrowserRouter(routes, {
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <QueryErrorBoundary>
-        <ErrorBoundary fallback={<div>에러에요!</div>}>
-          <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <RouterProvider router={router} />
-          </ThemeProvider>
-        </ErrorBoundary>
-      </QueryErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>,
 );

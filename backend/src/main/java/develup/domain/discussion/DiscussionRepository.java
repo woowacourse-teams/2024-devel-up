@@ -2,6 +2,7 @@ package develup.domain.discussion;
 
 import java.util.List;
 import java.util.Optional;
+import develup.domain.discussion.comment.DiscussionCommentCount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -52,4 +53,15 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             WHERE me.id = :memberId
             """)
     List<Discussion> findAllByMember_Id(Long memberId);
+
+    @Query("""
+            SELECT new develup.domain.discussion.comment.DiscussionCommentCount(
+                d.id, count(dc)
+            )
+            FROM Discussion d
+            JOIN FETCH DiscussionComment dc
+            ON dc.discussion.id = d.id
+            GROUP BY d.id
+            """)
+    List<DiscussionCommentCount> findDiscussionCommentCounts();
 }
