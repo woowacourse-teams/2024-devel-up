@@ -3,6 +3,7 @@ package develup.domain.discussion;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Function;
 import develup.domain.discussion.comment.DiscussionComment;
@@ -166,7 +167,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("디스커션에 달린 댓글의 개수를 조회한다.")
+    @DisplayName("디스커션에 달린 댓글의 개수를 조회한다. 삭제된 댓글은 제외한다")
     @Transactional
     void findDiscussionCommentCounts() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
@@ -176,6 +177,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         Discussion savedDiscussion = getSavedDiscussion(mission, member, hashTag);
 
         saveDiscussionComment(savedDiscussion, member);
+        saveDeletedDiscussionComment(savedDiscussion, member);
 
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(discussionRepository.findDiscussionCommentCounts());
         Long count = discussionCommentCounts.getCount(savedDiscussion);
@@ -197,6 +199,15 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .withDiscussion(savedDiscussion)
                 .withMember(member)
                 .build();
+        discussionCommentRepository.save(discussionComment);
+    }
+
+    private void saveDeletedDiscussionComment(Discussion savedDiscussion, Member member) {
+        DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
+                .withDiscussion(savedDiscussion)
+                .withMember(member)
+                .build();
+        discussionComment.delete();
         discussionCommentRepository.save(discussionComment);
     }
 }
