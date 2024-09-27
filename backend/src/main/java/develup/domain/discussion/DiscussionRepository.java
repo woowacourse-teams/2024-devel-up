@@ -12,19 +12,20 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
     @Query("""
             SELECT d
             FROM Discussion d
-            JOIN FETCH d.mission m
-            JOIN FETCH d.discussionHashTags.hashTags dhts
-            JOIN FETCH dhts.hashTag ht
+            LEFT JOIN FETCH d.mission m
+            LEFT JOIN FETCH d.discussionHashTags.hashTags dhts
+            LEFT JOIN FETCH dhts.hashTag ht
             WHERE
-                (LOWER(:mission) = 'all' OR m.title = :mission)
+                ((:mission = null) OR LOWER(:mission) = 'all' OR m.title = :mission)
                 AND
-                (LOWER(:hashTag) = 'all' OR EXISTS (
+                ((:hashTag = null) OR LOWER(:hashTag) = 'all' OR EXISTS (
                     SELECT 1
                     FROM DiscussionHashTag dht
                     JOIN dht.hashTag sht
                     WHERE dht.discussion.id = d.id
                     AND sht.name = :hashTag
                 ))
+            ORDER BY d.id DESC
             """)
     List<Discussion> findAllByMissionAndHashTagName(
             @Param("mission") String mission,
@@ -61,6 +62,7 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             FROM Discussion d
             JOIN FETCH DiscussionComment dc
             ON dc.discussion.id = d.id
+            WHERE dc.deletedAt IS NULL
             GROUP BY d.id
             """)
     List<DiscussionCommentCount> findDiscussionCommentCounts();

@@ -81,3 +81,9 @@ export const HeaderTitleWrapper = styled.div`
 export const HeaderTitle = styled.h1`
   ${(props) => props.theme.font.heading1}
 `;
+
+export const NoContentText = styled.h1`
+  margin-top: 20rem;
+  text-align: center;
+  ${(props) => props.theme.font.heading2}
+`;
