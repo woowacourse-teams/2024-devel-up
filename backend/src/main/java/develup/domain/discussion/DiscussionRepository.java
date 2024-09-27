@@ -61,6 +61,7 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             FROM Discussion d
             JOIN FETCH DiscussionComment dc
             ON dc.discussion.id = d.id
+            WHERE dc.deletedAt IS NULL
             GROUP BY d.id
             """)
     List<DiscussionCommentCount> findDiscussionCommentCounts();
