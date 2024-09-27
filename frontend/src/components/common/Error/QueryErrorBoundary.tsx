@@ -10,8 +10,8 @@ export default function QueryErrorBoundary({ children }: PropsWithChildren) {
     <ErrorBoundary
       onReset={reset}
       fallbackRender={(props) => {
-        const { error, resetErrorBoundary } = props;
-        return <ErrorFallback statusCode={error.statusCode} resetError={resetErrorBoundary} />;
+        const { error } = props;
+        return <ErrorFallback statusCode={error.statusCode} />;
       }}
     >
       {children}
