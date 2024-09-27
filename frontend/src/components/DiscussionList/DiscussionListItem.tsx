@@ -13,7 +13,7 @@ export default function DiscussionListItem({
     <S.ItemContainer>
       <S.ContentWrapper>
         <S.BadgeWrapper>
-          <Badge text={mission} variant="danger" />
+          {mission && <Badge text={mission} variant="danger" />}
           {hashTags.map((hashTag) => (
             <Badge key={hashTag.id} text={`# ${hashTag.name}`} />
           ))}
