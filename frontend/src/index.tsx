@@ -73,53 +73,53 @@ const routes = [
   {
     path: ROUTES.main,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <MainPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: `${ROUTES.submitSolution}/:id`,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <PrivateRoute redirectTo={ROUTES.login}>
               <MissionSubmitPage />
             </PrivateRoute>
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: `${ROUTES.missionDetail}/:id`,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <MissionDetailPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.profile,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <PrivateRoute redirectTo={ROUTES.login}>
               <UserProfilePage />
             </PrivateRoute>
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   // {
@@ -135,13 +135,13 @@ const routes = [
   {
     path: ROUTES.missionList,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <MissionListPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
@@ -157,25 +157,25 @@ const routes = [
   {
     path: ROUTES.solutions,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <SolutionListPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.dashboardHome,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <DashboardPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
     children: [
       {
@@ -223,80 +223,72 @@ const routes = [
   {
     path: `${ROUTES.solutions}/:id`,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <SolutionDetailPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.about,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <AboutPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: `${ROUTES.discussions}/:id`,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <DiscussionDetailPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.submitDiscussion,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <PrivateRoute redirectTo={ROUTES.login}>
               <DiscussionSubmitPage />
             </PrivateRoute>
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: ROUTES.discussions,
     element: (
-      <App>
-        <QueryErrorBoundary>
+      <QueryErrorBoundary>
+        <App>
           <Suspense fallback={<LoadingSpinner />}>
             <DiscussionListPage />
           </Suspense>
-        </QueryErrorBoundary>
-      </App>
+        </App>
+      </QueryErrorBoundary>
     ),
   },
   {
     path: '/login',
-    element: (
-      <App>
-        <NeedToLoginPage />
-      </App>
-    ),
+    element: <NeedToLoginPage />,
   },
   {
     path: '*',
-    element: (
-      <App>
-        <NotFoundPage />
-      </App>
-    ),
+    element: <NotFoundPage />,
   },
 ];
 
@@ -304,38 +296,38 @@ export const router = createBrowserRouter(routes, {
   basename: ROUTES.main,
 });
 
-// async function enableMocking() {
-//   if (process.env.NODE_ENV !== 'development') {
-//     return;
-//   }
+async function enableMocking() {
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
 
-//   const { worker } = await import('./mocks/browser');
+  const { worker } = await import('./mocks/browser');
 
-//   // `worker.start()` returns a Promise that resolves
-//   // once the Service Worker is up and ready to intercept requests.
-//   return worker.start();
-// }
+  // `worker.start()` returns a Promise that resolves
+  // once the Service Worker is up and ready to intercept requests.
+  return worker.start();
+}
 
-// enableMocking().then(() => {
-//   root.render(
-//     <React.StrictMode>
-//       <QueryClientProvider client={queryClient}>
-//         <ThemeProvider theme={theme}>
-//           <GlobalStyle />
-//           <RouterProvider router={router} />
-//         </ThemeProvider>
-//       </QueryClientProvider>
-//     </React.StrictMode>,
-//   );
-// });
+enableMocking().then(() => {
+  root.render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </React.StrictMode>,
+  );
+});
 
-root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </QueryClientProvider>
-  </React.StrictMode>,
-);
+// root.render(
+//   <React.StrictMode>
+//     <QueryClientProvider client={queryClient}>
+//       <ThemeProvider theme={theme}>
+//         <GlobalStyle />
+//         <RouterProvider router={router} />
+//       </ThemeProvider>
+//     </QueryClientProvider>
+//   </React.StrictMode>,
+// );
