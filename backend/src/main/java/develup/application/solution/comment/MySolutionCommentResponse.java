@@ -22,4 +22,15 @@ public record MySolutionCommentResponse(
                 mySolutionComment.solutionCommentCount()
         );
     }
+
+    public static MySolutionCommentResponse of(MySolutionComment mySolutionComment, Long solutionCommentCount) {
+        return new MySolutionCommentResponse(
+                mySolutionComment.id(),
+                mySolutionComment.solutionId(),
+                mySolutionComment.content(),
+                mySolutionComment.createdAt(),
+                mySolutionComment.solutionTitle(),
+                solutionCommentCount
+        );
+    }
 }

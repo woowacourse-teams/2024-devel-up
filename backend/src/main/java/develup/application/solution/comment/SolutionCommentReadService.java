@@ -3,8 +3,10 @@ package develup.application.solution.comment;
 import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
+import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.comment.MySolutionComment;
 import develup.domain.solution.comment.SolutionComment;
+import develup.domain.solution.comment.SolutionCommentCounts;
 import develup.domain.solution.comment.SolutionCommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +17,16 @@ public class SolutionCommentReadService {
 
     private final CommentGroupingService commentGroupingService;
     private final SolutionCommentRepository solutionCommentRepository;
+    private final SolutionRepository solutionRepository;
 
-    public SolutionCommentReadService(CommentGroupingService commentGroupingService, SolutionCommentRepository solutionCommentRepository) {
+    public SolutionCommentReadService(
+            CommentGroupingService commentGroupingService,
+            SolutionCommentRepository solutionCommentRepository,
+            SolutionRepository solutionRepository
+    ) {
         this.commentGroupingService = commentGroupingService;
         this.solutionCommentRepository = solutionCommentRepository;
+        this.solutionRepository = solutionRepository;
     }
 
     public SolutionComment getById(Long commentId) {
@@ -40,9 +48,21 @@ public class SolutionCommentReadService {
 
     public List<MySolutionCommentResponse> getMyComments(Long memberId) {
         List<MySolutionComment> mySolutionComments = solutionCommentRepository.findAllMySolutionComment(memberId);
+        SolutionCommentCounts solutionCommentCounts = new SolutionCommentCounts(
+                solutionRepository.findAllSolutionCommentCounts()
+        );
 
         return mySolutionComments.stream()
-                .map(MySolutionCommentResponse::from)
+                .map(mySolutionComment -> mapToMySolutionCommentResponse(mySolutionComment, solutionCommentCounts))
                 .toList();
+    }
+
+    private static MySolutionCommentResponse mapToMySolutionCommentResponse(
+            MySolutionComment mySolutionComment,
+            SolutionCommentCounts solutionCommentCounts
+    ) {
+        Long solutionId = mySolutionComment.solutionId();
+        Long commentCount = solutionCommentCounts.getCount(solutionId);
+        return MySolutionCommentResponse.of(mySolutionComment, commentCount);
     }
 }
