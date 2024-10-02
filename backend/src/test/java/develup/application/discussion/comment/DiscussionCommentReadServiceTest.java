@@ -2,8 +2,10 @@ package develup.application.discussion.comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionRepository;
@@ -97,5 +99,40 @@ class DiscussionCommentReadServiceTest extends IntegrationTestSupport {
         discussionCommentRepository.save(discussionComment);
 
         return discussionComment;
+    }
+
+    @Test
+    @DisplayName("사용자가 작성한 댓글을 조회한다.")
+    void getMyComments() {
+        Discussion discussion = createRootDiscussion();
+        for (int i = 0; i < 10; i++) {
+            createDiscussionComment(discussion);
+        }
+        Member otherMember = memberRepository.save(MemberTestData.defaultMember().build());
+        createDiscussionComment(discussion, otherMember);
+
+        Long memberId = discussion.getMember().getId();
+        List<MyDiscussionCommentResponse> myComments = discussionCommentReadService.getMyComments(memberId);
+
+        assertAll(
+                () -> assertThat(myComments).hasSize(10),
+                () -> assertThat(myComments.getFirst().discussionCommentCount()).isEqualTo(11)
+        );
+    }
+
+    private DiscussionComment createDiscussionComment(Discussion discussion) {
+        DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
+                .withDiscussion(discussion)
+                .withMember(discussion.getMember())
+                .build();
+        return discussionCommentRepository.save(discussionComment);
+    }
+
+    private DiscussionComment createDiscussionComment(Discussion discussion, Member writer) {
+        DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
+                .withDiscussion(discussion)
+                .withMember(writer)
+                .build();
+        return discussionCommentRepository.save(discussionComment);
     }
 }
