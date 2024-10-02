@@ -135,4 +135,33 @@ class DiscussionCommentReadServiceTest extends IntegrationTestSupport {
                 .build();
         return discussionCommentRepository.save(discussionComment);
     }
+
+    @Test
+    @DisplayName("사용자가 작성한 댓글을 조회시 솔루션에 달린 댓글 수는 부모 댓글만 반영한다.")
+    void getMyCommentsWhenContainReplyComments() {
+        Discussion discussion = createRootDiscussion();
+        Member otherMember = memberRepository.save(MemberTestData.defaultMember().build());
+        DiscussionComment parentComment = createDiscussionComment(discussion, otherMember);
+
+        for (int i = 0; i < 10; i++) {
+            createDiscussionReplyComment(discussion, parentComment);
+        }
+
+        Long memberId = discussion.getMember().getId();
+        List<MyDiscussionCommentResponse> myComments = discussionCommentReadService.getMyComments(memberId);
+
+        assertAll(
+                () -> assertThat(myComments).hasSize(10),
+                () -> assertThat(myComments.getFirst().discussionCommentCount()).isEqualTo(1)
+        );
+    }
+
+    private DiscussionComment createDiscussionReplyComment(Discussion discussion, DiscussionComment parentComment) {
+        DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
+                .withDiscussion(discussion)
+                .withParentComment(parentComment)
+                .withMember(discussion.getMember())
+                .build();
+        return discussionCommentRepository.save(discussionComment);
+    }
 }
