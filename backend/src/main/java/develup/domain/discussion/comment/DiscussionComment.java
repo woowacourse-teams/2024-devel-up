@@ -26,6 +26,7 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
+    // TODO : parent_comment_id Long으로 변경
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
     private DiscussionComment parentComment;
@@ -62,7 +63,7 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
         this.deletedAt = deletedAt;
     }
 
-    public static DiscussionComment create(String content, Discussion discussion, Member member) {
+    public static DiscussionComment createRoot(String content, Discussion discussion, Member member) {
         return new DiscussionComment(content, discussion, member, null, null);
     }
 

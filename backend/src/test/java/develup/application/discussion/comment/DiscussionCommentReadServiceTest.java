@@ -42,7 +42,7 @@ class DiscussionCommentReadServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 조회한다.")
     void getById() {
-        DiscussionComment discussionComment = createDiscussionComment();
+        DiscussionComment discussionComment = createRootDiscussionComment();
 
         DiscussionComment foundDiscussionComment = discussionCommentReadService.getById(discussionComment.getId());
 
@@ -62,7 +62,7 @@ class DiscussionCommentReadServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글 조회 시 삭제된 댓글일 경우 예외가 발생한다.")
     void getByIdFailedWhenDeleted() {
-        Discussion discussion = createDiscussion();
+        Discussion discussion = createRootDiscussion();
         Member member = discussion.getMember();
         DiscussionComment deletedComment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withDiscussion(discussion)
@@ -77,7 +77,7 @@ class DiscussionCommentReadServiceTest extends IntegrationTestSupport {
                 .hasMessage("존재하지 않는 댓글입니다.");
     }
 
-    private Discussion createDiscussion() {
+    private Discussion createRootDiscussion() {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Discussion discussion = DiscussionTestData.defaultDiscussion()
@@ -88,8 +88,8 @@ class DiscussionCommentReadServiceTest extends IntegrationTestSupport {
         return discussionRepository.save(discussion);
     }
 
-    private DiscussionComment createDiscussionComment() {
-        Discussion discussion = createDiscussion();
+    private DiscussionComment createRootDiscussionComment() {
+        Discussion discussion = createRootDiscussion();
         DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withDiscussion(discussion)
                 .withMember(discussion.getMember())
