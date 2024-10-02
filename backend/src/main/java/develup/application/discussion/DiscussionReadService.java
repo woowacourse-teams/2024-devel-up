@@ -22,7 +22,7 @@ public class DiscussionReadService {
     public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
         List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(mission, hashTagName);
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
-                discussionRepository.findDiscussionCommentCounts()
+                discussionRepository.findAllDiscussionCommentCounts()
         );
 
         return discussions.stream()
@@ -34,9 +34,9 @@ public class DiscussionReadService {
     }
 
     public List<SummarizedDiscussionResponse> getDiscussionsByMemberId(Long memberId) {
-        List<Discussion> myDiscussions = discussionRepository.findAllByMember_Id(memberId);
+        List<Discussion> myDiscussions = discussionRepository.findAllByMemberId(memberId);
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
-                discussionRepository.findDiscussionCommentCounts()
+                discussionRepository.findAllDiscussionCommentCounts()
         );
 
         return myDiscussions.stream()

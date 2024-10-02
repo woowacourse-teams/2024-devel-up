@@ -42,10 +42,6 @@ public class Mission extends IdentifiableEntity {
         this.missionHashTags = new MissionHashTags(this, hashTags);
     }
 
-    public void tagAll(List<HashTag> tags) {
-        missionHashTags.addAll(this, tags);
-    }
-
     public boolean isValidPullRequestUrl(String pullRequestUrl) {
         return this.missionUrl.isValidPullRequestUrl(pullRequestUrl);
     }

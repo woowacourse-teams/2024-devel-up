@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface MissionRepository extends JpaRepository<Mission, Long> {
 
     @Query("""
-            SELECT DISTINCT m
+            SELECT m
             FROM Mission m
             JOIN FETCH m.missionHashTags.hashTags mhts
             JOIN FETCH mhts.hashTag ht
@@ -17,7 +17,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     Optional<Mission> findHashTaggedMissionById(Long id);
 
     @Query("""
-            SELECT DISTINCT m
+            SELECT m
             FROM Mission m
             JOIN FETCH m.missionHashTags.hashTags mhts
             JOIN FETCH mhts.hashTag ht

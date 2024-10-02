@@ -16,7 +16,7 @@ class DiscussionCommentTest {
 
     @Test
     @DisplayName("댓글을 생성할 수 있다.")
-    void create() {
+    void createRoot() {
         String content = "댓글입니다.";
         DiscussionComment comment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withContent(content)

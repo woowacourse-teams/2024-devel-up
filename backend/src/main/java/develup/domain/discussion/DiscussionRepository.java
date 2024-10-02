@@ -53,7 +53,7 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             JOIN FETCH dhts.hashTag ht
             WHERE me.id = :memberId
             """)
-    List<Discussion> findAllByMember_Id(Long memberId);
+    List<Discussion> findAllByMemberId(Long memberId);
 
     @Query("""
             SELECT new develup.domain.discussion.comment.DiscussionCommentCount(
@@ -65,5 +65,5 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             WHERE dc.deletedAt IS NULL
             GROUP BY d.id
             """)
-    List<DiscussionCommentCount> findDiscussionCommentCounts();
+    List<DiscussionCommentCount> findAllDiscussionCommentCounts();
 }

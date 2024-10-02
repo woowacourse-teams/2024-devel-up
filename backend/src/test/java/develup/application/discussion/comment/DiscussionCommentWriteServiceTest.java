@@ -42,7 +42,7 @@ class DiscussionCommentWriteServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 추가한다.")
     void addComment() {
-        Discussion discussion = createDiscussion();
+        Discussion discussion = createRootDiscussion();
         Member member = discussion.getMember();
 
         Long discussionId = discussion.getId();
@@ -62,7 +62,7 @@ class DiscussionCommentWriteServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("답글을 추가한다.")
     void addReply() {
-        DiscussionComment discussionComment = createDiscussionComment();
+        DiscussionComment discussionComment = createRootDiscussionComment();
         Member member = discussionComment.getMember();
         Discussion discussion = discussionComment.getDiscussion();
 
@@ -83,7 +83,7 @@ class DiscussionCommentWriteServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글 내용을 수정한다.")
     void updateComment() {
-        DiscussionComment discussionComment = createDiscussionComment();
+        DiscussionComment discussionComment = createRootDiscussionComment();
         Member member = discussionComment.getMember();
 
         Long commentId = discussionComment.getId();
@@ -103,7 +103,7 @@ class DiscussionCommentWriteServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 수정 시 작성자가 아닌 경우 예외가 발생한다.")
     void updateComment_notWrittenBy() {
-        DiscussionComment discussionComment = createDiscussionComment();
+        DiscussionComment discussionComment = createRootDiscussionComment();
 
         Long commentId = discussionComment.getId();
         Long nonWriterId = -1L;
@@ -118,7 +118,7 @@ class DiscussionCommentWriteServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("삭제된 댓글의 내용을 수정할 수 없다.")
     void updateCommentFailedWhenAlreadyDeleted() {
-        DiscussionComment discussionComment = createDiscussionComment();
+        DiscussionComment discussionComment = createRootDiscussionComment();
         Member member = discussionComment.getMember();
 
         Long commentId = discussionComment.getId();
@@ -137,7 +137,7 @@ class DiscussionCommentWriteServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 삭제한다.")
     void deleteComment() {
-        DiscussionComment discussionComment = createDiscussionComment();
+        DiscussionComment discussionComment = createRootDiscussionComment();
 
         Long memberId = discussionComment.getMember().getId();
         Long commentId = discussionComment.getId();
@@ -151,7 +151,7 @@ class DiscussionCommentWriteServiceTest extends IntegrationTestSupport {
     @Test
     @DisplayName("댓글을 삭제 시 작성자가 아닌 경우 예외가 발생한다.")
     void deleteComment_notWrittenBy() {
-        DiscussionComment discussionComment = createDiscussionComment();
+        DiscussionComment discussionComment = createRootDiscussionComment();
 
         Long nonWriterId = -1L;
         Long commentId = discussionComment.getId();
@@ -161,7 +161,7 @@ class DiscussionCommentWriteServiceTest extends IntegrationTestSupport {
                 .hasMessage("댓글 작성자가 아닙니다.");
     }
 
-    private Discussion createDiscussion() {
+    private Discussion createRootDiscussion() {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Discussion discussion = DiscussionTestData.defaultDiscussion()
@@ -172,8 +172,8 @@ class DiscussionCommentWriteServiceTest extends IntegrationTestSupport {
         return discussionRepository.save(discussion);
     }
 
-    private DiscussionComment createDiscussionComment() {
-        Discussion discussion = createDiscussion();
+    private DiscussionComment createRootDiscussionComment() {
+        Discussion discussion = createRootDiscussion();
         DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withDiscussion(discussion)
                 .withMember(discussion.getMember())

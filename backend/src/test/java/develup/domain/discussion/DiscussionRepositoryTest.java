@@ -3,7 +3,6 @@ package develup.domain.discussion;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Function;
 import develup.domain.discussion.comment.DiscussionComment;
@@ -145,8 +144,8 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         discussionRepository.save(discussionByMember1);
         discussionRepository.save(discussionByMember2);
 
-        List<Discussion> discussionsByMember1 = discussionRepository.findAllByMember_Id(member1.getId());
-        List<Discussion> discussionsByMember2 = discussionRepository.findAllByMember_Id(member2.getId());
+        List<Discussion> discussionsByMember1 = discussionRepository.findAllByMemberId(member1.getId());
+        List<Discussion> discussionsByMember2 = discussionRepository.findAllByMemberId(member2.getId());
 
         assertAll(
                 () -> assertThat(discussionsByMember1).hasSize(1),
@@ -169,7 +168,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
     @Test
     @DisplayName("디스커션에 달린 댓글의 개수를 조회한다. 삭제된 댓글은 제외한다")
     @Transactional
-    void findDiscussionCommentCounts() {
+    void findAllDiscussionCommentCounts() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
@@ -179,7 +178,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         saveDiscussionComment(savedDiscussion, member);
         saveDeletedDiscussionComment(savedDiscussion, member);
 
-        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(discussionRepository.findDiscussionCommentCounts());
+        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(discussionRepository.findAllDiscussionCommentCounts());
         Long count = discussionCommentCounts.getCount(savedDiscussion);
 
         assertThat(count).isEqualTo(1);

@@ -37,14 +37,14 @@ class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
     @Test
     @DisplayName("특정 회원이 작성한 댓글 목록을 조회한다.")
     void getMyComments() {
-        Discussion discussion = createDiscussion();
-        Member member = createMember();
+        Discussion discussion = createRootDiscussion();
+        Member member = createRootMember();
         List<DiscussionComment> discussionComments = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            DiscussionComment discussionComment = createDiscussionComment(discussion, member);
+            DiscussionComment discussionComment = createRootDiscussionComment(discussion, member);
             discussionComments.add(discussionComment);
         }
-        createDiscussionComment();
+        createRootDiscussionComment();
 
         List<MyDiscussionComment> myComments = discussionCommentRepository.findAllMyDiscussionComment(member.getId());
 
@@ -55,15 +55,15 @@ class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
     @Test
     @DisplayName("특정 회원이 작성한 댓글 목록을 조회할 때 삭제된 댓글은 제외한다.")
     void getMyCommentsWithDelete() {
-        Discussion discussion = createDiscussion();
-        Member member = createMember();
+        Discussion discussion = createRootDiscussion();
+        Member member = createRootMember();
         List<DiscussionComment> discussionComments = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            DiscussionComment discussionComment = createDiscussionComment(discussion, member);
+            DiscussionComment discussionComment = createRootDiscussionComment(discussion, member);
             discussionComments.add(discussionComment);
         }
-        createDiscussionComment();
-        createDeletedDiscussionComment(discussion, member);
+        createRootDiscussionComment();
+        createRootDeletedDiscussionComment(discussion, member);
 
         List<MyDiscussionComment> myComments = discussionCommentRepository.findAllMyDiscussionComment(member.getId());
 
@@ -71,7 +71,7 @@ class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
                 .hasSize(discussionComments.size());
     }
 
-    private Discussion createDiscussion() {
+    private Discussion createRootDiscussion() {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Discussion discussion = DiscussionTestData.defaultDiscussion()
@@ -82,8 +82,8 @@ class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
         return discussionRepository.save(discussion);
     }
 
-    private DiscussionComment createDiscussionComment() {
-        Discussion discussion = createDiscussion();
+    private DiscussionComment createRootDiscussionComment() {
+        Discussion discussion = createRootDiscussion();
         DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withDiscussion(discussion)
                 .withMember(discussion.getMember())
@@ -93,13 +93,13 @@ class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
         return discussionComment;
     }
 
-    private Member createMember() {
+    private Member createRootMember() {
         Member member = MemberTestData.defaultMember().build();
 
         return memberRepository.save(member);
     }
 
-    private DiscussionComment createDiscussionComment(Discussion discussion, Member member) {
+    private DiscussionComment createRootDiscussionComment(Discussion discussion, Member member) {
         DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withDiscussion(discussion)
                 .withMember(member)
@@ -109,7 +109,7 @@ class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
         return discussionComment;
     }
 
-    private DiscussionComment createDeletedDiscussionComment(Discussion discussion, Member member) {
+    private DiscussionComment createRootDeletedDiscussionComment(Discussion discussion, Member member) {
         DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withDiscussion(discussion)
                 .withMember(member)

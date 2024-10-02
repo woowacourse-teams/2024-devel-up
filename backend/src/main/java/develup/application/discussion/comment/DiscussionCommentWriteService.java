@@ -54,7 +54,7 @@ public class DiscussionCommentWriteService {
     }
 
     private DiscussionComment createRootComment(DiscussionCommentRequest request, Discussion discussion, Member member) {
-        DiscussionComment rootComment = DiscussionComment.create(request.content(), discussion, member);
+        DiscussionComment rootComment = DiscussionComment.createRoot(request.content(), discussion, member);
 
         return discussionCommentRepository.save(rootComment);
     }

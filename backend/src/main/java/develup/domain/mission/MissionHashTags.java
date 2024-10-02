@@ -29,13 +29,6 @@ class MissionHashTags {
         this.hashTags = mapToMissionHashTag(mission, hashTags);
     }
 
-    public void addAll(Mission target, List<HashTag> hashTags) {
-        validateDuplicated(hashTags);
-        validateAlreadyTagged(hashTags);
-
-        this.hashTags.addAll(mapToMissionHashTag(target, hashTags));
-    }
-
     private void validateDuplicated(List<HashTag> hashTags) {
         int uniqueSize = hashTags.stream()
                 .distinct()
@@ -43,16 +36,6 @@ class MissionHashTags {
                 .size();
 
         if (uniqueSize != hashTags.size()) {
-            throw new DevelupException(ExceptionType.DUPLICATED_HASHTAG);
-        }
-    }
-
-    private void validateAlreadyTagged(List<HashTag> hashTags) {
-        boolean alreadyTagged = this.hashTags.stream()
-                .map(MissionHashTag::getHashTag)
-                .anyMatch(hashTags::contains);
-
-        if (alreadyTagged) {
             throw new DevelupException(ExceptionType.DUPLICATED_HASHTAG);
         }
     }
