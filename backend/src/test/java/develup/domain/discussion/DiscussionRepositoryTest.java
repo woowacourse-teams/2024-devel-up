@@ -178,7 +178,9 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         saveDiscussionComment(savedDiscussion, member);
         saveDeletedDiscussionComment(savedDiscussion, member);
 
-        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(discussionRepository.findAllDiscussionCommentCounts());
+        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
+                discussionRepository.findAllDiscussionCommentCounts()
+        );
         Long count = discussionCommentCounts.getCount(savedDiscussion);
 
         assertThat(count).isEqualTo(1);
