@@ -135,4 +135,33 @@ class SolutionCommentReadServiceTest extends IntegrationTestSupport {
                 .build();
         return solutionCommentRepository.save(solutionComment);
     }
+
+    @Test
+    @DisplayName("사용자가 작성한 댓글을 조회시 솔루션에 달린 댓글 수는 부모 댓글만 반영한다.")
+    void getMyCommentsWhenContainReplyComments() {
+        Solution solution = createSolution();
+        Member otherMember = memberRepository.save(MemberTestData.defaultMember().build());
+        SolutionComment parentComment = createSolutionComment(solution, otherMember);
+
+        for (int i = 0; i < 10; i++) {
+            createSolutionReplyComment(solution, parentComment);
+        }
+
+        Long memberId = solution.getMember().getId();
+        List<MySolutionCommentResponse> myComments = solutionCommentReadService.getMyComments(memberId);
+
+        assertAll(
+                () -> assertThat(myComments).hasSize(10),
+                () -> assertThat(myComments.getFirst().solutionCommentCount()).isEqualTo(1)
+        );
+    }
+
+    private SolutionComment createSolutionReplyComment(Solution solution, SolutionComment parentComment) {
+        SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
+                .withParentComment(parentComment)
+                .withSolution(solution)
+                .withMember(solution.getMember())
+                .build();
+        return solutionCommentRepository.save(solutionComment);
+    }
 }
