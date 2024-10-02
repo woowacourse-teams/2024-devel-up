@@ -76,13 +76,13 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
             throw new DevelupException(ExceptionType.CANNOT_REPLY_TO_REPLY);
         }
 
-        DiscussionComment reply = new DiscussionComment();
-        reply.content = content;
-        reply.discussion = this.discussion;
-        reply.member = member;
-        reply.parentComment = this;
-
-        return reply;
+        return new DiscussionComment(
+                content,
+                discussion,
+                member,
+                this,
+                null
+        );
     }
 
     public void updateContent(String content) {
