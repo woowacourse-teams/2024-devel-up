@@ -33,10 +33,8 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    // TODO : parent_comment_id Long으로 변경
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_comment_id")
-    private DiscussionComment parentComment;
+    @Column
+    private Long parentCommentId;
 
     @Column
     private LocalDateTime deletedAt;
@@ -46,14 +44,14 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
             String content,
             Discussion discussion,
             Member member,
-            DiscussionComment parentComment,
+            Long parentCommentId,
             LocalDateTime deletedAt
     ) {
         super(id);
         this.content = content;
         this.discussion = discussion;
         this.member = member;
-        this.parentComment = parentComment;
+        this.parentCommentId = parentCommentId;
         this.deletedAt = deletedAt;
     }
 
@@ -74,7 +72,7 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
                 content,
                 discussion,
                 member,
-                this,
+                id,
                 null
         );
     }
@@ -103,16 +101,12 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
         return !member.getId().equals(memberId);
     }
 
-    public Long getParentCommentId() {
-        return parentComment.getId();
-    }
-
     public boolean isRootComment() {
-        return parentComment == null;
+        return parentCommentId == null;
     }
 
     public boolean isReply() {
-        return parentComment != null;
+        return parentCommentId != null;
     }
 
     public boolean isNotDeleted() {

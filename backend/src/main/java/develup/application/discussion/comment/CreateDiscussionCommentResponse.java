@@ -1,7 +1,6 @@
 package develup.application.discussion.comment;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import develup.application.member.MemberResponse;
 import develup.domain.discussion.comment.DiscussionComment;
 
@@ -15,14 +14,10 @@ public record CreateDiscussionCommentResponse(
 ) {
 
     public static CreateDiscussionCommentResponse from(DiscussionComment comment) {
-        Long parentCommentId = Optional.ofNullable(comment.getParentComment())
-                .map(DiscussionComment::getId)
-                .orElse(null);
-
         return new CreateDiscussionCommentResponse(
                 comment.getId(),
                 comment.getDiscussionId(),
-                parentCommentId,
+                comment.getParentCommentId(),
                 comment.getContent(),
                 MemberResponse.from(comment.getMember()),
                 comment.getCreatedAt()
