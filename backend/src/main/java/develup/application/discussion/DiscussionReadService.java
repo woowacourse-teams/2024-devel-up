@@ -54,7 +54,7 @@ public class DiscussionReadService {
     }
 
     public Discussion getDiscussion(Long id) {
-        return discussionRepository.findById(id)
+        return discussionRepository.findFetchById(id)
                 .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
     }
 

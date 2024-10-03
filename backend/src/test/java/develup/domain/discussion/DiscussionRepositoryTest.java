@@ -3,6 +3,7 @@ package develup.domain.discussion;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import develup.domain.discussion.comment.DiscussionComment;
@@ -113,6 +114,59 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .withMission(mission)
                 .withMember(member)
                 .withHashTags(List.of(hashTag))
+                .build();
+        Discussion savedDiscussion = discussionRepository.save(discussion);
+
+        assertThat(discussionRepository.findFetchById(savedDiscussion.getId()))
+                .map(Discussion::getId)
+                .hasValue(savedDiscussion.getId());
+    }
+
+    @Test
+    @DisplayName("미션이 없는 디스커션을 식별자로 조회한다.")
+    @Transactional
+    void findFetchByIdWithoutMission() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMission(null)
+                .withMember(member)
+                .withHashTags(List.of(hashTag))
+                .build();
+        Discussion savedDiscussion = discussionRepository.save(discussion);
+
+        assertThat(discussionRepository.findFetchById(savedDiscussion.getId()))
+                .map(Discussion::getId)
+                .hasValue(savedDiscussion.getId());
+    }
+
+    @Test
+    @DisplayName("해시태그가 없는 디스커션을 식별자로 조회한다.")
+    @Transactional
+    void findFetchByIdWithoutHashTag() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .withMember(member)
+                .withHashTags(Collections.emptyList())
+                .build();
+        Discussion savedDiscussion = discussionRepository.save(discussion);
+
+        assertThat(discussionRepository.findFetchById(savedDiscussion.getId()))
+                .map(Discussion::getId)
+                .hasValue(savedDiscussion.getId());
+    }
+
+    @Test
+    @DisplayName("미션과 해시태그가 없는 디스커션을 식별자로 조회한다.")
+    @Transactional
+    void findFetchByIdWithoutMissionAndHashTag() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMission(null)
+                .withMember(member)
+                .withHashTags(Collections.emptyList())
                 .build();
         Discussion savedDiscussion = discussionRepository.save(discussion);
 
