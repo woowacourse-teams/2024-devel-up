@@ -10,13 +10,12 @@ public interface SolutionCommentRepository extends JpaRepository<SolutionComment
 
     @Query("""
             SELECT new develup.domain.solution.comment.MySolutionComment(
-                sc.id, sc.solution.id, sc.content, sc.createdAt, s.title.value, COUNT(sc)
+                sc.id, sc.solution.id, sc.content, sc.createdAt, s.title.value
             )
             FROM SolutionComment sc
             JOIN sc.solution s
             JOIN sc.member m
             WHERE sc.member.id = :memberId AND sc.deletedAt IS NULL
-            GROUP BY sc.id
             """)
     List<MySolutionComment> findAllMySolutionComment(Long memberId);
 }
