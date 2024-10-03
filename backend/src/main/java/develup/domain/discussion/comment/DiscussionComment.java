@@ -68,13 +68,7 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
             throw new DevelupException(ExceptionType.CANNOT_REPLY_TO_REPLY);
         }
 
-        return new DiscussionComment(
-                content,
-                discussion,
-                member,
-                id,
-                null
-        );
+        return new DiscussionComment(content, discussion, member, id, null);
     }
 
     public void updateContent(String content) {

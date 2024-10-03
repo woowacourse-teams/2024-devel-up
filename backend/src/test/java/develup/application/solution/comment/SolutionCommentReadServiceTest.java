@@ -158,7 +158,7 @@ class SolutionCommentReadServiceTest extends IntegrationTestSupport {
 
     private SolutionComment createSolutionReplyComment(Solution solution, SolutionComment parentComment) {
         SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
-                .withParentComment(parentComment)
+                .withParentCommentId(parentComment.getId())
                 .withSolution(solution)
                 .withMember(solution.getMember())
                 .build();
