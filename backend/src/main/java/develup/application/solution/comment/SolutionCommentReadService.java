@@ -33,7 +33,7 @@ public class SolutionCommentReadService {
     }
 
     public List<SolutionCommentRepliesResponse> getCommentsWithReplies(Long solutionId) {
-        List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solutionId);
+        List<SolutionComment> comments = solutionCommentRepository.findAllBySolutionIdOrderByCreatedAtAsc(solutionId);
 
         return commentGroupingService.groupReplies(comments);
     }

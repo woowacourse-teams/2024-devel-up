@@ -256,7 +256,7 @@ class SolutionWriteServiceTest extends IntegrationTestSupport {
 
         solutionWriteService.delete(member.getId(), solution.getId());
 
-        List<SolutionComment> comments = solutionCommentRepository.findAllBySolution_IdOrderByCreatedAtAsc(solution.getId());
+        List<SolutionComment> comments = solutionCommentRepository.findAllBySolutionIdOrderByCreatedAtAsc(solution.getId());
         Optional<Solution> deletedSolution = solutionRepository.findById(solution.getId());
         assertThat(comments).isEmpty();
         assertThat(deletedSolution).isEmpty();
