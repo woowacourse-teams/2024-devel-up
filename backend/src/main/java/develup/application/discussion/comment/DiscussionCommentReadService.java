@@ -57,7 +57,7 @@ public class DiscussionCommentReadService {
                 .toList();
     }
 
-    private static MyDiscussionCommentResponse mapToMyDiscussionCommentResponse(
+    private MyDiscussionCommentResponse mapToMyDiscussionCommentResponse(
             MyDiscussionComment myDiscussionComment,
             DiscussionCommentCounts discussionCommentCounts
     ) {
