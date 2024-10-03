@@ -47,10 +47,10 @@ public class DiscussionCommentReadService {
     }
 
     public List<MyDiscussionCommentResponse> getMyComments(Long memberId) {
+        List<MyDiscussionComment> mySolutionComments = discussionCommentRepository.findAllMyDiscussionComment(memberId);
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
                 discussionRepository.findAllDiscussionCommentCounts()
         );
-        List<MyDiscussionComment> mySolutionComments = discussionCommentRepository.findAllMyDiscussionComment(memberId);
 
         return mySolutionComments.stream()
                 .map(myDiscussionComment -> mapToMyDiscussionCommentResponse(myDiscussionComment, discussionCommentCounts))
