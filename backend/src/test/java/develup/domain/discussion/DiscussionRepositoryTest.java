@@ -50,15 +50,18 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
 
-        createDiscussion(mission, hashTag);
-        createDiscussion(mission, hashTag);
+        createDiscussion(mission, List.of(hashTag));
+        createDiscussion(mission, List.of(hashTag));
+        createDiscussion(null, List.of(hashTag));
+        createDiscussion(mission, Collections.emptyList());
+        createDiscussion(null, Collections.emptyList());
 
         List<Discussion> actual = discussionRepository.findAllByMissionAndHashTagName(
                 "all",
                 "all"
         );
 
-        assertThat(actual).hasSize(2);
+        assertThat(actual).hasSize(5);
     }
 
     @Test
@@ -68,8 +71,8 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         HashTag hashTag1 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
         HashTag hashTag2 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("객체지향").build());
-        createDiscussion(mission, hashTag1);
-        createDiscussion(mission, hashTag2);
+        createDiscussion(mission, List.of(hashTag1));
+        createDiscussion(mission, List.of(hashTag2));
 
         List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(
                 "all",
@@ -90,8 +93,8 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         Mission mission1 = missionRepository.save(MissionTestData.defaultMission().withTitle("루터회관 흡연단속").build());
         Mission mission2 = missionRepository.save(MissionTestData.defaultMission().withTitle("주문").build());
         HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
-        createDiscussion(mission1, hashTag);
-        createDiscussion(mission2, hashTag);
+        createDiscussion(mission1, List.of(hashTag));
+        createDiscussion(mission2, List.of(hashTag));
 
         List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(
                 "루터회관 흡연단속",
@@ -244,13 +247,13 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         assertThat(count).isEqualTo(1);
     }
 
-    private void createDiscussion(Mission mission, HashTag hashTag) {
+    private void createDiscussion(Mission mission, List<HashTag> hashTags) {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
 
         Discussion discussion = DiscussionTestData.defaultDiscussion()
                 .withMission(mission)
                 .withMember(member)
-                .withHashTags(List.of(hashTag))
+                .withHashTags(hashTags)
                 .build();
 
         discussionRepository.save(discussion);
