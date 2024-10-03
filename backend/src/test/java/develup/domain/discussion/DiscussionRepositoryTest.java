@@ -184,10 +184,25 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
 
-        Discussion discussionByMember1 = DiscussionTestData.defaultDiscussion()
+        Discussion discussionByMember1_1 = DiscussionTestData.defaultDiscussion()
                 .withMission(mission)
                 .withMember(member1)
                 .withHashTags(List.of(hashTag))
+                .build();
+        Discussion discussionByMember1_2 = DiscussionTestData.defaultDiscussion()
+                .withMission(null)
+                .withMember(member1)
+                .withHashTags(List.of(hashTag))
+                .build();
+        Discussion discussionByMember1_3 = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .withMember(member1)
+                .withHashTags(Collections.emptyList())
+                .build();
+        Discussion discussionByMember1_4 = DiscussionTestData.defaultDiscussion()
+                .withMission(null)
+                .withMember(member1)
+                .withHashTags(Collections.emptyList())
                 .build();
         Discussion discussionByMember2 = DiscussionTestData.defaultDiscussion()
                 .withMission(mission)
@@ -195,28 +210,19 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .withHashTags(List.of(hashTag))
                 .build();
 
-        discussionRepository.save(discussionByMember1);
+        discussionRepository.save(discussionByMember1_1);
+        discussionRepository.save(discussionByMember1_2);
+        discussionRepository.save(discussionByMember1_3);
+        discussionRepository.save(discussionByMember1_4);
         discussionRepository.save(discussionByMember2);
 
         List<Discussion> discussionsByMember1 = discussionRepository.findAllByMemberId(member1.getId());
         List<Discussion> discussionsByMember2 = discussionRepository.findAllByMemberId(member2.getId());
 
         assertAll(
-                () -> assertThat(discussionsByMember1).hasSize(1),
+                () -> assertThat(discussionsByMember1).hasSize(4),
                 () -> assertThat(discussionsByMember2).hasSize(1)
         );
-    }
-
-    private void createDiscussion(Mission mission, HashTag hashTag) {
-        Member member = memberRepository.save(MemberTestData.defaultMember().build());
-
-        Discussion discussion = DiscussionTestData.defaultDiscussion()
-                .withMission(mission)
-                .withMember(member)
-                .withHashTags(List.of(hashTag))
-                .build();
-
-        discussionRepository.save(discussion);
     }
 
     @Test
@@ -236,6 +242,18 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         Long count = discussionCommentCounts.getCount(savedDiscussion);
 
         assertThat(count).isEqualTo(1);
+    }
+
+    private void createDiscussion(Mission mission, HashTag hashTag) {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .withMember(member)
+                .withHashTags(List.of(hashTag))
+                .build();
+
+        discussionRepository.save(discussion);
     }
 
     private Discussion getSavedDiscussion(Mission mission, Member member, HashTag hashTag) {
