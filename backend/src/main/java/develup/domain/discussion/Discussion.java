@@ -12,7 +12,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
 @Entity
 public class Discussion extends CreatedAtAuditableEntity {
 
@@ -32,9 +36,6 @@ public class Discussion extends CreatedAtAuditableEntity {
 
     @Embedded
     private DiscussionHashTags discussionHashTags;
-
-    protected Discussion() {
-    }
 
     public Discussion(
             Title title,
@@ -64,18 +65,6 @@ public class Discussion extends CreatedAtAuditableEntity {
 
     public String getTitle() {
         return title.getValue();
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Mission getMission() {
-        return mission;
-    }
-
-    public Member getMember() {
-        return member;
     }
 
     public String getMissionTitle() {

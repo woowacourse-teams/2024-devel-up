@@ -5,7 +5,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
 @Entity
 public class Member extends CreatedAtAuditableEntity {
 
@@ -25,9 +29,6 @@ public class Member extends CreatedAtAuditableEntity {
     @Column(nullable = false)
     private String imageUrl;
 
-    protected Member() {
-    }
-
     public Member(String email, OAuthProvider provider, Long socialId, String name, String imageUrl) {
         this(null, email, provider, socialId, name, imageUrl);
     }
@@ -40,25 +41,5 @@ public class Member extends CreatedAtAuditableEntity {
         this.socialId = socialId;
         this.name = name;
         this.imageUrl = imageUrl;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public OAuthProvider getProvider() {
-        return provider;
-    }
-
-    public Long getSocialId() {
-        return socialId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
     }
 }

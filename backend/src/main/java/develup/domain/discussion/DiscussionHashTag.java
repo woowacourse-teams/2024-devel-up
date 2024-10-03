@@ -8,8 +8,14 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class DiscussionHashTag {
 
@@ -26,29 +32,8 @@ public class DiscussionHashTag {
     @JoinColumn(nullable = false)
     private HashTag hashTag;
 
-    protected DiscussionHashTag() {
-    }
-
     public DiscussionHashTag(Discussion discussion, HashTag hashTag) {
         this(new DiscussionHashTagId(discussion.getId(), hashTag.getId()), discussion, hashTag);
-    }
-
-    private DiscussionHashTag(DiscussionHashTagId id, Discussion discussion, HashTag hashTag) {
-        this.id = id;
-        this.discussion = discussion;
-        this.hashTag = hashTag;
-    }
-
-    public DiscussionHashTagId getId() {
-        return id;
-    }
-
-    public Discussion getDiscussion() {
-        return discussion;
-    }
-
-    public HashTag getHashTag() {
-        return hashTag;
     }
 
     @Override

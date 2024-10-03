@@ -6,7 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
 @Entity
 public class MissionHashTag extends IdentifiableEntity {
 
@@ -18,9 +22,6 @@ public class MissionHashTag extends IdentifiableEntity {
     @JoinColumn(nullable = false)
     private HashTag hashTag;
 
-    protected MissionHashTag() {
-    }
-
     public MissionHashTag(Mission mission, HashTag hashTag) {
         this(null, mission, hashTag);
     }
@@ -29,13 +30,5 @@ public class MissionHashTag extends IdentifiableEntity {
         super(id);
         this.mission = mission;
         this.hashTag = hashTag;
-    }
-
-    public Mission getMission() {
-        return mission;
-    }
-
-    public HashTag getHashTag() {
-        return hashTag;
     }
 }

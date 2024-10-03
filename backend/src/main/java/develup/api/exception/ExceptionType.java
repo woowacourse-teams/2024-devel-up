@@ -1,7 +1,11 @@
 package develup.api.exception;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+@Getter
+@RequiredArgsConstructor
 public enum ExceptionType {
 
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."),
@@ -31,17 +35,4 @@ public enum ExceptionType {
 
     private final HttpStatus status;
     private final String message;
-
-    ExceptionType(HttpStatus status, String message) {
-        this.status = status;
-        this.message = message;
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }

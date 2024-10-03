@@ -12,16 +12,15 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Embeddable
 class MissionHashTags {
 
     @OrderBy(value = "id ASC")
     @OneToMany(mappedBy = "mission", cascade = CascadeType.PERSIST)
     private Set<MissionHashTag> hashTags = new LinkedHashSet<>();
-
-    protected MissionHashTags() {
-    }
 
     public MissionHashTags(Mission mission, List<HashTag> hashTags) {
         validateDuplicated(hashTags);

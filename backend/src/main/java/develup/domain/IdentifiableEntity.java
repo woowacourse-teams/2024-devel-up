@@ -5,8 +5,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 
+@Getter
+@NoArgsConstructor
 @MappedSuperclass
 public abstract class IdentifiableEntity {
 
@@ -14,16 +18,8 @@ public abstract class IdentifiableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    protected IdentifiableEntity() {
-        this(null);
-    }
-
     protected IdentifiableEntity(Long id) {
         this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Override

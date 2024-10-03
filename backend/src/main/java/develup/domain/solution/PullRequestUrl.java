@@ -1,13 +1,18 @@
 package develup.domain.solution;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode
 @Embeddable
 public class PullRequestUrl {
 
@@ -17,9 +22,6 @@ public class PullRequestUrl {
     @Column(name = "url")
     private String value;
 
-    protected PullRequestUrl() {
-    }
-
     public PullRequestUrl(String url) {
         Matcher matcher = PR_URL_PATTERN.matcher(url);
         if (!matcher.matches()) {
@@ -27,22 +29,5 @@ public class PullRequestUrl {
         }
 
         this.value = url;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PullRequestUrl that = (PullRequestUrl) o;
-        return Objects.equals(value, that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
     }
 }

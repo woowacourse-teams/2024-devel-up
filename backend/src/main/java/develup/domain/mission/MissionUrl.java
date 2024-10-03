@@ -1,9 +1,16 @@
 package develup.domain.mission;
 
-import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 @Embeddable
 public class MissionUrl {
 
@@ -12,13 +19,6 @@ public class MissionUrl {
 
     @Column(name = "url", nullable = false)
     private String value;
-
-    protected MissionUrl() {
-    }
-
-    public MissionUrl(String url) {
-        this.value = url;
-    }
 
     public boolean isValidPullRequestUrl(String pullRequestUrl) {
         return pullRequestUrl.startsWith(value + "/");
@@ -29,22 +29,5 @@ public class MissionUrl {
         String missionName = parts[parts.length - 1];
 
         return String.format(DESCRIPTION_URL_FORMAT, missionName);
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MissionUrl that = (MissionUrl) o;
-        return Objects.equals(value, that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
     }
 }

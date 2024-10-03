@@ -11,7 +11,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
 @Entity
 public class SolutionComment extends CreatedAtAuditableEntity {
 
@@ -32,9 +36,6 @@ public class SolutionComment extends CreatedAtAuditableEntity {
 
     @Column
     private LocalDateTime deletedAt;
-
-    protected SolutionComment() {
-    }
 
     public SolutionComment(
             String content,
@@ -100,28 +101,12 @@ public class SolutionComment extends CreatedAtAuditableEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public Solution getSolution() {
-        return solution;
-    }
-
     public Long getSolutionId() {
         return solution.getId();
     }
 
-    public Member getMember() {
-        return member;
-    }
-
     public boolean isNotWrittenBy(Long memberId) {
         return !member.getId().equals(memberId);
-    }
-
-    public SolutionComment getParentComment() {
-        return parentComment;
     }
 
     public Long getParentCommentId() {
@@ -134,10 +119,6 @@ public class SolutionComment extends CreatedAtAuditableEntity {
 
     public boolean isReply() {
         return parentComment != null;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
     }
 
     public boolean isNotDeleted() {
