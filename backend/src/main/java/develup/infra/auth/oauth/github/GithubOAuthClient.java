@@ -3,7 +3,6 @@ package develup.infra.auth.oauth.github;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-import java.time.Duration;
 import develup.infra.auth.oauth.github.dto.GithubAccessTokenRequest;
 import develup.infra.auth.oauth.github.dto.GithubAccessTokenResponse;
 import develup.infra.auth.oauth.github.dto.GithubUserInfoResponse;
