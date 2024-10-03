@@ -15,7 +15,7 @@ public interface DiscussionCommentRepository extends JpaRepository<DiscussionCom
             FROM DiscussionComment dc
             JOIN dc.discussion d
             JOIN dc.member m
-            WHERE dc.member.id = :memberId AND dc.deletedAt is null
+            WHERE dc.member.id = :memberId AND dc.deletedAt IS NULL
             """)
     List<MyDiscussionComment> findAllMyDiscussionComment(Long memberId);
 }
