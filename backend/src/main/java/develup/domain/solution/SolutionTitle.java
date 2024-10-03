@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 @Embeddable
-public class Title {
+public class SolutionTitle {
 
     @Column(name = "title")
     private String value;
 
-    public Title(String value) {
+    public SolutionTitle(String value) {
         validateIsNotBlank(value);
         this.value = value;
     }
@@ -27,5 +27,9 @@ public class Title {
         if (value.isBlank()) {
             throw new DevelupException(ExceptionType.INVALID_TITLE);
         }
+    }
+
+    public String getValue() {
+        return value;
     }
 }
