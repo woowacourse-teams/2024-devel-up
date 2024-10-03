@@ -68,7 +68,7 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
                 s.id, count(sc)
             )
             FROM Solution s
-            JOIN FETCH SolutionComment sc
+            JOIN SolutionComment sc
             ON sc.solution.id = s.id
             WHERE sc.deletedAt IS NULL AND sc.parentComment IS NULL
             GROUP BY s.id
