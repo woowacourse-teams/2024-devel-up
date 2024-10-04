@@ -36,8 +36,4 @@ public class DiscussionTitle {
             throw new DevelupException(ExceptionType.INVALID_TITLE);
         }
     }
-
-    public String getValue() {
-        return value;
-    }
 }

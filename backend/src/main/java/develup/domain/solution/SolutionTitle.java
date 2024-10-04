@@ -36,8 +36,4 @@ public class SolutionTitle {
             throw new DevelupException(ExceptionType.INVALID_TITLE);
         }
     }
-
-    public String getValue() {
-        return value;
-    }
 }
