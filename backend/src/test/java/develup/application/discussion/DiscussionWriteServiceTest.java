@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.Collections;
 import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.application.hashtag.HashTagResponse;
@@ -181,6 +182,87 @@ class DiscussionWriteServiceTest extends IntegrationTestSupport {
     }
 
     @Test
+    @DisplayName("미션 없이 디스커션을 수정한다.")
+    @Transactional
+    void updateDiscussionWithoutMission() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = discussionRepository.save(DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(null)
+                .withHashTags(List.of(hashTag))
+                .build());
+
+        Long newHashTagId = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("hashTag").build()).getId();
+
+        UpdateDiscussionRequest request =
+                new UpdateDiscussionRequest(discussion.getId(), "title", "content", null, List.of(newHashTagId));
+
+        DiscussionResponse response = discussionWriteService.update(member.getId(), request);
+
+        assertAll(
+                () -> assertThat(response.id()).isEqualTo(discussion.getId()),
+                () -> assertThat(response.title()).isEqualTo("title"),
+                () -> assertThat(response.content()).isEqualTo("content"),
+                () -> assertThat(response.mission()).isNull(),
+                () -> assertThat(response.hashTags()).containsExactly(new HashTagResponse(newHashTagId, "hashTag"))
+        );
+    }
+
+    @Test
+    @DisplayName("해시태그 없이 디스커션을 수정한다.")
+    @Transactional
+    void updateDiscussionWithoutHashTags() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Discussion discussion = discussionRepository.save(DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(Collections.emptyList())
+                .build());
+
+        Long newMissionId = missionRepository.save(MissionTestData.defaultMission().build()).getId();
+
+        UpdateDiscussionRequest request =
+                new UpdateDiscussionRequest(discussion.getId(), "title", "content", newMissionId, Collections.emptyList());
+
+        DiscussionResponse response = discussionWriteService.update(member.getId(), request);
+
+        assertAll(
+                () -> assertThat(response.id()).isEqualTo(discussion.getId()),
+                () -> assertThat(response.title()).isEqualTo("title"),
+                () -> assertThat(response.content()).isEqualTo("content"),
+                () -> assertThat(response.mission().id()).isEqualTo(newMissionId),
+                () -> assertThat(response.hashTags()).isEmpty()
+        );
+    }
+
+    @Test
+    @DisplayName("미션과 해시태그 없이 디스커션을 수정한다.")
+    @Transactional
+    void updateDiscussionWithoutMissionAndHashTags() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Discussion discussion = discussionRepository.save(DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(null)
+                .withHashTags(Collections.emptyList())
+                .build());
+
+        UpdateDiscussionRequest request =
+                new UpdateDiscussionRequest(discussion.getId(), "title", "content", null, Collections.emptyList());
+
+        DiscussionResponse response = discussionWriteService.update(member.getId(), request);
+
+        assertAll(
+                () -> assertThat(response.id()).isEqualTo(discussion.getId()),
+                () -> assertThat(response.title()).isEqualTo("title"),
+                () -> assertThat(response.content()).isEqualTo("content"),
+                () -> assertThat(response.mission()).isNull(),
+                () -> assertThat(response.hashTags()).isEmpty()
+        );
+    }
+
+    @Test
     @DisplayName("존재하지 않는 디스커션을 수정 시도하면 예외가 발생한다.")
     @Transactional
     void updateDiscussionWithUnknownDiscussion() {
@@ -222,17 +304,5 @@ class DiscussionWriteServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> discussionWriteService.update(unknownMemberId, request))
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("디스커션 작성자가 아닙니다.");
-    }
-
-    private void createDiscussion(Mission mission, HashTag hashTag) {
-        Member member = memberRepository.save(MemberTestData.defaultMember().build());
-
-        Discussion discussion = DiscussionTestData.defaultDiscussion()
-                .withMission(mission)
-                .withMember(member)
-                .withHashTags(List.of(hashTag))
-                .build();
-
-        discussionRepository.save(discussion);
     }
 }

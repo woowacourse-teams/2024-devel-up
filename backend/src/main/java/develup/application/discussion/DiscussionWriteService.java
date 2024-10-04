@@ -65,7 +65,7 @@ public class DiscussionWriteService {
     }
 
     private void updateMissionIfNeeded(UpdateDiscussionRequest request, Discussion discussion) {
-        if (discussion.isNotSameMission(request.missionId())) {
+        if (request.missionId() != null && discussion.isNotSameMission(request.missionId())) {
             Mission mission = getMission(request.missionId());
             discussion.updateMission(mission);
         }

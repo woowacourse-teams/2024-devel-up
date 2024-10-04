@@ -69,6 +69,9 @@ public class Discussion extends CreatedAtAuditableEntity {
     }
 
     public boolean isNotSameMission(Long missionId) {
+        if (this.mission == null) {
+            return true;
+        }
         return !mission.getId().equals(missionId);
     }
 
