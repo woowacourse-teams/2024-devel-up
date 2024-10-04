@@ -33,9 +33,8 @@ public class SolutionComment extends CreatedAtAuditableEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_comment_id")
-    private SolutionComment parentComment;
+    @Column
+    private Long parentCommentId;
 
     @Column
     private LocalDateTime deletedAt;
@@ -45,14 +44,14 @@ public class SolutionComment extends CreatedAtAuditableEntity {
             String content,
             Solution solution,
             Member member,
-            SolutionComment parentComment,
+            Long parentCommentId,
             LocalDateTime deletedAt
     ) {
         super(id);
         this.content = content;
         this.solution = solution;
         this.member = member;
-        this.parentComment = parentComment;
+        this.parentCommentId = parentCommentId;
         this.deletedAt = deletedAt;
     }
 
@@ -69,13 +68,7 @@ public class SolutionComment extends CreatedAtAuditableEntity {
             throw new DevelupException(ExceptionType.CANNOT_REPLY_TO_REPLY);
         }
 
-        SolutionComment reply = new SolutionComment();
-        reply.content = content;
-        reply.solution = this.solution;
-        reply.member = member;
-        reply.parentComment = this;
-
-        return reply;
+        return new SolutionComment(content, solution, member, id, null);
     }
 
     public void updateContent(String content) {
@@ -102,16 +95,12 @@ public class SolutionComment extends CreatedAtAuditableEntity {
         return !member.getId().equals(memberId);
     }
 
-    public Long getParentCommentId() {
-        return parentComment.getId();
-    }
-
     public boolean isRootComment() {
-        return parentComment == null;
+        return parentCommentId == null;
     }
 
     public boolean isReply() {
-        return parentComment != null;
+        return parentCommentId != null;
     }
 
     public boolean isNotDeleted() {

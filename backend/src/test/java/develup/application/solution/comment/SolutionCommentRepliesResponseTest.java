@@ -23,7 +23,7 @@ class SolutionCommentRepliesResponseTest {
                 .build();
         SolutionComment reply = SolutionCommentTestData.defaultSolutionComment()
                 .withId(2L)
-                .withParentComment(rootComment)
+                .withParentCommentId(rootComment.getId())
                 .build();
 
         SolutionCommentRepliesResponse rootCommentResponse = SolutionCommentRepliesResponse.of(
@@ -47,7 +47,7 @@ class SolutionCommentRepliesResponseTest {
                 .build();
         SolutionComment reply = SolutionCommentTestData.defaultSolutionComment()
                 .withId(2L)
-                .withParentComment(rootComment)
+                .withParentCommentId(rootComment.getId())
                 .build();
 
         SolutionCommentRepliesResponse rootCommentResponse = SolutionCommentRepliesResponse.of(

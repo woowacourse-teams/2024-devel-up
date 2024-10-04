@@ -55,19 +55,19 @@ class CommentGroupingServiceTest extends IntegrationTestSupport {
         SolutionComment root1reply1 = SolutionCommentTestData.defaultSolutionComment()
                 .withId(3L)
                 .withDeletedAt(LocalDateTime.now())
-                .withParentComment(root1)
+                .withParentCommentId(root1.getId())
                 .build();
         SolutionComment root1reply2 = SolutionCommentTestData.defaultSolutionComment()
                 .withId(4L)
-                .withParentComment(root1)
+                .withParentCommentId(root1.getId())
                 .build();
         SolutionComment root2reply1 = SolutionCommentTestData.defaultSolutionComment()
                 .withId(5L)
-                .withParentComment(root2)
+                .withParentCommentId(root2.getId())
                 .build();
         SolutionComment root2reply2 = SolutionCommentTestData.defaultSolutionComment()
                 .withId(6L)
-                .withParentComment(root2)
+                .withParentCommentId(root2.getId())
                 .build();
 
         return List.of(root1, root2, root1reply1, root1reply2, root2reply1, root2reply2);

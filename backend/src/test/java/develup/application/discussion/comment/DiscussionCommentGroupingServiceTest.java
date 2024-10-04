@@ -55,19 +55,19 @@ class DiscussionCommentGroupingServiceTest extends IntegrationTestSupport {
         DiscussionComment root1reply1 = DiscussionCommentTestData.defaultDiscussionComment()
                 .withId(3L)
                 .withDeletedAt(LocalDateTime.now())
-                .withParentComment(root1)
+                .withParentCommentId(root1.getId())
                 .build();
         DiscussionComment root1reply2 = DiscussionCommentTestData.defaultDiscussionComment()
                 .withId(4L)
-                .withParentComment(root1)
+                .withParentCommentId(root1.getId())
                 .build();
         DiscussionComment root2reply1 = DiscussionCommentTestData.defaultDiscussionComment()
                 .withId(5L)
-                .withParentComment(root2)
+                .withParentCommentId(root2.getId())
                 .build();
         DiscussionComment root2reply2 = DiscussionCommentTestData.defaultDiscussionComment()
                 .withId(6L)
-                .withParentComment(root2)
+                .withParentCommentId(root2.getId())
                 .build();
 
         return List.of(root1, root2, root1reply1, root1reply2, root2reply1, root2reply2);

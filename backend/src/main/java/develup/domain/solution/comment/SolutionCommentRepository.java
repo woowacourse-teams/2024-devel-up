@@ -6,7 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface SolutionCommentRepository extends JpaRepository<SolutionComment, Long> {
 
-    List<SolutionComment> findAllBySolution_IdOrderByCreatedAtAsc(Long solutionId);
+    @Query("""
+            SELECT sc
+            FROM SolutionComment sc
+            JOIN FETCH sc.member
+            WHERE sc.solution.id = :solutionId
+            ORDER BY sc.createdAt ASC
+            """)
+    List<SolutionComment> findAllBySolutionIdOrderByCreatedAtAsc(Long solutionId);
 
     @Query("""
             SELECT new develup.domain.solution.comment.MySolutionComment(
