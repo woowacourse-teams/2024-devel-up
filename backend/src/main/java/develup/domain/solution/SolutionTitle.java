@@ -20,11 +20,19 @@ public class SolutionTitle {
 
     public SolutionTitle(String value) {
         validateIsNotBlank(value);
+        validateLength(value);
+
         this.value = value;
     }
 
     private void validateIsNotBlank(String value) {
         if (value.isBlank()) {
+            throw new DevelupException(ExceptionType.INVALID_TITLE);
+        }
+    }
+
+    private void validateLength(String value) {
+        if (value.length() > 50) {
             throw new DevelupException(ExceptionType.INVALID_TITLE);
         }
     }
