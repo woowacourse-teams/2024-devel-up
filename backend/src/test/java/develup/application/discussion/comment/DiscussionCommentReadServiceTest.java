@@ -159,7 +159,7 @@ class DiscussionCommentReadServiceTest extends IntegrationTestSupport {
     private DiscussionComment createDiscussionReplyComment(Discussion discussion, DiscussionComment parentComment) {
         DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withDiscussion(discussion)
-                .withParentComment(parentComment)
+                .withParentCommentId(parentComment.getId())
                 .withMember(discussion.getMember())
                 .build();
         return discussionCommentRepository.save(discussionComment);

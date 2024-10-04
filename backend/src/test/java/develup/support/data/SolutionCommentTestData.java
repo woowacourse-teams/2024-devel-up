@@ -13,7 +13,7 @@ public class SolutionCommentTestData {
                 .withContent("안녕하세요. 피드백 잘 부탁 드려요.")
                 .withSolution(SolutionTestData.defaultSolution().build())
                 .withMember(MemberTestData.defaultMember().build())
-                .withParentComment(null)
+                .withParentCommentId(null)
                 .withDeletedAt(null);
     }
 
@@ -23,7 +23,7 @@ public class SolutionCommentTestData {
         private String content;
         private Solution solution;
         private Member member;
-        private SolutionComment parentComment;
+        private Long parentCommentId;
         private LocalDateTime deletedAt;
 
         public SolutionCommentBuilder withId(Long id) {
@@ -46,8 +46,8 @@ public class SolutionCommentTestData {
             return this;
         }
 
-        public SolutionCommentBuilder withParentComment(SolutionComment parentComment) {
-            this.parentComment = parentComment;
+        public SolutionCommentBuilder withParentCommentId(Long parentCommentId) {
+            this.parentCommentId = parentCommentId;
             return this;
         }
 
@@ -62,7 +62,7 @@ public class SolutionCommentTestData {
                     content,
                     solution,
                     member,
-                    parentComment,
+                    parentCommentId,
                     deletedAt
             );
         }
