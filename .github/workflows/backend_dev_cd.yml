@@ -9,6 +9,18 @@ on:
       - backend/**
 
 jobs:
+  find_previous_image_version:
+    name: 🔎Find Previous Docker Image Version
+    runs-on: [ self-hosted, develup-dev ]
+    outputs:
+      previousImageVersion: ${{steps.find_version.outputs.name}}
+    steps:
+      - id: find_version
+        run: |
+          PREVIOUS_IMAGE_NAME=$(docker ps --format "{{.Image}}")
+          echo "name=$PREVIOUS_IMAGE_NAME" >> $GITHUB_OUTPUT
+          echo $PREVIOUS_IMAGE_NAME
+
   build:
     name: 🏗️ Build Jar and Upload Docker Image
     environment: dev
@@ -80,15 +92,88 @@ jobs:
       - name: Docker Compose up
         run: docker compose -f compose.dev.yml up -d
 
-      - name: Clean Unused Image
-        run: docker image prune -af
+  health_check:
+    name: 🙏 Dev Server Health Check
+    needs: deploy
+    defaults:
+      run:
+        working-directory: backend
+    runs-on: [ self-hosted, develup-dev ]
+    steps:
+      - name: ♻️ Send Helth Check Request
+        run: chmod u+x ./scripts/dev_healthcheck.sh && ./scripts/dev_healthcheck.sh
+
+  roll-back:
+    name: 🚀 Dev Server RollBack
+    needs: [ health_check, find_previous_image_version ]
+    if: failure()
+    runs-on: [ self-hosted, develup-dev ]
+    defaults:
+      run:
+        working-directory: backend
+
+    env:
+      BACKEND_APP_IMAGE_NAME: ${{ needs.find_previous_image_version.outputs.previousImageVersion }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🐳 Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 🐳 Docker Compose up
+        run: docker compose -f compose.dev.yml up -d
+
+  health_check_after_roll-back:
+    name: 🙏 Dev Server Health Check After RollBack
+    needs: roll-back
+    if: ${{always() && needs.roll-back.result != 'skipped'}}
+    defaults:
+      run:
+        working-directory: backend
+    runs-on: [ self-hosted, develup-dev ]
+    steps:
+      - name: ♻️ Send Helth Check Request
+        run: chmod u+x ./scripts/dev_healthcheck.sh && ./scripts/dev_healthcheck.sh
+
+  slack-notify_build_fail:
+    runs-on: ubuntu-latest
+    environment: dev
+    needs: build
+    if: ${{failure() && needs.build.result == 'failure'}}
+    steps:
+      - name: Extract Commit Title
+        run: |
+          COMMIT_TITLE=$(echo "${{ github.event.head_commit.message }}" | head -n 1)
+          echo "COMMIT_TITLE=$COMMIT_TITLE" >> $GITHUB_ENV   
+
+      - name: Build and Deploy Success
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.ISSUE_CHANNEL }}
+          payload: |
+            {
+              "text": "Build and Deploy Status",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀 Build Fail \n\t • 🔴 Deploy Skip \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ env.COMMIT_TITLE }}>"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
   slack-notify_success:
     runs-on: ubuntu-latest
     environment: dev
-    needs:
-      - build
-      - deploy
+    needs: health_check
     if: success()
     steps:
       - name: Extract Commit Title
@@ -116,19 +201,19 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
-  slack-notify_build-fail:
+  roll-back_success_notifiy:
+    name: 📢Send Dev Server RollBack Success Notification
     runs-on: ubuntu-latest
-    environment: dev
     needs:
-      - build
-    if: failure()
+      - health_check_a_after_roll-back
+    if: ${{failure() && needs.health_check_after_roll-back.result == 'success'}}
     steps:
       - name: Extract Commit Title
         run: |
           COMMIT_TITLE=$(echo "${{ github.event.head_commit.message }}" | head -n 1)
-          echo "COMMIT_TITLE=$COMMIT_TITLE" >> $GITHUB_ENV   
+          echo "COMMIT_TITLE=$COMMIT_TITLE" >> $GITHUB_ENV
 
-      - name: Build Fail
+      - name: Build and Deploy Success
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
@@ -140,7 +225,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🔴 Build Fail \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ env.COMMIT_TITLE }}>"
+                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀 Build Success \n\t • 🟠 Server RollBack Success \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ env.COMMIT_TITLE }}>"
                   }
                 }
               ]
@@ -148,19 +233,19 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
-  slack-notify_deploy-fail:
+  roll-back_fail_notifiy:
+    name: 📢Send Dev Server RollBack Fail Notification
     runs-on: ubuntu-latest
-    environment: dev
     needs:
-      - deploy
-    if: failure()
+      - health_check_after_roll-back
+    if: ${{failure() && needs.health_check_after_roll-back.result == 'failure'}}
     steps:
       - name: Extract Commit Title
         run: |
           COMMIT_TITLE=$(echo "${{ github.event.head_commit.message }}" | head -n 1)
-          echo "COMMIT_TITLE=$COMMIT_TITLE" >> $GITHUB_ENV   
+          echo "COMMIT_TITLE=$COMMIT_TITLE" >> $GITHUB_ENV
 
-      - name: Deploy Fail
+      - name: Build and Deploy Success
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.ISSUE_CHANNEL }}
@@ -172,7 +257,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀Build Success \n\t • 🔴Deploy Fail \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ env.COMMIT_TITLE }}>"
+                    "text": "<!channel> \n 📣 Server Build & Deploy 결과를 안내 드립니다. 📣 \n\t • 🚀 Build Success \n\t • 🔴Server RollBack Fail \n\t • 🏷️ 관련 Commit: <${{ github.event.head_commit.url }}|${{ env.COMMIT_TITLE }}>"
                   }
                 }
               ]
