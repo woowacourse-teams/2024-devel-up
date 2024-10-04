@@ -8,9 +8,11 @@ import develup.domain.member.Member;
 import develup.domain.solution.Solution;
 import develup.domain.solution.comment.SolutionComment;
 import develup.domain.solution.comment.SolutionCommentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class SolutionCommentWriteService {
@@ -19,18 +21,6 @@ public class SolutionCommentWriteService {
     private final SolutionCommentReadService solutionCommentReadService;
     private final MemberReadService memberReadService;
     private final SolutionReadService solutionReadService;
-
-    public SolutionCommentWriteService(
-            SolutionCommentRepository solutionCommentRepository,
-            SolutionCommentReadService solutionCommentReadService,
-            MemberReadService memberReadService,
-            SolutionReadService solutionReadService
-    ) {
-        this.solutionCommentRepository = solutionCommentRepository;
-        this.solutionCommentReadService = solutionCommentReadService;
-        this.memberReadService = memberReadService;
-        this.solutionReadService = solutionReadService;
-    }
 
     public CreateSolutionCommentResponse addComment(Long solutionId, SolutionCommentRequest request, Long memberId) {
         Member member = memberReadService.getMember(memberId);

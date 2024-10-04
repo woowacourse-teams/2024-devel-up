@@ -9,20 +9,17 @@ import develup.domain.mission.MissionRepository;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class MissionReadService {
 
     private final MissionRepository missionRepository;
     private final SolutionRepository solutionRepository;
-
-    public MissionReadService(MissionRepository missionRepository, SolutionRepository solutionRepository) {
-        this.missionRepository = missionRepository;
-        this.solutionRepository = solutionRepository;
-    }
 
     public List<MissionResponse> getMissions(String hashTagName) {
         return missionRepository.findAllByHashTagName(hashTagName).stream()

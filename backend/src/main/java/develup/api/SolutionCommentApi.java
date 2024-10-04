@@ -16,6 +16,7 @@ import develup.application.solution.comment.UpdateSolutionCommentResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,20 +26,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @Tag(name = "솔루션 댓글 API")
 public class SolutionCommentApi {
 
     private final SolutionCommentWriteService solutionCommentWriteService;
     private final SolutionCommentReadService solutionCommentReadService;
-
-    public SolutionCommentApi(
-            SolutionCommentWriteService solutionCommentWriteService,
-            SolutionCommentReadService solutionCommentReadService
-    ) {
-        this.solutionCommentWriteService = solutionCommentWriteService;
-        this.solutionCommentReadService = solutionCommentReadService;
-    }
 
     @GetMapping("/solutions/{solutionId}/comments")
     @Operation(summary = "솔루션 댓글 조회 API", description = "솔루션의 댓글 목록을 조회합니다. 댓글들과 댓글들에 대한 답글을 조회합니다.")

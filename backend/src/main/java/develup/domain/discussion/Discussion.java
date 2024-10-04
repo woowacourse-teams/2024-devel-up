@@ -12,12 +12,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Discussion extends CreatedAtAuditableEntity {
 
     @Embedded
-    private Title title;
+    private DiscussionTitle title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -33,11 +38,8 @@ public class Discussion extends CreatedAtAuditableEntity {
     @Embedded
     private DiscussionHashTags discussionHashTags;
 
-    protected Discussion() {
-    }
-
     public Discussion(
-            Title title,
+            DiscussionTitle title,
             String content,
             Mission mission,
             Member member,
@@ -48,7 +50,7 @@ public class Discussion extends CreatedAtAuditableEntity {
 
     public Discussion(
             Long id,
-            Title title,
+            DiscussionTitle title,
             String content,
             Mission mission,
             Member member,
@@ -64,18 +66,6 @@ public class Discussion extends CreatedAtAuditableEntity {
 
     public String getTitle() {
         return title.getValue();
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Mission getMission() {
-        return mission;
-    }
-
-    public Member getMember() {
-        return member;
     }
 
     public String getMissionTitle() {

@@ -5,7 +5,7 @@ import develup.domain.mission.Mission;
 import develup.domain.solution.PullRequestUrl;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionStatus;
-import develup.domain.solution.Title;
+import develup.domain.solution.SolutionTitle;
 
 public class SolutionTestData {
 
@@ -24,7 +24,7 @@ public class SolutionTestData {
         private Long id;
         private Mission mission;
         private Member member;
-        private Title title;
+        private SolutionTitle title;
         private String description;
         private PullRequestUrl url;
         private SolutionStatus status;
@@ -45,7 +45,7 @@ public class SolutionTestData {
         }
 
         public SolutionBuilder withTitle(String title) {
-            this.title = new Title(title);
+            this.title = new SolutionTitle(title);
             return this;
         }
 

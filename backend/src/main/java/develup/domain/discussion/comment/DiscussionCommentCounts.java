@@ -21,4 +21,8 @@ public class DiscussionCommentCounts {
     public Long getCount(Discussion discussion) {
         return discussionCommentCounts.getOrDefault(discussion.getId(), 0L);
     }
+
+    public Long getCount(Long discussionId) {
+        return discussionCommentCounts.getOrDefault(discussionId, 0L);
+    }
 }
