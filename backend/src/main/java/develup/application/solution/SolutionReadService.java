@@ -6,18 +6,16 @@ import develup.api.exception.ExceptionType;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class SolutionReadService {
 
     private final SolutionRepository solutionRepository;
-
-    public SolutionReadService(SolutionRepository solutionRepository) {
-        this.solutionRepository = solutionRepository;
-    }
 
     public SolutionResponse getById(Long id) {
         Solution solution = solutionRepository.findFetchById(id)

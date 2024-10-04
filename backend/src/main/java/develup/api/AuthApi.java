@@ -7,6 +7,7 @@ import develup.domain.member.OAuthProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,15 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @Tag(name = "인증 API")
 public class AuthApi {
 
     private final OAuthService oAuthService;
-
-    public AuthApi(OAuthService oAuthService) {
-        this.oAuthService = oAuthService;
-    }
 
     @GetMapping("/auth/social/redirect/{provider}")
     @Operation(summary = "OAuth 인증 API", description = "해당하는 OAuth 제공자의 로그인 페이지로 리다이렉트합니다.")

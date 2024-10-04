@@ -15,6 +15,7 @@ import develup.application.solution.UpdateSolutionRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +26,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @Tag(name = "솔루션 API")
 public class SolutionApi {
 
     private final SolutionWriteService solutionWriteService;
     private final SolutionReadService solutionReadService;
-
-    public SolutionApi(SolutionWriteService solutionWriteService, SolutionReadService solutionReadService) {
-        this.solutionWriteService = solutionWriteService;
-        this.solutionReadService = solutionReadService;
-    }
 
     @PostMapping("/solutions/start")
     @Operation(summary = "미션 시작 API", description = "미션을 시작합니다.")
