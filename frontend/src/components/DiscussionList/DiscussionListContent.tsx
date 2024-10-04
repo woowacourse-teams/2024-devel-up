@@ -10,6 +10,9 @@ interface DiscussionListContentProps {
 export default function DiscussionListContent({ discussions }: DiscussionListContentProps) {
   return (
     <S.ContentContainer>
+      {!discussions.length && (
+        <S.NoContentText>해당 태그에 관련한 디스커션이 존재하지 않아요!</S.NoContentText>
+      )}
       {discussions.map((discussion) => (
         <Link key={discussion.id} to={`/discussions/${discussion.id}`}>
           <DiscussionListItem

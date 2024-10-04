@@ -5,13 +5,18 @@ import develup.api.auth.AuthArgumentResolver;
 import develup.api.auth.CookieAuthorizationExtractor;
 import develup.application.auth.AuthService;
 import develup.application.auth.oauth.OAuthService;
-import develup.application.discussion.DiscussionService;
-import develup.application.discussion.comment.DiscussionCommentService;
-import develup.application.hashtag.HashTagService;
-import develup.application.member.MemberService;
-import develup.application.mission.MissionService;
-import develup.application.solution.SolutionService;
-import develup.application.solution.comment.SolutionCommentService;
+import develup.application.discussion.DiscussionReadService;
+import develup.application.discussion.DiscussionWriteService;
+import develup.application.discussion.comment.DiscussionCommentReadService;
+import develup.application.discussion.comment.DiscussionCommentWriteService;
+import develup.application.hashtag.HashTagReadService;
+import develup.application.member.MemberReadService;
+import develup.application.member.MemberWriteService;
+import develup.application.mission.MissionReadService;
+import develup.application.solution.SolutionReadService;
+import develup.application.solution.SolutionWriteService;
+import develup.application.solution.comment.SolutionCommentReadService;
+import develup.application.solution.comment.SolutionCommentWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -33,25 +38,40 @@ public class ApiTestSupport {
     protected OAuthService oAuthService;
 
     @MockBean
-    protected MemberService memberService;
+    protected MemberWriteService memberWriteService;
 
     @MockBean
-    protected MissionService missionService;
+    protected MemberReadService memberReadService;
 
     @MockBean
-    protected SolutionService solutionService;
+    protected MissionReadService missionReadService;
 
     @MockBean
-    protected SolutionCommentService solutionCommentService;
+    protected SolutionWriteService solutionWriteService;
 
     @MockBean
-    protected HashTagService hashTagService;
+    protected SolutionReadService solutionReadService;
 
     @MockBean
-    protected DiscussionService discussionService;
+    protected SolutionCommentWriteService solutionCommentWriteService;
 
     @MockBean
-    protected DiscussionCommentService discussionCommentService;
+    protected SolutionCommentReadService solutionCommentReadService;
+
+    @MockBean
+    protected HashTagReadService hashTagReadService;
+
+    @MockBean
+    protected DiscussionWriteService discussionWriteService;
+
+    @MockBean
+    protected DiscussionReadService discussionReadService;
+
+    @MockBean
+    protected DiscussionCommentWriteService discussionCommentWriteService;
+
+    @MockBean
+    protected DiscussionCommentReadService discussionCommentReadService;
 
     @MockBean
     protected AuthArgumentResolver argumentResolver;

@@ -11,7 +11,7 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
     boolean existsByMember_IdAndMission_IdAndStatus(Long memberId, Long missionId, SolutionStatus status);
 
     @Query("""
-            SELECT DISTINCT s
+            SELECT s
             FROM Solution s
             JOIN FETCH s.mission m
             JOIN FETCH m.missionHashTags.hashTags mhts
@@ -23,17 +23,27 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
                    FROM MissionHashTag smht
                    JOIN smht.hashTag sht
                    WHERE
-                       smht.mission.id = m.id AND
-                       (LOWER(:name) = 'all' OR sht.name = :name)
+                       smht.mission.id = m.id AND sht.name = :name
                )
             ORDER BY s.id DESC
             """)
     List<Solution> findAllCompletedSolutionByHashTagName(String name);
 
+    @Query("""
+            SELECT s
+            FROM Solution s
+            JOIN FETCH s.mission m
+            JOIN FETCH m.missionHashTags.hashTags mhts
+            JOIN FETCH mhts.hashTag ht
+            WHERE s.status = 'COMPLETED'
+            ORDER BY s.id DESC
+            """)
+    List<Solution> findAllCompletedSolution();
+
     List<Solution> findAllByMember_IdAndStatus(Long memberId, SolutionStatus status);
 
     @Query("""
-            SELECT DISTINCT s
+            SELECT s
             FROM Solution s
             JOIN FETCH s.member mem
             JOIN FETCH s.mission m

@@ -79,6 +79,7 @@ public class Discussion extends CreatedAtAuditableEntity {
     }
 
     public String getMissionTitle() {
+        if (mission == null) return null;
         return mission.getTitle();
     }
 

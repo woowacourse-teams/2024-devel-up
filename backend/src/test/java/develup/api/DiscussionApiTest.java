@@ -9,10 +9,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import develup.application.discussion.CreateDiscussionRequest;
 import develup.application.discussion.DiscussionResponse;
 import develup.application.discussion.SummarizedDiscussionResponse;
+import develup.application.hashtag.HashTagResponse;
+import develup.application.member.MemberResponse;
 import develup.domain.discussion.Discussion;
 import develup.domain.hashtag.HashTag;
 import develup.domain.member.Member;
@@ -32,10 +35,10 @@ public class DiscussionApiTest extends ApiTestSupport {
     @DisplayName("디스커션 목록을 조회한다.")
     void getSolutions() throws Exception {
         List<SummarizedDiscussionResponse> responses = List.of(
-                SummarizedDiscussionResponse.from(createDiscussion()),
-                SummarizedDiscussionResponse.from(createDiscussion())
+                SummarizedDiscussionResponse.of(createDiscussion(), 100L),
+                SummarizedDiscussionResponse.of(createDiscussion(), 100L)
         );
-        BDDMockito.given(discussionService.getSummaries(any(), any()))
+        BDDMockito.given(discussionReadService.getSummaries(any(), any()))
                 .willReturn(responses);
 
         mockMvc.perform(get("/discussions"))
@@ -61,7 +64,7 @@ public class DiscussionApiTest extends ApiTestSupport {
                 1L,
                 List.of(1L)
         );
-        BDDMockito.given(discussionService.create(any(), any()))
+        BDDMockito.given(discussionWriteService.create(any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(
@@ -78,7 +81,7 @@ public class DiscussionApiTest extends ApiTestSupport {
     @DisplayName("디스커션을 조회한다.")
     void getSolution() throws Exception {
         DiscussionResponse response = DiscussionResponse.from(createDiscussion());
-        BDDMockito.given(discussionService.getById(any()))
+        BDDMockito.given(discussionReadService.getById(any()))
                 .willReturn(response);
 
         mockMvc.perform(get("/discussions/1"))
@@ -103,12 +106,26 @@ public class DiscussionApiTest extends ApiTestSupport {
     @Test
     @DisplayName("나의 디스커션 목록을 조회한다.")
     void getMyDiscussions() throws Exception {
+        HashTag hashTag = HashTagTestData.defaultHashTag().withId(1L).build();
+        HashTagResponse hashTagResponse = HashTagResponse.from(hashTag);
+        List<HashTagResponse> hashTags = List.of(hashTagResponse);
+        Member member = MemberTestData.defaultMember().withId(1L).build();
+        MemberResponse memberResponse = MemberResponse.from(member);
+        LocalDateTime now = LocalDateTime.now();
+
         List<SummarizedDiscussionResponse> myDiscussions = List.of(
-                SummarizedDiscussionResponse.from(createDiscussion()),
-                SummarizedDiscussionResponse.from(createDiscussion())
+                new SummarizedDiscussionResponse(
+                        1L,
+                        "루터회관 흡연단속 구현에 대한 고찰",
+                        "루터회관 흡연단속",
+                        hashTags,
+                        memberResponse,
+                        100L,
+                        now
+                )
         );
 
-        BDDMockito.given(discussionService.getDiscussionsByMemberId(any()))
+        BDDMockito.given(discussionReadService.getDiscussionsByMemberId(any()))
                 .willReturn(myDiscussions);
 
         mockMvc.perform(get("/discussions/mine"))
@@ -121,7 +138,8 @@ public class DiscussionApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[0].hashTags[0].name", equalTo("JAVA")))
                 .andExpect(jsonPath("$.data[0].member.id", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].member.name", equalTo("tester")))
-                .andExpect(jsonPath("$.data[0].commentCount", equalTo(100)));
+                .andExpect(jsonPath("$.data[0].commentCount", equalTo(100)))
+                .andExpect(jsonPath("$.data[0].createdAt").exists());
     }
 
     private Discussion createDiscussion() {

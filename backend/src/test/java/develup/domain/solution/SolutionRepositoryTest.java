@@ -109,7 +109,7 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
         createSolution(SolutionStatus.COMPLETED);
         createSolution(SolutionStatus.IN_PROGRESS);
 
-        List<Solution> actual = solutionRepository.findAllCompletedSolutionByHashTagName("all");
+        List<Solution> actual = solutionRepository.findAllCompletedSolution();
 
         assertThat(actual).hasSize(2);
     }

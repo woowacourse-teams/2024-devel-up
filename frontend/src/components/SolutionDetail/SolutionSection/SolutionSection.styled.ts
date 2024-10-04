@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import javaIcon from '@/assets/images/java.svg';
 import GithubLogo from '@/assets/images/githubLogo.svg';
+import { Link } from 'react-router-dom';
 
 export const SolutionDetailTitle = styled.h2`
   margin: 4rem 0 2rem 0;
@@ -105,4 +106,8 @@ export const CodeViewButtonWrapper = styled.div`
 export const SolutionDescription = styled.div`
   margin-top: 3rem;
   ${({ theme }) => theme.font.body}
+`;
+
+export const CodeViewButtonLink = styled(Link)`
+  display: contents;
 `;

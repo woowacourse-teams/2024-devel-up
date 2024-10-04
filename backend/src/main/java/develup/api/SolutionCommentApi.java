@@ -7,9 +7,10 @@ import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
 import develup.application.solution.comment.CreateSolutionCommentResponse;
 import develup.application.solution.comment.MySolutionCommentResponse;
+import develup.application.solution.comment.SolutionCommentReadService;
 import develup.application.solution.comment.SolutionCommentRepliesResponse;
 import develup.application.solution.comment.SolutionCommentRequest;
-import develup.application.solution.comment.SolutionCommentService;
+import develup.application.solution.comment.SolutionCommentWriteService;
 import develup.application.solution.comment.UpdateSolutionCommentRequest;
 import develup.application.solution.comment.UpdateSolutionCommentResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,10 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "솔루션 댓글 API")
 public class SolutionCommentApi {
 
-    private final SolutionCommentService solutionCommentService;
+    private final SolutionCommentWriteService solutionCommentWriteService;
+    private final SolutionCommentReadService solutionCommentReadService;
 
-    public SolutionCommentApi(SolutionCommentService solutionCommentService) {
-        this.solutionCommentService = solutionCommentService;
+    public SolutionCommentApi(
+            SolutionCommentWriteService solutionCommentWriteService,
+            SolutionCommentReadService solutionCommentReadService
+    ) {
+        this.solutionCommentWriteService = solutionCommentWriteService;
+        this.solutionCommentReadService = solutionCommentReadService;
     }
 
     @GetMapping("/solutions/{solutionId}/comments")
@@ -39,7 +45,7 @@ public class SolutionCommentApi {
     public ResponseEntity<ApiResponse<List<SolutionCommentRepliesResponse>>> getComments(
             @PathVariable Long solutionId
     ) {
-        List<SolutionCommentRepliesResponse> responses = solutionCommentService.getCommentsWithReplies(solutionId);
+        List<SolutionCommentRepliesResponse> responses = solutionCommentReadService.getCommentsWithReplies(solutionId);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
@@ -47,7 +53,7 @@ public class SolutionCommentApi {
     @GetMapping("/solutions/comments/mine")
     @Operation(summary = "사용자가 솔루션에 단 댓글 조회 API", description = "사용자가 솔루션에 단 댓글 목록을 조회합니다. 댓글 정보와 댓글이 달린 솔루션의 일부 정보를 조회합니다.")
     public ResponseEntity<ApiResponse<List<MySolutionCommentResponse>>> getMyComments(@Auth Accessor accessor) {
-        List<MySolutionCommentResponse> responses = solutionCommentService.getMyComments(accessor.id());
+        List<MySolutionCommentResponse> responses = solutionCommentReadService.getMyComments(accessor.id());
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
 
@@ -58,7 +64,7 @@ public class SolutionCommentApi {
             @Valid @RequestBody SolutionCommentRequest request,
             @Auth Accessor accessor
     ) {
-        CreateSolutionCommentResponse response = solutionCommentService.addComment(solutionId, request, accessor.id());
+        CreateSolutionCommentResponse response = solutionCommentWriteService.addComment(solutionId, request, accessor.id());
 
         URI location = URI.create("/solutions/" + response.solutionId() + "/comments/" + response.id());
 
@@ -72,7 +78,7 @@ public class SolutionCommentApi {
             @Valid @RequestBody UpdateSolutionCommentRequest request,
             @Auth Accessor accessor
     ) {
-        UpdateSolutionCommentResponse response = solutionCommentService.updateComment(commentId, request, accessor.id());
+        UpdateSolutionCommentResponse response = solutionCommentWriteService.updateComment(commentId, request, accessor.id());
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
@@ -83,7 +89,7 @@ public class SolutionCommentApi {
             @PathVariable Long commentId,
             @Auth Accessor accessor
     ) {
-        solutionCommentService.deleteComment(commentId, accessor.id());
+        solutionCommentWriteService.deleteComment(commentId, accessor.id());
 
         return ResponseEntity.noContent().build();
     }

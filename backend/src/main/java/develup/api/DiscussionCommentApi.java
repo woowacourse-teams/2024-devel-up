@@ -6,9 +6,10 @@ import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
 import develup.application.auth.Accessor;
 import develup.application.discussion.comment.CreateDiscussionCommentResponse;
+import develup.application.discussion.comment.DiscussionCommentReadService;
 import develup.application.discussion.comment.DiscussionCommentRepliesResponse;
 import develup.application.discussion.comment.DiscussionCommentRequest;
-import develup.application.discussion.comment.DiscussionCommentService;
+import develup.application.discussion.comment.DiscussionCommentWriteService;
 import develup.application.discussion.comment.MyDiscussionCommentResponse;
 import develup.application.discussion.comment.UpdateDiscussionCommentRequest;
 import develup.application.discussion.comment.UpdateDiscussionCommentResponse;
@@ -28,10 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "디스커션 댓글 API")
 public class DiscussionCommentApi {
 
-    private final DiscussionCommentService discussionCommentService;
+    private final DiscussionCommentWriteService discussionCommentWriteService;
+    private final DiscussionCommentReadService discussionCommentReadService;
 
-    public DiscussionCommentApi(DiscussionCommentService discussionCommentService) {
-        this.discussionCommentService = discussionCommentService;
+    public DiscussionCommentApi(
+            DiscussionCommentWriteService discussionCommentWriteService,
+            DiscussionCommentReadService discussionCommentReadService
+    ) {
+        this.discussionCommentWriteService = discussionCommentWriteService;
+        this.discussionCommentReadService = discussionCommentReadService;
     }
 
     @GetMapping("/discussions/{discussionId}/comments")
@@ -39,7 +45,7 @@ public class DiscussionCommentApi {
     public ResponseEntity<ApiResponse<List<DiscussionCommentRepliesResponse>>> getComments(
             @PathVariable Long discussionId
     ) {
-        List<DiscussionCommentRepliesResponse> responses = discussionCommentService.getCommentsWithReplies(discussionId);
+        List<DiscussionCommentRepliesResponse> responses = discussionCommentReadService.getCommentsWithReplies(discussionId);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
@@ -47,7 +53,7 @@ public class DiscussionCommentApi {
     @GetMapping("/discussions/comments/mine")
     @Operation(summary = "사용자가 디스커션에 단 댓글 조회 API", description = "사용자가 디스커션에 단 댓글 목록을 조회합니다. 댓글 정보와 댓글이 달린 디스커션의 일부 정보를 조회합니다.")
     public ResponseEntity<ApiResponse<List<MyDiscussionCommentResponse>>> getMyComments(@Auth Accessor accessor) {
-        List<MyDiscussionCommentResponse> responses = discussionCommentService.getMyComments(accessor.id());
+        List<MyDiscussionCommentResponse> responses = discussionCommentReadService.getMyComments(accessor.id());
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
 
@@ -58,7 +64,7 @@ public class DiscussionCommentApi {
             @Valid @RequestBody DiscussionCommentRequest request,
             @Auth Accessor accessor
     ) {
-        CreateDiscussionCommentResponse response = discussionCommentService.addComment(discussionId, request, accessor.id());
+        CreateDiscussionCommentResponse response = discussionCommentWriteService.addComment(discussionId, request, accessor.id());
 
         URI location = URI.create("/discussions/" + response.discussionId() + "/comments/" + response.id());
 
@@ -72,7 +78,7 @@ public class DiscussionCommentApi {
             @Valid @RequestBody UpdateDiscussionCommentRequest request,
             @Auth Accessor accessor
     ) {
-        UpdateDiscussionCommentResponse response = discussionCommentService.updateComment(commentId, request, accessor.id());
+        UpdateDiscussionCommentResponse response = discussionCommentWriteService.updateComment(commentId, request, accessor.id());
 
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
@@ -83,7 +89,7 @@ public class DiscussionCommentApi {
             @PathVariable Long commentId,
             @Auth Accessor accessor
     ) {
-        discussionCommentService.deleteComment(commentId, accessor.id());
+        discussionCommentWriteService.deleteComment(commentId, accessor.id());
 
         return ResponseEntity.noContent().build();
     }

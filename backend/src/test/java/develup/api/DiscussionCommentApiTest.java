@@ -34,11 +34,11 @@ class DiscussionCommentApiTest extends ApiTestSupport {
     @Test
     @DisplayName("댓글 목록을 조회한다.")
     void getComments() throws Exception {
-        DiscussionReplyResponse replyResponse = createReplyResponse();
+        DiscussionReplyResponse replyResponse = createRootReplyResponse();
         List<DiscussionReplyResponse> replyResponses = List.of(replyResponse);
-        List<DiscussionCommentRepliesResponse> responses = List.of(createRootCommentResponse(replyResponses));
+        List<DiscussionCommentRepliesResponse> responses = List.of(createRootRootCommentResponse(replyResponses));
 
-        BDDMockito.given(discussionCommentService.getCommentsWithReplies(any()))
+        BDDMockito.given(discussionCommentReadService.getCommentsWithReplies(any()))
                 .willReturn(responses);
 
         mockMvc.perform(
@@ -58,7 +58,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
         MyDiscussionCommentResponse myDiscussionCommentResponse = new MyDiscussionCommentResponse(1L, 1L, "댓글 내용", now, "디스커션 제목", 123L);
         List<MyDiscussionCommentResponse> responses = List.of(myDiscussionCommentResponse);
 
-        BDDMockito.given(discussionCommentService.getMyComments(any()))
+        BDDMockito.given(discussionCommentReadService.getMyComments(any()))
                 .willReturn(responses);
 
         mockMvc.perform(
@@ -86,7 +86,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
                 memberResponse,
                 LocalDateTime.now()
         );
-        BDDMockito.given(discussionCommentService.addComment(any(), any(), any()))
+        BDDMockito.given(discussionCommentWriteService.addComment(any(), any(), any()))
                 .willReturn(response);
 
         DiscussionCommentRequest request = new DiscussionCommentRequest("content", null);
@@ -117,7 +117,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
                 LocalDateTime.now()
         );
 
-        BDDMockito.given(discussionCommentService.updateComment(any(), any(), any()))
+        BDDMockito.given(discussionCommentWriteService.updateComment(any(), any(), any()))
                 .willReturn(response);
 
         mockMvc.perform(
@@ -138,7 +138,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
     @DisplayName("댓글을 삭제한다.")
     void deleteComment() throws Exception {
         BDDMockito.doNothing()
-                .when(discussionCommentService)
+                .when(discussionCommentWriteService)
                 .deleteComment(any(), any());
 
         mockMvc.perform(
@@ -149,7 +149,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
                 .andExpect(status().isNoContent());
     }
 
-    private DiscussionCommentRepliesResponse createRootCommentResponse(List<DiscussionReplyResponse> replyResponses) {
+    private DiscussionCommentRepliesResponse createRootRootCommentResponse(List<DiscussionReplyResponse> replyResponses) {
         return new DiscussionCommentRepliesResponse(
                 1L,
                 1L,
@@ -161,7 +161,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
         );
     }
 
-    private DiscussionReplyResponse createReplyResponse() {
+    private DiscussionReplyResponse createRootReplyResponse() {
         return new DiscussionReplyResponse(
                 2L,
                 1L,

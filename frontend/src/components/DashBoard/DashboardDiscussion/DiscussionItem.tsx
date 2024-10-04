@@ -1,6 +1,7 @@
 import * as S from './DashboardDiscussion.styled';
 import type { HashTag } from '@/types';
 import CommentIcon from '@/assets/images/comment-count.svg';
+import { formatDateString } from '@/utils/formatDateString';
 
 interface DiscussionItemProps {
   id: number;
@@ -9,6 +10,7 @@ interface DiscussionItemProps {
   title: string;
   imageUrl: string;
   commentCount: number;
+  createdAt: string;
 }
 
 export default function DiscussionItem({
@@ -18,6 +20,7 @@ export default function DiscussionItem({
   title,
   imageUrl,
   commentCount,
+  createdAt,
 }: DiscussionItemProps) {
   return (
     <S.DiscussionWrapper to={`/discussions/${id}`}>
@@ -29,6 +32,7 @@ export default function DiscussionItem({
           })}
         </S.HashTagWrapper>
         <S.CommentText>{title}</S.CommentText>
+        <S.SubText>{formatDateString(createdAt)}</S.SubText>
       </S.TextWrapper>
       <S.ImageCommentWrapper>
         <S.ImageWrapper>

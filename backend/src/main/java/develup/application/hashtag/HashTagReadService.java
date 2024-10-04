@@ -3,13 +3,15 @@ package develup.application.hashtag;
 import java.util.List;
 import develup.domain.hashtag.HashTagRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class HashTagService {
+@Transactional(readOnly = true)
+public class HashTagReadService {
 
     private final HashTagRepository hashTagRepository;
 
-    public HashTagService(HashTagRepository hashTagRepository) {
+    public HashTagReadService(HashTagRepository hashTagRepository) {
         this.hashTagRepository = hashTagRepository;
     }
 

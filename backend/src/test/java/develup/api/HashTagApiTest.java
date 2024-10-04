@@ -22,7 +22,7 @@ class HashTagApiTest extends ApiTestSupport {
                 new HashTagResponse(1L, "JAVA"),
                 new HashTagResponse(2L, "JAVASCRIPT")
         );
-        BDDMockito.given(hashTagService.getHashTags())
+        BDDMockito.given(hashTagReadService.getHashTags())
                 .willReturn(responses);
 
         mockMvc.perform(get("/hash-tags"))

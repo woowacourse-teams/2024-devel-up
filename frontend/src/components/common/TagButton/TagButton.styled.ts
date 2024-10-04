@@ -10,13 +10,13 @@ interface ButtonProps {
 const getColorStyles = (variant: TagButtonVariant, isSelected: boolean, theme: DefaultTheme) => {
   const variantColorMap = {
     default: {
-      default: isSelected ? theme.colors.primary100 : theme.colors.primary50,
-      hover: isSelected ? theme.colors.primary200 : theme.colors.primary100,
+      default: isSelected ? theme.colors.primary200 : theme.colors.primary50,
+      hover: isSelected ? theme.colors.primary300 : theme.colors.primary100,
       color: theme.colors.black,
     },
     danger: {
-      default: isSelected ? theme.colors.danger100 : theme.colors.danger50,
-      hover: isSelected ? theme.colors.danger200 : theme.colors.danger100,
+      default: isSelected ? theme.colors.danger200 : theme.colors.danger50,
+      hover: isSelected ? theme.colors.danger300 : theme.colors.danger100,
       color: theme.colors.black,
     },
   };

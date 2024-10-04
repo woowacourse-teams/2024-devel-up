@@ -16,7 +16,7 @@ const NO_CONTENT_INFO = {
   },
   submitted: {
     route: ROUTES.solutions,
-    mainText: '제출한 솔루션이 없어요',
+    mainText: '제출한 풀이가 없어요',
     subText: '참여할 수 있는 미션을 찾아보러 가볼까요?',
     buttonText: '미션 둘러보기',
   },
@@ -24,10 +24,10 @@ const NO_CONTENT_INFO = {
     route: ROUTES.solutions,
     mainText: '제출한 댓글이 없어요',
     subText: '댓글을 달아볼까요?',
-    buttonText: '솔루션 둘러보기',
+    buttonText: '풀이 둘러보기',
   },
   dashboardDiscussion: {
-    route: '/discussion',
+    route: ROUTES.discussions,
     mainText: '제출한 디스커션이 없어요',
     subText: '다른 사람들이 작성한 디스커션을 보러 가볼까요?',
     buttonText: '디스커션 둘러보기',

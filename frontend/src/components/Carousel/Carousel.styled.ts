@@ -15,6 +15,7 @@ export const SlideWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 `;
 
 interface SlideTrackProps {
