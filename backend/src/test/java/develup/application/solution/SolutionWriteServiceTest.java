@@ -16,6 +16,7 @@ import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.comment.SolutionComment;
 import develup.domain.solution.comment.SolutionCommentRepository;
+import develup.domain.solution.comment.SolutionCommentRepositoryCustom;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
@@ -35,6 +36,9 @@ class SolutionWriteServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private SolutionCommentRepository solutionCommentRepository;
+
+    @Autowired
+    private SolutionCommentRepositoryCustom solutionCommentRepositoryCustom;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -256,7 +260,7 @@ class SolutionWriteServiceTest extends IntegrationTestSupport {
 
         solutionWriteService.delete(member.getId(), solution.getId());
 
-        List<SolutionComment> comments = solutionCommentRepository.findAllBySolutionIdOrderByCreatedAtAsc(solution.getId());
+        List<SolutionComment> comments = solutionCommentRepositoryCustom.findAllBySolutionIdOrderByCreatedAtAsc(solution.getId());
         Optional<Solution> deletedSolution = solutionRepository.findById(solution.getId());
         assertThat(comments).isEmpty();
         assertThat(deletedSolution).isEmpty();
