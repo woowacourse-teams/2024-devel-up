@@ -10,13 +10,12 @@ public interface DiscussionCommentRepository extends JpaRepository<DiscussionCom
 
     @Query("""
             SELECT new develup.domain.discussion.comment.MyDiscussionComment(
-                dc.id, dc.discussion.id, dc.content, dc.createdAt, d.title.value, COUNT(dc)
+                dc.id, dc.discussion.id, dc.content, dc.createdAt, d.title.value
             )
             FROM DiscussionComment dc
             JOIN dc.discussion d
             JOIN dc.member m
-            WHERE dc.member.id = :memberId AND dc.deletedAt is null
-            GROUP BY dc.id
+            WHERE dc.member.id = :memberId AND dc.deletedAt IS NULL
             """)
     List<MyDiscussionComment> findAllMyDiscussionComment(Long memberId);
 }
