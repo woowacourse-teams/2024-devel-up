@@ -84,7 +84,7 @@ public class Discussion extends CreatedAtAuditableEntity {
     }
 
     public void updateTitleAndContent(String title, String content) {
-        this.title = new Title(title);
+        this.title = new DiscussionTitle(title);
         this.content = content;
     }
 
