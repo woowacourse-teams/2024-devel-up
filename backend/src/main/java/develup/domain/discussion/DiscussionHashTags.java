@@ -41,6 +41,15 @@ class DiscussionHashTags {
                 .toList();
     }
 
+    public boolean isNotSameHashTags(List<Long> hashTagIds) {
+        List<Long> currentHashTagIds = hashTags.stream()
+                .map(DiscussionHashTag::getHashTag)
+                .map(HashTag::getId)
+                .toList();
+
+        return !currentHashTagIds.equals(hashTagIds);
+    }
+
     public Set<DiscussionHashTag> getHashTags() {
         return Collections.unmodifiableSet(hashTags);
     }

@@ -35,11 +35,11 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
     @Query("""
             SELECT d
             FROM Discussion d
-            JOIN FETCH d.mission m
-            JOIN FETCH m.missionHashTags.hashTags mhts
-            JOIN FETCH d.member me
-            JOIN FETCH d.discussionHashTags.hashTags dhts
-            JOIN FETCH dhts.hashTag ht
+            LEFT JOIN FETCH d.mission m
+            LEFT JOIN FETCH m.missionHashTags.hashTags mhts
+            LEFT JOIN FETCH d.member me
+            LEFT JOIN FETCH d.discussionHashTags.hashTags dhts
+            LEFT JOIN FETCH dhts.hashTag ht
             WHERE d.id = :id
             """)
     Optional<Discussion> findFetchById(Long id);
@@ -47,10 +47,10 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
     @Query("""
             SELECT d
             FROM Discussion d
-            JOIN FETCH d.mission m
-            JOIN FETCH d.member me
-            JOIN FETCH d.discussionHashTags.hashTags dhts
-            JOIN FETCH dhts.hashTag ht
+            LEFT JOIN FETCH d.mission m
+            LEFT JOIN FETCH d.member me
+            LEFT JOIN FETCH d.discussionHashTags.hashTags dhts
+            LEFT JOIN FETCH dhts.hashTag ht
             WHERE me.id = :memberId
             """)
     List<Discussion> findAllByMemberId(Long memberId);
@@ -62,7 +62,7 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             FROM Discussion d
             JOIN FETCH DiscussionComment dc
             ON dc.discussion.id = d.id
-            WHERE dc.deletedAt IS NULL
+            WHERE dc.deletedAt IS NULL AND dc.parentCommentId IS NULL
             GROUP BY d.id
             """)
     List<DiscussionCommentCount> findAllDiscussionCommentCounts();

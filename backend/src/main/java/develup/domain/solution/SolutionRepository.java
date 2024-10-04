@@ -2,6 +2,7 @@ package develup.domain.solution;
 
 import java.util.List;
 import java.util.Optional;
+import develup.domain.solution.comment.SolutionCommentCount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -61,4 +62,16 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
             """)
     @Modifying(clearAutomatically = true)
     void deleteAllComments(Long solutionId);
+
+    @Query("""
+            SELECT new develup.domain.solution.comment.SolutionCommentCount(
+                s.id, count(sc)
+            )
+            FROM Solution s
+            JOIN SolutionComment sc
+            ON sc.solution.id = s.id
+            WHERE sc.deletedAt IS NULL AND sc.parentCommentId IS NULL
+            GROUP BY s.id
+            """)
+    List<SolutionCommentCount> findAllSolutionCommentCounts();
 }

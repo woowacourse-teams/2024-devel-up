@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.Collections;
 import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.domain.discussion.Discussion;
@@ -19,7 +20,6 @@ import develup.support.data.DiscussionTestData;
 import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,8 +81,99 @@ class DiscussionReadServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("존재하지 않는 디스커션은 불러올 수 없다.")
+    @DisplayName("디스커션 아이디로 디스커션을 찾는다.")
+    @Transactional
     void getById() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(List.of(hashTag))
+                .build();
+        Long discussionId = discussionRepository.save(discussion).getId();
+
+        DiscussionResponse discussionResponse = discussionReadService.getById(discussionId);
+
+        assertAll(
+                () -> assertThat(discussionResponse.id()).isEqualTo(discussionId),
+                () -> assertThat(discussionResponse.member().id()).isEqualTo(member.getId()),
+                () -> assertThat(discussionResponse.mission().id()).isEqualTo(mission.getId())
+        );
+    }
+
+    @Test
+    @DisplayName("디스커션에 미션이 없을 때 디스커션 아이디로 디스커션을 찾는다.")
+    @Transactional
+    void getByIdWithoutMission() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().withId(1L).build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(null)
+                .withHashTags(List.of(hashTag))
+                .build();
+        Long discussionId = discussionRepository.save(discussion).getId();
+
+        DiscussionResponse discussionResponse = discussionReadService.getById(discussionId);
+
+        assertAll(
+                () -> assertThat(discussionResponse.id()).isEqualTo(discussionId),
+                () -> assertThat(discussionResponse.member().id()).isEqualTo(member.getId()),
+                () -> assertThat(discussionResponse.mission()).isNull(),
+                () -> assertThat(discussionResponse.hashTags()).hasSize(1)
+        );
+    }
+
+    @Test
+    @DisplayName("디스커션에 해시태그가 없을 때 디스커션 아이디로 디스커션을 찾는다.")
+    @Transactional
+    void getByIdWithoutHashTags() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().withId(1L).build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(Collections.emptyList())
+                .build();
+        Long discussionId = discussionRepository.save(discussion).getId();
+
+        DiscussionResponse discussionResponse = discussionReadService.getById(discussionId);
+
+        assertAll(
+                () -> assertThat(discussionResponse.id()).isEqualTo(discussionId),
+                () -> assertThat(discussionResponse.member().id()).isEqualTo(member.getId()),
+                () -> assertThat(discussionResponse.mission().id()).isEqualTo(mission.getId()),
+                () -> assertThat(discussionResponse.hashTags()).isEmpty()
+        );
+    }
+
+    @Test
+    @DisplayName("디스커션에 미션과 해시태그가 없을 때 디스커션 아이디로 디스커션을 찾는다.")
+    @Transactional
+    void getByIdWithoutMissionAndHashTags() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().withId(1L).build());
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(null)
+                .withHashTags(Collections.emptyList())
+                .build();
+        Long discussionId = discussionRepository.save(discussion).getId();
+
+        DiscussionResponse discussionResponse = discussionReadService.getById(discussionId);
+
+        assertAll(
+                () -> assertThat(discussionResponse.id()).isEqualTo(discussionId),
+                () -> assertThat(discussionResponse.member().id()).isEqualTo(member.getId()),
+                () -> assertThat(discussionResponse.mission()).isNull(),
+                () -> assertThat(discussionResponse.hashTags()).isEmpty()
+        );
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 디스커션은 불러올 수 없다.")
+    void getByIdWithUnKnownDiscussionId() {
         Long unknownId = -1L;
 
         assertThatThrownBy(() -> discussionReadService.getById(unknownId))

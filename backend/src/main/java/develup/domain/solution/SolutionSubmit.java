@@ -1,7 +1,7 @@
 package develup.domain.solution;
 
 public record SolutionSubmit(
-        Title title,
+        SolutionTitle title,
         String description,
         String url
 ) {

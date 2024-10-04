@@ -1,7 +1,7 @@
 package develup.application.solution;
 
 import develup.domain.solution.SolutionSubmit;
-import develup.domain.solution.Title;
+import develup.domain.solution.SolutionTitle;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -14,6 +14,6 @@ public record UpdateSolutionRequest(
 ) {
 
     public SolutionSubmit toSubmitPayload() {
-        return new SolutionSubmit(new Title(title), description, url);
+        return new SolutionSubmit(new SolutionTitle(title), description, url);
     }
 }

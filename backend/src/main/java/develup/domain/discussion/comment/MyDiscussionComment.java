@@ -7,7 +7,6 @@ public record MyDiscussionComment(
         Long discussionId,
         String content,
         LocalDateTime createdAt,
-        String discussionTitle,
-        Long discussionCommentCount
+        String discussionTitle
 ) {
 }

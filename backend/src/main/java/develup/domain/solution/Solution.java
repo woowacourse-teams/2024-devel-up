@@ -35,7 +35,7 @@ public class Solution extends CreatedAtAuditableEntity {
     private Member member;
 
     @Embedded
-    private Title title;
+    private SolutionTitle title;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -51,7 +51,7 @@ public class Solution extends CreatedAtAuditableEntity {
             Long id,
             Mission mission,
             Member member,
-            Title title,
+            SolutionTitle title,
             String description,
             PullRequestUrl pullRequestUrl,
             SolutionStatus status

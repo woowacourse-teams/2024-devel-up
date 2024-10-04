@@ -12,14 +12,14 @@ public record MySolutionCommentResponse(
         Long solutionCommentCount
 ) {
 
-    public static MySolutionCommentResponse from(MySolutionComment mySolutionComment) {
+    public static MySolutionCommentResponse of(MySolutionComment mySolutionComment, Long solutionCommentCount) {
         return new MySolutionCommentResponse(
                 mySolutionComment.id(),
                 mySolutionComment.solutionId(),
                 mySolutionComment.content(),
                 mySolutionComment.createdAt(),
                 mySolutionComment.solutionTitle(),
-                mySolutionComment.solutionCommentCount()
+                solutionCommentCount
         );
     }
 }
