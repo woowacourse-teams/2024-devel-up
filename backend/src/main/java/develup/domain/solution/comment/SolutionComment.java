@@ -12,11 +12,13 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 public class SolutionComment extends CreatedAtAuditableEntity {
 
@@ -37,16 +39,6 @@ public class SolutionComment extends CreatedAtAuditableEntity {
 
     @Column
     private LocalDateTime deletedAt;
-
-    public SolutionComment(
-            String content,
-            Solution solution,
-            Member member,
-            SolutionComment parentComment,
-            LocalDateTime deletedAt
-    ) {
-        this(null, content, solution, member, parentComment, deletedAt);
-    }
 
     public SolutionComment(
             Long id,
