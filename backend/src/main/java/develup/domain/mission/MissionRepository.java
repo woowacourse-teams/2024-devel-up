@@ -2,34 +2,33 @@ package develup.domain.mission;
 
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-public interface MissionRepository extends JpaRepository<Mission, Long> {
+@Repository
+@RequiredArgsConstructor
+public class MissionRepository {
 
-    @Query("""
-            SELECT m
-            FROM Mission m
-            JOIN FETCH m.missionHashTags.hashTags mhts
-            JOIN FETCH mhts.hashTag ht
-            WHERE m.id = :id
-            """)
-    Optional<Mission> findHashTaggedMissionById(Long id);
+    private final CustomMissionRepository customMissionRepository;
+    private final JpaMissionRepository jpaMissionRepository;
 
-    @Query("""
-            SELECT m
-            FROM Mission m
-            JOIN FETCH m.missionHashTags.hashTags mhts
-            JOIN FETCH mhts.hashTag ht
-            WHERE
-               EXISTS (
-                   SELECT 1
-                   FROM MissionHashTag smht
-                   JOIN smht.hashTag sht
-                   WHERE
-                       smht.mission.id = m.id AND
-                       (LOWER(:name) = 'all' OR sht.name = :name)
-               )
-            """)
-    List<Mission> findAllByHashTagName(String name);
+    public Optional<Mission> findHashTaggedMissionById(Long id) {
+        return customMissionRepository.findHashTaggedMissionById(id);
+    }
+
+    public List<Mission> findAllByHashTagName(String name) {
+        return customMissionRepository.findAllByHashTagName(name);
+    }
+
+    public Mission save(Mission mission) {
+        return jpaMissionRepository.save(mission);
+    }
+
+    public Optional<Mission> findById(Long id) {
+        return jpaMissionRepository.findById(id);
+    }
+
+    public List<Mission> saveAll(List<Mission> missions) {
+        return jpaMissionRepository.saveAll(missions);
+    }
 }
