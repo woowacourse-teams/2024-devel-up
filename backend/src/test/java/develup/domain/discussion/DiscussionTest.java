@@ -2,12 +2,18 @@ package develup.domain.discussion;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.ArrayList;
 import java.util.List;
 import develup.domain.hashtag.HashTag;
+import develup.domain.member.Member;
+import develup.domain.mission.Mission;
 import develup.support.data.DiscussionTestData;
 import develup.support.data.HashTagTestData;
+import develup.support.data.MemberTestData;
+import develup.support.data.MissionTestData;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,5 +45,56 @@ class DiscussionTest {
                 .build();
 
         assertThat(discussion.getHashTags()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("디스커션 작성자가 아니면 true를 맞으면 false를 반환한다.")
+    void isNotWrittenBy() {
+        Member member = MemberTestData.defaultMember()
+                .withId(1L)
+                .build();
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .build();
+
+        assertAll(
+                () -> assertThat(discussion.isNotWrittenBy(2L)).isTrue(),
+                () -> assertThat(discussion.isNotWrittenBy(member.getId())).isFalse()
+        );
+    }
+
+    @Test
+    @DisplayName("동일한 미션이 아니면 true를 동일한 미션이면 false를 반환한다.")
+    void isNotSameMission() {
+        Mission mission = MissionTestData.defaultMission()
+                .withId(1L)
+                .build();
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withMission(mission)
+                .build();
+
+        assertAll(
+                () -> assertThat(discussion.isNotSameMission(2L)).isTrue(),
+                () -> assertThat(discussion.isNotSameMission(mission.getId())).isFalse()
+        );
+    }
+
+    @Test
+    @DisplayName("완전히 동일한 해시 태그이면 false를 아니면 true를 반환한다.")
+    void isNotSameHashTags() {
+        HashTag hashTag1 = HashTagTestData.defaultHashTag()
+                .withId(1L)
+                .build();
+        HashTag hashTag2 = HashTagTestData.defaultHashTag()
+                .withId(2L)
+                .build();
+        Discussion discussion = DiscussionTestData.defaultDiscussion()
+                .withHashTags(List.of(hashTag1, hashTag2))
+                .build();
+
+        assertAll(
+                () -> assertThat(discussion.isNotSameHashTags(List.of(1L))).isTrue(),
+                () -> assertThat(discussion.isNotSameHashTags(List.of(hashTag1.getId(), hashTag2.getId()))).isFalse()
+        );
     }
 }
