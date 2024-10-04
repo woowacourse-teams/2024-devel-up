@@ -7,7 +7,7 @@ import develup.application.member.MemberReadService;
 import develup.application.mission.MissionReadService;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionRepository;
-import develup.domain.discussion.Title;
+import develup.domain.discussion.DiscussionTitle;
 import develup.domain.hashtag.HashTag;
 import develup.domain.hashtag.HashTagRepository;
 import develup.domain.member.Member;
@@ -31,7 +31,7 @@ public class DiscussionWriteService {
         Member member = memberReadService.getMember(memberId);
         List<HashTag> hashTags = getHashTags(request.hashTagIds());
         Discussion discussion = discussionRepository.save(new Discussion(
-                new Title(request.title()),
+                new DiscussionTitle(request.title()),
                 request.content(),
                 mission,
                 member,

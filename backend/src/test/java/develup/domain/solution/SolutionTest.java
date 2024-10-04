@@ -18,7 +18,7 @@ class SolutionTest {
                 .withStatus(SolutionStatus.COMPLETED)
                 .build();
         SolutionSubmit solutionSubmit = new SolutionSubmit(
-                new Title("title"),
+                new SolutionTitle("title"),
                 "description",
                 "https://github.com/develup-mission/java-smoking/pull/1"
         );
@@ -39,7 +39,7 @@ class SolutionTest {
                 .withMission(mission)
                 .build();
         SolutionSubmit solutionSubmit = new SolutionSubmit(
-                new Title("title"),
+                new SolutionTitle("title"),
                 "description",
                 "https://github.com/develup-mission/java-order/pull/1"
         );
@@ -56,7 +56,7 @@ class SolutionTest {
                 .withStatus(SolutionStatus.IN_PROGRESS)
                 .build();
         SolutionSubmit solutionSubmit = new SolutionSubmit(
-                new Title("title"),
+                new SolutionTitle("title"),
                 "description",
                 "https://github.com/develup-mission/java-smoking/pull/1"
         );
