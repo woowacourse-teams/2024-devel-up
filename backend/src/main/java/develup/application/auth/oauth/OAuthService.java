@@ -4,20 +4,16 @@ import develup.application.auth.TokenProvider;
 import develup.application.member.MemberResponse;
 import develup.application.member.MemberWriteService;
 import develup.domain.member.OAuthProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class OAuthService {
 
     private final OAuthContext oAuthContext;
     private final MemberWriteService memberWriteService;
     private final TokenProvider tokenProvider;
-
-    public OAuthService(OAuthContext oAuthContext, MemberWriteService memberWriteService, TokenProvider tokenProvider) {
-        this.oAuthContext = oAuthContext;
-        this.memberWriteService = memberWriteService;
-        this.tokenProvider = tokenProvider;
-    }
 
     public String getOAuthLoginUrl(OAuthProvider provider, String next) {
         return oAuthContext.getOAuthLoginUrl(provider, next);

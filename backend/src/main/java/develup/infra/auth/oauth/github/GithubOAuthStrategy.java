@@ -5,19 +5,16 @@ import develup.application.auth.oauth.OAuthUserInfo;
 import develup.domain.member.OAuthProvider;
 import develup.infra.auth.oauth.github.dto.GithubAccessTokenResponse;
 import develup.infra.auth.oauth.github.dto.GithubUserInfoResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@RequiredArgsConstructor
 @Component
 public class GithubOAuthStrategy implements OAuthStrategy {
 
     private final GithubOAuthClient githubOAuthClient;
     private final GithubOAuthProperties properties;
-
-    public GithubOAuthStrategy(GithubOAuthClient githubOAuthClient, GithubOAuthProperties properties) {
-        this.githubOAuthClient = githubOAuthClient;
-        this.properties = properties;
-    }
 
     @Override
     public String buildOAuthLoginUrl(String next) {

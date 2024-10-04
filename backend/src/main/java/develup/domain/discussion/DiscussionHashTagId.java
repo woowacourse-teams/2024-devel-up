@@ -4,7 +4,12 @@ import java.io.Serializable;
 import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Embeddable
 public class DiscussionHashTagId implements Serializable {
 
@@ -13,14 +18,6 @@ public class DiscussionHashTagId implements Serializable {
 
     @Column(nullable = false)
     private Long hashTagId;
-
-    protected DiscussionHashTagId() {
-    }
-
-    public DiscussionHashTagId(Long discussionId, Long hashTagId) {
-        this.discussionId = discussionId;
-        this.hashTagId = hashTagId;
-    }
 
     @Override
     public boolean equals(Object o) {
