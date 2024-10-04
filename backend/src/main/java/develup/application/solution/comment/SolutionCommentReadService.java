@@ -57,7 +57,7 @@ public class SolutionCommentReadService {
                 .toList();
     }
 
-    private static MySolutionCommentResponse mapToMySolutionCommentResponse(
+    private MySolutionCommentResponse mapToMySolutionCommentResponse(
             MySolutionComment mySolutionComment,
             SolutionCommentCounts solutionCommentCounts
     ) {
