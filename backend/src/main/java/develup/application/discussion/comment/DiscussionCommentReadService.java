@@ -8,9 +8,11 @@ import develup.domain.discussion.comment.DiscussionComment;
 import develup.domain.discussion.comment.DiscussionCommentCounts;
 import develup.domain.discussion.comment.DiscussionCommentRepository;
 import develup.domain.discussion.comment.MyDiscussionComment;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class DiscussionCommentReadService {
@@ -18,16 +20,6 @@ public class DiscussionCommentReadService {
     private final DiscussionCommentGroupingService commentGroupingService;
     private final DiscussionCommentRepository discussionCommentRepository;
     private final DiscussionRepository discussionRepository;
-
-    public DiscussionCommentReadService(
-            DiscussionCommentGroupingService commentGroupingService,
-            DiscussionCommentRepository discussionCommentRepository,
-            DiscussionRepository discussionRepository
-    ) {
-        this.commentGroupingService = commentGroupingService;
-        this.discussionCommentRepository = discussionCommentRepository;
-        this.discussionRepository = discussionRepository;
-    }
 
     public DiscussionComment getById(Long commentId) {
         DiscussionComment comment = discussionCommentRepository.findById(commentId)

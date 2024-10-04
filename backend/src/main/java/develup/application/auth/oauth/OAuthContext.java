@@ -3,16 +3,14 @@ package develup.application.auth.oauth;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.member.OAuthProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
 @Component
 public class OAuthContext {
 
     private final OAuthStrategyRegistry oAuthStrategyRegistry;
-
-    public OAuthContext(OAuthStrategyRegistry oAuthStrategyRegistry) {
-        this.oAuthStrategyRegistry = oAuthStrategyRegistry;
-    }
 
     public String getOAuthLoginUrl(OAuthProvider provider, String next) {
         OAuthStrategy strategy = getOAuthStrategy(provider);

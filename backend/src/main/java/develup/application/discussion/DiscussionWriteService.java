@@ -12,9 +12,11 @@ import develup.domain.hashtag.HashTag;
 import develup.domain.hashtag.HashTagRepository;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class DiscussionWriteService {
@@ -23,18 +25,6 @@ public class DiscussionWriteService {
     private final MemberReadService memberReadService;
     private final MissionReadService missionReadService;
     private final HashTagRepository hashTagRepository;
-
-    public DiscussionWriteService(
-            DiscussionRepository discussionRepository,
-            MemberReadService memberReadService,
-            MissionReadService missionReadService,
-            HashTagRepository hashTagRepository
-    ) {
-        this.discussionRepository = discussionRepository;
-        this.memberReadService = memberReadService;
-        this.missionReadService = missionReadService;
-        this.hashTagRepository = hashTagRepository;
-    }
 
     public DiscussionResponse create(Long memberId, CreateDiscussionRequest request) {
         Mission mission = getMission(request.missionId());

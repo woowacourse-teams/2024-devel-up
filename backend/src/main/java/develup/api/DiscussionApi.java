@@ -12,6 +12,7 @@ import develup.application.discussion.SummarizedDiscussionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,17 +21,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @Tag(name = "디스커션 API")
 public class DiscussionApi {
 
     private final DiscussionWriteService discussionWriteService;
     private final DiscussionReadService discussionReadService;
-
-    public DiscussionApi(DiscussionWriteService discussionWriteService, DiscussionReadService discussionReadService) {
-        this.discussionWriteService = discussionWriteService;
-        this.discussionReadService = discussionReadService;
-    }
 
     @GetMapping("/discussions")
     @Operation(summary = "디스커션 목록 조회 API", description = "디스커션 목록을 조회합니다.")

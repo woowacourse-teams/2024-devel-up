@@ -16,6 +16,7 @@ import develup.application.discussion.comment.UpdateDiscussionCommentResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,20 +26,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @Tag(name = "디스커션 댓글 API")
 public class DiscussionCommentApi {
 
     private final DiscussionCommentWriteService discussionCommentWriteService;
     private final DiscussionCommentReadService discussionCommentReadService;
-
-    public DiscussionCommentApi(
-            DiscussionCommentWriteService discussionCommentWriteService,
-            DiscussionCommentReadService discussionCommentReadService
-    ) {
-        this.discussionCommentWriteService = discussionCommentWriteService;
-        this.discussionCommentReadService = discussionCommentReadService;
-    }
 
     @GetMapping("/discussions/{discussionId}/comments")
     @Operation(summary = "디스커션 댓글 조회 API", description = "디스커션의 댓글 목록을 조회합니다. 댓글들과 댓글들에 대한 답글을 조회합니다.")
