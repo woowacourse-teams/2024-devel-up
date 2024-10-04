@@ -64,6 +64,34 @@ public class Discussion extends CreatedAtAuditableEntity {
         this.discussionHashTags = new DiscussionHashTags(this, hashTags);
     }
 
+    public boolean isNotWrittenBy(Long memberId) {
+        return !member.getId().equals(memberId);
+    }
+
+    public boolean isNotSameMission(Long missionId) {
+        if (this.mission == null) {
+            return true;
+        }
+        return !mission.getId().equals(missionId);
+    }
+
+    public boolean isNotSameHashTags(List<Long> hashTagIds) {
+        return discussionHashTags.isNotSameHashTags(hashTagIds);
+    }
+
+    public void updateMission(Mission mission) {
+        this.mission = mission;
+    }
+
+    public void updateTitleAndContent(String title, String content) {
+        this.title = new DiscussionTitle(title);
+        this.content = content;
+    }
+
+    public void updateHashTags(List<HashTag> hashTags) {
+        this.discussionHashTags = new DiscussionHashTags(this, hashTags);
+    }
+
     public String getTitle() {
         return title.getValue();
     }

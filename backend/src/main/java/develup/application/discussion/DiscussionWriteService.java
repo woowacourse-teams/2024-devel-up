@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DiscussionWriteService {
 
     private final DiscussionRepository discussionRepository;
+    private final DiscussionReadService discussionReadService;
     private final MemberReadService memberReadService;
     private final MissionReadService missionReadService;
     private final HashTagRepository hashTagRepository;
@@ -39,6 +40,42 @@ public class DiscussionWriteService {
         ));
 
         return createDiscussionResponse(discussion);
+    }
+
+    public DiscussionResponse update(
+            Long memberId,
+            UpdateDiscussionRequest request
+    ) {
+        Discussion discussion = discussionReadService.getDiscussion(request.discussionId());
+
+        validateDiscussionOwner(memberId, discussion);
+
+        updateMissionIfNeeded(request, discussion);
+        updateHashTagsIfNeeded(request, discussion);
+
+        discussion.updateTitleAndContent(request.title(), request.content());
+
+        return createDiscussionResponse(discussion);
+    }
+
+    private void validateDiscussionOwner(Long memberId, Discussion discussion) {
+        if (discussion.isNotWrittenBy(memberId)) {
+            throw new DevelupException(ExceptionType.DISCUSSION_NOT_WRITTEN_BY_MEMBER);
+        }
+    }
+
+    private void updateMissionIfNeeded(UpdateDiscussionRequest request, Discussion discussion) {
+        if (request.missionId() != null && discussion.isNotSameMission(request.missionId())) {
+            Mission mission = getMission(request.missionId());
+            discussion.updateMission(mission);
+        }
+    }
+
+    private void updateHashTagsIfNeeded(UpdateDiscussionRequest request, Discussion discussion) {
+        if (discussion.isNotSameHashTags(request.hashTagIds())) {
+            List<HashTag> hashTags = getHashTags(request.hashTagIds());
+            discussion.updateHashTags(hashTags);
+        }
     }
 
     private Mission getMission(Long missionId) {
