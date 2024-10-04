@@ -10,16 +10,16 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 class DiscussionHashTags {
 
     @OrderBy(value = "id ASC")
     @OneToMany(mappedBy = "discussion", cascade = CascadeType.PERSIST)
     private Set<DiscussionHashTag> hashTags = new LinkedHashSet<>();
-
-    protected DiscussionHashTags() {
-    }
 
     public DiscussionHashTags(Discussion discussion, List<HashTag> hashTags) {
         this.hashTags = mapToDiscussionHashTag(discussion, hashTags);

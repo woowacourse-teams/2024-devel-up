@@ -6,18 +6,16 @@ import develup.api.exception.ExceptionType;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionRepository;
 import develup.domain.discussion.comment.DiscussionCommentCounts;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class DiscussionReadService {
 
     private final DiscussionRepository discussionRepository;
-
-    public DiscussionReadService(DiscussionRepository discussionRepository) {
-        this.discussionRepository = discussionRepository;
-    }
 
     public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
         List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(mission, hashTagName);

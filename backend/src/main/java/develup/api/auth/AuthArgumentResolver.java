@@ -10,6 +10,7 @@ import develup.application.auth.AuthService;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -18,19 +19,12 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+@RequiredArgsConstructor
 @Component
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final CookieAuthorizationExtractor authorizationExtractor;
     private final AuthService authService;
-
-    public AuthArgumentResolver(
-            CookieAuthorizationExtractor authorizationExtractor,
-            AuthService authService
-    ) {
-        this.authorizationExtractor = authorizationExtractor;
-        this.authService = authService;
-    }
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {

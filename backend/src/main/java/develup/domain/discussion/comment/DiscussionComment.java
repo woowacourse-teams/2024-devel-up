@@ -11,7 +11,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 public class DiscussionComment extends CreatedAtAuditableEntity {
 
@@ -33,19 +40,6 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
 
     @Column
     private LocalDateTime deletedAt;
-
-    protected DiscussionComment() {
-    }
-
-    public DiscussionComment(
-            String content,
-            Discussion discussion,
-            Member member,
-            DiscussionComment parentComment,
-            LocalDateTime deletedAt
-    ) {
-        this(null, content, discussion, member, parentComment, deletedAt);
-    }
 
     public DiscussionComment(
             Long id,
@@ -101,28 +95,12 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public Discussion getDiscussion() {
-        return discussion;
-    }
-
     public Long getDiscussionId() {
         return discussion.getId();
     }
 
-    public Member getMember() {
-        return member;
-    }
-
     public boolean isNotWrittenBy(Long memberId) {
         return !member.getId().equals(memberId);
-    }
-
-    public DiscussionComment getParentComment() {
-        return parentComment;
     }
 
     public Long getParentCommentId() {
@@ -135,10 +113,6 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
 
     public boolean isReply() {
         return parentComment != null;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
     }
 
     public boolean isNotDeleted() {
