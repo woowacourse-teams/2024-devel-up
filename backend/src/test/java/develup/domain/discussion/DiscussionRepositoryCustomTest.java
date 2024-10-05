@@ -26,10 +26,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-public class DiscussionRepositoryTest extends IntegrationTestSupport {
+public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
 
     @Autowired
     private DiscussionRepository discussionRepository;
+
+    @Autowired
+    private DiscussionRepositoryCustom discussionRepositoryCustom;
 
     @Autowired
     private DiscussionCommentRepository discussionCommentRepository;
@@ -56,7 +59,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         createDiscussion(mission, Collections.emptyList());
         createDiscussion(null, Collections.emptyList());
 
-        List<Discussion> actual = discussionRepository.findAllByMissionAndHashTagName(
+        List<Discussion> actual = discussionRepositoryCustom.findAllByMissionAndHashTagName(
                 "all",
                 "all"
         );
@@ -74,7 +77,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         createDiscussion(mission, List.of(hashTag1));
         createDiscussion(mission, List.of(hashTag2));
 
-        List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(
+        List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagName(
                 "all",
                 "JAVA"
         );
@@ -96,7 +99,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         createDiscussion(mission1, List.of(hashTag));
         createDiscussion(mission2, List.of(hashTag));
 
-        List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(
+        List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagName(
                 "루터회관 흡연단속",
                 "all"
         );
@@ -120,7 +123,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .build();
         Discussion savedDiscussion = discussionRepository.save(discussion);
 
-        assertThat(discussionRepository.findFetchById(savedDiscussion.getId()))
+        assertThat(discussionRepositoryCustom.findFetchById(savedDiscussion.getId()))
                 .map(Discussion::getId)
                 .hasValue(savedDiscussion.getId());
     }
@@ -138,7 +141,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .build();
         Discussion savedDiscussion = discussionRepository.save(discussion);
 
-        assertThat(discussionRepository.findFetchById(savedDiscussion.getId()))
+        assertThat(discussionRepositoryCustom.findFetchById(savedDiscussion.getId()))
                 .map(Discussion::getId)
                 .hasValue(savedDiscussion.getId());
     }
@@ -156,7 +159,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .build();
         Discussion savedDiscussion = discussionRepository.save(discussion);
 
-        assertThat(discussionRepository.findFetchById(savedDiscussion.getId()))
+        assertThat(discussionRepositoryCustom.findFetchById(savedDiscussion.getId()))
                 .map(Discussion::getId)
                 .hasValue(savedDiscussion.getId());
     }
@@ -173,7 +176,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .build();
         Discussion savedDiscussion = discussionRepository.save(discussion);
 
-        assertThat(discussionRepository.findFetchById(savedDiscussion.getId()))
+        assertThat(discussionRepositoryCustom.findFetchById(savedDiscussion.getId()))
                 .map(Discussion::getId)
                 .hasValue(savedDiscussion.getId());
     }
@@ -181,7 +184,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
     @Test
     @DisplayName("멤버 식별자를 통해 디스커션을 조회한다.")
     @Transactional
-    void findByMember_Id() {
+    void findByMemberId() {
         Member member1 = memberRepository.save(MemberTestData.defaultMember().withId(1L).build());
         Member member2 = memberRepository.save(MemberTestData.defaultMember().withId(2L).build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
@@ -219,8 +222,8 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         discussionRepository.save(discussionByMember1_4);
         discussionRepository.save(discussionByMember2);
 
-        List<Discussion> discussionsByMember1 = discussionRepository.findAllByMemberId(member1.getId());
-        List<Discussion> discussionsByMember2 = discussionRepository.findAllByMemberId(member2.getId());
+        List<Discussion> discussionsByMember1 = discussionRepositoryCustom.findAllByMemberId(member1.getId());
+        List<Discussion> discussionsByMember2 = discussionRepositoryCustom.findAllByMemberId(member2.getId());
 
         assertAll(
                 () -> assertThat(discussionsByMember1).hasSize(4),
@@ -242,7 +245,7 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         saveDeletedDiscussionComment(savedDiscussion, member);
 
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
-                discussionRepository.findAllDiscussionCommentCounts()
+                discussionRepositoryCustom.findAllDiscussionCommentCounts()
         );
         Long count = discussionCommentCounts.getCount(savedDiscussion);
 
