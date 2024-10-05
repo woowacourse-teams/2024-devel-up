@@ -3,7 +3,7 @@ package develup.application.discussion.comment;
 import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
-import develup.domain.discussion.DiscussionRepository;
+import develup.domain.discussion.DiscussionRepositoryCustom;
 import develup.domain.discussion.comment.DiscussionComment;
 import develup.domain.discussion.comment.DiscussionCommentCounts;
 import develup.domain.discussion.comment.DiscussionCommentRepository;
@@ -21,7 +21,7 @@ public class DiscussionCommentReadService {
     private final DiscussionCommentGroupingService commentGroupingService;
     private final DiscussionCommentRepositoryCustom discussionCommentRepositoryCustom;
     private final DiscussionCommentRepository discussionCommentRepository;
-    private final DiscussionRepository discussionRepository;
+    private final DiscussionRepositoryCustom discussionRepositoryCustom;
 
     public DiscussionComment getById(Long commentId) {
         DiscussionComment comment = discussionCommentRepository.findById(commentId)
@@ -43,7 +43,7 @@ public class DiscussionCommentReadService {
     public List<MyDiscussionCommentResponse> getMyComments(Long memberId) {
         List<MyDiscussionComment> mySolutionComments = discussionCommentRepositoryCustom.findAllMyDiscussionComment(memberId);
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
-                discussionRepository.findAllDiscussionCommentCounts()
+                discussionRepositoryCustom.findAllDiscussionCommentCounts()
         );
 
         return mySolutionComments.stream()
