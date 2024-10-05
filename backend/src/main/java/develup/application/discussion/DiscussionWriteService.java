@@ -102,4 +102,12 @@ public class DiscussionWriteService {
 
         return DiscussionResponse.from(discussion);
     }
+
+    public void delete(Long memberId, Long discussionId) {
+        Discussion discussion = discussionReadService.getDiscussion(discussionId);
+        validateDiscussionOwner(memberId, discussion);
+
+        discussionRepository.deleteAllComments(discussion.getId());
+        discussionRepository.delete(discussion);
+    }
 }
