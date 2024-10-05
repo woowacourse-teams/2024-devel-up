@@ -1,6 +1,8 @@
 package develup.domain.discussion.comment;
 
+import static develup.domain.discussion.QDiscussion.discussion;
 import static develup.domain.discussion.comment.QDiscussionComment.discussionComment;
+import static develup.domain.member.QMember.member;
 
 import java.util.List;
 import com.querydsl.core.types.Projections;
@@ -16,7 +18,7 @@ public class DiscussionCommentRepositoryCustom {
 
     public List<DiscussionComment> findAllByDiscussionIdOrderByCreatedAtAsc(Long discussionId) {
         return queryFactory.selectFrom(discussionComment)
-                .join(discussionComment.member).fetchJoin()
+                .join(discussionComment.member, member).fetchJoin()
                 .where(discussionComment.discussion.id.eq(discussionId))
                 .orderBy(discussionComment.createdAt.asc())
                 .fetch();
@@ -28,12 +30,12 @@ public class DiscussionCommentRepositoryCustom {
                         discussionComment.discussion.id,
                         discussionComment.content,
                         discussionComment.createdAt,
-                        discussionComment.discussion.title.value
+                        discussion.title.value
                 ))
                 .from(discussionComment)
+                .join(discussionComment.discussion, discussion)
                 .join(discussionComment.member)
-                .join(discussionComment.member)
-                .where(discussionComment.member.id.eq(memberId).and(discussionComment.isNull()))
+                .where(discussionComment.member.id.eq(memberId).and(discussionComment.deletedAt.isNull()))
                 .fetch();
     }
 }
