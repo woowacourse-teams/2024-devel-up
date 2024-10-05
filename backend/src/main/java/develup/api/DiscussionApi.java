@@ -73,13 +73,13 @@ public class DiscussionApi {
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
-    @DeleteMapping("/discussions/{solutionId}")
+    @DeleteMapping("/discussions/{discussionId}")
     @Operation(summary = "디스커션 삭제 API", description = "디스커션을 삭제합니다.")
     public ResponseEntity<ApiResponse<Void>> deleteSolution(
             @Auth Accessor accessor,
-            @PathVariable Long solutionId
+            @PathVariable Long discussionId
     ) {
-        discussionWriteService.delete(accessor.id(), solutionId);
+        discussionWriteService.delete(accessor.id(), discussionId);
 
         return ResponseEntity.noContent().build();
     }
