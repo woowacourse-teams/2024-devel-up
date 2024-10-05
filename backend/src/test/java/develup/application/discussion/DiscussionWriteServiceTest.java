@@ -333,4 +333,22 @@ class DiscussionWriteServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("디스커션 작성자가 아닙니다.");
     }
+
+    @Test
+    @DisplayName("디스커션을 삭제한다")
+    @Transactional
+    void deleteDiscussion() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = discussionRepository.save(DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(List.of(hashTag))
+                .build());
+        
+        discussionWriteService.delete(member.getId(), discussion.getId());
+
+        assertThat(discussionRepository.findById(discussion.getId())).isEmpty();
+    }
 }

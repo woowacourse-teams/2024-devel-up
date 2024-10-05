@@ -107,7 +107,7 @@ public class DiscussionWriteService {
         Discussion discussion = discussionReadService.getDiscussion(discussionId);
         validateDiscussionOwner(memberId, discussion);
 
-        discussionRepository.deleteAllComments(discussion.getId());
-        discussionRepository.delete(discussion);
+        discussionRepository.deleteAllComments(discussionId);
+        discussionRepository.deleteById(discussionId);
     }
 }
