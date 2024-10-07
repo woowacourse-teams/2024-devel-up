@@ -12,7 +12,7 @@ interface SolutionBottomProps {
   solutionId: number;
 }
 
-export default function SolutionBottom({ missionId, solutionId }: SolutionBottomProps) {
+export default function SolutionDetailBottom({ missionId, solutionId }: SolutionBottomProps) {
   const navigate = useNavigate();
 
   const handleNavigateToModifySolution = () => {

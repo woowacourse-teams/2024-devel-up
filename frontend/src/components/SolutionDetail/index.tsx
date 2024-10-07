@@ -3,7 +3,7 @@ import type { Solution } from '@/types/solution';
 import Button from '@/components/common/Button/Button';
 import SolutionDetailHeader from './SolutionDetailHeader';
 import useUserInfo from '@/hooks/useUserInfo';
-import SolutionBottom from './SolutionBottom';
+import SolutionBottom from './SolutionDetailBottom';
 
 interface SolutionDetailProps {
   solution: Solution;
