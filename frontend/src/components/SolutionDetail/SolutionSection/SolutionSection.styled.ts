@@ -108,6 +108,15 @@ export const SolutionDescription = styled.div`
   ${({ theme }) => theme.font.body}
 `;
 
+export const SolutionDescriptionBottom = styled.div`
+  margin: 2rem 0;
+
+  display: flex;
+  gap: 0.2rem;
+  justify-content: flex-end;
+  align-content: center;
+`;
+
 export const CodeViewButtonLink = styled(Link)`
   display: contents;
 `;
