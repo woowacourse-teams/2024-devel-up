@@ -37,3 +37,15 @@ export const postDiscussionSubmit = async (payload: {
 
   return data;
 };
+
+export const patchDiscussion = async (payload: {
+  discussionId: number;
+  title: string;
+  content: string;
+  missionId?: number;
+  hashTagIds: number[];
+}) => {
+  const { data } = await develupAPIClient.patch<{ data: Discussion }>(PATH.discussions, payload);
+
+  return data;
+};

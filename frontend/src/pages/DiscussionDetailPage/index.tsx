@@ -8,6 +8,7 @@ import useDiscussion from '@/hooks/useDiscussion';
 import { useDiscussionComments } from '@/hooks/useDiscussionComments';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import DiscussionDetailBottom from '@/components/DiscussionDetail/DiscussionDetailBottom';
 
 export default function DiscussionDetailPage() {
   const { data: userInfo } = useUserInfo();
@@ -31,6 +32,9 @@ export default function DiscussionDetailPage() {
       </S.DiscussionDetailTitle>
       <DiscussionDetailHeader discussion={discussion} />
       <S.DiscussionDescription source={discussion.content} />
+      {userInfo?.id === discussion.member.id && (
+        <DiscussionDetailBottom discussionId={discussionId} />
+      )}
       <CommentSection
         comments={comments}
         postId={discussionId}

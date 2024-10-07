@@ -4,33 +4,37 @@ import Modal from '@/components/common/Modal/Modal';
 import ConfirmButtons from '@/components/ModalContent/ConfirmButtons';
 import { useNavigate } from 'react-router-dom';
 import useModal from '@/hooks/useModal';
-import { useSolutionDelete } from '@/hooks/useSolutionDelete';
 import Button from '@/components/common/Button/Button';
 
-interface SolutionBottomProps {
-  missionId: number;
-  solutionId: number;
+interface DiscussionDetailBottomProps {
+  // missionId: number;
+  // solutionId: number;
+  discussionId: number;
 }
 
-export default function DiscussionDetailBottom({ missionId, solutionId }: SolutionBottomProps) {
+export default function DiscussionDetailBottom({
+  // missionId,
+  // solutionId,
+  discussionId,
+}: DiscussionDetailBottomProps) {
   const navigate = useNavigate();
 
-  const handleNavigateToModifySolution = () => {
-    navigate(`${ROUTES.submitSolution}/${missionId}?solutionId=${solutionId}`);
+  const handleNavigateToUpdateDiscussion = () => {
+    navigate(`${ROUTES.submitDiscussion}?discussionId=${discussionId}`);
   };
 
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
-  const { solutionDeleteMutation } = useSolutionDelete();
+  // const { solutionDeleteMutation } = useSolutionDelete();
 
-  const handleSolutionDelete = () => {
-    solutionDeleteMutation(solutionId);
-    handleModalClose();
-  };
+  // const handleDiscussionDelete = () => {
+  //   discussionDeleteMutation(discussionId);
+  //   handleModalClose();
+  // };
 
   return (
     <>
       <S.DiscussionDetailBottom>
-        <Button variant="defaultText" onClick={() => handleNavigateToModifySolution()}>
+        <Button variant="defaultText" onClick={() => handleNavigateToUpdateDiscussion()}>
           수정
         </Button>
         <Button variant="defaultText" onClick={handleModalOpen}>
@@ -38,12 +42,12 @@ export default function DiscussionDetailBottom({ missionId, solutionId }: Soluti
         </Button>
       </S.DiscussionDetailBottom>
 
-      <Modal isModalOpen={isModalOpen}>
+      {/* <Modal isModalOpen={isModalOpen}>
         <ConfirmButtons
           handleModalClose={handleModalClose}
           handleSolutionDelete={handleSolutionDelete}
         />
-      </Modal>
+      </Modal> */}
     </>
   );
 }
