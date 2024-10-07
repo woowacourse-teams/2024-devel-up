@@ -3,7 +3,7 @@ import type { Solution } from '@/types/solution';
 import Button from '@/components/common/Button/Button';
 import SolutionDetailHeader from './SolutionDetailHeader';
 import useUserInfo from '@/hooks/useUserInfo';
-import SolutionBottom from './SolutionDetailBottom';
+import SolutionDetailBottom from './SolutionDetailBottom';
 
 interface SolutionDetailProps {
   solution: Solution;
@@ -28,8 +28,8 @@ export default function SolutionSection({ solution }: SolutionDetailProps) {
         </S.CodeViewButtonLink>
       </S.CodeViewButtonWrapper>
       <S.SolutionDescription>{description}</S.SolutionDescription>
-      {userInfo?.id !== solution.member.id && (
-        <SolutionBottom missionId={mission.id} solutionId={solutionId} />
+      {userInfo?.id === solution.member.id && (
+        <SolutionDetailBottom missionId={mission.id} solutionId={solutionId} />
       )}
     </section>
   );
