@@ -25,7 +25,7 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
       <S.ThumbnailWrapper>
         <S.HeaderLeftArea>
           <S.MissionActionHeader>
-            {mission && <S.MissionTitle># {mission.title}</S.MissionTitle>}
+            {mission && <TagButton variant="danger"># {mission.title}</TagButton>}
             {userInfo && (
               <Button variant="primary" onClick={handleToSubmitDiscussion}>
                 작성하기
