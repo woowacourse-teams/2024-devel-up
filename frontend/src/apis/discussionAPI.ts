@@ -49,3 +49,7 @@ export const patchDiscussion = async (payload: {
 
   return data;
 };
+
+export const deleteDiscussion = async (discussionId: number) => {
+  await develupAPIClient.delete(`${PATH.discussions}/${discussionId}`);
+};

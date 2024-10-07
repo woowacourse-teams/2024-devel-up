@@ -5,18 +5,13 @@ import ConfirmButtons from '@/components/ModalContent/ConfirmButtons';
 import { useNavigate } from 'react-router-dom';
 import useModal from '@/hooks/useModal';
 import Button from '@/components/common/Button/Button';
+import { useDiscussionDelete } from '@/hooks/useDiscussionDelete';
 
 interface DiscussionDetailBottomProps {
-  // missionId: number;
-  // solutionId: number;
   discussionId: number;
 }
 
-export default function DiscussionDetailBottom({
-  // missionId,
-  // solutionId,
-  discussionId,
-}: DiscussionDetailBottomProps) {
+export default function DiscussionDetailBottom({ discussionId }: DiscussionDetailBottomProps) {
   const navigate = useNavigate();
 
   const handleNavigateToUpdateDiscussion = () => {
@@ -24,12 +19,12 @@ export default function DiscussionDetailBottom({
   };
 
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
-  // const { solutionDeleteMutation } = useSolutionDelete();
+  const { discussionDeleteMutation } = useDiscussionDelete();
 
-  // const handleDiscussionDelete = () => {
-  //   discussionDeleteMutation(discussionId);
-  //   handleModalClose();
-  // };
+  const handleDiscussionDelete = () => {
+    discussionDeleteMutation(discussionId);
+    handleModalClose();
+  };
 
   return (
     <>
@@ -42,12 +37,12 @@ export default function DiscussionDetailBottom({
         </Button>
       </S.DiscussionDetailBottom>
 
-      {/* <Modal isModalOpen={isModalOpen}>
+      <Modal isModalOpen={isModalOpen}>
         <ConfirmButtons
           handleModalClose={handleModalClose}
-          handleSolutionDelete={handleSolutionDelete}
+          handleConfirm={handleDiscussionDelete}
         />
-      </Modal> */}
+      </Modal>
     </>
   );
 }
