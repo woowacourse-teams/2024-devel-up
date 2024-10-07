@@ -7,12 +7,12 @@ import Button from '../common/Button/Button';
 import useModal from '@/hooks/useModal';
 import { useSolutionDelete } from '@/hooks/useSolutionDelete';
 
-interface SolutionBottomProps {
+interface SolutionDetailBottomProps {
   missionId: number;
   solutionId: number;
 }
 
-export default function SolutionDetailBottom({ missionId, solutionId }: SolutionBottomProps) {
+export default function SolutionDetailBottom({ missionId, solutionId }: SolutionDetailBottomProps) {
   const navigate = useNavigate();
 
   const handleNavigateToModifySolution = () => {
@@ -39,10 +39,7 @@ export default function SolutionDetailBottom({ missionId, solutionId }: Solution
       </S.SolutionDescriptionBottom>
 
       <Modal isModalOpen={isModalOpen}>
-        <ConfirmButtons
-          handleModalClose={handleModalClose}
-          handleSolutionDelete={handleSolutionDelete}
-        />
+        <ConfirmButtons handleModalClose={handleModalClose} handleConfirm={handleSolutionDelete} />
       </Modal>
     </>
   );
