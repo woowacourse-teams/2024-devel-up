@@ -5,6 +5,9 @@ import SolutionDetailHeader from './SolutionDetailHeader';
 import { useSolutionDelete } from '@/hooks/useSolutionDelete';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import Modal from '@/components/common/Modal/Modal';
+import useModal from '@/hooks/useModal';
+import ModalWrapper from '@/components/common/Modal/ModalWrapper';
 
 interface SolutionDetailProps {
   solution: Solution;
@@ -18,6 +21,13 @@ export default function SolutionSection({ solution }: SolutionDetailProps) {
   const navigate = useNavigate();
   const handleNavigateToModifySolution = () => {
     navigate(`${ROUTES.submitSolution}/${mission.id}?solutionId=${solutionId}`);
+  };
+
+  const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
+
+  const handleSolutionDelete = () => {
+    solutionDeleteMutation(solutionId);
+    handleModalClose();
   };
 
   return (
@@ -37,10 +47,22 @@ export default function SolutionSection({ solution }: SolutionDetailProps) {
         <Button variant="defaultText" onClick={() => handleNavigateToModifySolution()}>
           수정
         </Button>
-        <Button variant="defaultText" onClick={() => solutionDeleteMutation(solutionId)}>
+        <Button variant="defaultText" onClick={handleModalOpen}>
           삭제
         </Button>
       </S.SolutionDescriptionBottom>
+
+      <Modal isModalOpen={isModalOpen}>
+        <S.DeleteModalContainer>
+          <ModalWrapper.Title>풀이를 삭제할까요?</ModalWrapper.Title>
+          <S.ModalButtonWrapper>
+            <Button onClick={handleModalClose}>취소</Button>
+            <Button variant="primary" onClick={handleSolutionDelete}>
+              삭제
+            </Button>
+          </S.ModalButtonWrapper>
+        </S.DeleteModalContainer>
+      </Modal>
     </section>
   );
 }
