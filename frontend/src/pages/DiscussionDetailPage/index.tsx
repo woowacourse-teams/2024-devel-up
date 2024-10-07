@@ -1,5 +1,5 @@
 import * as S from './DiscussionDetailPage.styled';
-import DiscussionDetailHeader from './DiscussionDetailHeader';
+import DiscussionDetailHeader from '@/components/DiscussionDetail/DiscussionDetailHeader';
 import useUserInfo from '@/hooks/useUserInfo';
 import usePostDiscussionCommentMutation from '@/hooks/usePostDiscussionCommentMutation';
 import CommentSection from '@/components/CommentSection';
