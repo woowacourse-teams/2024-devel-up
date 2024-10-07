@@ -8,6 +8,7 @@ import { ROUTES } from '@/constants/routes';
 import Modal from '@/components/common/Modal/Modal';
 import useModal from '@/hooks/useModal';
 import ModalWrapper from '@/components/common/Modal/ModalWrapper';
+import useUserInfo from '@/hooks/useUserInfo';
 
 interface SolutionDetailProps {
   solution: Solution;
@@ -23,6 +24,7 @@ export default function SolutionSection({ solution }: SolutionDetailProps) {
     navigate(`${ROUTES.submitSolution}/${mission.id}?solutionId=${solutionId}`);
   };
 
+  const { data: userInfo } = useUserInfo();
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
 
   const handleSolutionDelete = () => {
@@ -43,14 +45,16 @@ export default function SolutionSection({ solution }: SolutionDetailProps) {
         </S.CodeViewButtonLink>
       </S.CodeViewButtonWrapper>
       <S.SolutionDescription>{description}</S.SolutionDescription>
-      <S.SolutionDescriptionBottom>
-        <Button variant="defaultText" onClick={() => handleNavigateToModifySolution()}>
-          수정
-        </Button>
-        <Button variant="defaultText" onClick={handleModalOpen}>
-          삭제
-        </Button>
-      </S.SolutionDescriptionBottom>
+      {userInfo?.id === solution.member.id && (
+        <S.SolutionDescriptionBottom>
+          <Button variant="defaultText" onClick={() => handleNavigateToModifySolution()}>
+            수정
+          </Button>
+          <Button variant="defaultText" onClick={handleModalOpen}>
+            삭제
+          </Button>
+        </S.SolutionDescriptionBottom>
+      )}
 
       <Modal isModalOpen={isModalOpen}>
         <S.DeleteModalContainer>
