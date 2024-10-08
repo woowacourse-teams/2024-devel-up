@@ -16,7 +16,7 @@
       "language": "string",
       "descriptionUrl": "string",
       "thumbnail": "string",
-      "url": "string",
+      "url": "https://github.com/develup-mission/react-auth-form",
       "isStarted": "boolean",
       "summary": "string",
       "hashTags": [{ "id": 1, "name": "zz" }]
@@ -39,7 +39,7 @@
       "language": "string",
       "descriptionUrl": "string",
       "thumbnail": "string",
-      "url": "string",
+      "url": "https://github.com/develup-mission/react-auth-form",
       "isStarted": "boolean",
       "summary": "string",
       "hashTags": [{ "id": 1, "name": "zz" }]

@@ -22,6 +22,8 @@ export const handlers = [
 
     return HttpResponse.json({ data: filteredMissions });
   }),
+
+  
   http.get(`${API_URL}${PATH.mySolutions}`, () => {
     return HttpResponse.json({
       data: submittedSolutions,
@@ -90,5 +92,9 @@ export const handlers = [
 
   http.delete(`${API_URL}${PATH.solutions}/:id`, () => {
     return HttpResponse.json({ status: 200 });
+  }),
+
+  http.get(`${API_URL}${PATH.solutions}`, () => {
+    return HttpResponse.json({ data: mockSolutions }, { status: 200 });
   }),
 ];
