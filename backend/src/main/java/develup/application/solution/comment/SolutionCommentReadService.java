@@ -4,6 +4,7 @@ import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.solution.SolutionRepository;
+import develup.domain.solution.SolutionRepositoryCustom;
 import develup.domain.solution.comment.MySolutionComment;
 import develup.domain.solution.comment.SolutionComment;
 import develup.domain.solution.comment.SolutionCommentCounts;
@@ -20,6 +21,7 @@ public class SolutionCommentReadService {
     private final CommentGroupingService commentGroupingService;
     private final SolutionCommentRepository solutionCommentRepository;
     private final SolutionRepository solutionRepository;
+    private final SolutionRepositoryCustom solutionRepositoryCustom;
 
     public SolutionComment getById(Long commentId) {
         SolutionComment comment = solutionCommentRepository.findById(commentId)
@@ -41,7 +43,7 @@ public class SolutionCommentReadService {
     public List<MySolutionCommentResponse> getMyComments(Long memberId) {
         List<MySolutionComment> mySolutionComments = solutionCommentRepository.findAllMySolutionComment(memberId);
         SolutionCommentCounts solutionCommentCounts = new SolutionCommentCounts(
-                solutionRepository.findAllSolutionCommentCounts()
+                solutionRepositoryCustom.findAllSolutionCommentCounts()
         );
 
         return mySolutionComments.stream()

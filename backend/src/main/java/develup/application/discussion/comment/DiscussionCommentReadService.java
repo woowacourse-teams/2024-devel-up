@@ -7,6 +7,7 @@ import develup.domain.discussion.DiscussionRepository;
 import develup.domain.discussion.comment.DiscussionComment;
 import develup.domain.discussion.comment.DiscussionCommentCounts;
 import develup.domain.discussion.comment.DiscussionCommentRepository;
+import develup.domain.discussion.comment.DiscussionCommentRepositoryCustom;
 import develup.domain.discussion.comment.MyDiscussionComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DiscussionCommentReadService {
 
     private final DiscussionCommentGroupingService commentGroupingService;
+    private final DiscussionCommentRepositoryCustom discussionCommentRepositoryCustom;
     private final DiscussionCommentRepository discussionCommentRepository;
     private final DiscussionRepository discussionRepository;
 
@@ -33,13 +35,13 @@ public class DiscussionCommentReadService {
     }
 
     public List<DiscussionCommentRepliesResponse> getCommentsWithReplies(Long discussionId) {
-        List<DiscussionComment> comments = discussionCommentRepository.findAllByDiscussionIdOrderByCreatedAtAsc(discussionId);
+        List<DiscussionComment> comments = discussionCommentRepositoryCustom.findAllByDiscussionIdOrderByCreatedAtAsc(discussionId);
 
         return commentGroupingService.groupReplies(comments);
     }
 
     public List<MyDiscussionCommentResponse> getMyComments(Long memberId) {
-        List<MyDiscussionComment> mySolutionComments = discussionCommentRepository.findAllMyDiscussionComment(memberId);
+        List<MyDiscussionComment> mySolutionComments = discussionCommentRepositoryCustom.findAllMyDiscussionComment(memberId);
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
                 discussionRepository.findAllDiscussionCommentCounts()
         );
