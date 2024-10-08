@@ -7,6 +7,7 @@ import develup.application.member.MemberReadService;
 import develup.application.mission.MissionReadService;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionRepository;
+import develup.domain.discussion.DiscussionRepositoryCustom;
 import develup.domain.discussion.DiscussionTitle;
 import develup.domain.hashtag.HashTag;
 import develup.domain.hashtag.HashTagRepository;
@@ -26,6 +27,7 @@ public class DiscussionWriteService {
     private final MemberReadService memberReadService;
     private final MissionReadService missionReadService;
     private final HashTagRepository hashTagRepository;
+    private final DiscussionRepositoryCustom discussionRepositoryCustom;
 
     public DiscussionResponse create(Long memberId, CreateDiscussionRequest request) {
         Mission mission = getMission(request.missionId());
@@ -107,7 +109,7 @@ public class DiscussionWriteService {
         Discussion discussion = discussionReadService.getDiscussion(discussionId);
         validateDiscussionOwner(memberId, discussion);
 
-        discussionRepository.deleteAllComments(discussionId);
+        discussionRepositoryCustom.deleteAllComments(discussionId);
         discussionRepository.deleteById(discussionId);
     }
 }

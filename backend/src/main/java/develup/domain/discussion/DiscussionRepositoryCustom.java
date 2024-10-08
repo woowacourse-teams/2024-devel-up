@@ -14,6 +14,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.domain.discussion.comment.DiscussionCommentCount;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Repository;
 public class DiscussionRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
+    private final EntityManager entityManager;
 
     public List<Discussion> findAllByMissionAndHashTagName(String missionTitle, String hashTagName) {
         return queryFactory
@@ -88,5 +90,15 @@ public class DiscussionRepositoryCustom {
                 .where(discussionComment.deletedAt.isNull(), discussionComment.parentCommentId.isNull())
                 .groupBy(discussion.id)
                 .fetch();
+    }
+
+    public void deleteAllComments(Long discussionId) {
+        queryFactory
+                .delete(discussionComment)
+                .where(discussionComment.discussion.id.eq(discussionId))
+                .execute();
+
+        entityManager.flush();
+        entityManager.clear();
     }
 }

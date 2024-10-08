@@ -301,7 +301,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
 
         DiscussionComment discussionComment = saveDiscussionComment(discussion, member);
 
-        discussionRepository.deleteAllComments(discussion.getId());
+        discussionRepositoryCustom.deleteAllComments(discussion.getId());
 
         assertThat(discussionCommentRepository.findById(discussionComment.getId())).isEmpty();
     }
