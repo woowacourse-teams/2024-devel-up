@@ -2,6 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { PATH } from '@/apis/paths';
 import missions from './missions.json';
 import submittedSolutions from './SubmittedSolutions.json';
+import mockSolutions from './Solutions.json';
 import myComments from './myComments.json';
 import missionInProgress from './missionInProgress.json';
 import { HASHTAGS } from '@/constants/hashTags';
@@ -72,5 +73,18 @@ export const handlers = [
         },
       },
     );
+  }),
+
+  http.get(`${API_URL}${PATH.solutions}/:id`, ({ request }) => {
+    const url = new URL(request.url);
+    const id = Number(url.pathname.split('/').pop());
+
+    const solution = mockSolutions.find((solution) => solution.id === id);
+
+    if (solution) {
+      return HttpResponse.json({ data: solution }, { status: 200 });
+    } else {
+      return HttpResponse.json({ status: 404 }, { statusText: 'Solution not found' });
+    }
   }),
 ];
