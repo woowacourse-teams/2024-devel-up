@@ -87,4 +87,8 @@ export const handlers = [
       return HttpResponse.json({ status: 404 }, { statusText: 'Solution not found' });
     }
   }),
+
+  http.delete(`${API_URL}${PATH.solutions}/:id`, () => {
+    return HttpResponse.json({ status: 200 });
+  }),
 ];
