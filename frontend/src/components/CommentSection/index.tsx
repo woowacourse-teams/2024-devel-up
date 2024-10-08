@@ -36,7 +36,7 @@ export default function CommentSection({
         usePatchCommentMutation={usePatchCommentMutation}
         useDeleteCommentMutation={useDeleteCommentMutation}
       />
-      {!isLoggedIn && (
+      {isLoggedIn && (
         <S.CommentFormWrapper>
           <CommentSubmitForm postId={postId} usePostCommentMutation={usePostCommentMutation} />
         </S.CommentFormWrapper>
