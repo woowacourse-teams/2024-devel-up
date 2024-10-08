@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,6 +71,17 @@ public class DiscussionApi {
         DiscussionResponse response = discussionWriteService.update(accessor.id(), request);
 
         return ResponseEntity.ok(new ApiResponse<>(response));
+    }
+
+    @DeleteMapping("/discussions/{discussionId}")
+    @Operation(summary = "디스커션 삭제 API", description = "디스커션을 삭제합니다.")
+    public ResponseEntity<ApiResponse<Void>> deleteSolution(
+            @Auth Accessor accessor,
+            @PathVariable Long discussionId
+    ) {
+        discussionWriteService.delete(accessor.id(), discussionId);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/discussions/mine")

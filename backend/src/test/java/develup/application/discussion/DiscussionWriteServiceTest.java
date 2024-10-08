@@ -305,4 +305,50 @@ class DiscussionWriteServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(DevelupException.class)
                 .hasMessage("디스커션 작성자가 아닙니다.");
     }
+
+    @Test
+    @DisplayName("존재하지 않는 디스커션을 삭제 시도하면 예외가 발생한다.")
+    void deleteDiscussionWithUnknownDiscussion() {
+        assertThatThrownBy(() -> discussionWriteService.delete(1L, -1L))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("존재하지 않는 디스커션입니다.");
+    }
+
+    @Test
+    @DisplayName("디스커션 작성자가 아닌 사용자가 디스커션을 삭제 시도하면 예외가 발생한다.")
+    @Transactional
+    void deleteDiscussionWithNotOwner() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = discussionRepository.save(DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(List.of(hashTag))
+                .build());
+
+        Member otherMember = memberRepository.save(MemberTestData.defaultMember().build());
+
+        assertThatThrownBy(() -> discussionWriteService.delete(otherMember.getId(), discussion.getId()))
+                .isInstanceOf(DevelupException.class)
+                .hasMessage("디스커션 작성자가 아닙니다.");
+    }
+
+    @Test
+    @DisplayName("디스커션을 삭제한다")
+    @Transactional
+    void deleteDiscussion() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Discussion discussion = discussionRepository.save(DiscussionTestData.defaultDiscussion()
+                .withMember(member)
+                .withMission(mission)
+                .withHashTags(List.of(hashTag))
+                .build());
+        
+        discussionWriteService.delete(member.getId(), discussion.getId());
+
+        assertThat(discussionRepository.findById(discussion.getId())).isEmpty();
+    }
 }
