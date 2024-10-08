@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 class DiscussionHashTags {
 
     @OrderBy(value = "id ASC")
-    @OneToMany(mappedBy = "discussion", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "discussion", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<DiscussionHashTag> hashTags = new LinkedHashSet<>();
 
     public DiscussionHashTags(Discussion discussion, List<HashTag> hashTags) {

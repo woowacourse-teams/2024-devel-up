@@ -270,12 +270,12 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
         return discussionRepository.save(discussion);
     }
 
-    private void saveDiscussionComment(Discussion savedDiscussion, Member member) {
+    private DiscussionComment saveDiscussionComment(Discussion savedDiscussion, Member member) {
         DiscussionComment discussionComment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withDiscussion(savedDiscussion)
                 .withMember(member)
                 .build();
-        discussionCommentRepository.save(discussionComment);
+        return discussionCommentRepository.save(discussionComment);
     }
 
     private void saveDeletedDiscussionComment(Discussion savedDiscussion, Member member) {
@@ -285,5 +285,21 @@ public class DiscussionRepositoryTest extends IntegrationTestSupport {
                 .build();
         discussionComment.delete();
         discussionCommentRepository.save(discussionComment);
+    }
+
+    @Test
+    @DisplayName("디스커션의 댓글을 모두 물리적으로 삭제한다")
+    @Transactional
+    void deleteAllComments() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().withTitle("루터회관 흡연단속").build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        Discussion discussion = getSavedDiscussion(mission, member, hashTag);
+
+        DiscussionComment discussionComment = saveDiscussionComment(discussion, member);
+
+        discussionRepository.deleteAllComments(discussion.getId());
+
+        assertThat(discussionCommentRepository.findById(discussionComment.getId())).isEmpty();
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import develup.domain.discussion.comment.DiscussionCommentCount;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -66,4 +67,11 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
             GROUP BY d.id
             """)
     List<DiscussionCommentCount> findAllDiscussionCommentCounts();
+
+    @Query("""
+            DELETE FROM DiscussionComment dc
+            WHERE dc.discussion.id = :discussionId
+            """)
+    @Modifying(clearAutomatically = true)
+    void deleteAllComments(Long discussionId);
 }
