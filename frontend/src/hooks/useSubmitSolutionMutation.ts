@@ -19,7 +19,7 @@ const useSubmitSolutionMutation = ({
   const navigate = useNavigate();
 
   const { mutate: submitSolutionMutation, isPending } = useSingleRequestMutation({
-    queryFn: postSolutionSubmit,
+    mutationFn: postSolutionSubmit,
     onSuccess: () => {
       onSuccessCallback();
       queryClient.invalidateQueries({ queryKey: missionKeys.detail(missionId) });

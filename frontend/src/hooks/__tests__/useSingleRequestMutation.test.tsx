@@ -33,7 +33,7 @@ describe('useSingleRequestMutation 훅 테스트', () => {
     const { result } = renderHook(
       () =>
         useSingleRequestMutation({
-          queryFn: mockMutationFn,
+          mutationFn: mockMutationFn,
           onSuccess: mockOnSuccess,
           onSettled: mockOnSettled,
         }),
@@ -55,7 +55,7 @@ describe('useSingleRequestMutation 훅 테스트', () => {
     const { result } = renderHook(
       () =>
         useSingleRequestMutation({
-          queryFn: mockMutationFn,
+          mutationFn: mockMutationFn,
           onError: mockOnError,
           onSettled: mockOnSettled,
         }),
@@ -73,7 +73,7 @@ describe('useSingleRequestMutation 훅 테스트', () => {
 
   it('동일한 requestId로 중복 요청이 방지된다.', async () => {
     const { result } = renderHook(
-      () => useSingleRequestMutation({ queryFn: mockMutationFn, requestId: 'testRequestId' }),
+      () => useSingleRequestMutation({ mutationFn: mockMutationFn, requestId: 'testRequestId' }),
       { wrapper },
     );
 
@@ -95,12 +95,12 @@ describe('useSingleRequestMutation 훅 테스트', () => {
 
   it('다른 requestId로 요청이 가능하다.', async () => {
     const { result: result1 } = renderHook(
-      () => useSingleRequestMutation({ queryFn: mockMutationFn, requestId: 'requestId1' }),
+      () => useSingleRequestMutation({ mutationFn: mockMutationFn, requestId: 'requestId1' }),
       { wrapper },
     );
 
     const { result: result2 } = renderHook(
-      () => useSingleRequestMutation({ queryFn: mockMutationFn, requestId: 'requestId2' }),
+      () => useSingleRequestMutation({ mutationFn: mockMutationFn, requestId: 'requestId2' }),
       { wrapper },
     );
 
@@ -114,7 +114,7 @@ describe('useSingleRequestMutation 훅 테스트', () => {
 
   it('onMutate가 호출되면 요청 전에 실행된다.', async () => {
     const { result } = renderHook(
-      () => useSingleRequestMutation({ queryFn: mockMutationFn, onMutate: mockOnMutate }),
+      () => useSingleRequestMutation({ mutationFn: mockMutationFn, onMutate: mockOnMutate }),
       { wrapper },
     );
 
