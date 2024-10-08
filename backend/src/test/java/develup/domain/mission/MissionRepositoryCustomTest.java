@@ -15,10 +15,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class MissionRepositoryTest extends IntegrationTestSupport {
+class MissionRepositoryCustomTest extends IntegrationTestSupport {
 
     @Autowired
     private MissionRepository missionRepository;
+
+    @Autowired
+    private MissionRepositoryCustom missionRepositoryCustom;
 
     @Autowired
     private HashTagRepository hashTagRepository;
@@ -33,8 +36,8 @@ class MissionRepositoryTest extends IntegrationTestSupport {
         Mission nonTaggedMission = MissionTestData.defaultMission().build();
         missionRepository.saveAll(List.of(hashTaggedMission, nonTaggedMission));
 
-        Optional<Mission> hashTaggedFound = missionRepository.findHashTaggedMissionById(hashTaggedMission.getId());
-        Optional<Mission> noneTaggedFound = missionRepository.findHashTaggedMissionById(nonTaggedMission.getId());
+        Optional<Mission> hashTaggedFound = missionRepositoryCustom.findHashTaggedMissionById(hashTaggedMission.getId());
+        Optional<Mission> noneTaggedFound = missionRepositoryCustom.findHashTaggedMissionById(nonTaggedMission.getId());
 
         Assertions.assertAll(
                 () -> assertThat(hashTaggedFound)
@@ -43,6 +46,23 @@ class MissionRepositoryTest extends IntegrationTestSupport {
                         .hasValue(1),
                 () -> assertThat(noneTaggedFound).isEmpty()
         );
+    }
+
+    @Test
+    @DisplayName("특정 해시태그가 태그된 모든 미션을 조회한다.")
+    void findAllByHashTagName() {
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        Mission mission1 = MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build();
+        Mission mission2 = MissionTestData.defaultMission().build();
+        missionRepository.saveAll(List.of(mission1, mission2));
+
+        List<Mission> missions = missionRepositoryCustom.findAllByHashTagName("JAVA");
+
+        assertThat(missions)
+                .map(Mission::getHashTags)
+                .flatMap(Function.identity())
+                .map(MissionHashTag::getHashTag)
+                .contains(hashTag);
     }
 
     @Test
@@ -57,25 +77,8 @@ class MissionRepositoryTest extends IntegrationTestSupport {
                 .build();
         missionRepository.saveAll(List.of(mission1, mission2));
 
-        List<Mission> missions = missionRepository.findAllByHashTagName("all");
+        List<Mission> missions = missionRepositoryCustom.findAllByHashTagName("all");
 
         assertThat(missions).hasSize(2);
-    }
-
-    @Test
-    @DisplayName("특정 해시태그가 태그된 모든 미션을 조회한다.")
-    void findAllByHashTagName() {
-        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
-        Mission mission1 = MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build();
-        Mission mission2 = MissionTestData.defaultMission().build();
-        missionRepository.saveAll(List.of(mission1, mission2));
-
-        List<Mission> missions = missionRepository.findAllByHashTagName("JAVA");
-
-        assertThat(missions)
-                .map(Mission::getHashTags)
-                .flatMap(Function.identity())
-                .map(MissionHashTag::getHashTag)
-                .contains(hashTag);
     }
 }

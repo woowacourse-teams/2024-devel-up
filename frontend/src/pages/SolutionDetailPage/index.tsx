@@ -6,6 +6,8 @@ import useSolution from '@/hooks/useSolution';
 import SolutionSection from '@/components/SolutionDetail';
 import usePostSolutionCommentMutation from '@/hooks/usePostSolutionCommentMutation';
 import CommentSection from '@/components/CommentSection';
+import useDeleteSolutionCommentMutation from '@/hooks/useDeleteSolutionCommentMutation';
+import usePatchSolutionCommentMutation from '@/hooks/usePatchSolutionComment';
 
 export default function SolutionDetailPage() {
   const { data: userInfo } = useUserInfo();
@@ -24,6 +26,8 @@ export default function SolutionDetailPage() {
         comments={comments}
         postId={solutionId}
         usePostCommentMutation={usePostSolutionCommentMutation}
+        usePatchCommentMutation={usePatchSolutionCommentMutation}
+        useDeleteCommentMutation={useDeleteSolutionCommentMutation}
         isLoggedIn={isLoggedIn}
       />
     </S.SolutionDetailPageContainer>

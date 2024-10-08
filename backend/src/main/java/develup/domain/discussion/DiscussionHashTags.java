@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 class DiscussionHashTags {
 
     @OrderBy(value = "id ASC")
-    @OneToMany(mappedBy = "discussion", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "discussion", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<DiscussionHashTag> hashTags = new LinkedHashSet<>();
 
     public DiscussionHashTags(Discussion discussion, List<HashTag> hashTags) {
@@ -39,6 +39,15 @@ class DiscussionHashTags {
         return hashTags.stream()
                 .map(DiscussionHashTag::getHashTag)
                 .toList();
+    }
+
+    public boolean isNotSameHashTags(List<Long> hashTagIds) {
+        List<Long> currentHashTagIds = hashTags.stream()
+                .map(DiscussionHashTag::getHashTag)
+                .map(HashTag::getId)
+                .toList();
+
+        return !currentHashTagIds.equals(hashTagIds);
     }
 
     public Set<DiscussionHashTag> getHashTags() {

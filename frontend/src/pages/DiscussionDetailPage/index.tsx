@@ -9,6 +9,8 @@ import { useDiscussionComments } from '@/hooks/useDiscussionComments';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import DiscussionDetailBottom from '@/components/DiscussionDetail/DiscussionDetailBottom';
+import useDeleteDiscussionCommentMutation from '@/hooks/useDeleteDiscussionCommentMutation';
+import usePatchDiscussionCommentMutation from '@/hooks/usePatchDiscussionComment';
 
 export default function DiscussionDetailPage() {
   const { data: userInfo } = useUserInfo();
@@ -39,6 +41,8 @@ export default function DiscussionDetailPage() {
         comments={comments}
         postId={discussionId}
         usePostCommentMutation={usePostDiscussionCommentMutation}
+        usePatchCommentMutation={usePatchDiscussionCommentMutation}
+        useDeleteCommentMutation={useDeleteDiscussionCommentMutation}
         isLoggedIn={isLoggedIn}
       />
     </S.DiscussionDetailPageContainer>

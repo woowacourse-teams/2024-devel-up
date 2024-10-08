@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Discussion extends CreatedAtAuditableEntity {
 
     @Embedded
-    private Title title;
+    private DiscussionTitle title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -39,7 +39,7 @@ public class Discussion extends CreatedAtAuditableEntity {
     private DiscussionHashTags discussionHashTags;
 
     public Discussion(
-            Title title,
+            DiscussionTitle title,
             String content,
             Mission mission,
             Member member,
@@ -50,7 +50,7 @@ public class Discussion extends CreatedAtAuditableEntity {
 
     public Discussion(
             Long id,
-            Title title,
+            DiscussionTitle title,
             String content,
             Mission mission,
             Member member,
@@ -61,6 +61,34 @@ public class Discussion extends CreatedAtAuditableEntity {
         this.content = content;
         this.mission = mission;
         this.member = member;
+        this.discussionHashTags = new DiscussionHashTags(this, hashTags);
+    }
+
+    public boolean isNotWrittenBy(Long memberId) {
+        return !member.getId().equals(memberId);
+    }
+
+    public boolean isNotSameMission(Long missionId) {
+        if (this.mission == null) {
+            return true;
+        }
+        return !mission.getId().equals(missionId);
+    }
+
+    public boolean isNotSameHashTags(List<Long> hashTagIds) {
+        return discussionHashTags.isNotSameHashTags(hashTagIds);
+    }
+
+    public void updateMission(Mission mission) {
+        this.mission = mission;
+    }
+
+    public void updateTitleAndContent(String title, String content) {
+        this.title = new DiscussionTitle(title);
+        this.content = content;
+    }
+
+    public void updateHashTags(List<HashTag> hashTags) {
         this.discussionHashTags = new DiscussionHashTags(this, hashTags);
     }
 
