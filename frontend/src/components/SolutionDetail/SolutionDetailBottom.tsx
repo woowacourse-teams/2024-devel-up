@@ -22,9 +22,13 @@ export default function SolutionDetailBottom({ missionId, solutionId }: Solution
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
   const { solutionDeleteMutation } = useSolutionDelete();
 
-  const handleSolutionDelete = () => {
-    solutionDeleteMutation(solutionId);
+  const handleSolutionDeleteCallback = () => {
     handleModalClose();
+    navigate(ROUTES.solutions);
+  };
+
+  const handleSolutionDelete = () => {
+    solutionDeleteMutation(solutionId, handleSolutionDeleteCallback);
   };
 
   return (

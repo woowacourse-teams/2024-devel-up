@@ -1,19 +1,22 @@
 import { deleteSolution } from '@/apis/solutions';
 import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '..';
+import { solutionKeys } from './queries/keys';
 
 export const useSolutionDelete = () => {
-  const { mutate: deleteMutation } = useMutation({
+  const { mutateAsync: deleteMutation } = useMutation({
     mutationFn: (solutionId: number) => deleteSolution(solutionId),
     onSuccess: () => {
-      window.location.reload();
+      queryClient.invalidateQueries({ queryKey: solutionKeys.all });
     },
     onError: (error: Error) => {
       console.error(error.message);
     },
   });
 
-  const solutionDeleteMutation = (solutionId: number) => {
-    deleteMutation(solutionId);
+  const solutionDeleteMutation = async (solutionId: number, onSuccessCallback?: () => void) => {
+    await deleteMutation(solutionId);
+    if (onSuccessCallback) onSuccessCallback();
   };
 
   return { solutionDeleteMutation };
