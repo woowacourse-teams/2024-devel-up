@@ -27,7 +27,7 @@ export const useSubmitDiscussion = ({ missionId, hashTagIds }: useSubmitDiscussi
 
   const { submitDiscussionMutation, isPending } = useSubmitDiscussionMutation();
 
-  const handleSubmitSolution = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitDiscussion = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isValidDiscussionTitle) {
@@ -56,7 +56,7 @@ export const useSubmitDiscussion = ({ missionId, hashTagIds }: useSubmitDiscussi
     description,
     handleDescription,
     isDescriptionError,
-    handleSubmitSolution,
+    handleSubmitDiscussion,
     isPending,
   };
 };

@@ -12,6 +12,7 @@ import * as S from './DiscussionSubmit.style';
 import { useSearchParams } from 'react-router-dom';
 import useDiscussion from '@/hooks/useDiscussion';
 import useUserInfo from '@/hooks/useUserInfo';
+import { useUpdateDiscussion } from '@/hooks/useUpdateDiscussion';
 
 export default function DiscussionSubmit() {
   const [searchParams] = useSearchParams();
@@ -22,6 +23,7 @@ export default function DiscussionSubmit() {
   const { data: allHashTags } = useHashTags();
   const { data: allMissions } = useMissions();
   const { data: userInfo } = useUserInfo();
+  const { discussionPatchMutation } = useUpdateDiscussion(discussionId);
 
   const [selectedHashTags, setSelectedHashTags] = useState<HashTag[]>([]);
   const [selectedMission, setSelectedMission] = useState<{ id: number; title: string } | null>(
@@ -41,7 +43,7 @@ export default function DiscussionSubmit() {
     handleDiscussionTitle,
     isDescriptionError,
     handleDescription,
-    handleSubmitSolution,
+    handleSubmitDiscussion,
   } = useSubmitDiscussion(useSubmitDiscussionData);
 
   const {
@@ -71,6 +73,22 @@ export default function DiscussionSubmit() {
     }
   }, [isEditMode, inputTitle, inputContent, inputMission, inputHashTags, member.id, userInfo?.id]);
 
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (isEditMode && discussionId) {
+      discussionPatchMutation({
+        discussionId,
+        title: discussionTitle,
+        content: description,
+        missionId: selectedMission?.id,
+        hashTagIds: selectedHashTags.map((hashTag) => hashTag.id),
+      });
+    } else {
+      handleSubmitDiscussion(e);
+    }
+  };
+
   return (
     <S.DiscussionSubmitContainer>
       <S.DiscussionTagListWrapper>
@@ -89,7 +107,7 @@ export default function DiscussionSubmit() {
         />
       </S.DiscussionTagListWrapper>
 
-      <form onSubmit={handleSubmitSolution}>
+      <form onSubmit={handleFormSubmit}>
         <DiscussionTitle
           value={discussionTitle}
           onChange={handleDiscussionTitle}

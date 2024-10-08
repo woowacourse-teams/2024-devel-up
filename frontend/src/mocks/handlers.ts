@@ -4,6 +4,7 @@ import missions from './missions.json';
 import submittedSolutions from './SubmittedSolutions.json';
 import mockSolutions from './Solutions.json';
 import mockDiscussions from './Discussions.json';
+import mockDiscussion from './Discussion.json';
 import myComments from './myComments.json';
 import missionInProgress from './missionInProgress.json';
 import { HASHTAGS } from '@/constants/hashTags';
@@ -126,16 +127,55 @@ export const handlers = [
     return HttpResponse.json({ data: mockDiscussions }, { status: 200 });
   }),
 
-  http.get(`${API_URL}${PATH.discussions}/:id`, ({ request }) => {
-    const url = new URL(request.url);
-    const id = Number(url.pathname.split('/').pop());
+  http.get(`${API_URL}${PATH.discussions}/:id`, () => {
+    // id가 1번인 discussion만 리턴하도록 할게요
+    return HttpResponse.json({ data: mockDiscussion }, { status: 200 });
+  }),
 
-    const discussion = mockDiscussions.find((discussion) => discussion.id === id);
+  http.patch(`${API_URL}${PATH.discussions}`, async ({ request }) => {
+    const { discussionId, title, content, missionId, hashTagIds } = (await request.json()) as {
+      discussionId: number;
+      title: string;
+      content: string;
+      missionId?: number;
+      hashTagIds: number[];
+    };
 
-    if (discussion) {
-      return HttpResponse.json({ data: discussion }, { status: 200 });
-    } else {
+    mockDiscussion.content = content;
+
+    const discussionIndex = mockDiscussions.findIndex(
+      (discussion) => discussion.id === discussionId,
+    );
+
+    if (discussionIndex !== -1) {
+      // missionId가 전달되었을 경우 해당 mission을 업데이트
+      let mission = mockDiscussions[discussionIndex].mission;
+      if (missionId) {
+        const missionData = missions.find((mission) => mission.id === missionId);
+        if (missionData) {
+          mission = missionData.title;
+        }
+      }
+
+      // hashTagIds를 hashTags 형식으로 변환하여 업데이트
+      const hashTags = hashTagIds.map((id) => {
+        const foundTag = mockDiscussions[discussionIndex].hashTags.find((tag) => tag.id === id);
+        return foundTag ? { id: foundTag.id, name: foundTag.name } : { id, name: 'Unknown' };
+      });
+
+      // discussion 데이터를 업데이트
+      mockDiscussions[discussionIndex] = {
+        ...mockDiscussions[discussionIndex],
+        title,
+        mission,
+        hashTags,
+      };
+
       return HttpResponse.json({ status: 404 }, { statusText: 'Discussion not found' });
     }
+  }),
+
+  http.delete(`${API_URL}${PATH.discussions}/:id`, () => {
+    return HttpResponse.json({ status: 200 });
   }),
 ];
