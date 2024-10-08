@@ -21,9 +21,13 @@ export default function DiscussionDetailBottom({ discussionId }: DiscussionDetai
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
   const { discussionDeleteMutation } = useDiscussionDelete();
 
-  const handleDiscussionDelete = () => {
-    discussionDeleteMutation(discussionId);
+  const handleDiscussionDeleteCallback = () => {
     handleModalClose();
+    navigate(ROUTES.discussions);
+  };
+
+  const handleDiscussionDelete = () => {
+    discussionDeleteMutation(discussionId, handleDiscussionDeleteCallback);
   };
 
   return (
