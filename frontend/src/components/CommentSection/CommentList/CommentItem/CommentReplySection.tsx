@@ -1,20 +1,28 @@
 import { useState } from 'react';
-import CommentForm from '../../CommentForm';
-import type { UsePostCommentMutation } from '../../CommentForm/types';
+import type {
+  UseDeleteCommentMutation,
+  UsePatchCommentMutation,
+  UsePostCommentMutation,
+} from '../../CommentForm/types';
 import * as S from '../CommentList.styled';
 import CommentReplyList from './CommentReplyList';
 import type { Comment, SolutionComment } from '@/types';
+import CommentSubmitForm from '../../CommentSubmitForm';
 
 interface CommentReplySectionProps {
   parentComment: Comment;
   isLoggedIn: boolean;
   usePostCommentMutation: UsePostCommentMutation;
+  usePatchCommentMutation: UsePatchCommentMutation;
+  useDeleteCommentMutation: UseDeleteCommentMutation;
 }
 
 export default function CommentReplySection({
   parentComment,
   isLoggedIn,
   usePostCommentMutation,
+  usePatchCommentMutation,
+  useDeleteCommentMutation,
 }: CommentReplySectionProps) {
   const { isDeleted: isParentDeleted, id: parentId, replies } = parentComment;
 
@@ -28,12 +36,12 @@ export default function CommentReplySection({
 
   return (
     <S.CommentReplySectionContainer>
-      {isLoggedIn && !isParentDeleted && (
+      {!isLoggedIn && !isParentDeleted && (
         <>
           <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글</S.ReplyWriteButton>
           {isReplyFormOpen && (
             <S.CommentReplyFormWrapper>
-              <CommentForm
+              <CommentSubmitForm
                 postId={postId}
                 parentCommentId={parentId}
                 usePostCommentMutation={usePostCommentMutation}
@@ -42,7 +50,11 @@ export default function CommentReplySection({
           )}
         </>
       )}
-      <CommentReplyList commentReplies={replies} />
+      <CommentReplyList
+        commentReplies={replies}
+        usePatchCommentMutation={usePatchCommentMutation}
+        useDeleteCommentMutation={useDeleteCommentMutation}
+      />
     </S.CommentReplySectionContainer>
   );
 }
