@@ -22,7 +22,7 @@ describe('useSingleRequestMutation 훅 테스트', () => {
   });
 
   it('초기 상태가 정상적으로 설정된다.', () => {
-    const { result } = renderHook(() => useSingleRequestMutation({ queryFn: mockMutationFn }), {
+    const { result } = renderHook(() => useSingleRequestMutation({ mutationFn: mockMutationFn }), {
       wrapper,
     });
 
