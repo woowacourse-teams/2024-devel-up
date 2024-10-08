@@ -33,7 +33,7 @@ export default function DiscussionDetailBottom({ discussionId }: DiscussionDetai
   return (
     <>
       <S.DiscussionDetailBottom>
-        <Button variant="defaultText" onClick={() => handleNavigateToUpdateDiscussion()}>
+        <Button variant="defaultText" onClick={handleNavigateToUpdateDiscussion}>
           수정
         </Button>
         <Button variant="defaultText" onClick={handleModalOpen}>

@@ -4,7 +4,6 @@ import type {
   UsePatchCommentMutation,
 } from '@/components/CommentSection/CommentForm/types';
 import { queryClient } from '..';
-import { discussionCommentKeys } from './queries/keys';
 import {
   patchDiscountComment,
   type PatchDiscussionCommentResponseData,
@@ -19,10 +18,10 @@ const usePatchDiscussionCommentMutation: UsePatchDiscussionCommentMutation = (
 ) => {
   return useMutation<PatchDiscussionCommentResponseData, Error, PatchCommentParams>({
     mutationFn: patchDiscountComment,
-    onSuccess: ({ discussionId }) => {
+    onSuccess: () => {
       onSuccess?.();
       queryClient.invalidateQueries({
-        queryKey: [discussionCommentKeys.all(discussionId)],
+        queryKey: [],
       });
     },
     onError,
