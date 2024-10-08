@@ -1,25 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
-import type {
-  PostCommentParams,
-  UsePostCommentMutation,
-} from '@/components/CommentSection/CommentForm/types';
+import type { UsePostCommentMutation } from '@/components/CommentSection/CommentForm/types';
 import { queryClient } from '..';
 import { solutionCommentKeys } from './queries/keys';
-import { postSolutionComment } from '@/apis/solutionCommentAPI';
-
-export interface PostSolutionCommentResponseData {
-  id: number;
-  solutionId: number;
-  parentCommentId: number;
-  content: string;
-  member: {
-    id: number;
-    email: string;
-    name: string;
-    imageUrl: string;
-  };
-  createdAt: string;
-}
+import {
+  postSolutionComment,
+  type PostSolutionCommentResponseData,
+} from '@/apis/solutionCommentAPI';
+import type { PostCommentParams } from '@/components/CommentSection/CommentForm/types';
 
 export type UsePostSolutionCommentMutation =
   UsePostCommentMutation<PostSolutionCommentResponseData>;
