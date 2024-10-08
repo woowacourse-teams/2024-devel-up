@@ -3,6 +3,7 @@ import { PATH } from '@/apis/paths';
 import missions from './missions.json';
 import submittedSolutions from './SubmittedSolutions.json';
 import mockSolutions from './Solutions.json';
+import mockDiscussions from './Discussions.json';
 import myComments from './myComments.json';
 import missionInProgress from './missionInProgress.json';
 import { HASHTAGS } from '@/constants/hashTags';
@@ -119,5 +120,22 @@ export const handlers = [
     }
 
     return HttpResponse.json({ status: 404 }, { statusText: 'Solution not found' });
+  }),
+
+  http.get(`${API_URL}${PATH.discussions}`, () => {
+    return HttpResponse.json({ data: mockDiscussions }, { status: 200 });
+  }),
+
+  http.get(`${API_URL}${PATH.discussions}/:id`, ({ request }) => {
+    const url = new URL(request.url);
+    const id = Number(url.pathname.split('/').pop());
+
+    const discussion = mockDiscussions.find((discussion) => discussion.id === id);
+
+    if (discussion) {
+      return HttpResponse.json({ data: discussion }, { status: 200 });
+    } else {
+      return HttpResponse.json({ status: 404 }, { statusText: 'Discussion not found' });
+    }
   }),
 ];

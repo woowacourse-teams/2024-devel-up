@@ -53,12 +53,11 @@ export default function DiscussionSubmit() {
   } = discussion;
 
   useEffect(() => {
-    if (isEditMode && member.id !== userInfo?.id) {
+    if (isEditMode && member.id === userInfo?.id) {
       if (inputTitle)
         handleDiscussionTitle({
           target: { value: inputTitle },
         } as React.ChangeEvent<HTMLInputElement>);
-      console.log(inputContent);
       if (inputContent)
         handleDescription({
           target: { value: inputContent },
