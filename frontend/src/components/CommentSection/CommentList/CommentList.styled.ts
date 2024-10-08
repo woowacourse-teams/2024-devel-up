@@ -88,3 +88,17 @@ export const CommentReplySectionContainer = styled.section`
 `;
 
 export const CommentReplyFormWrapper = styled.div``;
+
+export const CommentHead = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Button = styled.button`
+  height: fit-content;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 1.5rem;
+`;
