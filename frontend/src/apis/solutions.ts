@@ -70,3 +70,28 @@ export const getSubmittedSolution = async (): Promise<SubmittedSolution[]> => {
 
   return data;
 };
+
+// export interface DeleteSolutionResponse {
+//   data: Solution;
+// }
+
+export const deleteSolution = async (solutionId: number) => {
+  await develupAPIClient.delete(`${PATH.solutions}/${solutionId}`);
+
+  // return data;
+};
+
+export interface PatchSolutionResponse {
+  data: Solution;
+}
+
+export const patchSolution = async (payload: {
+  solutionId: number;
+  title: string;
+  description: string;
+  url: string;
+}) => {
+  await develupAPIClient.patch(`${PATH.solutions}`, payload);
+
+  // return data;
+};

@@ -1,5 +1,5 @@
 import Button from '@/components/common/Button/Button';
-import * as S from './DiscussionDetailPage.styled';
+import * as S from './DiscussionDetail.styled';
 import TagButton from '@/components/common/TagButton';
 import type { DiscussionDetail } from '@/types/discussion';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
       <S.ThumbnailWrapper>
         <S.HeaderLeftArea>
           <S.MissionActionHeader>
-            {mission && <S.MissionTitle># {mission.title}</S.MissionTitle>}
+            {mission && <TagButton variant="danger"># {mission.title}</TagButton>}
             {userInfo && (
               <Button variant="primary" onClick={handleToSubmitDiscussion}>
                 작성하기

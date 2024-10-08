@@ -1,9 +1,9 @@
-import * as S from '@/components/SolutionDetail/SolutionDetail.styled';
+import * as S from './SolutionDetailPage.styled';
 import usePathnameAt from '@/hooks/usePathnameAt';
 import useUserInfo from '@/hooks/useUserInfo';
 import { useSolutionComments } from '@/hooks/useSolutionComments';
 import useSolution from '@/hooks/useSolution';
-import SolutionSection from '@/components/SolutionDetail/SolutionSection';
+import SolutionSection from '@/components/SolutionDetail';
 import usePostSolutionCommentMutation from '@/hooks/usePostSolutionCommentMutation';
 import CommentSection from '@/components/CommentSection';
 import useDeleteSolutionCommentMutation from '@/hooks/useDeleteSolutionCommentMutation';
@@ -21,6 +21,7 @@ export default function SolutionDetailPage() {
   return (
     <S.SolutionDetailPageContainer>
       <SolutionSection solution={solution} />
+
       <CommentSection
         comments={comments}
         postId={solutionId}
