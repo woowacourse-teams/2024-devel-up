@@ -23,7 +23,6 @@ export const handlers = [
     return HttpResponse.json({ data: filteredMissions });
   }),
 
-  
   http.get(`${API_URL}${PATH.mySolutions}`, () => {
     return HttpResponse.json({
       data: submittedSolutions,
@@ -96,5 +95,29 @@ export const handlers = [
 
   http.get(`${API_URL}${PATH.solutions}`, () => {
     return HttpResponse.json({ data: mockSolutions }, { status: 200 });
+  }),
+
+  http.patch(`${API_URL}${PATH.solutions}`, async ({ request }) => {
+    const { solutionId, title, description, url } = (await request.json()) as {
+      solutionId: number;
+      title: string;
+      description: string;
+      url: string;
+    };
+
+    const solutionIndex = mockSolutions.findIndex((solution) => solution.id === solutionId);
+
+    if (solutionIndex !== -1) {
+      mockSolutions[solutionIndex] = {
+        ...mockSolutions[solutionIndex],
+        title,
+        description,
+        url,
+      };
+
+      return HttpResponse.json({ data: mockSolutions[solutionIndex] }, { status: 200 });
+    }
+
+    return HttpResponse.json({ status: 404 }, { statusText: 'Solution not found' });
   }),
 ];

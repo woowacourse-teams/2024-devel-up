@@ -25,7 +25,7 @@ export default function MissionSubmitPage() {
   const { data: mission } = useMission(missionId);
   const { data: solution } = useSolution(solutionId);
   const { data: userInfo } = useUserInfo();
-  const { solutionPatchMutation } = useUpdateSolution();
+  const { solutionPatchMutation } = useUpdateSolution(solutionId);
 
   const missionName = new URL(mission.url).pathname.split('/').pop() ?? '';
   const {
