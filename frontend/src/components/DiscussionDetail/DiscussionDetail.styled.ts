@@ -28,6 +28,10 @@ export const MissionActionHeader = styled.div`
   width: 100%;
 `;
 
+export const ButtonLeft = styled.div`
+  margin-left: 0;
+`;
+
 export const MissionTitle = styled.div`
   width: fit-content;
   ${({ theme }) => theme.font.badge}
