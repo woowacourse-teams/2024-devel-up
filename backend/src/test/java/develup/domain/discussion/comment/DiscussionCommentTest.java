@@ -16,7 +16,7 @@ class DiscussionCommentTest {
 
     @Test
     @DisplayName("댓글을 생성할 수 있다.")
-    void create() {
+    void createRoot() {
         String content = "댓글입니다.";
         DiscussionComment comment = DiscussionCommentTestData.defaultDiscussionComment()
                 .withContent(content)
@@ -24,7 +24,7 @@ class DiscussionCommentTest {
 
         assertAll(
                 () -> assertThat(comment.getContent()).isEqualTo(content),
-                () -> assertThat(comment.getParentComment()).isNull(),
+                () -> assertThat(comment.getParentCommentId()).isNull(),
                 () -> assertThat(comment.getDeletedAt()).isNull()
         );
     }
@@ -79,7 +79,9 @@ class DiscussionCommentTest {
     @Test
     @DisplayName("댓글에 답글을 달 수 있다.")
     void reply() {
-        DiscussionComment parentComment = DiscussionCommentTestData.defaultDiscussionComment().build();
+        DiscussionComment parentComment = DiscussionCommentTestData.defaultDiscussionComment()
+                .withId(1L)
+                .build();
         String content = "답글입니다.";
         Member member = MemberTestData.defaultMember().build();
 
@@ -89,7 +91,7 @@ class DiscussionCommentTest {
                 () -> assertThat(reply.getContent()).isEqualTo(content),
                 () -> assertThat(reply.getDiscussion()).isEqualTo(parentComment.getDiscussion()),
                 () -> assertThat(reply.getMember()).isEqualTo(member),
-                () -> assertThat(reply.getParentComment()).isEqualTo(parentComment),
+                () -> assertThat(reply.getParentCommentId()).isEqualTo(parentComment.getId()),
                 () -> assertThat(reply.getDeletedAt()).isNull()
         );
     }
@@ -111,9 +113,12 @@ class DiscussionCommentTest {
     @Test
     @DisplayName("답글에는 답글을 달 수 없다.")
     void replyFailedWhenAlreadyReply() {
-        DiscussionComment rootComment = DiscussionCommentTestData.defaultDiscussionComment().build();
+        DiscussionComment rootComment = DiscussionCommentTestData.defaultDiscussionComment()
+                .withId(1L)
+                .build();
         DiscussionComment reply = DiscussionCommentTestData.defaultDiscussionComment()
-                .withParentComment(rootComment)
+                .withId(2L)
+                .withParentCommentId(rootComment.getId())
                 .build();
         String content = "답글에 대한 답글입니다.";
         Member member = MemberTestData.defaultMember().build();

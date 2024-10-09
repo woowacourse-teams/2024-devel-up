@@ -7,7 +7,6 @@ public record MySolutionComment(
         Long solutionId,
         String content,
         LocalDateTime createdAt,
-        String solutionTitle,
-        Long solutionCommentCount
+        String solutionTitle
 ) {
 }

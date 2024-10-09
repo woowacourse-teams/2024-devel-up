@@ -8,29 +8,21 @@ import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
+import develup.domain.solution.SolutionRepositoryCustom;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class SolutionWriteService {
 
     private final SolutionRepository solutionRepository;
+    private final SolutionRepositoryCustom solutionRepositoryCustom;
     private final SolutionReadService solutionReadService;
     private final MissionReadService missionReadService;
     private final MemberReadService memberReadService;
-
-    public SolutionWriteService(
-            SolutionRepository solutionRepository,
-            SolutionReadService solutionReadService,
-            MissionReadService missionReadService,
-            MemberReadService memberReadService
-    ) {
-        this.solutionRepository = solutionRepository;
-        this.solutionReadService = solutionReadService;
-        this.missionReadService = missionReadService;
-        this.memberReadService = memberReadService;
-    }
 
     public SolutionResponse startMission(Long memberId, StartSolutionRequest request) {
         validateAlreadyStarted(memberId, request.missionId());
@@ -74,7 +66,7 @@ public class SolutionWriteService {
         Solution solution = solutionReadService.getSolution(solutionId);
         validateSolutionOwner(memberId, solution);
 
-        solutionRepository.deleteAllComments(solution.getId());
+        solutionRepositoryCustom.deleteAllComments(solution.getId());
         solutionRepository.delete(solution);
     }
 

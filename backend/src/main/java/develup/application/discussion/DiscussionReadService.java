@@ -4,25 +4,23 @@ import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.discussion.Discussion;
-import develup.domain.discussion.DiscussionRepository;
+import develup.domain.discussion.DiscussionRepositoryCustom;
 import develup.domain.discussion.comment.DiscussionCommentCounts;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class DiscussionReadService {
 
-    private final DiscussionRepository discussionRepository;
-
-    public DiscussionReadService(DiscussionRepository discussionRepository) {
-        this.discussionRepository = discussionRepository;
-    }
+    private final DiscussionRepositoryCustom discussionRepositoryCustom;
 
     public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
-        List<Discussion> discussions = discussionRepository.findAllByMissionAndHashTagName(mission, hashTagName);
+        List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagName(mission, hashTagName);
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
-                discussionRepository.findDiscussionCommentCounts()
+                discussionRepositoryCustom.findAllDiscussionCommentCounts()
         );
 
         return discussions.stream()
@@ -34,9 +32,9 @@ public class DiscussionReadService {
     }
 
     public List<SummarizedDiscussionResponse> getDiscussionsByMemberId(Long memberId) {
-        List<Discussion> myDiscussions = discussionRepository.findAllByMember_Id(memberId);
+        List<Discussion> myDiscussions = discussionRepositoryCustom.findAllByMemberId(memberId);
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
-                discussionRepository.findDiscussionCommentCounts()
+                discussionRepositoryCustom.findAllDiscussionCommentCounts()
         );
 
         return myDiscussions.stream()
@@ -54,7 +52,7 @@ public class DiscussionReadService {
     }
 
     public Discussion getDiscussion(Long id) {
-        return discussionRepository.findById(id)
+        return discussionRepositoryCustom.findFetchById(id)
                 .orElseThrow(() -> new DevelupException(ExceptionType.DISCUSSION_NOT_FOUND));
     }
 

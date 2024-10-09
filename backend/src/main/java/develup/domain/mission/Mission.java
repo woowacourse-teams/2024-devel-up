@@ -7,7 +7,12 @@ import develup.domain.hashtag.HashTag;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Mission extends IdentifiableEntity {
 
@@ -26,9 +31,6 @@ public class Mission extends IdentifiableEntity {
     @Embedded
     private MissionHashTags missionHashTags;
 
-    protected Mission() {
-    }
-
     public Mission(String title, String thumbnail, String summary, MissionUrl missionUrl, List<HashTag> hashTags) {
         this(null, title, thumbnail, summary, missionUrl, hashTags);
     }
@@ -42,24 +44,8 @@ public class Mission extends IdentifiableEntity {
         this.missionHashTags = new MissionHashTags(this, hashTags);
     }
 
-    public void tagAll(List<HashTag> tags) {
-        missionHashTags.addAll(this, tags);
-    }
-
     public boolean isValidPullRequestUrl(String pullRequestUrl) {
         return this.missionUrl.isValidPullRequestUrl(pullRequestUrl);
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public String getSummary() {
-        return summary;
     }
 
     public String getUrl() {

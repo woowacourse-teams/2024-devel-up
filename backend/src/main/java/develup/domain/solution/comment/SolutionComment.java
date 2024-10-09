@@ -11,7 +11,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 public class SolutionComment extends CreatedAtAuditableEntity {
 
@@ -26,39 +33,25 @@ public class SolutionComment extends CreatedAtAuditableEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_comment_id")
-    private SolutionComment parentComment;
+    @Column
+    private Long parentCommentId;
 
     @Column
     private LocalDateTime deletedAt;
-
-    protected SolutionComment() {
-    }
-
-    public SolutionComment(
-            String content,
-            Solution solution,
-            Member member,
-            SolutionComment parentComment,
-            LocalDateTime deletedAt
-    ) {
-        this(null, content, solution, member, parentComment, deletedAt);
-    }
 
     public SolutionComment(
             Long id,
             String content,
             Solution solution,
             Member member,
-            SolutionComment parentComment,
+            Long parentCommentId,
             LocalDateTime deletedAt
     ) {
         super(id);
         this.content = content;
         this.solution = solution;
         this.member = member;
-        this.parentComment = parentComment;
+        this.parentCommentId = parentCommentId;
         this.deletedAt = deletedAt;
     }
 
@@ -75,13 +68,7 @@ public class SolutionComment extends CreatedAtAuditableEntity {
             throw new DevelupException(ExceptionType.CANNOT_REPLY_TO_REPLY);
         }
 
-        SolutionComment reply = new SolutionComment();
-        reply.content = content;
-        reply.solution = this.solution;
-        reply.member = member;
-        reply.parentComment = this;
-
-        return reply;
+        return new SolutionComment(content, solution, member, id, null);
     }
 
     public void updateContent(String content) {
@@ -100,44 +87,20 @@ public class SolutionComment extends CreatedAtAuditableEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public Solution getSolution() {
-        return solution;
-    }
-
     public Long getSolutionId() {
         return solution.getId();
-    }
-
-    public Member getMember() {
-        return member;
     }
 
     public boolean isNotWrittenBy(Long memberId) {
         return !member.getId().equals(memberId);
     }
 
-    public SolutionComment getParentComment() {
-        return parentComment;
-    }
-
-    public Long getParentCommentId() {
-        return parentComment.getId();
-    }
-
     public boolean isRootComment() {
-        return parentComment == null;
+        return parentCommentId == null;
     }
 
     public boolean isReply() {
-        return parentComment != null;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return parentCommentId != null;
     }
 
     public boolean isNotDeleted() {

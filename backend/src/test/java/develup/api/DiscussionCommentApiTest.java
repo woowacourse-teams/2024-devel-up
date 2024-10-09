@@ -34,9 +34,9 @@ class DiscussionCommentApiTest extends ApiTestSupport {
     @Test
     @DisplayName("댓글 목록을 조회한다.")
     void getComments() throws Exception {
-        DiscussionReplyResponse replyResponse = createReplyResponse();
+        DiscussionReplyResponse replyResponse = createRootReplyResponse();
         List<DiscussionReplyResponse> replyResponses = List.of(replyResponse);
-        List<DiscussionCommentRepliesResponse> responses = List.of(createRootCommentResponse(replyResponses));
+        List<DiscussionCommentRepliesResponse> responses = List.of(createRootRootCommentResponse(replyResponses));
 
         BDDMockito.given(discussionCommentReadService.getCommentsWithReplies(any()))
                 .willReturn(responses);
@@ -149,7 +149,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
                 .andExpect(status().isNoContent());
     }
 
-    private DiscussionCommentRepliesResponse createRootCommentResponse(List<DiscussionReplyResponse> replyResponses) {
+    private DiscussionCommentRepliesResponse createRootRootCommentResponse(List<DiscussionReplyResponse> replyResponses) {
         return new DiscussionCommentRepliesResponse(
                 1L,
                 1L,
@@ -161,7 +161,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
         );
     }
 
-    private DiscussionReplyResponse createReplyResponse() {
+    private DiscussionReplyResponse createRootReplyResponse() {
         return new DiscussionReplyResponse(
                 2L,
                 1L,

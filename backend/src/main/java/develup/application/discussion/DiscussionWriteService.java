@@ -7,41 +7,34 @@ import develup.application.member.MemberReadService;
 import develup.application.mission.MissionReadService;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionRepository;
-import develup.domain.discussion.Title;
+import develup.domain.discussion.DiscussionRepositoryCustom;
+import develup.domain.discussion.DiscussionTitle;
 import develup.domain.hashtag.HashTag;
 import develup.domain.hashtag.HashTagRepository;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class DiscussionWriteService {
 
     private final DiscussionRepository discussionRepository;
+    private final DiscussionReadService discussionReadService;
     private final MemberReadService memberReadService;
     private final MissionReadService missionReadService;
     private final HashTagRepository hashTagRepository;
-
-    public DiscussionWriteService(
-            DiscussionRepository discussionRepository,
-            MemberReadService memberReadService,
-            MissionReadService missionReadService,
-            HashTagRepository hashTagRepository
-    ) {
-        this.discussionRepository = discussionRepository;
-        this.memberReadService = memberReadService;
-        this.missionReadService = missionReadService;
-        this.hashTagRepository = hashTagRepository;
-    }
+    private final DiscussionRepositoryCustom discussionRepositoryCustom;
 
     public DiscussionResponse create(Long memberId, CreateDiscussionRequest request) {
         Mission mission = getMission(request.missionId());
         Member member = memberReadService.getMember(memberId);
         List<HashTag> hashTags = getHashTags(request.hashTagIds());
         Discussion discussion = discussionRepository.save(new Discussion(
-                new Title(request.title()),
+                new DiscussionTitle(request.title()),
                 request.content(),
                 mission,
                 member,
@@ -49,6 +42,42 @@ public class DiscussionWriteService {
         ));
 
         return createDiscussionResponse(discussion);
+    }
+
+    public DiscussionResponse update(
+            Long memberId,
+            UpdateDiscussionRequest request
+    ) {
+        Discussion discussion = discussionReadService.getDiscussion(request.discussionId());
+
+        validateDiscussionOwner(memberId, discussion);
+
+        updateMissionIfNeeded(request, discussion);
+        updateHashTagsIfNeeded(request, discussion);
+
+        discussion.updateTitleAndContent(request.title(), request.content());
+
+        return createDiscussionResponse(discussion);
+    }
+
+    private void validateDiscussionOwner(Long memberId, Discussion discussion) {
+        if (discussion.isNotWrittenBy(memberId)) {
+            throw new DevelupException(ExceptionType.DISCUSSION_NOT_WRITTEN_BY_MEMBER);
+        }
+    }
+
+    private void updateMissionIfNeeded(UpdateDiscussionRequest request, Discussion discussion) {
+        if (request.missionId() != null && discussion.isNotSameMission(request.missionId())) {
+            Mission mission = getMission(request.missionId());
+            discussion.updateMission(mission);
+        }
+    }
+
+    private void updateHashTagsIfNeeded(UpdateDiscussionRequest request, Discussion discussion) {
+        if (discussion.isNotSameHashTags(request.hashTagIds())) {
+            List<HashTag> hashTags = getHashTags(request.hashTagIds());
+            discussion.updateHashTags(hashTags);
+        }
     }
 
     private Mission getMission(Long missionId) {
@@ -74,5 +103,13 @@ public class DiscussionWriteService {
         }
 
         return DiscussionResponse.from(discussion);
+    }
+
+    public void delete(Long memberId, Long discussionId) {
+        Discussion discussion = discussionReadService.getDiscussion(discussionId);
+        validateDiscussionOwner(memberId, discussion);
+
+        discussionRepositoryCustom.deleteAllComments(discussionId);
+        discussionRepository.deleteById(discussionId);
     }
 }

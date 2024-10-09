@@ -11,7 +11,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 public class DiscussionComment extends CreatedAtAuditableEntity {
 
@@ -26,43 +33,29 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_comment_id")
-    private DiscussionComment parentComment;
+    @Column
+    private Long parentCommentId;
 
     @Column
     private LocalDateTime deletedAt;
-
-    protected DiscussionComment() {
-    }
-
-    public DiscussionComment(
-            String content,
-            Discussion discussion,
-            Member member,
-            DiscussionComment parentComment,
-            LocalDateTime deletedAt
-    ) {
-        this(null, content, discussion, member, parentComment, deletedAt);
-    }
 
     public DiscussionComment(
             Long id,
             String content,
             Discussion discussion,
             Member member,
-            DiscussionComment parentComment,
+            Long parentCommentId,
             LocalDateTime deletedAt
     ) {
         super(id);
         this.content = content;
         this.discussion = discussion;
         this.member = member;
-        this.parentComment = parentComment;
+        this.parentCommentId = parentCommentId;
         this.deletedAt = deletedAt;
     }
 
-    public static DiscussionComment create(String content, Discussion discussion, Member member) {
+    public static DiscussionComment createRoot(String content, Discussion discussion, Member member) {
         return new DiscussionComment(content, discussion, member, null, null);
     }
 
@@ -75,13 +68,7 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
             throw new DevelupException(ExceptionType.CANNOT_REPLY_TO_REPLY);
         }
 
-        DiscussionComment reply = new DiscussionComment();
-        reply.content = content;
-        reply.discussion = this.discussion;
-        reply.member = member;
-        reply.parentComment = this;
-
-        return reply;
+        return new DiscussionComment(content, discussion, member, id, null);
     }
 
     public void updateContent(String content) {
@@ -100,44 +87,20 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public Discussion getDiscussion() {
-        return discussion;
-    }
-
     public Long getDiscussionId() {
         return discussion.getId();
-    }
-
-    public Member getMember() {
-        return member;
     }
 
     public boolean isNotWrittenBy(Long memberId) {
         return !member.getId().equals(memberId);
     }
 
-    public DiscussionComment getParentComment() {
-        return parentComment;
-    }
-
-    public Long getParentCommentId() {
-        return parentComment.getId();
-    }
-
     public boolean isRootComment() {
-        return parentComment == null;
+        return parentCommentId == null;
     }
 
     public boolean isReply() {
-        return parentComment != null;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return parentCommentId != null;
     }
 
     public boolean isNotDeleted() {

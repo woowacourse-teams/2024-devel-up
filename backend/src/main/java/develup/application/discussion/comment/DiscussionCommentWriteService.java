@@ -8,9 +8,11 @@ import develup.domain.discussion.Discussion;
 import develup.domain.discussion.comment.DiscussionComment;
 import develup.domain.discussion.comment.DiscussionCommentRepository;
 import develup.domain.member.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class DiscussionCommentWriteService {
@@ -19,18 +21,6 @@ public class DiscussionCommentWriteService {
     private final DiscussionCommentReadService discussionCommentReadService;
     private final MemberReadService memberReadService;
     private final DiscussionReadService discussionReadService;
-
-    public DiscussionCommentWriteService(
-            DiscussionCommentRepository discussionCommentRepository,
-            DiscussionCommentReadService discussionCommentReadService,
-            MemberReadService memberReadService,
-            DiscussionReadService discussionReadService
-    ) {
-        this.discussionCommentRepository = discussionCommentRepository;
-        this.discussionCommentReadService = discussionCommentReadService;
-        this.memberReadService = memberReadService;
-        this.discussionReadService = discussionReadService;
-    }
 
     public CreateDiscussionCommentResponse addComment(Long discussionId, DiscussionCommentRequest request, Long memberId) {
         Member member = memberReadService.getMember(memberId);
@@ -54,7 +44,7 @@ public class DiscussionCommentWriteService {
     }
 
     private DiscussionComment createRootComment(DiscussionCommentRequest request, Discussion discussion, Member member) {
-        DiscussionComment rootComment = DiscussionComment.create(request.content(), discussion, member);
+        DiscussionComment rootComment = DiscussionComment.createRoot(request.content(), discussion, member);
 
         return discussionCommentRepository.save(rootComment);
     }

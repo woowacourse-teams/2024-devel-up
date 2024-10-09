@@ -15,7 +15,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 public class Solution extends CreatedAtAuditableEntity {
 
@@ -28,7 +35,7 @@ public class Solution extends CreatedAtAuditableEntity {
     private Member member;
 
     @Embedded
-    private Title title;
+    private SolutionTitle title;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -40,25 +47,11 @@ public class Solution extends CreatedAtAuditableEntity {
     @Enumerated(EnumType.STRING)
     private SolutionStatus status = SolutionStatus.IN_PROGRESS;
 
-    protected Solution() {
-    }
-
-    public Solution(
-            Mission mission,
-            Member member,
-            Title title,
-            String description,
-            PullRequestUrl pullRequestUrl,
-            SolutionStatus status
-    ) {
-        this(null, mission, member, title, description, pullRequestUrl, status);
-    }
-
     public Solution(
             Long id,
             Mission mission,
             Member member,
-            Title title,
+            SolutionTitle title,
             String description,
             PullRequestUrl pullRequestUrl,
             SolutionStatus status
@@ -111,28 +104,12 @@ public class Solution extends CreatedAtAuditableEntity {
         return status.isInProgress();
     }
 
-    public Mission getMission() {
-        return mission;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
     public String getTitle() {
         return title.getValue();
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public String getUrl() {
         return pullRequestUrl.getValue();
-    }
-
-    public SolutionStatus getStatus() {
-        return status;
     }
 
     public String getMissionThumbnail() {

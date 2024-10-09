@@ -5,22 +5,22 @@ import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.solution.Solution;
 import develup.domain.solution.SolutionRepository;
+import develup.domain.solution.SolutionRepositoryCustom;
 import develup.domain.solution.SolutionStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class SolutionReadService {
 
     private final SolutionRepository solutionRepository;
-
-    public SolutionReadService(SolutionRepository solutionRepository) {
-        this.solutionRepository = solutionRepository;
-    }
+    private final SolutionRepositoryCustom solutionRepositoryCustom;
 
     public SolutionResponse getById(Long id) {
-        Solution solution = solutionRepository.findFetchById(id)
+        Solution solution = solutionRepositoryCustom.findFetchById(id)
                 .orElseThrow(() -> new DevelupException(ExceptionType.SOLUTION_NOT_FOUND));
 
         return SolutionResponse.from(solution);
@@ -35,11 +35,11 @@ public class SolutionReadService {
 
     public List<SummarizedSolutionResponse> getCompletedSummaries(String hashTagName) {
         if (hashTagName.equalsIgnoreCase("all")) {
-            return solutionRepository.findAllCompletedSolution().stream()
+            return solutionRepositoryCustom.findAllCompletedSolution().stream()
                     .map(SummarizedSolutionResponse::from)
                     .toList();
         }
-        return solutionRepository.findAllCompletedSolutionByHashTagName(hashTagName).stream()
+        return solutionRepositoryCustom.findAllCompletedSolutionByHashTagName(hashTagName).stream()
                 .map(SummarizedSolutionResponse::from)
                 .toList();
     }

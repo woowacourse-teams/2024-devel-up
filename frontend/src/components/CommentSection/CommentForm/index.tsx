@@ -1,38 +1,22 @@
-import { useState } from 'react';
+import { type FormEventHandler } from 'react';
 import * as S from './CommentForm.styled';
 import { commands } from '@uiw/react-md-editor';
-import type { UsePostCommentMutation } from './types';
 
 interface CommentFormProps {
-  postId: number;
-  parentCommentId?: number;
-  usePostCommentMutation: UsePostCommentMutation;
+  content: string;
+  onChange: (value?: string) => void;
+  onSubmit: FormEventHandler<HTMLFormElement>;
 }
 
-export default function CommentForm({
-  postId,
-  parentCommentId,
-  usePostCommentMutation,
-}: CommentFormProps) {
-  const [comment, setComment] = useState('');
-
-  const resetComment = () => setComment('');
-
-  const { mutate: postCommentMutation } = usePostCommentMutation(resetComment);
-
-  const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    postCommentMutation({ postId, body: { content: comment, parentCommentId } });
-  };
-
+export function CommentForm({ content, onChange, onSubmit }: CommentFormProps) {
   return (
-    <S.CommentForm onSubmit={onSubmitComment}>
+    <S.CommentForm onSubmit={onSubmit}>
       <S.MDEditor
         height="fit-content"
         preview="edit"
         visibleDragbar={false}
-        onChange={(v?: string) => setComment(v || '')}
-        value={comment}
+        onChange={onChange}
+        value={content}
         commands={[
           commands.bold,
           commands.italic,

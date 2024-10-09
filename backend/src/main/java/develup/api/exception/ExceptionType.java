@@ -1,7 +1,12 @@
 package develup.api.exception;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+@Getter
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ExceptionType {
 
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."),
@@ -27,21 +32,10 @@ public enum ExceptionType {
     DUPLICATED_HASHTAG(HttpStatus.BAD_REQUEST, "중복된 해시태그입니다."),
     HASHTAG_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 해시태그입니다."),
     DISCUSSION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 디스커션입니다."),
+    DISCUSSION_NOT_WRITTEN_BY_MEMBER(HttpStatus.FORBIDDEN, "디스커션 작성자가 아닙니다."),
+
     ;
 
     private final HttpStatus status;
     private final String message;
-
-    ExceptionType(HttpStatus status, String message) {
-        this.status = status;
-        this.message = message;
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }
