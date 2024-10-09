@@ -25,7 +25,7 @@ export const HTTP_ERROR_MESSAGE: Record<
   500: {
     heading: '서버에 오류가 발생했어요!',
     body: '잠시 후 다시 시도해 주세요.',
-    button: '새로고침',
+    button: '홈으로 돌아가기',
     imgComponent: ErrorImg,
   },
   unknown: {
