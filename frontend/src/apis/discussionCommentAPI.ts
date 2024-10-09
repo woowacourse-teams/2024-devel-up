@@ -1,8 +1,11 @@
-import type { PostCommentParams } from '@/components/CommentSection/CommentForm/types';
+import type {
+  DeleteCommentParams,
+  PatchCommentParams,
+} from '@/components/CommentSection/CommentForm/types';
 import type { DiscussionComment } from '@/types';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH_FORMATTER } from './paths';
-import type { PostDiscussionCommentResponseData } from '@/hooks/usePostDiscussionCommentMutation';
+import type { PostCommentParams } from '@/components/CommentSection/CommentForm/types';
 
 export const getDiscussionComments = async (solutionId: number): Promise<DiscussionComment[]> => {
   const { data } = await develupAPIClient.get<{ data: DiscussionComment[] }>(
@@ -11,6 +14,20 @@ export const getDiscussionComments = async (solutionId: number): Promise<Discuss
 
   return data;
 };
+
+export interface PostDiscussionCommentResponseData {
+  id: number;
+  discussionId: number;
+  parentCommentId: number;
+  content: string;
+  member: {
+    id: number;
+    email: string;
+    name: string;
+    imageUrl: string;
+  };
+  createdAt: string;
+}
 
 export const postDiscussionComment = async ({
   postId,
@@ -22,4 +39,39 @@ export const postDiscussionComment = async ({
   );
 
   return data;
+};
+
+export interface PatchDiscussionCommentResponseData {
+  id: number;
+  discussionId: number;
+  content: string;
+  member: {
+    id: number;
+    email: string;
+    name: string;
+    imageUrl: string;
+  };
+  createdAt: string;
+}
+
+export const patchDiscountComment = async ({
+  commentId,
+  body,
+}: PatchCommentParams): Promise<PatchDiscussionCommentResponseData> => {
+  const { data } = await develupAPIClient.patch<{ data: PatchDiscussionCommentResponseData }>(
+    PATH_FORMATTER.discussionSingleComment(commentId),
+    body,
+  );
+
+  return data;
+};
+
+type CommentId = number;
+
+export const deleteDiscussionComment = async ({
+  commentId,
+}: DeleteCommentParams): Promise<CommentId> => {
+  await develupAPIClient.delete(PATH_FORMATTER.discussionSingleComment(commentId));
+
+  return commentId;
 };

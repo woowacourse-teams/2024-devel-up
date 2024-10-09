@@ -1,6 +1,8 @@
 export const BUTTON_VARIANTS = {
   default: 'default',
   primary: 'primary',
+  primaryText: 'primaryText',
+  defaultText: 'defaultText',
 } as const;
 
 export const BUTTON_SIZE = {

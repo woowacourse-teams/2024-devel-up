@@ -20,7 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
+class DiscussionCommentRepositoryCustomTest extends IntegrationTestSupport {
 
     @Autowired
     private DiscussionRepository discussionRepository;
@@ -30,6 +30,9 @@ class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private MissionRepository missionRepository;
+
+    @Autowired
+    private DiscussionCommentRepositoryCustom discussionCommentRepositoryCustom;
 
     @Autowired
     private DiscussionCommentRepository discussionCommentRepository;
@@ -46,7 +49,7 @@ class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
         }
         createRootDiscussionComment();
 
-        List<MyDiscussionComment> myComments = discussionCommentRepository.findAllMyDiscussionComment(member.getId());
+        List<MyDiscussionComment> myComments = discussionCommentRepositoryCustom.findAllMyDiscussionComment(member.getId());
 
         assertThat(myComments)
                 .hasSize(discussionComments.size());
@@ -65,7 +68,7 @@ class DiscussionCommentRepositoryTest extends IntegrationTestSupport {
         createRootDiscussionComment();
         createRootDeletedDiscussionComment(discussion, member);
 
-        List<MyDiscussionComment> myComments = discussionCommentRepository.findAllMyDiscussionComment(member.getId());
+        List<MyDiscussionComment> myComments = discussionCommentRepositoryCustom.findAllMyDiscussionComment(member.getId());
 
         assertThat(myComments)
                 .hasSize(discussionComments.size());

@@ -6,5 +6,5 @@ export const CommentFormWrapper = styled.div`
 
 export const SeparationLine = styled.div`
   border-top: solid 4px ${({ theme }) => theme.colors.grey200};
-  margin: 10rem 0 4rem;
+  margin: 2rem 0 4rem;
 `;
