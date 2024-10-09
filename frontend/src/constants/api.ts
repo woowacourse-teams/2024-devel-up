@@ -1,26 +1,38 @@
+import ErrorImg from '@/assets/images/error.svg';
+import ErrorNotFound from '@/assets/images/error_not_found.svg';
+
 export const HTTP_ERROR_MESSAGE: Record<
   number | 'unknown',
-  { heading: string; body: string; button: string }
+  {
+    heading: string;
+    body: string;
+    button: string;
+    imgComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  }
 > = {
   404: {
-    heading: '404',
-    body: '요청하신 페이지를 찾을 수 없습니다.',
+    heading: '페이지를 찾을 수 없어요!',
+    body: '페이지 주소를 다시 확인해 주세요.',
     button: '홈으로 돌아가기',
-  },
-  500: {
-    heading: '서버 오류가 발생했습니다',
-    body: '잠시 후 다시 요청해주세요.',
-    button: '새로고침',
+    imgComponent: ErrorNotFound,
   },
   400: {
     heading: '잘못된 요청입니다.',
-    body: '확인 후 다시 시도해주세요.',
+    body: '확인 후 다시 시도해 주세요.',
     button: '홈으로 돌아가기',
+    imgComponent: ErrorNotFound,
+  },
+  500: {
+    heading: '서버에 오류가 발생했어요!',
+    body: '잠시 후 다시 시도해 주세요.',
+    button: '새로고침',
+    imgComponent: ErrorImg,
   },
   unknown: {
-    heading: 'Unknown Error',
-    body: '알 수 없는 오류가 발생했습니다.',
+    heading: '오류가 발생했어요!',
+    body: '잠시 후 다시 시도해 주세요.',
     button: '홈으로 돌아가기',
+    imgComponent: ErrorImg,
   },
 } as const;
 
