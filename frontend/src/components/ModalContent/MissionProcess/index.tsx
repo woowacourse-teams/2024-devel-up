@@ -25,7 +25,7 @@ const CONTENT_LIST = [
   },
   {
     id: 4,
-    image: 'https://dp71rnme1p14w.cloudfront.net/how-to-start.webp',
+    image: 'https://dp71rnme1p14w.cloudfront.net/howToStart.webp',
     content: `미션 구현이 완료되면 **[풀이 제출하기]** 버튼을 클릭하여 풀이를 제출해주세요.\n
 풀이 제출하기 버튼은 **[미션 시작하기]** 버튼을 누른 상태일때만 확인 가능해요.`,
   },
