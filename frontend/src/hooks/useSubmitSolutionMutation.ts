@@ -18,7 +18,11 @@ const useSubmitSolutionMutation = ({
 }: UseSubmissionMutationParams) => {
   const navigate = useNavigate();
 
-  const { mutate: submitSolutionMutation, isPending } = useSingleRequestMutation({
+  const {
+    mutate: submitSolutionMutation,
+    isPending,
+    isError: isSubmitSolutionError,
+  } = useSingleRequestMutation({
     mutationFn: postSolutionSubmit,
     onSuccess: () => {
       onSuccessCallback();
@@ -32,7 +36,7 @@ const useSubmitSolutionMutation = ({
     requestId: SINGLE_REQUEST_ID,
   });
 
-  return { submitSolutionMutation, isPending };
+  return { submitSolutionMutation, isPending, isSubmitSolutionError };
 };
 
 export default useSubmitSolutionMutation;
