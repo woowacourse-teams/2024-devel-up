@@ -33,8 +33,8 @@ public class SolutionReadService {
                 .toList();
     }
 
-    public List<SummarizedSolutionResponse> getCompletedSummaries(String hashTagName) {
-        return solutionRepositoryCustom.findAllCompletedSolutionByHashTagName("all", hashTagName).stream()
+    public List<SummarizedSolutionResponse> getCompletedSummaries(String missionTitle, String hashTagName) {
+        return solutionRepositoryCustom.findAllCompletedSolutionByHashTagName(missionTitle, hashTagName).stream()
                 .map(SummarizedSolutionResponse::from)
                 .toList();
     }
