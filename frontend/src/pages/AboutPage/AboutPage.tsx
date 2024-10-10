@@ -16,13 +16,11 @@ export default function AboutPage() {
 
   return (
     <S.Container>
-      <img src="https://dp71rnme1p14w.cloudfront.net/about-1.webp" />
-      <img src="https://dp71rnme1p14w.cloudfront.net/about-2.webp" />
-      <img src="https://dp71rnme1p14w.cloudfront.net/about-3.webp" />
-      <img src="https://dp71rnme1p14w.cloudfront.net/about-4.webp" />
-      <img src="https://dp71rnme1p14w.cloudfront.net/about-5.webp" />
+      <S.Image src="https://dp71rnme1p14w.cloudfront.net/about-3.webp" />
+      <S.Image src="https://dp71rnme1p14w.cloudfront.net/about-4.webp" />
+      <S.Image src="https://dp71rnme1p14w.cloudfront.net/about-5.webp" />
       <S.ButtonWrapper>
-        <img src="https://dp71rnme1p14w.cloudfront.net/about-6.webp" />
+        <S.Image src="https://dp71rnme1p14w.cloudfront.net/about-6.webp" />
         <Button
           variant="primary"
           style={{
@@ -35,7 +33,7 @@ export default function AboutPage() {
       </S.ButtonWrapper>
 
       <S.ButtonWrapper>
-        <img src="https://dp71rnme1p14w.cloudfront.net/about-7.webp" />
+        <S.Image src="https://dp71rnme1p14w.cloudfront.net/about-7.webp" />
         <Button
           variant="primary"
           style={{

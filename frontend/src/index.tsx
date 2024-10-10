@@ -224,18 +224,6 @@ const routes = [
     ),
   },
   {
-    path: ROUTES.about,
-    element: (
-      <QueryErrorBoundary>
-        <App>
-          <Suspense fallback={<LoadingSpinner />}>
-            <AboutPage />
-          </Suspense>
-        </App>
-      </QueryErrorBoundary>
-    ),
-  },
-  {
     path: `${ROUTES.discussions}/:id`,
     element: (
       <QueryErrorBoundary>
