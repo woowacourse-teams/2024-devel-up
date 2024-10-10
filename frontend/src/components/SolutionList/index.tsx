@@ -5,6 +5,7 @@ import * as S from './SolutionList.styled';
 import useSolutionSummaries from '@/hooks/useSolutionSummaries';
 import type { HashTag } from '@/types';
 import type { SelectedMissionType } from '@/types/mission';
+import NoContentWithoutButton from '../common/NoContent/NoContentWithoutButton';
 
 interface SolutionListProps {
   selectedMission: SelectedMissionType | null;
@@ -18,18 +19,22 @@ export default function SolutionList({ selectedMission, selectedHashTag }: Solut
   );
   return (
     <S.SolutionList>
-      {solutionSummaries.map(({ id, thumbnail, title, description, hashTags }) => (
-        <Link key={id} to={`${ROUTES.solutions}/${id}`}>
-          <InfoCard
-            id={id}
-            thumbnailSrc={thumbnail}
-            title={title}
-            hashTags={hashTags}
-            description={description}
-            thumbnailFallbackText="Solution"
-          />
-        </Link>
-      ))}
+      {solutionSummaries.length > 0 ? (
+        solutionSummaries.map(({ id, thumbnail, title, description, hashTags }) => (
+          <Link key={id} to={`${ROUTES.solutions}/${id}`}>
+            <InfoCard
+              id={id}
+              thumbnailSrc={thumbnail}
+              title={title}
+              hashTags={hashTags}
+              description={description}
+              thumbnailFallbackText="Solution"
+            />
+          </Link>
+        ))
+      ) : (
+        <NoContentWithoutButton type="solution" />
+      )}
     </S.SolutionList>
   );
 }

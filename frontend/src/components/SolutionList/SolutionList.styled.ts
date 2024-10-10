@@ -13,7 +13,7 @@ const show = keyframes`
 export const SolutionList = styled.div`
   display: flex;
   max-width: 100rem;
-  width: fit-content;
+
   column-gap: 5rem;
   row-gap: 3.6rem;
   flex-wrap: wrap;
