@@ -34,7 +34,7 @@ public class SolutionReadService {
     }
 
     public List<SummarizedSolutionResponse> getCompletedSummaries(String hashTagName) {
-        return solutionRepositoryCustom.findAllCompletedSolutionByHashTagName(hashTagName).stream()
+        return solutionRepositoryCustom.findAllCompletedSolutionByHashTagName("all", hashTagName).stream()
                 .map(SummarizedSolutionResponse::from)
                 .toList();
     }

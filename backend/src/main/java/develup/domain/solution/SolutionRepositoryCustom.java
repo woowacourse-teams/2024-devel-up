@@ -21,22 +21,34 @@ public class SolutionRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<Solution> findAllCompletedSolutionByHashTagName(String name) {
+    public List<Solution> findAllCompletedSolutionByHashTagName(String missionTitle, String hashTagName) {
         return queryFactory.selectFrom(solution)
                 .join(solution.mission, mission).fetchJoin()
                 .join(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
                 .join(missionHashTag.hashTag).fetchJoin()
-                .where(solution.status.eq(SolutionStatus.COMPLETED).and(eqHashTagName(name)))
+                .where(eqCompleted(), eqMissionTitle(missionTitle), eqHashTagName(hashTagName))
                 .orderBy(solution.id.desc())
                 .fetch();
     }
 
-    private BooleanExpression eqHashTagName(String name) {
-        if ("all".equalsIgnoreCase(name)) {
+    private BooleanExpression eqCompleted() {
+        return solution.status.eq(SolutionStatus.COMPLETED);
+    }
+
+    private BooleanExpression eqMissionTitle(String missionTitle) {
+        if ("all".equalsIgnoreCase(missionTitle)) {
             return null;
         }
 
-        return missionHashTag.hashTag.name.eq(name);
+        return mission.title.eq(missionTitle);
+    }
+
+    private BooleanExpression eqHashTagName(String hashTagName) {
+        if ("all".equalsIgnoreCase(hashTagName)) {
+            return null;
+        }
+
+        return missionHashTag.hashTag.name.eq(hashTagName);
     }
 
     public Optional<Solution> findFetchById(Long solutionId) {
