@@ -4,6 +4,7 @@ import Button from '@/components/common/Button/Button';
 
 export const MissionProcessContentContainer = styled.div`
   width: 53rem;
+  min-height: 68rem;
   background: ${(props) => props.theme.colors.white};
   box-shadow: ${(props) => props.theme.boxShadow.shadow08};
   border-radius: 1.2rem;
@@ -15,11 +16,13 @@ export const MissionProcessContentContainer = styled.div`
 `;
 
 export const Title = styled.h1`
+  position: absolute;
+  top: 5%;
   ${(props) => props.theme.font.bodyBold}
 `;
 
-export const CloseIconWrapper = styled.div`
-  padding: 0.5rem;
+export const CloseIconWrapper = styled.button`
+  padding: 1.5rem;
   position: absolute;
   top: 2.1rem;
   right: 2.6rem;
@@ -45,6 +48,16 @@ export const ButtonWrapper = styled.div`
   gap: 0.8rem;
 `;
 
-export const ArrowButton = styled(Button)`
+export const LeftArrowButton = styled(Button)`
+  position: absolute;
+  bottom: 7%;
+  left: 30%;
+  gap: 1.2rem;
+`;
+
+export const RightArrowButton = styled(Button)`
+  position: absolute;
+  bottom: 7%;
+  left: 55%;
   gap: 1.2rem;
 `;

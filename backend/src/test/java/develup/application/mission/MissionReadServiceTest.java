@@ -101,7 +101,7 @@ class MissionReadServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("사용자가 시작한 미션 목록을 조회한다.")
+    @DisplayName("사용자가 시작한 미션 목록을 역순으로 조회한다.")
     void getInProgressMissions() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
 
@@ -123,6 +123,9 @@ class MissionReadServiceTest extends IntegrationTestSupport {
         List<MissionResponse> inProgressMissions = missionReadService.getInProgressMissions(member.getId());
 
         assertThat(inProgressMissions).hasSize(2);
+        assertThat(inProgressMissions)
+                .map(MissionResponse::id)
+                .containsExactlyInAnyOrder(otherMission.getId(), mission.getId());
     }
 
     private Mission createMission() {

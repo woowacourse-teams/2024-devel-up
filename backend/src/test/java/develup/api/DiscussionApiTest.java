@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.http.MediaType;
 
-public class DiscussionApiTest extends ApiTestSupport {
+class DiscussionApiTest extends ApiTestSupport {
 
     @Test
     @DisplayName("디스커션 목록을 조회한다.")
@@ -48,6 +48,7 @@ public class DiscussionApiTest extends ApiTestSupport {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속 구현에 대한 고찰")))
+                .andExpect(jsonPath("$.data[0].content", equalTo("루터회관 흡연단속을 구현하면서 느낀 점을 공유합니다.")))
                 .andExpect(jsonPath("$.data[0].mission", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data[0].hashTags[0].id", is(1)))
                 .andExpect(jsonPath("$.data[0].hashTags[0].name", equalTo("JAVA")))
@@ -119,6 +120,7 @@ public class DiscussionApiTest extends ApiTestSupport {
                 new SummarizedDiscussionResponse(
                         1L,
                         "루터회관 흡연단속 구현에 대한 고찰",
+                        "루터회관 흡연단속을 구현하면서 느낀 점을 공유합니다.",
                         "루터회관 흡연단속",
                         hashTags,
                         memberResponse,
@@ -135,6 +137,7 @@ public class DiscussionApiTest extends ApiTestSupport {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].title", equalTo("루터회관 흡연단속 구현에 대한 고찰")))
+                .andExpect(jsonPath("$.data[0].content", equalTo("루터회관 흡연단속을 구현하면서 느낀 점을 공유합니다.")))
                 .andExpect(jsonPath("$.data[0].mission", equalTo("루터회관 흡연단속")))
                 .andExpect(jsonPath("$.data[0].hashTags[0].id", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].hashTags[0].name", equalTo("JAVA")))

@@ -27,19 +27,14 @@ public class SolutionReadService {
     }
 
     public List<MySolutionResponse> getSubmittedSolutionsByMemberId(Long memberId) {
-        List<Solution> mySolutions = solutionRepository.findAllByMember_IdAndStatus(memberId, SolutionStatus.COMPLETED);
+        List<Solution> mySolutions = solutionRepository.findAllByMember_IdAndStatusOrderBySubmittedAtDesc(memberId, SolutionStatus.COMPLETED);
         return mySolutions.stream()
                 .map(MySolutionResponse::from)
                 .toList();
     }
 
-    public List<SummarizedSolutionResponse> getCompletedSummaries(String hashTagName) {
-        if (hashTagName.equalsIgnoreCase("all")) {
-            return solutionRepositoryCustom.findAllCompletedSolution().stream()
-                    .map(SummarizedSolutionResponse::from)
-                    .toList();
-        }
-        return solutionRepositoryCustom.findAllCompletedSolutionByHashTagName(hashTagName).stream()
+    public List<SummarizedSolutionResponse> getCompletedSummaries(String missionTitle, String hashTagName) {
+        return solutionRepositoryCustom.findAllCompletedSolutionByHashTagName(missionTitle, hashTagName).stream()
                 .map(SummarizedSolutionResponse::from)
                 .toList();
     }

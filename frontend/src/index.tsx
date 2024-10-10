@@ -33,7 +33,7 @@ Sentry.init({
 
 // 메인
 const MainPage = lazy(() => import('./pages/MainPage'));
-const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
+// const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
 const UserProfilePage = lazy(() => import('./pages/UserProfilePage'));
 // const GuidePage = lazy(() => import('./pages/GuidePage'));
 
@@ -224,18 +224,6 @@ const routes = [
     ),
   },
   {
-    path: ROUTES.about,
-    element: (
-      <QueryErrorBoundary>
-        <App>
-          <Suspense fallback={<LoadingSpinner />}>
-            <AboutPage />
-          </Suspense>
-        </App>
-      </QueryErrorBoundary>
-    ),
-  },
-  {
     path: `${ROUTES.discussions}/:id`,
     element: (
       <QueryErrorBoundary>
@@ -324,6 +312,7 @@ export const router = createBrowserRouter(routes, {
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <RouterProvider router={router} />

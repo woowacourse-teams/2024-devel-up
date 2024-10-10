@@ -16,8 +16,12 @@ export default function Carousel({
   infinite = true,
   children,
 }: CarouselProps) {
-  const { carouselItems, trackRef, currentIndex, isSliding, handleNextSlide, handlePreviousSlide } =
-    useCarousel({ autoPlay, autoSpeed, infinite, children });
+  const { carouselItems, trackRef, currentIndex, isSliding } = useCarousel({
+    autoPlay,
+    autoSpeed,
+    infinite,
+    children,
+  });
 
   return (
     <S.Container>
