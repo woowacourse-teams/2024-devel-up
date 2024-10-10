@@ -3,10 +3,10 @@ import { getSolutionSummaries, type SolutionSummary } from '@/apis/solutions';
 import { solutionKeys } from './queries/keys';
 import { HASHTAGS } from '@/constants/hashTags';
 
-const useSolutionSummaries = (filter: string = HASHTAGS.all) => {
+const useSolutionSummaries = (mission: string = HASHTAGS.all, hashTag: string = HASHTAGS.all) => {
   return useSuspenseQuery<SolutionSummary[]>({
-    queryKey: [...solutionKeys.all, filter],
-    queryFn: () => getSolutionSummaries(filter),
+    queryKey: [...solutionKeys.all, mission, hashTag],
+    queryFn: () => getSolutionSummaries({ mission, hashTag }),
   });
 };
 
