@@ -43,9 +43,10 @@ public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
     @DisplayName("주어진 해시태그가 포함된 완료된 솔루션을 조회할 수 있다.")
     void findAllCompletedSolutionByHashTag() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
-        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
-        Mission mission1 = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
-        Mission mission2 = missionRepository.save(MissionTestData.defaultMission().build());
+        HashTag hashTag1 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        HashTag hashTag2 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JS").build());
+        Mission mission1 = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag1)).build());
+        Mission mission2 = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag2)).build());
         Solution solution1 = SolutionTestData.defaultSolution()
                 .withMember(member)
                 .withMission(mission1)
@@ -59,13 +60,40 @@ public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
 
         solutionRepository.saveAll(List.of(solution1, solution2));
 
-        List<Solution> solutions = solutionRepositoryCustom.findAllCompletedSolutionByHashTagName("JAVA");
+        List<Solution> solutions = solutionRepositoryCustom.findAllCompletedSolutionByHashTagName("all", "JAVA");
 
         assertThat(solutions)
                 .map(Solution::getHashTags)
                 .flatMap(Function.identity())
                 .map(MissionHashTag::getHashTag)
-                .contains(hashTag);
+                .contains(hashTag1);
+    }
+
+    @Test
+    @DisplayName("주어진 미션에 대한 완료된 솔루션을 조회할 수 있다.")
+    void findAllCompletedSolutionByMissionName() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        Mission otherMission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+        Mission targetMission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).withTitle("테스트 미션 제목").build());
+        Solution otherSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(otherMission)
+                .withStatus(SolutionStatus.COMPLETED)
+                .build();
+        Solution tragetSolution = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(targetMission)
+                .withStatus(SolutionStatus.COMPLETED)
+                .build();
+
+        solutionRepository.saveAll(List.of(otherSolution, tragetSolution));
+
+        List<Solution> solutions = solutionRepositoryCustom.findAllCompletedSolutionByHashTagName("테스트 미션 제목", "all");
+
+        assertThat(solutions)
+                .map(Solution::getId)
+                .containsOnly(targetMission.getId());
     }
 
     @Test
@@ -75,7 +103,7 @@ public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
         createSolution(SolutionStatus.COMPLETED);
         createSolution(SolutionStatus.IN_PROGRESS);
 
-        List<Solution> actual = solutionRepositoryCustom.findAllCompletedSolution();
+        List<Solution> actual = solutionRepositoryCustom.findAllCompletedSolutionByHashTagName("all", "all");
 
         assertThat(actual).hasSize(2);
     }

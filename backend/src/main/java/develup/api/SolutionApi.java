@@ -81,9 +81,10 @@ public class SolutionApi {
     @GetMapping("/solutions")
     @Operation(summary = "솔루션 목록 조회 API", description = "솔루션 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<SummarizedSolutionResponse>>> getSolutions(
+            @RequestParam(defaultValue = "all") String mission,
             @RequestParam(defaultValue = "all") String hashTag
     ) {
-        List<SummarizedSolutionResponse> responses = solutionReadService.getCompletedSummaries(hashTag);
+        List<SummarizedSolutionResponse> responses = solutionReadService.getCompletedSummaries(mission, hashTag);
 
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
