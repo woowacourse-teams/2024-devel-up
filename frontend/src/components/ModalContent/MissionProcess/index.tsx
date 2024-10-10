@@ -9,7 +9,7 @@ import ModalContent from '../index';
 const CONTENT_LIST = [
   {
     id: 1,
-    image: 'https://dp71rnme1p14w.cloudfront.net/howToLogin.webp',
+    image: 'https://dp71rnme1p14w.cloudfront.net/howToLogin(1).webp',
     content: `우측 상단 **[로그인]** 버튼을 클릭해서 로그인을 수행해주세요.\n
 로그인을 성공적으로 마치면 **[미션 시작하기]** 버튼을 클릭해서 미션을 시작할 수 있어요.`,
   },
@@ -25,7 +25,7 @@ const CONTENT_LIST = [
   },
   {
     id: 4,
-    image: 'https://dp71rnme1p14w.cloudfront.net/howToStart.webp',
+    image: 'https://dp71rnme1p14w.cloudfront.net/howToStart(1).webp',
     content: `미션 구현이 완료되면 **[풀이 제출하기]** 버튼을 클릭하여 풀이를 제출해주세요.\n
 풀이 제출하기 버튼은 **[미션 시작하기]** 버튼을 누른 상태일때만 확인 가능해요.`,
   },
