@@ -32,7 +32,7 @@ public class DiscussionReadService {
     }
 
     public List<SummarizedDiscussionResponse> getDiscussionsByMemberId(Long memberId) {
-        List<Discussion> myDiscussions = discussionRepositoryCustom.findAllByMemberId(memberId);
+        List<Discussion> myDiscussions = discussionRepositoryCustom.findAllByMemberIdOrderByDesc(memberId);
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
                 discussionRepositoryCustom.findAllDiscussionCommentCounts()
         );
