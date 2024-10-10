@@ -55,7 +55,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
     @DisplayName("내가 디스커션에 작성한 댓글 목록을 조회한다.")
     void getMyComments() throws Exception {
         LocalDateTime now = LocalDateTime.now();
-        MyDiscussionCommentResponse myDiscussionCommentResponse = new MyDiscussionCommentResponse(1L, 1L, "댓글 내용", now, "디스커션 제목", 123L);
+        MyDiscussionCommentResponse myDiscussionCommentResponse = new MyDiscussionCommentResponse(1L, 1L, "댓글 내용", now, "디스커션 제목");
         List<MyDiscussionCommentResponse> responses = List.of(myDiscussionCommentResponse);
 
         BDDMockito.given(discussionCommentReadService.getMyComments(any()))
@@ -69,8 +69,7 @@ class DiscussionCommentApiTest extends ApiTestSupport {
                 .andExpect(jsonPath("$.data[0].discussionId", equalTo(1)))
                 .andExpect(jsonPath("$.data[0].content", equalTo("댓글 내용")))
                 .andExpect(jsonPath("$.data[0].createdAt").exists())
-                .andExpect(jsonPath("$.data[0].discussionTitle", equalTo("디스커션 제목")))
-                .andExpect(jsonPath("$.data[0].discussionCommentCount", equalTo(123)));
+                .andExpect(jsonPath("$.data[0].discussionTitle", equalTo("디스커션 제목")));
     }
 
     @Test
