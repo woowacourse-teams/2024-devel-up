@@ -92,9 +92,3 @@ export const HeaderSubtitle = styled.p`
 
   color: ${(props) => props.theme.colors.grey500};
 `;
-
-export const NoContentText = styled.h1`
-  margin-top: 20rem;
-  text-align: center;
-  ${(props) => props.theme.font.heading2}
-`;

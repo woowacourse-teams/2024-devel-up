@@ -7,16 +7,14 @@ interface NoContentWithoutButtonProps {
 
 export default function NoContentWithoutButton({ type }: NoContentWithoutButtonProps) {
   const INPUT_CONTENT = {
-    solution: '풀이',
-    discussion: '디스커션',
+    solution: '풀이가',
+    discussion: '디스커션이',
   };
 
   return (
     <S.NoContentWrapper>
       <NoContentImg />
-      <S.NoContentMessage>
-        아직 해당 태그와 관련된 {INPUT_CONTENT[type]}가 없어요!
-      </S.NoContentMessage>
+      <S.NoContentMessage>아직 해당 태그와 관련된 {INPUT_CONTENT[type]} 없어요!</S.NoContentMessage>
     </S.NoContentWrapper>
   );
 }
