@@ -44,6 +44,10 @@ public class SolutionRepositoryCustom {
     }
 
     private BooleanExpression eqHashTagName(String name) {
+        if ("all".equalsIgnoreCase(name)) {
+            return null;
+        }
+
         return missionHashTag.hashTag.name.eq(name);
     }
 
