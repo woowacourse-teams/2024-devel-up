@@ -38,7 +38,7 @@ public class DiscussionCommentReadService {
     }
 
     public List<MyDiscussionCommentResponse> getMyComments(Long memberId) {
-        List<MyDiscussionComment> mySolutionComments = discussionCommentRepositoryCustom.findAllMyDiscussionComment(memberId);
+        List<MyDiscussionComment> mySolutionComments = discussionCommentRepositoryCustom.findAllMyDiscussionCommentOrderByCreatedAtDesc(memberId);
 
         return mySolutionComments.stream()
                 .map(MyDiscussionCommentResponse::from)
