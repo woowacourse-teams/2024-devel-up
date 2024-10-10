@@ -12,6 +12,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.domain.solution.comment.SolutionCommentCount;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Repository;
 public class SolutionRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
+    private final EntityManager entityManager;
 
     public List<Solution> findAllCompletedSolutionByHashTagName(String missionTitle, String hashTagName) {
         return queryFactory.selectFrom(solution)
@@ -66,6 +68,9 @@ public class SolutionRepositoryCustom {
         queryFactory.delete(solutionComment)
                 .where(solutionComment.solution.id.eq(solutionId))
                 .execute();
+
+        entityManager.flush();
+        entityManager.clear();
     }
 
     public List<SolutionCommentCount> findAllSolutionCommentCounts() {

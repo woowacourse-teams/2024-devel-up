@@ -12,15 +12,19 @@ import develup.domain.member.MemberRepository;
 import develup.domain.mission.Mission;
 import develup.domain.mission.MissionHashTag;
 import develup.domain.mission.MissionRepository;
+import develup.domain.solution.comment.SolutionComment;
+import develup.domain.solution.comment.SolutionCommentRepository;
 import develup.support.IntegrationTestSupport;
 import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
+import develup.support.data.SolutionCommentTestData;
 import develup.support.data.SolutionTestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
 
@@ -29,6 +33,9 @@ public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
 
     @Autowired
     private SolutionRepository solutionRepository;
+
+    @Autowired
+    private SolutionCommentRepository solutionCommentRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -139,6 +146,29 @@ public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
                         .hasValue(1),
                 () -> assertThat(noneTaggedFound).isEmpty()
         );
+    }
+
+    @Test
+    @DisplayName("솔루션 댓글을 모두 지운다.")
+    @Transactional
+    void deleteAllComments() {
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        Mission mission = MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build();
+        missionRepository.save(mission);
+        Solution solution = SolutionTestData.defaultSolution().withId(1L).withMember(member)
+                .withMission(mission)
+                .build();
+        SolutionComment comment = SolutionCommentTestData.defaultSolutionComment()
+                .withSolution(solution)
+                .withMember(member)
+                .build();
+        solutionRepository.save(solution);
+        solutionCommentRepository.save(comment);
+
+        solutionRepositoryCustom.deleteAllComments(solution.getId());
+
+        assertThat(solutionCommentRepository.findById(comment.getId())).isEmpty();
     }
 
     private void createSolution(SolutionStatus status) {
