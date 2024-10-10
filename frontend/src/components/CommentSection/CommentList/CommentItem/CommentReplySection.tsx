@@ -39,15 +39,6 @@ export default function CommentReplySection({
       {isLoggedIn && !isParentDeleted && (
         <>
           <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글</S.ReplyWriteButton>
-          {isReplyFormOpen && (
-            <S.CommentReplyFormWrapper>
-              <CommentSubmitForm
-                postId={postId}
-                parentCommentId={parentId}
-                usePostCommentMutation={usePostCommentMutation}
-              />
-            </S.CommentReplyFormWrapper>
-          )}
         </>
       )}
       <CommentReplyList
@@ -55,6 +46,15 @@ export default function CommentReplySection({
         usePatchCommentMutation={usePatchCommentMutation}
         useDeleteCommentMutation={useDeleteCommentMutation}
       />
+      {isReplyFormOpen && (
+        <S.CommentReplyFormWrapper>
+          <CommentSubmitForm
+            postId={postId}
+            parentCommentId={parentId}
+            usePostCommentMutation={usePostCommentMutation}
+          />
+        </S.CommentReplyFormWrapper>
+      )}
     </S.CommentReplySectionContainer>
   );
 }
