@@ -1,17 +1,18 @@
 import * as S from './SolutionListPage.styled';
-import useSolutionSummaries from '@/hooks/useSolutionSummaries';
-import InfoCard from '@/components/common/InfoCard';
 import TagList from '@/components/common/TagList';
 import useHashTags from '@/hooks/useHashTags';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '@/constants/routes';
+
 import { useState } from 'react';
+import SolutionList from '@/components/SolutionList';
+import type { SelectedMissionType } from '@/types/mission';
+import useMissions from '@/hooks/useMissions';
 
 export default function SolutionListPage() {
+  const [selectedMission, setSelectedMission] = useState<SelectedMissionType | null>(null);
   const [selectedHashTag, setSelectedHashTag] = useState<{ id: number; name: string } | null>(null);
 
-  const { data: solutionSummaries } = useSolutionSummaries(selectedHashTag?.name);
   const { data: allHashTags } = useHashTags();
+  const { data: allMissions } = useMissions(selectedHashTag?.name);
 
   return (
     <S.SolutionListPageContainer>
@@ -20,25 +21,19 @@ export default function SolutionListPage() {
         <S.Subtitle>다른 사람이 푼 풀이도 확인해보세요!</S.Subtitle>
       </S.TitleWrapper>
       <TagList
+        tags={allMissions}
+        setSelectedTag={setSelectedMission}
+        selectedTag={selectedMission}
+        keyName="title"
+        variant="danger"
+      />
+      <TagList
         tags={allHashTags}
         setSelectedTag={setSelectedHashTag}
         selectedTag={selectedHashTag}
         keyName="name"
       />
-      <S.SolutionList>
-        {solutionSummaries.map(({ id, thumbnail, title, description, hashTags }) => (
-          <Link key={id} to={`${ROUTES.solutions}/${id}`}>
-            <InfoCard
-              id={id}
-              thumbnailSrc={thumbnail}
-              title={title}
-              hashTags={hashTags}
-              description={description}
-              thumbnailFallbackText="Solution"
-            />
-          </Link>
-        ))}
-      </S.SolutionList>
+      <SolutionList selectedMission={selectedMission} selectedHashTag={selectedHashTag} />
     </S.SolutionListPageContainer>
   );
 }

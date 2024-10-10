@@ -17,12 +17,13 @@ interface GetSolutionSummariesResponse {
   data: SolutionSummary[];
 }
 
-export const getSolutionSummaries = async (
-  filter: string = HASHTAGS.all,
-): Promise<SolutionSummary[]> => {
+export const getSolutionSummaries = async (payload: {
+  mission: string;
+  hashTag: string;
+}): Promise<SolutionSummary[]> => {
   const { data } = await develupAPIClient.get<GetSolutionSummariesResponse>(
     PATH.solutionSummaries,
-    { hashTag: filter },
+    payload,
   );
 
   return data;

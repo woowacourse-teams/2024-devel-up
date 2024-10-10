@@ -14,13 +14,20 @@ export default function DiscussionListHeader() {
   };
 
   return (
-    <S.HeaderTitleWrapper>
-      <S.HeaderTitle>💬 디스커션</S.HeaderTitle>
-      {userInfo && (
-        <Button variant="primary" onClick={handleToSubmitDiscussion}>
-          작성하기
-        </Button>
-      )}
-    </S.HeaderTitleWrapper>
+    <S.HeaderContainer>
+      <S.HeaderTitleWrapper>
+        <S.HeaderTitle>💬 디스커션</S.HeaderTitle>
+        {userInfo && (
+          <Button variant="primary" onClick={handleToSubmitDiscussion}>
+            작성하기
+          </Button>
+        )}
+      </S.HeaderTitleWrapper>
+      <S.HeaderSubtitle>
+        사람들과 함께 자유롭게 이야기해보세요!
+        <br />
+        미션과 해시태그로 원하는 주제를 쉽게 찾을 수 있어요.
+      </S.HeaderSubtitle>
+    </S.HeaderContainer>
   );
 }

@@ -2,6 +2,7 @@ import Header from './components/Header';
 import { GlobalLayout } from './styles/GlobalLayout';
 import type { PropsWithChildren } from 'react';
 import Footer from './components/Footer';
+import { ScrollToTopButton } from './components/common/ScrollToTopButton';
 
 export default function App({ children }: PropsWithChildren) {
   return (
@@ -11,6 +12,7 @@ export default function App({ children }: PropsWithChildren) {
         {children}
       </GlobalLayout>
       <Footer />
+      <ScrollToTopButton />
     </>
   );
 }
