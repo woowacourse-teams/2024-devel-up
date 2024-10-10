@@ -324,6 +324,7 @@ export const router = createBrowserRouter(routes, {
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <RouterProvider router={router} />
