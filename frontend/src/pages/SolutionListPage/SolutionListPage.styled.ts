@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 export const SolutionTitle = styled.h2`
   ${(props) => props.theme.font.heading1}

@@ -6,6 +6,7 @@ interface TagMultipleListProps<T> {
   selectedTags: T[];
   setSelectedTags: (updatedSelectedTags: T[]) => void;
   variant?: TagButtonVariant;
+  label?: string;
   keyName: keyof T;
 }
 
@@ -14,6 +15,7 @@ export default function TagMultipleList<T extends { id: number }>({
   selectedTags,
   setSelectedTags,
   variant = 'default',
+  label,
   keyName,
 }: TagMultipleListProps<T>) {
   const handleSelectedTags = (tag: T) => {
@@ -28,21 +30,24 @@ export default function TagMultipleList<T extends { id: number }>({
   };
 
   return (
-    <S.TagMultipleListContainer>
-      {tags.map((tag) => {
-        const name = tag[keyName] as string;
-        const isSelected = selectedTags.some((selectedTag) => selectedTag.id === tag.id);
-        return (
-          <TagButton
-            key={tag.id}
-            isSelected={isSelected}
-            onClick={() => handleSelectedTags(tag)}
-            variant={variant}
-          >
-            {name}
-          </TagButton>
-        );
-      })}
-    </S.TagMultipleListContainer>
+    <S.Container>
+      <S.Label>{label}</S.Label>
+      <S.TagMultipleListWrapper>
+        {tags.map((tag) => {
+          const name = tag[keyName] as string;
+          const isSelected = selectedTags.some((selectedTag) => selectedTag.id === tag.id);
+          return (
+            <TagButton
+              key={tag.id}
+              isSelected={isSelected}
+              onClick={() => handleSelectedTags(tag)}
+              variant={variant}
+            >
+              # {name}
+            </TagButton>
+          );
+        })}
+      </S.TagMultipleListWrapper>
+    </S.Container>
   );
 }
