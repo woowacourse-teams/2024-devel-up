@@ -1,5 +1,6 @@
 package develup.support.data;
 
+import java.time.LocalDateTime;
 import develup.domain.member.Member;
 import develup.domain.mission.Mission;
 import develup.domain.solution.PullRequestUrl;
@@ -16,7 +17,8 @@ public class SolutionTestData {
                 .withTitle("루터회관 흡연단속 제출합니다.")
                 .withDescription("안녕하세요. 피드백 잘 부탁 드려요.")
                 .withUrl("https://github.com/develup/mission/pull/1")
-                .withStatus(SolutionStatus.COMPLETED);
+                .withStatus(SolutionStatus.COMPLETED)
+                .withSubmittedAt(LocalDateTime.now());
     }
 
     public static class SolutionBuilder {
@@ -28,6 +30,7 @@ public class SolutionTestData {
         private String description;
         private PullRequestUrl url;
         private SolutionStatus status;
+        private LocalDateTime submittedAt;
 
         public SolutionBuilder withId(Long id) {
             this.id = id;
@@ -64,6 +67,11 @@ public class SolutionTestData {
             return this;
         }
 
+        public SolutionBuilder withSubmittedAt(LocalDateTime submittedAt) {
+            this.submittedAt = submittedAt;
+            return this;
+        }
+
         public Solution build() {
             return new Solution(
                     id,
@@ -72,7 +80,8 @@ public class SolutionTestData {
                     title,
                     description,
                     url,
-                    status
+                    status,
+                    submittedAt
             );
         }
     }
