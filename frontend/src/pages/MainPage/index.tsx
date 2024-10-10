@@ -1,7 +1,6 @@
 import * as S from './MainPage.styled';
 import useMissions from '@/hooks/useMissions';
 import MissionList from '@/components/MissionList';
-import { useNavigate } from 'react-router-dom';
 import AboutPage from '../AboutPage/AboutPage';
 
 export default function MainPage() {

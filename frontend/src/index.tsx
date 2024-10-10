@@ -33,7 +33,7 @@ Sentry.init({
 
 // 메인
 const MainPage = lazy(() => import('./pages/MainPage'));
-const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
+// const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
 const UserProfilePage = lazy(() => import('./pages/UserProfilePage'));
 // const GuidePage = lazy(() => import('./pages/GuidePage'));
 
