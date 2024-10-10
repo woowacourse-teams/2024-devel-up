@@ -27,7 +27,7 @@ export default function Header() {
             </S.LogoWrapper>
           </S.LeftPart>
           <S.MenuWrapper>
-            <HeaderMenu name="미션 리스트" path={ROUTES.missionList} currentPath={pathname} />
+            <HeaderMenu name="미션" path={ROUTES.missionList} currentPath={pathname} />
             <HeaderMenu name="풀이" path={ROUTES.solutions} currentPath={pathname} />
             <HeaderMenu name="디스커션" path={ROUTES.discussions} currentPath={pathname} />
           </S.MenuWrapper>

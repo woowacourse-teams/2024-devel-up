@@ -16,7 +16,7 @@ export default function SolutionListPage() {
   return (
     <S.SolutionListPageContainer>
       <S.TitleWrapper>
-        <S.SolutionTitle>💡 다른 사람의 풀이</S.SolutionTitle>
+        <S.SolutionTitle>💡 풀이</S.SolutionTitle>
         <S.Subtitle>다른 사람이 푼 풀이도 확인해보세요!</S.Subtitle>
       </S.TitleWrapper>
       <TagList
