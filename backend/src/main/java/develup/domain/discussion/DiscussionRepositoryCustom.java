@@ -67,7 +67,7 @@ public class DiscussionRepositoryCustom {
         return Optional.ofNullable(result);
     }
 
-    public List<Discussion> findAllByMemberId(Long memberId) {
+    public List<Discussion> findAllByMemberIdOrderByDesc(Long memberId) {
         return queryFactory
                 .selectFrom(discussion)
                 .innerJoin(discussion.member, member).fetchJoin()
@@ -75,6 +75,7 @@ public class DiscussionRepositoryCustom {
                 .leftJoin(discussion.discussionHashTags.hashTags, discussionHashTag).fetchJoin()
                 .leftJoin(discussionHashTag.hashTag, hashTag).fetchJoin()
                 .where(member.id.eq(memberId))
+                .orderBy(discussion.id.desc())
                 .fetch();
     }
 

@@ -8,7 +8,9 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
 
     boolean existsByMember_IdAndMission_IdAndStatus(Long memberId, Long missionId, SolutionStatus status);
 
-    List<Solution> findAllByMember_IdAndStatus(Long memberId, SolutionStatus status);
+    List<Solution> findAllByMember_IdAndStatusOrderBySubmittedAtDesc(Long memberId, SolutionStatus status);
 
     Optional<Solution> findByMember_IdAndMission_IdAndStatus(Long memberId, Long missionId, SolutionStatus status);
+
+    List<Solution> findAllByMember_IdAndStatusOrderByIdDesc(Long memberId, SolutionStatus solutionStatus);
 }

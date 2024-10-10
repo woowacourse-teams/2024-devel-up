@@ -2,7 +2,6 @@ package develup.application.solution.comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -114,54 +113,22 @@ class SolutionCommentReadServiceTest extends IntegrationTestSupport {
         Long memberId = solution.getMember().getId();
         List<MySolutionCommentResponse> myComments = solutionCommentReadService.getMyComments(memberId);
 
-        assertAll(
-                () -> assertThat(myComments).hasSize(10),
-                () -> assertThat(myComments.getFirst().solutionCommentCount()).isEqualTo(11)
-        );
+        assertThat(myComments).hasSize(10);
     }
 
-    private SolutionComment createSolutionComment(Solution solution) {
+    private void createSolutionComment(Solution solution) {
         SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
                 .withSolution(solution)
                 .withMember(solution.getMember())
                 .build();
-        return solutionCommentRepository.save(solutionComment);
+        solutionCommentRepository.save(solutionComment);
     }
 
-    private SolutionComment createSolutionComment(Solution solution, Member writer) {
+    private void createSolutionComment(Solution solution, Member writer) {
         SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
                 .withSolution(solution)
                 .withMember(writer)
                 .build();
-        return solutionCommentRepository.save(solutionComment);
-    }
-
-    @Test
-    @DisplayName("사용자가 작성한 댓글을 조회시 솔루션에 달린 댓글 수는 부모 댓글만 반영한다.")
-    void getMyCommentsWhenContainReplyComments() {
-        Solution solution = createSolution();
-        Member otherMember = memberRepository.save(MemberTestData.defaultMember().build());
-        SolutionComment parentComment = createSolutionComment(solution, otherMember);
-
-        for (int i = 0; i < 10; i++) {
-            createSolutionReplyComment(solution, parentComment);
-        }
-
-        Long memberId = solution.getMember().getId();
-        List<MySolutionCommentResponse> myComments = solutionCommentReadService.getMyComments(memberId);
-
-        assertAll(
-                () -> assertThat(myComments).hasSize(10),
-                () -> assertThat(myComments.getFirst().solutionCommentCount()).isEqualTo(1)
-        );
-    }
-
-    private SolutionComment createSolutionReplyComment(Solution solution, SolutionComment parentComment) {
-        SolutionComment solutionComment = SolutionCommentTestData.defaultSolutionComment()
-                .withParentCommentId(parentComment.getId())
-                .withSolution(solution)
-                .withMember(solution.getMember())
-                .build();
-        return solutionCommentRepository.save(solutionComment);
+        solutionCommentRepository.save(solutionComment);
     }
 }

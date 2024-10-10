@@ -8,18 +8,16 @@ public record MyDiscussionCommentResponse(
         Long discussionId,
         String content,
         LocalDateTime createdAt,
-        String discussionTitle,
-        Long discussionCommentCount
+        String discussionTitle
 ) {
 
-    public static MyDiscussionCommentResponse of(MyDiscussionComment myDiscussionComment, Long discussionCommentCount) {
+    public static MyDiscussionCommentResponse from(MyDiscussionComment myDiscussionComment) {
         return new MyDiscussionCommentResponse(
                 myDiscussionComment.id(),
                 myDiscussionComment.discussionId(),
                 myDiscussionComment.content(),
                 myDiscussionComment.createdAt(),
-                myDiscussionComment.discussionTitle(),
-                discussionCommentCount
+                myDiscussionComment.discussionTitle()
         );
     }
 }

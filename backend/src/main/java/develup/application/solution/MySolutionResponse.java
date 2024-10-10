@@ -10,7 +10,7 @@ public record MySolutionResponse(Long id, String thumbnail, String title, LocalD
                 solution.getId(),
                 solution.getMissionThumbnail(),
                 solution.getTitle(),
-                solution.getCreatedAt()
+                solution.getSubmittedAt()
         );
     }
 }
