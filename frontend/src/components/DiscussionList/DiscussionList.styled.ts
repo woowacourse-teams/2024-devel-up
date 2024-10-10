@@ -71,6 +71,11 @@ export const CommentCountIcon = styled(CommentCount)`
 `;
 
 // Header
+export const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
 
 export const HeaderTitleWrapper = styled.div`
   display: flex;
@@ -80,6 +85,12 @@ export const HeaderTitleWrapper = styled.div`
 
 export const HeaderTitle = styled.h1`
   ${(props) => props.theme.font.heading1}
+`;
+
+export const HeaderSubtitle = styled.p`
+  ${(props) => props.theme.font.body}
+
+  color: ${(props) => props.theme.colors.grey500};
 `;
 
 export const NoContentText = styled.h1`
