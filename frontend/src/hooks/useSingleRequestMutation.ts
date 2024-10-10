@@ -6,7 +6,6 @@ import { ERROR_MESSAGE } from '@/constants/messages';
 interface SingleFlightMutationOptions<TData, TError, TVariables>
   extends UseMutationOptions<TData, TError, TVariables> {
   requestId?: string;
-  queryFn: (variables: TVariables) => Promise<TData>;
 }
 
 const useSingleRequestMutation = <TData, TError, TVariables = void>(
@@ -17,7 +16,7 @@ const useSingleRequestMutation = <TData, TError, TVariables = void>(
 
   return useMutation<TData, TError, TVariables>({
     ...options,
-    mutationFn: options.queryFn,
+    mutationFn: options.mutationFn,
     onMutate: async (variables: TVariables) => {
       const canProceed = startRequest(requestId);
       if (!canProceed) {

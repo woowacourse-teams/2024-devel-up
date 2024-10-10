@@ -22,7 +22,7 @@ const NO_CONTENT_INFO = {
   },
   comments: {
     route: ROUTES.solutions,
-    mainText: '제출한 댓글이 없어요',
+    mainText: '작성한 댓글이 없어요',
     subText: '댓글을 달아볼까요?',
     buttonText: '풀이 둘러보기',
   },

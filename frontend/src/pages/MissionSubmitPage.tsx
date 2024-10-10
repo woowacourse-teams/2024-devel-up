@@ -41,6 +41,7 @@ export default function MissionSubmitPage() {
     isUrlError,
     isDescriptionError,
     isSolutionTitleError,
+    isSubmitSolutionError,
     // isMatchedMissionName,
   } = useSubmitSolution({ missionId, missionName });
 
@@ -98,7 +99,7 @@ export default function MissionSubmitPage() {
           onChange={handleUrl}
           missionId={missionId}
           // danger={isUrlError || !isMatchedMissionName}
-          danger={isUrlError}
+          danger={isUrlError || isSubmitSolutionError}
         />
         <OneWord
           danger={isDescriptionError}

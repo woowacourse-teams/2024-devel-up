@@ -1,4 +1,5 @@
 import Bell from '@/assets/images/bell.svg';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.nav`
@@ -31,7 +32,8 @@ export const LogoImg = styled.img`
 `;
 
 export const Logo = styled.h1`
-  ${(props) => props.theme.font.heading3}
+  ${(props) => props.theme.font.heading3};
+  margin-left: 1rem;
 `;
 
 export const Spacer = styled.div`
@@ -50,6 +52,12 @@ export const RightPart = styled.div`
 `;
 
 export const LeftPart = styled.div``;
+
+export const LogoWrapper = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const LoginButton = styled.button`
   ${(props) => props.theme.font.body}
