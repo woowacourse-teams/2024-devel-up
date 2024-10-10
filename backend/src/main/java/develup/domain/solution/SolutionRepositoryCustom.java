@@ -9,6 +9,7 @@ import static develup.domain.solution.comment.QSolutionComment.solutionComment;
 import java.util.List;
 import java.util.Optional;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.domain.solution.comment.SolutionCommentCount;
@@ -33,13 +34,17 @@ public class SolutionRepositoryCustom {
                                         .join(missionHashTag.hashTag)
                                         .where(
                                                 missionHashTag.mission.id.eq(mission.id)
-                                                        .and(missionHashTag.hashTag.name.eq(name))
+                                                        .and(eqHashTagName(name))
                                         )
                                         .exists()
                                 )
                 )
                 .orderBy(solution.id.desc())
                 .fetch();
+    }
+
+    private BooleanExpression eqHashTagName(String name) {
+        return missionHashTag.hashTag.name.eq(name);
     }
 
     public List<Solution> findAllCompletedSolution() {
