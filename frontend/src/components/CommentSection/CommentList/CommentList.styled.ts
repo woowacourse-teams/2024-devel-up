@@ -96,6 +96,10 @@ export const CommentHead = styled.div`
   justify-content: space-between;
 `;
 
+export const CommentPatchFormWrapper = styled.div`
+  margin-top: 1.5rem;
+`;
+
 export const Button = styled.button`
   height: fit-content;
 `;

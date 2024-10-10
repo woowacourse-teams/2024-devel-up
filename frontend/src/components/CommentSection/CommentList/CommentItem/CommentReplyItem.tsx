@@ -54,12 +54,14 @@ export default function CommentReplyItem({
         )}
       </S.CommentHead>
       {isMine && isEdit ? (
-        <CommentPatchForm
-          initialContent={commentReply.content}
-          commentId={commentReply.id}
-          usePatchCommentMutation={usePatchCommentMutation}
-          onSubmit={() => setIsEdit(false)}
-        />
+        <S.CommentPatchFormWrapper>
+          <CommentPatchForm
+            initialContent={commentReply.content}
+            commentId={commentReply.id}
+            usePatchCommentMutation={usePatchCommentMutation}
+            onSubmit={() => setIsEdit(false)}
+          />
+        </S.CommentPatchFormWrapper>
       ) : (
         <S.CommentContent source={content} />
       )}

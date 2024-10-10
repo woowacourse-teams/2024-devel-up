@@ -4,6 +4,7 @@ import SanitizedMDPreview from '@/components/common/SanitizedMDPreview';
 export const DiscussionDetailPageContainer = styled.div`
   margin: 0 auto;
   width: fit-content;
+  padding-bottom: 10rem;
 `;
 
 export const DiscussionDetailTitle = styled.h2`
