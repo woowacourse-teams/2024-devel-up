@@ -1,5 +1,5 @@
 import TextArea from '@/components/common/TextArea/TextArea';
-import * as S from './DiscussionSubmit.style';
+import * as S from './DiscussionSubmit.styled';
 import type { TextareaHTMLAttributes } from 'react';
 
 interface DiscussionDescriptionProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
