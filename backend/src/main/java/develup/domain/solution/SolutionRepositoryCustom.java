@@ -9,7 +9,7 @@ import static develup.domain.solution.comment.QSolutionComment.solutionComment;
 import java.util.List;
 import java.util.Optional;
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.domain.solution.comment.SolutionCommentCount;
 import lombok.RequiredArgsConstructor;
@@ -21,35 +21,34 @@ public class SolutionRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<Solution> findAllCompletedSolutionByHashTagName(String name) {
+    public List<Solution> findAllCompletedSolutionByHashTagName(String missionTitle, String hashTagName) {
         return queryFactory.selectFrom(solution)
                 .join(solution.mission, mission).fetchJoin()
                 .join(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
                 .join(missionHashTag.hashTag).fetchJoin()
-                .where(
-                        solution.status.eq(SolutionStatus.COMPLETED)
-                                .and(JPAExpressions.selectOne()
-                                        .from(missionHashTag)
-                                        .join(missionHashTag.hashTag)
-                                        .where(
-                                                missionHashTag.mission.id.eq(mission.id)
-                                                        .and(missionHashTag.hashTag.name.eq(name))
-                                        )
-                                        .exists()
-                                )
-                )
+                .where(eqCompleted(), eqMissionTitle(missionTitle), eqHashTagName(hashTagName))
                 .orderBy(solution.id.desc())
                 .fetch();
     }
 
-    public List<Solution> findAllCompletedSolution() {
-        return queryFactory.selectFrom(solution)
-                .join(solution.mission, mission).fetchJoin()
-                .join(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
-                .join(missionHashTag.hashTag).fetchJoin()
-                .where(solution.status.eq(SolutionStatus.COMPLETED))
-                .orderBy(solution.id.desc())
-                .fetch();
+    private BooleanExpression eqCompleted() {
+        return solution.status.eq(SolutionStatus.COMPLETED);
+    }
+
+    private BooleanExpression eqMissionTitle(String missionTitle) {
+        if ("all".equalsIgnoreCase(missionTitle)) {
+            return null;
+        }
+
+        return mission.title.eq(missionTitle);
+    }
+
+    private BooleanExpression eqHashTagName(String hashTagName) {
+        if ("all".equalsIgnoreCase(hashTagName)) {
+            return null;
+        }
+
+        return missionHashTag.hashTag.name.eq(hashTagName);
     }
 
     public Optional<Solution> findFetchById(Long solutionId) {
