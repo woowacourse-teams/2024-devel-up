@@ -40,6 +40,7 @@ export default function MissionProcess({ handleModalClose, onClick }: MissionPro
   const [contentId, setContentId] = useState(1);
   const currentContent = CONTENT_LIST.find((content) => content.id === contentId);
   if (!currentContent) throw new Error();
+  console.log(contentId);
 
   const isEndContent = contentId === CONTENT_LIST.length;
 
@@ -53,8 +54,8 @@ export default function MissionProcess({ handleModalClose, onClick }: MissionPro
 
   return (
     <S.MissionProcessContentContainer>
-      <S.CloseIconWrapper>
-        <S.CloseIcon onClick={handleModalClose} />
+      <S.CloseIconWrapper onClick={handleModalClose}>
+        <S.CloseIcon />
       </S.CloseIconWrapper>
       <S.ContentWrapper>
         <S.Title>어떻게 진행하나요?</S.Title>
@@ -69,15 +70,17 @@ export default function MissionProcess({ handleModalClose, onClick }: MissionPro
             </>
           ) : (
             <>
-              <S.ArrowButton onClick={handlePreviousMissionProcess}>
-                <LeftArrow />
-                Prev
-              </S.ArrowButton>
+              {contentId > 1 ? (
+                <S.LeftArrowButton onClick={handlePreviousMissionProcess}>
+                  <LeftArrow />
+                  Prev
+                </S.LeftArrowButton>
+              ) : null}
 
-              <S.ArrowButton onClick={handleNextMissionProcess}>
+              <S.RightArrowButton onClick={handleNextMissionProcess}>
                 Next
                 <RightArrow />
-              </S.ArrowButton>
+              </S.RightArrowButton>
             </>
           )}
         </S.ButtonWrapper>
