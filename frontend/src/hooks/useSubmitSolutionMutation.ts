@@ -32,7 +32,7 @@ const useSubmitSolutionMutation = ({
     requestId: SINGLE_REQUEST_ID,
   });
 
-  return { submitSolutionMutation, isPending };
+  return { submitSolutionMutation, isPending, isSubmitSolutionError };
 };
 
 export default useSubmitSolutionMutation;

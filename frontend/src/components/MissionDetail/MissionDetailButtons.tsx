@@ -60,7 +60,7 @@ export default function MissionDetailButtons({
         )}
         {userInfo && isMissionStarted && (
           <Button variant="primary" size="half" onClick={handleNavigateToSubmit}>
-            미션 제출하기
+            풀이 제출하기
           </Button>
         )}
         <S.InfoMsgWrapper onClick={handleModalOpen}>

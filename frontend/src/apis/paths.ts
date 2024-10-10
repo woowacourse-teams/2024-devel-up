@@ -23,5 +23,7 @@ export const PATH = {
 
 export const PATH_FORMATTER = {
   solutionComments: (solutionId: number) => `/solutions/${solutionId}/comments`,
+  solutionSingleComment: (commentId: number) => `/solutions/comments/${commentId}`,
   discussionComments: (discussionId: number) => `/discussions/${discussionId}/comments`,
+  discussionSingleComment: (commentId: number) => `/discussions/comments/${commentId}`,
 };

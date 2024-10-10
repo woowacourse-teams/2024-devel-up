@@ -20,7 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class SolutionCommentRepositoryTest extends IntegrationTestSupport {
+class SolutionCommentRepositoryCustomTest extends IntegrationTestSupport {
 
     @Autowired
     private SolutionRepository solutionRepository;
@@ -34,6 +34,27 @@ class SolutionCommentRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private SolutionCommentRepository solutionCommentRepository;
 
+    @Autowired
+    private SolutionCommentRepositoryCustom solutionCommentRepositoryCustom;
+
+    @Test
+    @DisplayName("특정 솔루션에 작성된 댓글 목록을 생성일자 오름차순으로 조회한다.")
+    void findAllBySolutionIdOrderByCreatedAtAsc() {
+        Member member = createMember();
+
+        Solution otherSolution = createSolution();
+        createSolutionComment(otherSolution, member);
+
+        Solution targetSolution = createSolution();
+        SolutionComment comment1 = createSolutionComment(targetSolution, member);
+        SolutionComment comment2 = createSolutionComment(targetSolution, member);
+
+        List<SolutionComment> solutionComments = solutionCommentRepositoryCustom
+                .findAllBySolutionIdOrderByCreatedAtAsc(targetSolution.getId());
+
+        assertThat(solutionComments).containsExactly(comment1, comment2);
+    }
+
     @Test
     @DisplayName("특정 회원이 작성한 댓글 목록을 조회한다.")
     void getMyComments() {
@@ -46,7 +67,7 @@ class SolutionCommentRepositoryTest extends IntegrationTestSupport {
         }
         createSolutionComment();
 
-        List<MySolutionComment> myComments = solutionCommentRepository.findAllMySolutionComment(member.getId());
+        List<MySolutionComment> myComments = solutionCommentRepositoryCustom.findAllMySolutionComment(member.getId());
 
         assertThat(myComments)
                 .hasSize(solutionComments.size());
@@ -65,7 +86,7 @@ class SolutionCommentRepositoryTest extends IntegrationTestSupport {
         createSolutionComment();
         createDeletedSolutionComment(solution, member);
 
-        List<MySolutionComment> myComments = solutionCommentRepository.findAllMySolutionComment(member.getId());
+        List<MySolutionComment> myComments = solutionCommentRepositoryCustom.findAllMySolutionComment(member.getId());
 
         assertThat(myComments)
                 .hasSize(solutionComments.size());

@@ -7,6 +7,7 @@ import useUserInfo from '@/hooks/useUserInfo';
 import HeaderMenu from './HeaderMenu';
 import useLogoutMutation from '@/hooks/useLogoutMutation';
 import { API_URL } from '@/apis/clients/develupClient';
+import Logo from '@/assets/images/logo.svg';
 // import useModal from '@/hooks/useModal';
 
 export default function Header() {
@@ -20,9 +21,10 @@ export default function Header() {
       <S.Container>
         <S.Wrapper>
           <S.LeftPart>
-            <Link to={ROUTES.main}>
-              <S.Logo>🚀 DEVEL UP</S.Logo>
-            </Link>
+            <S.LogoWrapper to={ROUTES.main}>
+              <Logo width={20} height={20} />
+              <S.Logo> DEVEL UP</S.Logo>
+            </S.LogoWrapper>
           </S.LeftPart>
           <S.MenuWrapper>
             <HeaderMenu name="미션 리스트" path={ROUTES.missionList} currentPath={pathname} />

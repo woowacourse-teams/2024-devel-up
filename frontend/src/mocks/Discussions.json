@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "title": "id가 1인 discussion",
+    "mission": "단어 퍼즐 게임",
+    "hashTags": [
+      {
+        "id": 1,
+        "name": "JAVA"
+      }
+    ],
+    "member": {
+      "id": 1,
+      "email": "test@example.com",
+      "name": "test",
+      "imageUrl": "sample.com"
+    },
+    "commentCount": 10,
+    "createdAt": "2024-10-08T16:33:56.081285"
+  },
+  {
+    "id": 2,
+    "title": "zzz",
+    "mission": "단어 퍼즐 게임",
+    "hashTags": [],
+    "member": {
+      "id": 1,
+      "email": "test@example.com",
+      "name": "test",
+      "imageUrl": "sample.com"
+    },
+    "commentCount": 5,
+    "createdAt": "2024-10-08T16:33:56.081285"
+  },
+  {
+    "id": 3,
+    "title": "aasdadw",
+    "mission": "",
+    "hashTags": [
+      {
+        "id": 1,
+        "name": "JAVA"
+      }
+    ],
+    "member": {
+      "id": 1,
+      "email": "test@example.com",
+      "name": "test",
+      "imageUrl": "sample.com"
+    },
+    "commentCount": 0,
+    "createdAt": "2024-10-08T16:33:56.081285"
+  }
+]

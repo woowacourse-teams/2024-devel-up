@@ -1,8 +1,11 @@
-import type { PostCommentParams } from '@/components/CommentSection/CommentForm/types';
+import type {
+  DeleteCommentParams,
+  PatchCommentParams,
+  PostCommentParams,
+} from '@/components/CommentSection/CommentForm/types';
 import type { SolutionComment, MyComments } from '@/types';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH, PATH_FORMATTER } from './paths';
-import type { PostSolutionCommentResponseData } from '@/hooks/usePostSolutionCommentMutation';
 
 export const getSolutionComments = async (solutionId: number): Promise<SolutionComment[]> => {
   const { data } = await develupAPIClient.get<{ data: SolutionComment[] }>(
@@ -11,6 +14,20 @@ export const getSolutionComments = async (solutionId: number): Promise<SolutionC
 
   return data;
 };
+
+export interface PostSolutionCommentResponseData {
+  id: number;
+  solutionId: number;
+  parentCommentId: number;
+  content: string;
+  member: {
+    id: number;
+    email: string;
+    name: string;
+    imageUrl: string;
+  };
+  createdAt: string;
+}
 
 export const postSolutionComment = async ({
   postId,
@@ -22,6 +39,41 @@ export const postSolutionComment = async ({
   );
 
   return data;
+};
+
+export interface PatchSolutionCommentResponseData {
+  id: number;
+  solutionId: number;
+  content: string;
+  member: {
+    id: number;
+    email: string;
+    name: string;
+    imageUrl: string;
+  };
+  createdAt: string;
+}
+
+export const patchSolutionComment = async ({
+  commentId,
+  body,
+}: PatchCommentParams): Promise<PatchSolutionCommentResponseData> => {
+  const { data } = await develupAPIClient.patch<{ data: PatchSolutionCommentResponseData }>(
+    PATH_FORMATTER.solutionSingleComment(commentId),
+    body,
+  );
+
+  return data;
+};
+
+type CommentId = number;
+
+export const deleteSolutionComment = async ({
+  commentId,
+}: DeleteCommentParams): Promise<CommentId> => {
+  await develupAPIClient.delete(PATH_FORMATTER.solutionSingleComment(commentId));
+
+  return commentId;
 };
 
 export const getMyComments = async (): Promise<MyComments[]> => {

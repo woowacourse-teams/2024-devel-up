@@ -3,6 +3,7 @@ import * as S from './ErrorFallback.styled';
 import { ROUTES } from '@/constants/routes';
 import { GlobalLayout } from '@/styles/GlobalLayout';
 import ErrorLogo from './ErrorLogo';
+import Button from '../Button/Button';
 
 export interface ErrorFallbackProps {
   statusCode: number;
@@ -15,16 +16,24 @@ const generateHTTPErrorMessage = (statusCode: number) => {
 };
 
 const ErrorFallback = ({ statusCode }: ErrorFallbackProps) => {
-  const { heading, body, button } = generateHTTPErrorMessage(statusCode);
+  const {
+    heading,
+    body,
+    button,
+    imgComponent: ImgComponent,
+  } = generateHTTPErrorMessage(statusCode);
 
   return (
     <GlobalLayout>
       <ErrorLogo />
       <S.Container>
-        <S.Wrapper>{heading}</S.Wrapper>
-        <S.Wrapper>{body}</S.Wrapper>
+        <ImgComponent />
         <S.Wrapper>
-          <a href={ROUTES.main}>{button}</a>
+          <S.Header>{heading}</S.Header>
+          <S.Body>{body}</S.Body>
+          <a href={ROUTES.main}>
+            <Button>{button}</Button>
+          </a>
         </S.Wrapper>
       </S.Container>
     </GlobalLayout>

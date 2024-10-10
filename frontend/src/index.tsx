@@ -64,8 +64,7 @@ const MyCommentsPage = lazy(() => import('./pages/DashboardPage/MyComments'));
 const SubmittedSolutionList = lazy(() => import('./components/DashBoard/SubmittedSolutions'));
 
 // 기타
-const ErrorPage = lazy(() => import('./pages/ErrorPage'));
-const NotFoundPage = lazy(() => import('./pages/404Page'));
+const ErrorFallback = lazy(() => import('@/components/common/Error/ErrorFallback'));
 const NeedToLoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const PrivateRoute = lazy(() => import('./components/common/PrivateRoute'));
 
@@ -144,16 +143,6 @@ const routes = [
           </Suspense>
         </App>
       </QueryErrorBoundary>
-    ),
-  },
-  {
-    path: ROUTES.error,
-    element: (
-      <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <ErrorPage />
-        </Suspense>
-      </App>
     ),
   },
   {
@@ -286,11 +275,19 @@ const routes = [
   },
   {
     path: '/login',
-    element: <NeedToLoginPage />,
+    element: (
+      <QueryErrorBoundary>
+        <App>
+          <Suspense fallback={<LoadingSpinner />}>
+            <NeedToLoginPage />
+          </Suspense>
+        </App>
+      </QueryErrorBoundary>
+    ),
   },
   {
     path: '*',
-    element: <NotFoundPage />,
+    element: <ErrorFallback statusCode={404} />,
   },
 ];
 
