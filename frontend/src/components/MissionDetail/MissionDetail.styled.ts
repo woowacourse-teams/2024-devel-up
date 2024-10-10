@@ -116,6 +116,24 @@ export const NeedToLoginText = styled.span`
   color: var(--grey-500);
 `;
 
+export const SubmitButton = styled.button`
+  background-color: var(--grey-700);
+  color: #ffffff;
+  width: 27.1rem;
+  min-height: 4.2rem;
+  padding: 1rem 1.4rem;
+  border-radius: 0.8rem;
+  display: flex;
+  gap: 0.3rem;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+  white-space: nowrap;
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-family: inherit;
+`;
+
 // MissionDetailContent
 
 export const MissionDescription = styled.div`

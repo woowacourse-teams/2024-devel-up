@@ -33,8 +33,6 @@ export default function MissionDetailButtons({
   };
 
   const { data: userInfo } = useUserInfo();
-
-  console.log(userInfo);
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
   const { startMissionMutation, isPendingStartMission } = useMissionStartMutation({
     onSuccessCallback: handleStartMission,
@@ -63,9 +61,7 @@ export default function MissionDetailButtons({
         )}
         {isPendingStartMission ?? <LoadingSpinner />}
         {userInfo && isMissionStarted && (
-          <Button variant="primary" size="half" onClick={handleNavigateToSubmit}>
-            풀이 제출하기
-          </Button>
+          <S.SubmitButton onClick={handleNavigateToSubmit}>풀이 제출하기</S.SubmitButton>
         )}
         {!userInfo && !isMissionStarted && (
           <S.NeedToLoginText>로그인 후 미션 시작 버튼을 눌러주세요!</S.NeedToLoginText>
