@@ -26,7 +26,7 @@ export default function DiscussionItem({
     <S.DiscussionWrapper to={`/discussions/${id}`}>
       <S.TextWrapper>
         <S.HashTagWrapper>
-          <S.HashTag $isTitle>{mission}</S.HashTag>
+          {mission && <S.HashTag $isTitle>{mission}</S.HashTag>}
           {hashTags.map((hashTag) => {
             return <S.HashTag key={hashTag.id}>{hashTag.name}</S.HashTag>;
           })}
