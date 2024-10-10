@@ -51,16 +51,6 @@ public class SolutionRepositoryCustom {
         return missionHashTag.hashTag.name.eq(name);
     }
 
-    public List<Solution> findAllCompletedSolution() {
-        return queryFactory.selectFrom(solution)
-                .join(solution.mission, mission).fetchJoin()
-                .join(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
-                .join(missionHashTag.hashTag).fetchJoin()
-                .where(solution.status.eq(SolutionStatus.COMPLETED))
-                .orderBy(solution.id.desc())
-                .fetch();
-    }
-
     public Optional<Solution> findFetchById(Long solutionId) {
         return Optional.ofNullable(queryFactory.selectFrom(solution)
                 .join(solution.member, member).fetchJoin()
