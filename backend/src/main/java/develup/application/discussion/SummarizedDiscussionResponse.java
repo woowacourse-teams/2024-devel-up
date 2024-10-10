@@ -10,6 +10,7 @@ import develup.domain.discussion.DiscussionHashTag;
 public record SummarizedDiscussionResponse(
         Long id,
         String title,
+        String content,
         String mission,
         List<HashTagResponse> hashTags,
         MemberResponse member,
@@ -25,6 +26,7 @@ public record SummarizedDiscussionResponse(
         return new SummarizedDiscussionResponse(
                 discussion.getId(),
                 discussion.getTitle(),
+                discussion.getContent(),
                 discussion.getMissionTitle(),
                 hashTagResponses,
                 MemberResponse.from(discussion.getMember()),
