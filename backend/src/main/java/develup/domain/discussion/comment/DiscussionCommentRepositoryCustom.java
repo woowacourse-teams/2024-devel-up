@@ -24,7 +24,7 @@ public class DiscussionCommentRepositoryCustom {
                 .fetch();
     }
 
-    public List<MyDiscussionComment> findAllMyDiscussionComment(Long memberId) {
+    public List<MyDiscussionComment> findAllMyDiscussionCommentOrderByCreatedAtDesc(Long memberId) {
         return queryFactory.select(Projections.constructor(MyDiscussionComment.class,
                         discussionComment.id,
                         discussionComment.discussion.id,
@@ -36,6 +36,7 @@ public class DiscussionCommentRepositoryCustom {
                 .join(discussionComment.discussion, discussion)
                 .join(discussionComment.member)
                 .where(discussionComment.member.id.eq(memberId).and(discussionComment.deletedAt.isNull()))
+                .orderBy(discussionComment.createdAt.desc())
                 .fetch();
     }
 }
