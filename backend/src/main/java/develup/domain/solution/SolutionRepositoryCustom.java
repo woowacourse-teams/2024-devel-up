@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.domain.solution.comment.SolutionCommentCount;
 import lombok.RequiredArgsConstructor;
@@ -27,18 +26,7 @@ public class SolutionRepositoryCustom {
                 .join(solution.mission, mission).fetchJoin()
                 .join(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
                 .join(missionHashTag.hashTag).fetchJoin()
-                .where(
-                        solution.status.eq(SolutionStatus.COMPLETED)
-                                .and(JPAExpressions.selectOne()
-                                        .from(missionHashTag)
-                                        .join(missionHashTag.hashTag)
-                                        .where(
-                                                missionHashTag.mission.id.eq(mission.id)
-                                                        .and(eqHashTagName(name))
-                                        )
-                                        .exists()
-                                )
-                )
+                .where(solution.status.eq(SolutionStatus.COMPLETED).and(eqHashTagName(name)))
                 .orderBy(solution.id.desc())
                 .fetch();
     }
