@@ -23,7 +23,11 @@ export default function MissionDetailHeader({
         <S.HashTagWrapper>
           {hashTags &&
             hashTags.map((tag) => {
-              return <TagButton key={tag.id}># {tag.name}</TagButton>;
+              return (
+                <TagButton key={tag.id} isClickable={false}>
+                  # {tag.name}
+                </TagButton>
+              );
             })}
         </S.HashTagWrapper>
       </S.ThumbnailWrapper>
