@@ -1,6 +1,7 @@
 package develup.domain.discussion.comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,10 +50,16 @@ class DiscussionCommentRepositoryCustomTest extends IntegrationTestSupport {
         }
         createRootDiscussionComment();
 
-        List<MyDiscussionComment> myComments = discussionCommentRepositoryCustom.findAllMyDiscussionComment(member.getId());
+        List<MyDiscussionComment> myComments = discussionCommentRepositoryCustom.findAllMyDiscussionCommentOrderByCreatedAtDesc(member.getId());
 
-        assertThat(myComments)
-                .hasSize(discussionComments.size());
+        assertAll(
+                () -> assertThat(myComments)
+                        .hasSize(discussionComments.size()),
+                () -> assertThat(myComments)
+                        .map(MyDiscussionComment::id)
+                        .containsExactly(4L, 3L, 2L, 1L)
+        );
+
     }
 
     @Test
@@ -68,7 +75,7 @@ class DiscussionCommentRepositoryCustomTest extends IntegrationTestSupport {
         createRootDiscussionComment();
         createRootDeletedDiscussionComment(discussion, member);
 
-        List<MyDiscussionComment> myComments = discussionCommentRepositoryCustom.findAllMyDiscussionComment(member.getId());
+        List<MyDiscussionComment> myComments = discussionCommentRepositoryCustom.findAllMyDiscussionCommentOrderByCreatedAtDesc(member.getId());
 
         assertThat(myComments)
                 .hasSize(discussionComments.size());

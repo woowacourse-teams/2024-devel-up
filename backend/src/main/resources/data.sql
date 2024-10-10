@@ -46,19 +46,19 @@ VALUES (1, 1),
        (6, 4),
        (6, 5);
 
-INSERT INTO solution (mission_id, member_id, title, description, url, status, created_at)
+INSERT INTO solution (mission_id, member_id, title, description, url, status, created_at, submitted_at)
 VALUES (1, 1, '릴리 미션 제출합니다.', '안녕하세요. 잘 부탁 드립니다.', 'https://github.com/develup/mission/pull/1', 'COMPLETED',
-        '2024-08-16 13:40:00'),
+        '2024-08-16 13:40:00', '2024-08-17 13:40:00'),
        (1, 2, '아톰 미션 제출합니다.', '안녕하세요. 잘 부탁 드립니다.', 'https://github.com/develup/mission/pull/1', 'COMPLETED',
-        '2024-08-16 13:40:00'),
+        '2024-08-16 13:40:00', '2024-08-18 13:40:00'),
        (1, 3, '라이언 미션 제출합니다.', '안녕하세요. 잘 부탁 드립니다.', 'https://github.com/develup/mission/pull/1', 'COMPLETED',
-        '2024-08-16 13:40:00'),
+        '2024-08-16 13:40:00', '2024-08-16 13:40:00'),
        (2, 1, '아톰 미션 제출합니다.', '안녕하세요. 잘 부탁 드립니다.', 'https://github.com/develup/mission/pull/1', 'COMPLETED',
-        '2024-08-16 13:40:00'),
+        '2024-08-16 13:40:00', '2024-08-18 13:40:00'),
        (2, 2, '릴리 미션 제출합니다.', '안녕하세요. 잘 부탁 드립니다.', 'https://github.com/develup/mission/pull/1', 'COMPLETED',
-        '2024-08-16 13:40:00'),
+        '2024-08-16 13:40:00', '2024-08-19 13:40:00'),
        (2, 3, '아톰 미션 제출합니다.', '안녕하세요. 잘 부탁 드립니다.', 'https://github.com/develup/mission/pull/1', 'COMPLETED',
-        '2024-08-16 13:40:00');
+        '2024-08-16 13:40:00', '2024-08-19 13:40:00');
 
 -- root-1
 -- ㄴ root-1-1

@@ -2,7 +2,9 @@ package develup.application.solution;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.domain.member.Member;
 import develup.domain.member.MemberRepository;
@@ -44,19 +46,36 @@ class SolutionReadServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("나의 솔루션 리스트를 조회한다.")
+    @DisplayName("나의 솔루션 리스트를 제출 일자 역순으로 조회한다.")
     void getSubmittedSolutionsByMemberId() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
-        Solution solution = SolutionTestData.defaultSolution()
+        Solution solution1 = SolutionTestData.defaultSolution()
+                .withId(1L)
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(SolutionStatus.COMPLETED)
+                .build();
+        Solution solution2 = SolutionTestData.defaultSolution()
+                .withId(2L)
                 .withMember(member)
                 .withMission(mission)
                 .withStatus(SolutionStatus.COMPLETED)
                 .build();
 
-        solutionRepository.save(solution);
+        solutionRepository.save(solution1);
+        solutionRepository.save(solution2);
 
-        assertThat(solutionReadService.getSubmittedSolutionsByMemberId(member.getId())).hasSize(1);
+        List<MySolutionResponse> mySolutions = solutionReadService.getSubmittedSolutionsByMemberId(member.getId());
+
+        assertAll(
+                () -> assertThat(mySolutions).hasSize(2),
+                () -> assertThat(mySolutions)
+                        .map(MySolutionResponse::id)
+                        .containsExactly(solution2.getId(), solution1.getId())
+        );
+
+
     }
 
     @Test

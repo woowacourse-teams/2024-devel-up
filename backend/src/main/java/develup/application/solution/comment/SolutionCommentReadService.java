@@ -40,7 +40,7 @@ public class SolutionCommentReadService {
 
     public List<MySolutionCommentResponse> getMyComments(Long memberId) {
         List<MySolutionComment> mySolutionComments = solutionCommentRepositoryCustom
-                .findAllMySolutionComment(memberId);
+                .findAllMySolutionCommentOrderByDesc(memberId);
 
         return mySolutionComments.stream()
                 .map(MySolutionCommentResponse::from)

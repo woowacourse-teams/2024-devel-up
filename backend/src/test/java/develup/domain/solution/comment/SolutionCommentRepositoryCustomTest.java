@@ -1,6 +1,7 @@
 package develup.domain.solution.comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ class SolutionCommentRepositoryCustomTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("특정 회원이 작성한 댓글 목록을 조회한다.")
+    @DisplayName("특정 회원이 작성한 댓글 목록을 작성일자 역순으로 조회한다.")
     void getMyComments() {
         Solution solution = createSolution();
         Member member = createMember();
@@ -67,10 +68,15 @@ class SolutionCommentRepositoryCustomTest extends IntegrationTestSupport {
         }
         createSolutionComment();
 
-        List<MySolutionComment> myComments = solutionCommentRepositoryCustom.findAllMySolutionComment(member.getId());
+        List<MySolutionComment> myComments = solutionCommentRepositoryCustom.findAllMySolutionCommentOrderByDesc(member.getId());
 
-        assertThat(myComments)
-                .hasSize(solutionComments.size());
+        assertAll(
+                () -> assertThat(myComments)
+                        .hasSize(solutionComments.size()),
+                () -> assertThat(myComments)
+                        .map(MySolutionComment::id)
+                        .containsExactly(4L, 3L, 2L, 1L)
+        );
     }
 
     @Test
@@ -86,7 +92,7 @@ class SolutionCommentRepositoryCustomTest extends IntegrationTestSupport {
         createSolutionComment();
         createDeletedSolutionComment(solution, member);
 
-        List<MySolutionComment> myComments = solutionCommentRepositoryCustom.findAllMySolutionComment(member.getId());
+        List<MySolutionComment> myComments = solutionCommentRepositoryCustom.findAllMySolutionCommentOrderByDesc(member.getId());
 
         assertThat(myComments)
                 .hasSize(solutionComments.size());

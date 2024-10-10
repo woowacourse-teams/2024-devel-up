@@ -182,7 +182,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("멤버 식별자를 통해 디스커션을 조회한다.")
+    @DisplayName("멤버 식별자를 통해 디스커션을 작성일자 역순으로 조회한다.")
     @Transactional
     void findByMemberId() {
         Member member1 = memberRepository.save(MemberTestData.defaultMember().withId(1L).build());
@@ -222,12 +222,20 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         discussionRepository.save(discussionByMember1_4);
         discussionRepository.save(discussionByMember2);
 
-        List<Discussion> discussionsByMember1 = discussionRepositoryCustom.findAllByMemberId(member1.getId());
-        List<Discussion> discussionsByMember2 = discussionRepositoryCustom.findAllByMemberId(member2.getId());
+        List<Discussion> discussionsByMember1 = discussionRepositoryCustom.findAllByMemberIdOrderByDesc(member1.getId());
+        List<Discussion> discussionsByMember2 = discussionRepositoryCustom.findAllByMemberIdOrderByDesc(member2.getId());
 
         assertAll(
                 () -> assertThat(discussionsByMember1).hasSize(4),
-                () -> assertThat(discussionsByMember2).hasSize(1)
+                () -> assertThat(discussionsByMember2).hasSize(1),
+                () -> assertThat(discussionsByMember1)
+                        .map(Discussion::getId)
+                        .containsExactly(
+                                discussionByMember1_4.getId(),
+                                discussionByMember1_3.getId(),
+                                discussionByMember1_2.getId(),
+                                discussionByMember1_1.getId()
+                        )
         );
     }
 
