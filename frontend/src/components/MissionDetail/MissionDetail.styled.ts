@@ -107,6 +107,15 @@ export const Text = styled.div`
   width: 11rem;
 `;
 
+export const NeedToLoginText = styled.span`
+  font-size: 1.4rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--grey-500);
+`;
+
 // MissionDetailContent
 
 export const MissionDescription = styled.div`
