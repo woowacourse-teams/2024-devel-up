@@ -8,6 +8,7 @@ import MissionProcess from '../ModalContent/MissionProcess';
 import useMissionStartMutation from '@/hooks/useMissionStartMutation';
 import { useState } from 'react';
 import Button from '../common/Button/Button';
+import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
 
 interface MissionDetailButtonsProps {
   id: number;
@@ -33,7 +34,7 @@ export default function MissionDetailButtons({
 
   const { data: userInfo } = useUserInfo();
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
-  const { startMissionMutation } = useMissionStartMutation({
+  const { startMissionMutation, isPendingStartMission } = useMissionStartMutation({
     onSuccessCallback: handleStartMission,
   });
 
@@ -58,10 +59,12 @@ export default function MissionDetailButtons({
             미션 시작하기
           </Button>
         )}
+        {isPendingStartMission ?? <LoadingSpinner />}
         {userInfo && isMissionStarted && (
-          <Button variant="primary" size="half" onClick={handleNavigateToSubmit}>
-            풀이 제출하기
-          </Button>
+          <S.SubmitButton onClick={handleNavigateToSubmit}>풀이 제출하기</S.SubmitButton>
+        )}
+        {!userInfo && !isMissionStarted && (
+          <S.NeedToLoginText>로그인 후 미션 시작 버튼을 눌러주세요!</S.NeedToLoginText>
         )}
         <S.InfoMsgWrapper onClick={handleModalOpen}>
           <S.InfoIcon />

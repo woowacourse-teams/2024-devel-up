@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import * as S from './Header.styled';
 import { ROUTES } from '@/constants/routes';
 // import NotiModal from './NotiModal';
@@ -22,7 +22,7 @@ export default function Header() {
         <S.Wrapper>
           <S.LeftPart>
             <S.LogoWrapper to={ROUTES.main}>
-              <Logo width={20} height={20} />
+              <Logo width={30} height={30} />
               <S.Logo> DEVEL UP</S.Logo>
             </S.LogoWrapper>
           </S.LeftPart>

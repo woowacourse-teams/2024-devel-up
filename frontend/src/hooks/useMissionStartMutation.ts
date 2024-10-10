@@ -6,7 +6,7 @@ interface UserStartMissionMutationParams {
 }
 
 const useMissionStartMutation = ({ onSuccessCallback }: UserStartMissionMutationParams) => {
-  const { mutate: startMissionMutation } = useMutation({
+  const { mutate: startMissionMutation, isPending: isPendingStartMission } = useMutation({
     mutationFn: postSolutionStart,
     onSuccess: onSuccessCallback,
     onError: (error: Error) => {
@@ -14,7 +14,7 @@ const useMissionStartMutation = ({ onSuccessCallback }: UserStartMissionMutation
     },
   });
 
-  return { startMissionMutation };
+  return { startMissionMutation, isPendingStartMission };
 };
 
 export default useMissionStartMutation;
