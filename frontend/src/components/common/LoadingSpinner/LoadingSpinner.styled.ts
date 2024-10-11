@@ -44,8 +44,6 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  // TODO rgba에 관하여 일단 속성 값을 지정해둡니다.
-  background: rgba(0, 0, 0, 0.4);
   z-index: 30000;
 `;
 

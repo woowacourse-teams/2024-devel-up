@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from './MissionDetail.styled';
 import { ROUTES } from '@/constants/routes';
 import useUserInfo from '@/hooks/useUserInfo';
@@ -8,6 +8,9 @@ import MissionProcess from '../ModalContent/MissionProcess';
 import useMissionStartMutation from '@/hooks/useMissionStartMutation';
 import { useState } from 'react';
 import Button from '../common/Button/Button';
+import { API_URL } from '@/apis/clients/develupClient';
+import { PATH } from '@/apis/paths';
+import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
 
 interface MissionDetailButtonsProps {
   id: number;
@@ -20,6 +23,7 @@ export default function MissionDetailButtons({
   missionUrl,
   isStarted = false,
 }: MissionDetailButtonsProps) {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const handleNavigateToSubmit = () => {
     navigate(`${ROUTES.submitSolution}/${id}`);
@@ -33,7 +37,7 @@ export default function MissionDetailButtons({
 
   const { data: userInfo } = useUserInfo();
   const { isModalOpen, handleModalClose, handleModalOpen } = useModal();
-  const { startMissionMutation } = useMissionStartMutation({
+  const { startMissionMutation, isPendingStartMission } = useMissionStartMutation({
     onSuccessCallback: handleStartMission,
   });
 
@@ -53,15 +57,22 @@ export default function MissionDetailButtons({
           코드 보러 가기
         </Button>
 
-        {userInfo && !isMissionStarted && (
-          <Button variant="primary" size="half" onClick={handleMissionStart}>
-            미션 시작하기
-          </Button>
-        )}
+        {!isMissionStarted &&
+          (userInfo ? (
+            <Button variant="primary" size="half" onClick={handleMissionStart}>
+              미션 시작하기
+            </Button>
+          ) : (
+            <a href={`${API_URL}${PATH.githubLogin}?next=${pathname}`}>
+              <Button variant="primary" size="half">
+                로그인 후 미션 시작하기
+              </Button>
+            </a>
+          ))}
+
+        {isPendingStartMission ?? <LoadingSpinner />}
         {userInfo && isMissionStarted && (
-          <Button variant="primary" size="half" onClick={handleNavigateToSubmit}>
-            미션 제출하기
-          </Button>
+          <S.SubmitButton onClick={handleNavigateToSubmit}>풀이 제출하기</S.SubmitButton>
         )}
         <S.InfoMsgWrapper onClick={handleModalOpen}>
           <S.InfoIcon />

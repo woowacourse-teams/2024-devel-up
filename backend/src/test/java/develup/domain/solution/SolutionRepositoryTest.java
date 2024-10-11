@@ -3,6 +3,7 @@ package develup.domain.solution;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import develup.domain.hashtag.HashTag;
@@ -109,8 +110,8 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("멤버 식별자와 특정 상태에 해당하는 솔루션을 조회한다.")
-    void findByMember_IdAndStatus() {
+    @DisplayName("멤버 식별자와 특정 상태에 해당하는 솔루션을 제출일자 역순으로 조회한다.")
+    void findByMember_IdAndStatusOrderBySubmittedAtDesc() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         SolutionStatus inProgress = SolutionStatus.IN_PROGRESS;
@@ -119,21 +120,31 @@ class SolutionRepositoryTest extends IntegrationTestSupport {
                 .withMember(member)
                 .withMission(mission)
                 .withStatus(inProgress)
+                .withSubmittedAt(LocalDateTime.of(2024, 1, 1, 0, 0))
                 .build();
-        Solution completeSolution = SolutionTestData.defaultSolution()
+        Solution completeSolution1 = SolutionTestData.defaultSolution()
                 .withMember(member)
                 .withMission(mission)
                 .withStatus(completed)
+                .withSubmittedAt(LocalDateTime.of(2024, 1, 1, 0, 0))
+                .build();
+        Solution completeSolution2 = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission)
+                .withStatus(completed)
+                .withSubmittedAt(LocalDateTime.of(2024, 1, 2, 0, 0))
                 .build();
         solutionRepository.save(inProgressSolution);
-        solutionRepository.save(completeSolution);
+        solutionRepository.save(completeSolution1);
+        solutionRepository.save(completeSolution2);
 
-        List<Solution> solutionInProgress = solutionRepository.findAllByMember_IdAndStatus(member.getId(), inProgress);
-        List<Solution> solutionCompleted = solutionRepository.findAllByMember_IdAndStatus(member.getId(), completed);
+        List<Solution> solutionInProgress = solutionRepository.findAllByMember_IdAndStatusOrderBySubmittedAtDesc(member.getId(), inProgress);
+        List<Solution> solutionCompleted = solutionRepository.findAllByMember_IdAndStatusOrderBySubmittedAtDesc(member.getId(), completed);
 
         assertAll(
                 () -> assertThat(solutionInProgress).hasSize(1),
-                () -> assertThat(solutionCompleted).hasSize(1)
+                () -> assertThat(solutionCompleted).hasSize(2),
+                () -> assertThat(solutionCompleted).containsExactly(completeSolution2, completeSolution1)
         );
     }
 

@@ -5,11 +5,11 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 0 auto;
 `;
 
 export const ButtonWrapper = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 export const Button = styled.button`

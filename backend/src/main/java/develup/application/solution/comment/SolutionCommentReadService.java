@@ -3,10 +3,8 @@ package develup.application.solution.comment;
 import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
-import develup.domain.solution.SolutionRepositoryCustom;
 import develup.domain.solution.comment.MySolutionComment;
 import develup.domain.solution.comment.SolutionComment;
-import develup.domain.solution.comment.SolutionCommentCounts;
 import develup.domain.solution.comment.SolutionCommentRepository;
 import develup.domain.solution.comment.SolutionCommentRepositoryCustom;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,6 @@ public class SolutionCommentReadService {
 
     private final CommentGroupingService commentGroupingService;
     private final SolutionCommentRepository solutionCommentRepository;
-    private final SolutionRepositoryCustom solutionRepositoryCustom;
     private final SolutionCommentRepositoryCustom solutionCommentRepositoryCustom;
 
     public SolutionComment getById(Long commentId) {
@@ -43,22 +40,10 @@ public class SolutionCommentReadService {
 
     public List<MySolutionCommentResponse> getMyComments(Long memberId) {
         List<MySolutionComment> mySolutionComments = solutionCommentRepositoryCustom
-                .findAllMySolutionComment(memberId);
-        SolutionCommentCounts solutionCommentCounts = new SolutionCommentCounts(
-                solutionRepositoryCustom.findAllSolutionCommentCounts()
-        );
+                .findAllMySolutionCommentOrderByDesc(memberId);
 
         return mySolutionComments.stream()
-                .map(mySolutionComment -> mapToMySolutionCommentResponse(mySolutionComment, solutionCommentCounts))
+                .map(MySolutionCommentResponse::from)
                 .toList();
-    }
-
-    private MySolutionCommentResponse mapToMySolutionCommentResponse(
-            MySolutionComment mySolutionComment,
-            SolutionCommentCounts solutionCommentCounts
-    ) {
-        Long solutionId = mySolutionComment.solutionId();
-        Long commentCount = solutionCommentCounts.getCount(solutionId);
-        return MySolutionCommentResponse.of(mySolutionComment, commentCount);
     }
 }

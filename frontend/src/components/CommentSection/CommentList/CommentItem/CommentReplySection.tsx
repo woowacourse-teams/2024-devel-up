@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type {
   UseDeleteCommentMutation,
   UsePatchCommentMutation,
@@ -24,6 +24,8 @@ export default function CommentReplySection({
   usePatchCommentMutation,
   useDeleteCommentMutation,
 }: CommentReplySectionProps) {
+  const replyButtonAreaRef = useRef<HTMLDivElement>(null);
+
   const { isDeleted: isParentDeleted, id: parentId, replies } = parentComment;
 
   const postId = getCommentPostId(parentComment);
@@ -32,6 +34,12 @@ export default function CommentReplySection({
 
   const toggleReplyFormOpen = () => {
     setIsReplyFormOpen((prevState) => !prevState);
+
+    if (!isReplyFormOpen) {
+      setTimeout(() =>
+        replyButtonAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+      );
+    }
   };
 
   return (
@@ -39,15 +47,6 @@ export default function CommentReplySection({
       {isLoggedIn && !isParentDeleted && (
         <>
           <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글</S.ReplyWriteButton>
-          {isReplyFormOpen && (
-            <S.CommentReplyFormWrapper>
-              <CommentSubmitForm
-                postId={postId}
-                parentCommentId={parentId}
-                usePostCommentMutation={usePostCommentMutation}
-              />
-            </S.CommentReplyFormWrapper>
-          )}
         </>
       )}
       <CommentReplyList
@@ -55,6 +54,16 @@ export default function CommentReplySection({
         usePatchCommentMutation={usePatchCommentMutation}
         useDeleteCommentMutation={useDeleteCommentMutation}
       />
+      <div ref={replyButtonAreaRef} />
+      {isReplyFormOpen && (
+        <S.CommentReplyFormWrapper>
+          <CommentSubmitForm
+            postId={postId}
+            parentCommentId={parentId}
+            usePostCommentMutation={usePostCommentMutation}
+          />
+        </S.CommentReplyFormWrapper>
+      )}
     </S.CommentReplySectionContainer>
   );
 }

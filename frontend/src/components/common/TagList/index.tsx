@@ -6,6 +6,7 @@ interface TagListProps<T> {
   selectedTag: T | null;
   setSelectedTag: (tag: T | null) => void;
   variant?: TagButtonVariant;
+  label?: string;
   keyName: keyof T;
 }
 
@@ -14,24 +15,28 @@ export default function TagList<T extends { id: number }>({
   selectedTag,
   setSelectedTag,
   variant,
+  label,
   keyName,
 }: TagListProps<T>) {
   return (
-    <S.TagListContainer>
-      {tags.map((tag) => {
-        const name = tag[keyName] as string;
-        const isSelected = tag.id === selectedTag?.id;
-        return (
-          <TagButton
-            key={tag.id}
-            isSelected={isSelected}
-            onClick={() => setSelectedTag(isSelected ? null : tag)}
-            variant={variant}
-          >
-            {name}
-          </TagButton>
-        );
-      })}
-    </S.TagListContainer>
+    <S.Container>
+      <S.Label>{label}</S.Label>
+      <S.TagListWrapper>
+        {tags.map((tag) => {
+          const name = tag[keyName] as string;
+          const isSelected = tag.id === selectedTag?.id;
+          return (
+            <TagButton
+              key={tag.id}
+              isSelected={isSelected}
+              onClick={() => setSelectedTag(isSelected ? null : tag)}
+              variant={variant}
+            >
+              {name}
+            </TagButton>
+          );
+        })}
+      </S.TagListWrapper>
+    </S.Container>
   );
 }

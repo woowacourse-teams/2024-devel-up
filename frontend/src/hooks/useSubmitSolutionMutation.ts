@@ -18,13 +18,17 @@ const useSubmitSolutionMutation = ({
 }: UseSubmissionMutationParams) => {
   const navigate = useNavigate();
 
-  const { mutate: submitSolutionMutation, isPending } = useSingleRequestMutation({
-    queryFn: postSolutionSubmit,
-    onSuccess: () => {
+  const {
+    mutate: submitSolutionMutation,
+    isPending,
+    isError: isSubmitSolutionError,
+  } = useSingleRequestMutation({
+    mutationFn: postSolutionSubmit,
+    onSuccess: ({ id }) => {
       onSuccessCallback();
       queryClient.invalidateQueries({ queryKey: missionKeys.detail(missionId) });
       queryClient.invalidateQueries({ queryKey: solutionKeys.summaries });
-      navigate(ROUTES.solutions);
+      navigate(ROUTES.solutions + `/${id}`);
     },
     onError: (error: Error) => {
       console.error(error.message);
@@ -32,7 +36,7 @@ const useSubmitSolutionMutation = ({
     requestId: SINGLE_REQUEST_ID,
   });
 
-  return { submitSolutionMutation, isPending };
+  return { submitSolutionMutation, isPending, isSubmitSolutionError };
 };
 
 export default useSubmitSolutionMutation;

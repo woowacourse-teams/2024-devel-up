@@ -33,7 +33,7 @@ Sentry.init({
 
 // 메인
 const MainPage = lazy(() => import('./pages/MainPage'));
-const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
+// const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
 const UserProfilePage = lazy(() => import('./pages/UserProfilePage'));
 // const GuidePage = lazy(() => import('./pages/GuidePage'));
 
@@ -64,8 +64,7 @@ const MyCommentsPage = lazy(() => import('./pages/DashboardPage/MyComments'));
 const SubmittedSolutionList = lazy(() => import('./components/DashBoard/SubmittedSolutions'));
 
 // 기타
-const ErrorPage = lazy(() => import('./pages/ErrorPage'));
-const NotFoundPage = lazy(() => import('./pages/404Page'));
+const ErrorFallback = lazy(() => import('@/components/common/Error/ErrorFallback'));
 const NeedToLoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const PrivateRoute = lazy(() => import('./components/common/PrivateRoute'));
 
@@ -147,16 +146,6 @@ const routes = [
     ),
   },
   {
-    path: ROUTES.error,
-    element: (
-      <App>
-        <Suspense fallback={<LoadingSpinner />}>
-          <ErrorPage />
-        </Suspense>
-      </App>
-    ),
-  },
-  {
     path: ROUTES.solutions,
     element: (
       <QueryErrorBoundary>
@@ -235,18 +224,6 @@ const routes = [
     ),
   },
   {
-    path: ROUTES.about,
-    element: (
-      <QueryErrorBoundary>
-        <App>
-          <Suspense fallback={<LoadingSpinner />}>
-            <AboutPage />
-          </Suspense>
-        </App>
-      </QueryErrorBoundary>
-    ),
-  },
-  {
     path: `${ROUTES.discussions}/:id`,
     element: (
       <QueryErrorBoundary>
@@ -286,11 +263,19 @@ const routes = [
   },
   {
     path: '/login',
-    element: <NeedToLoginPage />,
+    element: (
+      <QueryErrorBoundary>
+        <App>
+          <Suspense fallback={<LoadingSpinner />}>
+            <NeedToLoginPage />
+          </Suspense>
+        </App>
+      </QueryErrorBoundary>
+    ),
   },
   {
     path: '*',
-    element: <NotFoundPage />,
+    element: <ErrorFallback statusCode={404} />,
   },
 ];
 
@@ -327,6 +312,7 @@ export const router = createBrowserRouter(routes, {
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <RouterProvider router={router} />

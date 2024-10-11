@@ -4,7 +4,6 @@ export const DiscussionSubmitContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.5rem;
-  margin: 0 8rem;
 `;
 
 export const DiscussionTagListWrapper = styled.div`
@@ -34,4 +33,20 @@ export const DiscussionDescriptionContainer = styled.div`
 export const DiscussionDescriptionTitle = styled.h1`
   ${(props) => props.theme.font.bodyBold}
   margin: 1.1rem 0;
+`;
+
+// Header
+export const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+export const DiscussionSubmitTitle = styled.h1`
+  ${(props) => props.theme.font.heading1}
+`;
+
+export const Subtitle = styled.p`
+  ${(props) => props.theme.font.body}
+  color: ${(props) => props.theme.colors.grey500};
 `;

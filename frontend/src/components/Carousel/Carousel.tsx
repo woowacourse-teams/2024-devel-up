@@ -1,8 +1,8 @@
 import type { PropsWithChildren } from 'react';
 import * as S from './Carousel.styled';
 import useCarousel from '@/hooks/useCarousel';
-import LeftArrow from '@/assets/images/leftArrow.svg';
-import RightArrow from '@/assets/images/rightArrow.svg';
+// import LeftArrow from '@/assets/images/leftArrow.svg';
+// import RightArrow from '@/assets/images/rightArrow.svg';
 
 interface CarouselProps extends PropsWithChildren {
   autoPlay?: boolean;
@@ -16,8 +16,12 @@ export default function Carousel({
   infinite = true,
   children,
 }: CarouselProps) {
-  const { carouselItems, trackRef, currentIndex, isSliding, handleNextSlide, handlePreviousSlide } =
-    useCarousel({ autoPlay, autoSpeed, infinite, children });
+  const { carouselItems, trackRef, currentIndex, isSliding } = useCarousel({
+    autoPlay,
+    autoSpeed,
+    infinite,
+    children,
+  });
 
   return (
     <S.Container>
@@ -31,12 +35,12 @@ export default function Carousel({
           ))}
         </S.SlideTrack>
       </S.SlideWrapper>
-      <S.PreviousButton onClick={handlePreviousSlide}>
+      {/* <S.PreviousButton onClick={handlePreviousSlide}>
         <LeftArrow width={30} height={30} />
       </S.PreviousButton>
       <S.NextButton onClick={handleNextSlide}>
         <RightArrow width={30} height={30} />
-      </S.NextButton>
+      </S.NextButton> */}
     </S.Container>
   );
 }

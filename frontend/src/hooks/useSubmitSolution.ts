@@ -32,7 +32,7 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
     isValidSolutionTitle,
   } = useSolutionTitle();
   const { handleModalOpen, isModalOpen } = useModal();
-  const { submitSolutionMutation, isPending } = useSubmitSolutionMutation({
+  const { submitSolutionMutation, isPending, isSubmitSolutionError } = useSubmitSolutionMutation({
     onSuccessCallback: handleModalOpen,
     missionId,
   });
@@ -71,6 +71,7 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
     isUrlError,
     isDescriptionError,
     isSolutionTitleError,
+    isSubmitSolutionError,
     // isMatchedMissionName,
   };
 };

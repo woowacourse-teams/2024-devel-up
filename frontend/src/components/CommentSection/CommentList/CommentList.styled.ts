@@ -87,11 +87,17 @@ export const CommentReplySectionContainer = styled.section`
   margin-left: 6.2rem;
 `;
 
-export const CommentReplyFormWrapper = styled.div``;
+export const CommentReplyFormWrapper = styled.div`
+  margin-top: 2.5rem;
+`;
 
 export const CommentHead = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const CommentPatchFormWrapper = styled.div`
+  margin-top: 1.5rem;
 `;
 
 export const Button = styled.button`

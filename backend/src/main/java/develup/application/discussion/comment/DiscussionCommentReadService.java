@@ -3,9 +3,7 @@ package develup.application.discussion.comment;
 import java.util.List;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
-import develup.domain.discussion.DiscussionRepositoryCustom;
 import develup.domain.discussion.comment.DiscussionComment;
-import develup.domain.discussion.comment.DiscussionCommentCounts;
 import develup.domain.discussion.comment.DiscussionCommentRepository;
 import develup.domain.discussion.comment.DiscussionCommentRepositoryCustom;
 import develup.domain.discussion.comment.MyDiscussionComment;
@@ -21,7 +19,6 @@ public class DiscussionCommentReadService {
     private final DiscussionCommentGroupingService commentGroupingService;
     private final DiscussionCommentRepositoryCustom discussionCommentRepositoryCustom;
     private final DiscussionCommentRepository discussionCommentRepository;
-    private final DiscussionRepositoryCustom discussionRepositoryCustom;
 
     public DiscussionComment getById(Long commentId) {
         DiscussionComment comment = discussionCommentRepository.findById(commentId)
@@ -41,22 +38,10 @@ public class DiscussionCommentReadService {
     }
 
     public List<MyDiscussionCommentResponse> getMyComments(Long memberId) {
-        List<MyDiscussionComment> mySolutionComments = discussionCommentRepositoryCustom.findAllMyDiscussionComment(memberId);
-        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
-                discussionRepositoryCustom.findAllDiscussionCommentCounts()
-        );
+        List<MyDiscussionComment> mySolutionComments = discussionCommentRepositoryCustom.findAllMyDiscussionCommentOrderByCreatedAtDesc(memberId);
 
         return mySolutionComments.stream()
-                .map(myDiscussionComment -> mapToMyDiscussionCommentResponse(myDiscussionComment, discussionCommentCounts))
+                .map(MyDiscussionCommentResponse::from)
                 .toList();
-    }
-
-    private MyDiscussionCommentResponse mapToMyDiscussionCommentResponse(
-            MyDiscussionComment myDiscussionComment,
-            DiscussionCommentCounts discussionCommentCounts
-    ) {
-        Long discussionId = myDiscussionComment.discussionId();
-        Long commentCount = discussionCommentCounts.getCount(discussionId);
-        return MyDiscussionCommentResponse.of(myDiscussionComment, commentCount);
     }
 }
