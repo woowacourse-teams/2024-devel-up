@@ -5,9 +5,17 @@ import type { DefaultTheme } from 'styled-components/dist/types';
 interface ButtonProps {
   $isSelected: boolean;
   $variant: TagButtonVariant;
+  $isClickable: boolean;
 }
 
-const getColorStyles = (variant: TagButtonVariant, isSelected: boolean, theme: DefaultTheme) => {
+interface GetColorStylesParams {
+  variant: TagButtonVariant;
+  isSelected: boolean;
+  isClickable: boolean;
+  theme: DefaultTheme;
+}
+
+const getColorStyles = ({ variant, isSelected, isClickable, theme }: GetColorStylesParams) => {
   const variantColorMap = {
     default: {
       default: isSelected ? theme.colors.primary200 : theme.colors.primary50,
@@ -26,14 +34,26 @@ const getColorStyles = (variant: TagButtonVariant, isSelected: boolean, theme: D
   return css`
     background-color: ${defaultColor};
     color: ${color};
-    &:hover {
-      background-color: ${hoverColor};
-    }
+    cursor: default;
+
+    ${isClickable &&
+    css`
+      cursor: pointer;
+      &:hover {
+        background-color: ${hoverColor};
+      }
+    `}
   `;
 };
 
 export const Button = styled.button<ButtonProps>`
-  ${(props) => getColorStyles(props.$variant, props.$isSelected, props.theme)}
+  ${(props) =>
+    getColorStyles({
+      variant: props.$variant,
+      isSelected: props.$isSelected,
+      isClickable: props.$isClickable,
+      theme: props.theme,
+    })};
   transition: 0.2s;
 
   padding: 1rem 1.6rem;

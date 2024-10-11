@@ -8,7 +8,3 @@ export const DiscussionSubmitPageContainer = styled.div`
   width: 100%;
   max-width: 100rem;
 `;
-
-export const DiscussionSubmitTitle = styled.h1`
-  ${(props) => props.theme.font.heading1}
-`;

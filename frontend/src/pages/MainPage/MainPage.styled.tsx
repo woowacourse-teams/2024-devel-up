@@ -3,10 +3,14 @@ import styled from 'styled-components';
 export const MainPageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
   margin-bottom: 10rem;
-  padding-top: 6rem;
+`;
+
+export const MissionListWrapper = styled.div`
   width: fit-content;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 `;
 
 export const MissionListTitle = styled.h2`

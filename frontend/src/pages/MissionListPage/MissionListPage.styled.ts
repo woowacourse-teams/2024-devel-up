@@ -21,8 +21,7 @@ export const TitleWrapper = styled.div`
 `;
 
 export const Subtitle = styled.p`
-  font-size: 1.6rem;
-  font-weight: 500;
+  ${(props) => props.theme.font.body}
 
-  color: var(--grey-500);
+  color: ${(props) => props.theme.colors.grey500};
 `;

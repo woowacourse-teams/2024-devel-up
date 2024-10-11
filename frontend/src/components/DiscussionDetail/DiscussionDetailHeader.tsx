@@ -15,7 +15,11 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
         <S.HeaderLeftArea>
           <S.MissionActionHeader>
             <S.ButtonLeft>
-              {mission && <TagButton variant="danger"># {mission.title}</TagButton>}
+              {mission && (
+                <TagButton variant="danger" isClickable={false}>
+                  # {mission.title}
+                </TagButton>
+              )}
             </S.ButtonLeft>
           </S.MissionActionHeader>
           <S.Title>{title}</S.Title>
@@ -25,7 +29,12 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
               <S.HeaderUserName>{member.name}</S.HeaderUserName>
             </S.HeaderUserInfo>
             <S.HashTagWrapper>
-              {hashTags && hashTags.map((tag) => <TagButton key={tag.id}># {tag.name}</TagButton>)}
+              {hashTags &&
+                hashTags.map((tag) => (
+                  <TagButton key={tag.id} isClickable={false}>
+                    # {tag.name}
+                  </TagButton>
+                ))}
             </S.HashTagWrapper>
           </S.DiscussionDetailInfo>
         </S.HeaderLeftArea>

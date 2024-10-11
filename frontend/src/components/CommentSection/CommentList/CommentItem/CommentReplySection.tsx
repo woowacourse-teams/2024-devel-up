@@ -44,7 +44,7 @@ export default function CommentReplySection({
 
   return (
     <S.CommentReplySectionContainer>
-      {!isLoggedIn && !isParentDeleted && (
+      {isLoggedIn && !isParentDeleted && (
         <>
           <S.ReplyWriteButton onClick={toggleReplyFormOpen}>답글</S.ReplyWriteButton>
         </>
@@ -54,7 +54,7 @@ export default function CommentReplySection({
         usePatchCommentMutation={usePatchCommentMutation}
         useDeleteCommentMutation={useDeleteCommentMutation}
       />
-      <div ref={replyButtonRef} />
+      <div ref={replyButtonAreaRef} />
       {isReplyFormOpen && (
         <S.CommentReplyFormWrapper>
           <CommentSubmitForm

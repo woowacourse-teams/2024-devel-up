@@ -12,6 +12,11 @@ const useDiscussionTitle = () => {
   const handleDiscussionTitle = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setDiscussionTitle(value);
+
+    if (value.trim().length === 0) {
+      setIsDiscussionTitleError(true);
+      return;
+    }
     setIsDiscussionTitleError(false);
   };
 
