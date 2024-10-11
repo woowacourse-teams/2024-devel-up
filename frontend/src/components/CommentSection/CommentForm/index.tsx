@@ -13,7 +13,7 @@ export function CommentForm({ content, onChange, onSubmit }: CommentFormProps) {
     <S.CommentForm onSubmit={onSubmit}>
       <S.MDEditor
         height="fit-content"
-        preview="edit"
+        preview="live"
         visibleDragbar={false}
         onChange={onChange}
         value={content}

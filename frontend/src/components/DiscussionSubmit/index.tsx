@@ -8,11 +8,12 @@ import useMissions from '@/hooks/useMissions';
 import TagMultipleList from '../common/TagMultipleList';
 import type { HashTag } from '@/types';
 import TagList from '@/components/common/TagList';
-import * as S from './DiscussionSubmit.style';
+import * as S from './DiscussionSubmit.styled';
 import { useSearchParams } from 'react-router-dom';
 import useDiscussion from '@/hooks/useDiscussion';
 import useUserInfo from '@/hooks/useUserInfo';
 import { useUpdateDiscussion } from '@/hooks/useUpdateDiscussion';
+import { ERROR_MESSAGE } from '@/constants/messages';
 
 export default function DiscussionSubmit() {
   const [searchParams] = useSearchParams();
@@ -97,12 +98,14 @@ export default function DiscussionSubmit() {
           selectedTag={selectedMission}
           setSelectedTag={setSelectedMission}
           variant="danger"
+          label="미션"
           keyName="title"
         />
         <TagMultipleList
           tags={allHashTags}
           selectedTags={selectedHashTags}
           setSelectedTags={setSelectedHashTags}
+          label="해시 태그"
           keyName="name"
         />
       </S.DiscussionTagListWrapper>
@@ -116,6 +119,7 @@ export default function DiscussionSubmit() {
         <DiscussionDescription
           value={description}
           danger={isDescriptionError}
+          dangerMessage={ERROR_MESSAGE.no_content}
           onChange={handleDescription}
           placeholder="내용을 입력해 주세요."
         />

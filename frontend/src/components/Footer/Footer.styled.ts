@@ -24,6 +24,7 @@ export const LinkTextWrapper = styled.div`
 export const LinkText = styled.a`
   color: var(--grey-500) !important;
   font-size: 1.4rem;
+  width: fit-content;
 `;
 
 export const EmailText = styled(LinkText)`
