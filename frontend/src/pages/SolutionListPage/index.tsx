@@ -12,7 +12,7 @@ export default function SolutionListPage() {
   const [selectedHashTag, setSelectedHashTag] = useState<{ id: number; name: string } | null>(null);
 
   const { data: allHashTags } = useHashTags();
-  const { data: allMissions } = useMissions(selectedHashTag?.name);
+  const { data: allMissions } = useMissions();
 
   return (
     <S.SolutionListPageContainer>
