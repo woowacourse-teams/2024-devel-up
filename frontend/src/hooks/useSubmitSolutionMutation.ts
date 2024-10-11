@@ -24,11 +24,11 @@ const useSubmitSolutionMutation = ({
     isError: isSubmitSolutionError,
   } = useSingleRequestMutation({
     mutationFn: postSolutionSubmit,
-    onSuccess: () => {
+    onSuccess: ({ id }) => {
       onSuccessCallback();
       queryClient.invalidateQueries({ queryKey: missionKeys.detail(missionId) });
       queryClient.invalidateQueries({ queryKey: solutionKeys.summaries });
-      navigate(ROUTES.solutions);
+      navigate(ROUTES.solutions + `/${id}`);
     },
     onError: (error: Error) => {
       console.error(error.message);

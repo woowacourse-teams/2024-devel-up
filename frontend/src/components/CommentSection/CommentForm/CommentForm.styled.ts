@@ -13,7 +13,10 @@ export const CommentTextArea = styled.textarea`
 export const CommentButton = styled.button`
   margin-top: 1.7rem;
   color: ${({ theme }) => theme.colors.primary500};
-  ${({ theme }) => theme.font.button}
+  border: solid 1px ${({ theme }) => theme.colors.primary500};
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  ${({ theme }) => theme.font.button};
 `;
 
 export const StartFromRight = styled.div`

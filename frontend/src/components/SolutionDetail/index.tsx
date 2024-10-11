@@ -17,10 +17,10 @@ export default function SolutionSection({ solution }: SolutionDetailProps) {
 
   return (
     <section>
-      <S.SolutionDetailTitle>📝 Solutions</S.SolutionDetailTitle>
+      <S.SolutionDetailTitle>💡 풀이</S.SolutionDetailTitle>
       <SolutionDetailHeader solution={solution} />
       <S.CodeViewButtonWrapper>
-        <S.CodeViewButtonLink to={url} target="_blank">
+        <S.CodeViewButtonLink to={url + '/files'} target="_blank">
           <Button variant="default">
             <S.GithubIcon />
             코드 보러 가기
