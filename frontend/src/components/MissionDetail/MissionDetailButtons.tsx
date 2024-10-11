@@ -65,7 +65,7 @@ export default function MissionDetailButtons({
           ) : (
             <a href={`${API_URL}${PATH.githubLogin}?next=${pathname}`}>
               <Button variant="primary" size="half">
-                미션 시작하기
+                로그인 후 미션 시작하기
               </Button>
             </a>
           ))}
@@ -73,9 +73,6 @@ export default function MissionDetailButtons({
         {isPendingStartMission ?? <LoadingSpinner />}
         {userInfo && isMissionStarted && (
           <S.SubmitButton onClick={handleNavigateToSubmit}>풀이 제출하기</S.SubmitButton>
-        )}
-        {!userInfo && !isMissionStarted && (
-          <S.NeedToLoginText>로그인 후 미션 시작 버튼을 눌러주세요!</S.NeedToLoginText>
         )}
         <S.InfoMsgWrapper onClick={handleModalOpen}>
           <S.InfoIcon />
