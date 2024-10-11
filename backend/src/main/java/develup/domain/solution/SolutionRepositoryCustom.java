@@ -29,7 +29,7 @@ public class SolutionRepositoryCustom {
                 .join(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
                 .join(missionHashTag.hashTag).fetchJoin()
                 .where(eqCompleted(), eqMissionTitle(missionTitle), eqHashTagName(hashTagName))
-                .orderBy(solution.id.desc())
+                .orderBy(solution.submittedAt.desc())
                 .fetch();
     }
 
