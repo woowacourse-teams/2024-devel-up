@@ -14,13 +14,23 @@ export const TitleWrapper = styled.div`
 `;
 
 export const Title = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   ${(props) => props.theme.font.bodyBold}
 `;
 
 export const Description = styled.div`
-  ${(props) => props.theme.font.body}
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+
   color: ${(props) => props.theme.colors.grey500};
   margin-top: 0.5rem;
+  ${(props) => props.theme.font.body}
 `;
 
 export const TagWrapper = styled.ul`

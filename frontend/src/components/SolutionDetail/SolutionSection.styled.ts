@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import javaIcon from '@/assets/images/java.svg';
 import GithubLogo from '@/assets/images/githubLogo.svg';
 import { Link } from 'react-router-dom';
+import SanitizedMDPreview from '../common/SanitizedMDPreview';
 
 export const SolutionDetailTitle = styled.h2`
   margin: 4rem 0 2rem 0;
@@ -103,7 +104,7 @@ export const CodeViewButtonWrapper = styled.div`
   margin: 3rem 0;
 `;
 
-export const SolutionDescription = styled.div`
+export const SolutionDescription = styled(SanitizedMDPreview)`
   margin-top: 3rem;
   ${({ theme }) => theme.font.body}
 `;
@@ -120,4 +121,3 @@ export const SolutionDescriptionBottom = styled.div`
 export const CodeViewButtonLink = styled(Link)`
   display: contents;
 `;
-

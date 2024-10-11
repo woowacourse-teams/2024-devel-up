@@ -27,7 +27,7 @@ export default function SolutionSection({ solution }: SolutionDetailProps) {
           </Button>
         </S.CodeViewButtonLink>
       </S.CodeViewButtonWrapper>
-      <S.SolutionDescription>{description}</S.SolutionDescription>
+      <S.SolutionDescription source={description} />
       {userInfo?.id === solution.member.id && (
         <SolutionDetailBottom missionId={mission.id} solutionId={solutionId} />
       )}
