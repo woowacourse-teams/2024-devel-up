@@ -1,5 +1,6 @@
 package develup.domain.solution;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
@@ -47,6 +48,8 @@ public class Solution extends CreatedAtAuditableEntity {
     @Enumerated(EnumType.STRING)
     private SolutionStatus status = SolutionStatus.IN_PROGRESS;
 
+    private LocalDateTime submittedAt;
+
     public Solution(
             Long id,
             Mission mission,
@@ -54,7 +57,8 @@ public class Solution extends CreatedAtAuditableEntity {
             SolutionTitle title,
             String description,
             PullRequestUrl pullRequestUrl,
-            SolutionStatus status
+            SolutionStatus status,
+            LocalDateTime submittedAt
     ) {
         super(id);
         this.mission = mission;
@@ -63,10 +67,11 @@ public class Solution extends CreatedAtAuditableEntity {
         this.description = description;
         this.pullRequestUrl = pullRequestUrl;
         this.status = status;
+        this.submittedAt = submittedAt;
     }
 
     public static Solution start(Mission mission, Member member) {
-        return new Solution(mission, member, null, null, null, SolutionStatus.IN_PROGRESS);
+        return new Solution(mission, member, null, null, null, SolutionStatus.IN_PROGRESS, null);
     }
 
     public void submit(SolutionSubmit solutionSubmit) {
@@ -77,6 +82,7 @@ public class Solution extends CreatedAtAuditableEntity {
         this.description = solutionSubmit.description();
         this.pullRequestUrl = createPullRequestUrl(solutionSubmit.url());
         this.status = SolutionStatus.COMPLETED;
+        this.submittedAt = LocalDateTime.now();
     }
 
     public void update(SolutionSubmit solutionSubmit) {

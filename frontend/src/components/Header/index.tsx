@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import * as S from './Header.styled';
 import { ROUTES } from '@/constants/routes';
 // import NotiModal from './NotiModal';
@@ -22,12 +22,12 @@ export default function Header() {
         <S.Wrapper>
           <S.LeftPart>
             <S.LogoWrapper to={ROUTES.main}>
-              <Logo width={20} height={20} />
+              <Logo width={30} height={30} />
               <S.Logo> DEVEL UP</S.Logo>
             </S.LogoWrapper>
           </S.LeftPart>
           <S.MenuWrapper>
-            <HeaderMenu name="미션 리스트" path={ROUTES.missionList} currentPath={pathname} />
+            <HeaderMenu name="미션" path={ROUTES.missionList} currentPath={pathname} />
             <HeaderMenu name="풀이" path={ROUTES.solutions} currentPath={pathname} />
             <HeaderMenu name="디스커션" path={ROUTES.discussions} currentPath={pathname} />
           </S.MenuWrapper>

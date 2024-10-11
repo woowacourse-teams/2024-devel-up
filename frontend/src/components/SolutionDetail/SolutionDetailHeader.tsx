@@ -24,7 +24,11 @@ export default function SolutionDetailHeader({ solution }: SolutionDetailHeaderP
         </S.HeaderLeftArea>
         <S.HashTagWrapper>
           {mission.hashTags &&
-            mission.hashTags.map((tag) => <TagButton key={tag.id}># {tag.name}</TagButton>)}
+            mission.hashTags.map((tag) => (
+              <TagButton key={tag.id} isClickable={false}>
+                # {tag.name}
+              </TagButton>
+            ))}
         </S.HashTagWrapper>
       </S.ThumbnailWrapper>
     </S.SolutionDetailHeaderContainer>

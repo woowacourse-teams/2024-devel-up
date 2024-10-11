@@ -102,9 +102,6 @@ html,
   section {
     display: block;
   }
-  * {
-    user-select: none;
-  }
   ol,
   ul,
   li {

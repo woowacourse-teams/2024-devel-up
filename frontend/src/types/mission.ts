@@ -8,3 +8,8 @@ export interface MissionInProgress {
   url: string;
   hashTags: HashTag[];
 }
+
+export interface SelectedMissionType {
+  id: number;
+  title: string;
+}

@@ -30,7 +30,7 @@ public class MissionReadService {
     }
 
     public List<MissionResponse> getInProgressMissions(Long memberId) {
-        return solutionRepository.findAllByMember_IdAndStatus(memberId, SolutionStatus.IN_PROGRESS)
+        return solutionRepository.findAllByMember_IdAndStatusOrderByIdDesc(memberId, SolutionStatus.IN_PROGRESS)
                 .stream()
                 .map(Solution::getMission)
                 .distinct()

@@ -7,11 +7,7 @@ import TagList from '@/components/common/TagList';
 import useHashTags from '@/hooks/useHashTags';
 import type { HashTag } from '@/types';
 import useMissions from '@/hooks/useMissions';
-
-interface SelectedMissionType {
-  id: number;
-  title: string;
-}
+import type { SelectedMissionType } from '@/types/mission';
 
 export default function DiscussionListPage() {
   const [selectedMission, setSelectedMission] = useState<SelectedMissionType | null>(null);
