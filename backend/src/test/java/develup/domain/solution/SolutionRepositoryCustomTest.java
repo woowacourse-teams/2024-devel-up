@@ -2,6 +2,7 @@ package develup.domain.solution;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -45,6 +46,35 @@ public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
 
     @Autowired
     private HashTagRepository hashTagRepository;
+
+    @Test
+    @DisplayName("솔루션을 제출일자 역순으로 조회할 수 있다.")
+    void findAllCompletedSolutionByHashTagOrderBySubmittedAtDesc() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        Mission mission1 = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+        Mission mission2 = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+        Solution solution1 = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission1)
+                .withStatus(SolutionStatus.COMPLETED)
+                .withSubmittedAt(LocalDateTime.of(2024, 1, 1, 0, 0))
+                .build();
+        Solution solution2 = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission2)
+                .withStatus(SolutionStatus.COMPLETED)
+                .withSubmittedAt(LocalDateTime.of(2024, 1, 2, 0, 0))
+                .build();
+
+        solutionRepository.saveAll(List.of(solution1, solution2));
+
+        List<Solution> solutions = solutionRepositoryCustom.findAllCompletedSolutionByHashTagName("all", "all");
+
+        assertThat(solutions)
+                .map(Solution::getId)
+                .containsExactly(solution2.getId(), solution1.getId());
+    }
 
     @Test
     @DisplayName("주어진 해시태그가 포함된 완료된 솔루션을 조회할 수 있다.")
