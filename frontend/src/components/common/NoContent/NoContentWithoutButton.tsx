@@ -2,13 +2,14 @@ import * as S from './NoContent.styled';
 import NoContentImg from '@/assets/images/noContent.svg';
 
 interface NoContentWithoutButtonProps {
-  type: 'solution' | 'discussion';
+  type: 'solution' | 'discussion' | 'mission';
 }
 
 export default function NoContentWithoutButton({ type }: NoContentWithoutButtonProps) {
   const INPUT_CONTENT = {
     solution: '풀이가',
     discussion: '디스커션이',
+    mission: '미션이',
   };
 
   return (
