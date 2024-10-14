@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 import develup.domain.discussion.comment.DiscussionComment;
 import develup.domain.discussion.comment.DiscussionCommentCounts;
 import develup.domain.discussion.comment.DiscussionCommentRepository;
@@ -74,8 +73,8 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
         HashTag hashTag1 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
         HashTag hashTag2 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("객체지향").build());
-        createDiscussion(mission, List.of(hashTag1));
-        createDiscussion(mission, List.of(hashTag2));
+        Discussion discussion = createDiscussion(mission, List.of(hashTag1));
+        Discussion withOut = createDiscussion(mission, List.of(hashTag2));
 
         List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagName(
                 "all",
@@ -83,10 +82,8 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         );
 
         assertThat(discussions)
-                .map(Discussion::getDiscussionHashTags)
-                .flatMap(Function.identity())
-                .map(DiscussionHashTag::getHashTag)
-                .contains(hashTag1);
+                .containsExactly(discussion)
+                .doesNotContain(withOut);
     }
 
     @Test
@@ -96,8 +93,8 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         Mission mission1 = missionRepository.save(MissionTestData.defaultMission().withTitle("루터회관 흡연단속").build());
         Mission mission2 = missionRepository.save(MissionTestData.defaultMission().withTitle("주문").build());
         HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
-        createDiscussion(mission1, List.of(hashTag));
-        createDiscussion(mission2, List.of(hashTag));
+        Discussion discussion = createDiscussion(mission1, List.of(hashTag));
+        Discussion without = createDiscussion(mission2, List.of(hashTag));
 
         List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagName(
                 "루터회관 흡연단속",
@@ -105,8 +102,8 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         );
 
         assertThat(discussions)
-                .map(Discussion::getMission)
-                .contains(mission1);
+                .containsExactly(discussion)
+                .doesNotContain(without);
     }
 
     @Test
@@ -260,7 +257,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         assertThat(count).isEqualTo(1);
     }
 
-    private void createDiscussion(Mission mission, List<HashTag> hashTags) {
+    private Discussion createDiscussion(Mission mission, List<HashTag> hashTags) {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
 
         Discussion discussion = DiscussionTestData.defaultDiscussion()
@@ -269,7 +266,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
                 .withHashTags(hashTags)
                 .build();
 
-        discussionRepository.save(discussion);
+        return discussionRepository.save(discussion);
     }
 
     private Discussion getSavedDiscussion(Mission mission, Member member, HashTag hashTag) {
