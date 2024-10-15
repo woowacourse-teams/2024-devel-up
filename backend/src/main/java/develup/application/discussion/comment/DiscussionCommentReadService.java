@@ -9,6 +9,7 @@ import develup.domain.discussion.comment.DiscussionCommentRepository;
 import develup.domain.discussion.comment.DiscussionCommentRepositoryCustom;
 import develup.domain.discussion.comment.MyDiscussionComment;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,13 +48,13 @@ public class DiscussionCommentReadService {
                 .toList();
     }
 
-    public PageResponse<List<MyDiscussionCommentResponse>> getMyComments(
-            Long memberId,
-            Integer page,
-            Integer size
-    ) {
+    public PageResponse<List<MyDiscussionCommentResponse>> getMyComments(Long memberId, Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        discussionCommentRepositoryCustom.findPageMyDiscussionCommentOrderByCreatedAtDesc(memberId, pageRequest);
-        return null;
+        Page<MyDiscussionComment> mySolutionComments = discussionCommentRepositoryCustom.findPageMyDiscussionCommentOrderByCreatedAtDesc(memberId, pageRequest);
+        List<MyDiscussionCommentResponse> data = mySolutionComments.getContent().stream()
+                .map(MyDiscussionCommentResponse::from)
+                .toList();
+
+        return new PageResponse<>(data, pageRequest.getPageNumber(), mySolutionComments.getTotalPages());
     }
 }
