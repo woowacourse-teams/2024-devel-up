@@ -93,13 +93,13 @@ public class DiscussionRepositoryCustom {
     public Page<Discussion> findPageByMemberIdOrderByDesc(Long memberId, Pageable pageRequest) {
         long offset = pageRequest.getOffset();
         int limit = pageRequest.getPageSize();
-        JPAQuery<Long> countQuery = getMemberDiscussionCountQuery(memberId);
+        JPAQuery<Long> countQuery = getMemberDiscussionsCountQuery(memberId);
         List<Discussion> data = fetchMemberDiscussions(memberId, offset, limit);
 
         return PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
     }
 
-    private JPAQuery<Long> getMemberDiscussionCountQuery(Long memberId) {
+    private JPAQuery<Long> getMemberDiscussionsCountQuery(Long memberId) {
         return queryFactory.select(discussion.count())
                 .from(discussion)
                 .where(discussion.member.id.eq(memberId));
