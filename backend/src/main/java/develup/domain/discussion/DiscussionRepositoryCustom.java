@@ -15,7 +15,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import develup.api.common.PageResponse;
 import develup.domain.discussion.comment.DiscussionCommentCount;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -91,14 +90,13 @@ public class DiscussionRepositoryCustom {
                 .fetch();
     }
 
-    public PageResponse<List<Discussion>> findPageByMemberIdOrderByDesc(Long memberId, Pageable pageRequest) {
+    public Page<Discussion> findPageByMemberIdOrderByDesc(Long memberId, Pageable pageRequest) {
         long offset = pageRequest.getOffset();
         int limit = pageRequest.getPageSize();
         JPAQuery<Long> countQuery = getMemberDiscussionCountQuery(memberId);
         List<Discussion> data = fetchMemberDiscussions(memberId, offset, limit);
-        Page<Discussion> page = PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
 
-        return new PageResponse<>(page.getContent(), pageRequest.getPageNumber(), page.getTotalPages());
+        return PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
     }
 
     private JPAQuery<Long> getMemberDiscussionCountQuery(Long memberId) {
