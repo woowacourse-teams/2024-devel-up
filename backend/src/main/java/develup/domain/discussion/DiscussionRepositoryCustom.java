@@ -105,7 +105,7 @@ public class DiscussionRepositoryCustom {
                 .where(discussion.member.id.eq(memberId));
     }
 
-    private List<Discussion> fetchMemberDiscussions(Long memberId, long offset, int limit) {
+    private List<Discussion> fetchMemberDiscussions(Long memberId, Long offset, Integer limit) {
         return queryFactory.select(discussion).distinct()
                 .from(discussion)
                 .innerJoin(discussion.member, member).fetchJoin()
