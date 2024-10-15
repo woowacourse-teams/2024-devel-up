@@ -37,7 +37,13 @@ public class DiscussionComment extends CreatedAtAuditableEntity {
     @Column
     private LocalDateTime deletedAt;
 
-    public DiscussionComment(String content, Discussion discussion, Member member, Long parentCommentId, LocalDateTime deletedAt) {
+    public DiscussionComment(
+            String content,
+            Discussion discussion,
+            Member member,
+            Long parentCommentId,
+            LocalDateTime deletedAt
+    ) {
         this(null, content, discussion, member, parentCommentId, deletedAt);
     }
 
