@@ -13,12 +13,15 @@ import java.util.Optional;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.api.common.PageResponse;
 import develup.domain.discussion.comment.DiscussionCommentCount;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -91,20 +94,20 @@ public class DiscussionRepositoryCustom {
     public PageResponse<List<Discussion>> findPageByMemberIdOrderByDesc(Long memberId, Pageable pageRequest) {
         long offset = pageRequest.getOffset();
         int limit = pageRequest.getPageSize();
-        Long resultSize = countMemberDiscussions(memberId);
-        List<Discussion> data = fetch(memberId, offset, limit);
+        JPAQuery<Long> countQuery = getMemberDiscussionCountQuery(memberId);
+        List<Discussion> data = fetchMemberDiscussions(memberId, offset, limit);
+        Page<Discussion> page = PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
 
-        return new PageResponse<>(data, pageRequest.getPageNumber(), (int) Math.ceil((double) resultSize / limit));
+        return new PageResponse<>(page.getContent(), pageRequest.getPageNumber(), page.getTotalPages());
     }
 
-    private Long countMemberDiscussions(Long memberId) {
+    private JPAQuery<Long> getMemberDiscussionCountQuery(Long memberId) {
         return queryFactory.select(discussion.count())
                 .from(discussion)
-                .where(discussion.member.id.eq(memberId))
-                .fetchOne();
+                .where(discussion.member.id.eq(memberId));
     }
 
-    private List<Discussion> fetch(Long memberId, long offset, int limit) {
+    private List<Discussion> fetchMemberDiscussions(Long memberId, long offset, int limit) {
         return queryFactory.select(discussion).distinct()
                 .from(discussion)
                 .innerJoin(discussion.member, member).fetchJoin()
