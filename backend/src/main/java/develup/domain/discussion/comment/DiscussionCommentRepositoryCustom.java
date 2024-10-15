@@ -59,7 +59,7 @@ public class DiscussionCommentRepositoryCustom {
                 .where(discussionComment.member.id.eq(memberId).and(discussionComment.deletedAt.isNull()));
     }
 
-    private List<MyDiscussionComment> fetchMemberDiscussionComments(Long memberId, long offset, int limit) {
+    private List<MyDiscussionComment> fetchMemberDiscussionComments(Long memberId, Long offset, Integer limit) {
         return queryFactory.select(Projections.constructor(MyDiscussionComment.class,
                         discussionComment.id,
                         discussionComment.discussion.id,
