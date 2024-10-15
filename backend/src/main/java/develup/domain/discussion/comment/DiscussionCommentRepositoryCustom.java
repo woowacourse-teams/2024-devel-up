@@ -47,13 +47,13 @@ public class DiscussionCommentRepositoryCustom {
     public Page<MyDiscussionComment> findPageMyDiscussionCommentOrderByCreatedAtDesc(Long memberId, Pageable pageRequest) {
         long offset = pageRequest.getOffset();
         int limit = pageRequest.getPageSize();
-        JPAQuery<Long> countQuery = getMemberDiscussionCommentCountQuery(memberId);
+        JPAQuery<Long> countQuery = getMemberDiscussionCommentsCountQuery(memberId);
         List<MyDiscussionComment> data = fetchMemberDiscussionComments(memberId, offset, limit);
 
         return PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
     }
 
-    private JPAQuery<Long> getMemberDiscussionCommentCountQuery(Long memberId) {
+    private JPAQuery<Long> getMemberDiscussionCommentsCountQuery(Long memberId) {
         return queryFactory.select(discussionComment.count())
                 .from(discussionComment)
                 .where(discussionComment.member.id.eq(memberId).and(discussionComment.deletedAt.isNull()));
