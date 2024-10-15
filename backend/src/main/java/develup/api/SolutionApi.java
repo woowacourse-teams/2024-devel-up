@@ -3,6 +3,9 @@ package develup.api;
 import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
+import develup.api.common.PageResponse;
+import develup.api.exception.DevelupException;
+import develup.api.exception.ExceptionType;
 import develup.application.auth.Accessor;
 import develup.application.solution.MySolutionResponse;
 import develup.application.solution.SolutionReadService;
@@ -80,12 +83,25 @@ public class SolutionApi {
 
     @GetMapping("/solutions")
     @Operation(summary = "솔루션 목록 조회 API", description = "솔루션 목록을 조회합니다.")
-    public ResponseEntity<ApiResponse<List<SummarizedSolutionResponse>>> getSolutions(
+    public ResponseEntity<ApiResponse<?>> getSolutions(
             @RequestParam(defaultValue = "all") String mission,
-            @RequestParam(defaultValue = "all") String hashTag
+            @RequestParam(defaultValue = "all") String hashTag,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size
     ) {
-        List<SummarizedSolutionResponse> responses = solutionReadService.getCompletedSummaries(mission, hashTag);
-
+        if (page == null && size == null) {
+            List<SummarizedSolutionResponse> responses = solutionReadService.getCompletedSummaries(mission, hashTag);
+            return ResponseEntity.ok(new ApiResponse<>(responses));
+        }
+        if (page == null || size == null) {
+            throw new DevelupException(ExceptionType.INVALID_PAGE_REQUEST);
+        }
+        PageResponse<List<SummarizedSolutionResponse>> responses = solutionReadService.getCompletedSummaries(
+                mission,
+                hashTag,
+                page,
+                size
+        );
         return ResponseEntity.ok(new ApiResponse<>(responses));
     }
 

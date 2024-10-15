@@ -15,6 +15,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.domain.solution.comment.SolutionCommentCount;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,6 +26,44 @@ public class SolutionRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
     private final EntityManager entityManager;
+
+    public Page<Solution> findAllCompletedSolutionByHashTagName(
+            String missionTitle,
+            String hashTagName,
+            PageRequest pageRequest
+    ) {
+
+        int totalCount = queryFactory.select(solution.id)
+                .distinct()
+                .from(solution)
+                .join(solution.mission, mission)
+                .join(mission.missionHashTags.hashTags, missionHashTag)
+                .join(missionHashTag.hashTag)
+                .where(
+                        eqCompleted(),
+                        eqMissionTitle(missionTitle),
+                        eqHashTagName(hashTagName)
+                )
+                .fetch()
+                .size();
+
+
+        List<Solution> data = queryFactory.selectFrom(solution)
+                .join(solution.mission, mission)
+                .join(mission.missionHashTags.hashTags, missionHashTag)
+                .join(missionHashTag.hashTag)
+                .where(
+                        eqCompleted(),
+                        eqMissionTitle(missionTitle),
+                        eqHashTagName(hashTagName)
+                )
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize())
+                .orderBy(solution.submittedAt.desc())
+                .distinct()
+                .fetch();
+        return new PageImpl<>(data, pageRequest, totalCount / pageRequest.getPageSize() + totalCount % pageRequest.getPageSize());
+    }
 
     public List<Solution> findAllCompletedSolutionByHashTagName(String missionTitle, String hashTagName) {
         return queryFactory.selectFrom(solution)
