@@ -62,7 +62,7 @@ public class SolutionRepositoryCustom {
                 .orderBy(solution.submittedAt.desc())
                 .distinct()
                 .fetch();
-        return new PageImpl<>(data, pageRequest, totalCount / pageRequest.getPageSize() + totalCount % pageRequest.getPageSize());
+        return new PageImpl<>(data, pageRequest, totalCount);
     }
 
     public List<Solution> findAllCompletedSolutionByHashTagName(String missionTitle, String hashTagName) {
