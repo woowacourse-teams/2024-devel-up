@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.domain.discussion.comment.DiscussionCommentCount;
 import jakarta.persistence.EntityManager;
@@ -50,8 +51,14 @@ public class DiscussionRepositoryCustom {
             return null;
         }
 
-        return discussionHashTag.hashTag.name.eq(hashTagName)
-                .and(discussionHashTag.discussion.id.eq(discussion.id));
+        return JPAExpressions.selectOne()
+                .from(discussionHashTag)
+                .join(discussionHashTag.hashTag)
+                .where(
+                        discussionHashTag.discussion.id.eq(discussion.id),
+                        discussionHashTag.hashTag.name.eq(hashTagName)
+                )
+                .exists();
     }
 
     public Optional<Discussion> findFetchById(Long id) {

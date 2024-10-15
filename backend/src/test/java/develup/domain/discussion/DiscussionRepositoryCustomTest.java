@@ -47,6 +47,33 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
     private HashTagRepository hashTagRepository;
 
     @Test
+    @DisplayName("디스커션 목록 조회 시 연관관계가 모두 조회된다.")
+    @Transactional
+    void findAllDiscussionWithRelations() {
+        HashTag java = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        HashTag oop = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("OOP").build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+
+        createDiscussion(mission, List.of(java, oop));
+        createDiscussion(mission, List.of(oop, java));
+        createDiscussion(null, List.of(oop));
+        createDiscussion(mission, Collections.emptyList());
+        createDiscussion(null, List.of(java));
+
+        List<Discussion> actual = discussionRepositoryCustom.findAllByMissionAndHashTagName(
+                "all",
+                "JAVA"
+        );
+
+        assertAll(
+                () -> assertThat(actual).hasSize(3),
+                () -> assertThat(actual.get(2).getHashTags()).containsExactly(java, oop),
+                () -> assertThat(actual.get(1).getHashTags()).containsExactly(oop, java),
+                () -> assertThat(actual.get(0).getHashTags()).containsExactly(java)
+        );
+    }
+
+    @Test
     @DisplayName("디스커션 목록을 조회할 수 있다.")
     @Transactional
     void findAllDiscussion() {
