@@ -21,7 +21,7 @@ public class DiscussionReadService {
     private final DiscussionRepositoryCustom discussionRepositoryCustom;
 
     public List<SummarizedDiscussionResponse> getSummaries(String mission, String hashTagName) {
-        List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagName(mission, hashTagName);
+        List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagNameOrderByDesc(mission, hashTagName);
         DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
                 discussionRepositoryCustom.findAllDiscussionCommentCounts()
         );
@@ -32,6 +32,30 @@ public class DiscussionReadService {
                         discussionCommentCounts.getCount(discussion))
                 )
                 .toList();
+    }
+
+    public PageResponse<List<SummarizedDiscussionResponse>> getSummaries(
+            String mission,
+            String hashTagName,
+            Integer size,
+            Integer page
+    ) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Discussion> discussions = discussionRepositoryCustom
+                .findAllByMissionAndHashTagNameOrderByDesc(mission, hashTagName, pageRequest);
+
+        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
+                discussionRepositoryCustom.findAllDiscussionCommentCounts()
+        );
+
+        List<SummarizedDiscussionResponse> responseWithCommentCounts = discussions.stream()
+                .map(discussion -> SummarizedDiscussionResponse.of(
+                        discussion,
+                        discussionCommentCounts.getCount(discussion))
+                )
+                .toList();
+
+        return new PageResponse<>(responseWithCommentCounts, pageRequest.getPageNumber(), discussions.getTotalPages());
     }
 
     public List<SummarizedDiscussionResponse> getDiscussionsByMemberId(Long memberId) {
