@@ -25,8 +25,6 @@ import develup.support.data.MissionTestData;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
 
-    private static final Logger log = LoggerFactory.getLogger(DiscussionRepositoryCustomTest.class);
     @Autowired
     private DiscussionRepository discussionRepository;
 
