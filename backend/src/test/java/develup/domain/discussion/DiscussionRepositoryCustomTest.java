@@ -3,9 +3,11 @@ package develup.domain.discussion;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import develup.api.common.PageResponse;
 import develup.domain.discussion.comment.DiscussionComment;
 import develup.domain.discussion.comment.DiscussionCommentCounts;
 import develup.domain.discussion.comment.DiscussionCommentRepository;
@@ -21,13 +23,18 @@ import develup.support.data.DiscussionTestData;
 import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
 
+    private static final Logger log = LoggerFactory.getLogger(DiscussionRepositoryCustomTest.class);
     @Autowired
     private DiscussionRepository discussionRepository;
 
@@ -45,6 +52,9 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
 
     @Autowired
     private HashTagRepository hashTagRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     @DisplayName("디스커션 목록 조회 시 연관관계가 모두 조회된다.")
@@ -287,6 +297,57 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         assertThat(count).isEqualTo(1);
     }
 
+    @Test
+    @DisplayName("pageable 기반으로 사용자의 디스커션을 id 역순으로 조회한다.")
+    @Transactional
+    void pageDescMemberDiscussion() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+
+        int pageSize = 5;
+        List<Long> expectedFirstPageIds = new ArrayList<>();
+        List<Long> expectedSecondPageIds = new ArrayList<>();
+        for (int i = 0; i < pageSize; i++) {
+            // 정렬 조건이 DESC 반대로 넣어줘야한다.
+            expectedSecondPageIds.add(getSavedDiscussion(mission, member, hashTag).getId());
+        }
+        for (int i = 0; i < pageSize; i++) {
+            expectedFirstPageIds.add(getSavedDiscussion(mission, member, hashTag).getId());
+        }
+
+        entityManager.clear();
+
+        PageRequest firstPageRequest = PageRequest.of(0, pageSize);
+        PageRequest secondPageRequest = PageRequest.of(1, pageSize);
+        PageRequest thirdPageRequest = PageRequest.of(2, pageSize);
+        PageResponse<List<Discussion>> firstResult = discussionRepositoryCustom
+                .findPageByMemberIdOrderByDesc(member.getId(), firstPageRequest);
+        PageResponse<List<Discussion>> secondResult = discussionRepositoryCustom
+                .findPageByMemberIdOrderByDesc(member.getId(), secondPageRequest);
+        PageResponse<List<Discussion>> thirdResult = discussionRepositoryCustom
+                .findPageByMemberIdOrderByDesc(member.getId(), thirdPageRequest);
+
+        List<Long> firstPageIds = firstResult
+                .data().stream()
+                .map(Discussion::getId)
+                .toList();
+        List<Long> secondPageIds = secondResult
+                .data().stream()
+                .map(Discussion::getId)
+                .toList();
+
+        assertAll(
+                () -> assertThat(firstResult.currentPage()).isEqualTo(0),
+                () -> assertThat(secondResult.currentPage()).isEqualTo(1),
+                () -> assertThat(secondResult.totalPage()).isEqualTo(2),
+                () -> assertThat(secondResult.totalPage()).isEqualTo(2),
+                () -> assertThat(firstPageIds).containsAll(expectedFirstPageIds),
+                () -> assertThat(secondPageIds).containsAll(expectedSecondPageIds),
+                () -> assertThat(thirdResult.data()).isEmpty()
+        );
+    }
+
     private void createDiscussion(Mission mission, List<HashTag> hashTags) {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
 
@@ -305,6 +366,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
                 .withMember(member)
                 .withHashTags(List.of(hashTag))
                 .build();
+
         return discussionRepository.save(discussion);
     }
 
