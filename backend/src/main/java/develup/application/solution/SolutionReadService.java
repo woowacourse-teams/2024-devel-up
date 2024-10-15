@@ -1,6 +1,7 @@
 package develup.application.solution;
 
 import java.util.List;
+import develup.api.common.PageResponse;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.solution.Solution;
@@ -8,6 +9,8 @@ import develup.domain.solution.SolutionRepository;
 import develup.domain.solution.SolutionRepositoryCustom;
 import develup.domain.solution.SolutionStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +40,21 @@ public class SolutionReadService {
         return solutionRepositoryCustom.findAllCompletedSolutionByHashTagName(missionTitle, hashTagName).stream()
                 .map(SummarizedSolutionResponse::from)
                 .toList();
+    }
+
+    public PageResponse<List<SummarizedSolutionResponse>> getCompletedSummaries(
+            String missionTitle,
+            String hashTagName,
+            int page,
+            int size
+    ) {
+        Page<SummarizedSolutionResponse> pageResponse = solutionRepositoryCustom.findAllCompletedSolutionByHashTagName(
+                        missionTitle,
+                        hashTagName,
+                        PageRequest.of(page - 1, size)
+                )
+                .map(SummarizedSolutionResponse::from);
+        return new PageResponse<>(pageResponse.toList(), page, pageResponse.getTotalPages());
     }
 
     public Solution getSolution(Long solutionId) {

@@ -33,7 +33,7 @@ public enum ExceptionType {
     HASHTAG_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 해시태그입니다."),
     DISCUSSION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 디스커션입니다."),
     DISCUSSION_NOT_WRITTEN_BY_MEMBER(HttpStatus.FORBIDDEN, "디스커션 작성자가 아닙니다."),
-
+    INVALID_PAGE_REQUEST(HttpStatus.BAD_REQUEST, "페이지 요청이 잘못되었습니다."),
     ;
 
     private final HttpStatus status;
