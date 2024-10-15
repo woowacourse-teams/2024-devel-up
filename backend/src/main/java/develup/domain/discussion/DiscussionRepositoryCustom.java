@@ -14,9 +14,11 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import develup.api.common.PageResponse;
 import develup.domain.discussion.comment.DiscussionCommentCount;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -83,6 +85,36 @@ public class DiscussionRepositoryCustom {
                 .leftJoin(discussionHashTag.hashTag, hashTag).fetchJoin()
                 .where(member.id.eq(memberId))
                 .orderBy(discussion.id.desc())
+                .fetch();
+    }
+
+    public PageResponse<List<Discussion>> findPageByMemberIdOrderByDesc(Long memberId, Pageable pageRequest) {
+        long offset = pageRequest.getOffset();
+        int limit = pageRequest.getPageSize();
+        Long resultSize = countMemberDiscussions(memberId);
+        List<Discussion> data = fetch(memberId, offset, limit);
+
+        return new PageResponse<>(data, pageRequest.getPageNumber(), (int) Math.ceil((double) resultSize / limit));
+    }
+
+    private Long countMemberDiscussions(Long memberId) {
+        return queryFactory.select(discussion.count())
+                .from(discussion)
+                .where(discussion.member.id.eq(memberId))
+                .fetchOne();
+    }
+
+    private List<Discussion> fetch(Long memberId, long offset, int limit) {
+        return queryFactory.select(discussion).distinct()
+                .from(discussion)
+                .innerJoin(discussion.member, member).fetchJoin()
+                .leftJoin(discussion.mission, mission).fetchJoin()
+                .leftJoin(discussion.discussionHashTags.hashTags, discussionHashTag)
+                .leftJoin(discussionHashTag.hashTag, hashTag)
+                .where(member.id.eq(memberId))
+                .orderBy(discussion.id.desc())
+                .offset(offset)
+                .limit(limit)
                 .fetch();
     }
 
