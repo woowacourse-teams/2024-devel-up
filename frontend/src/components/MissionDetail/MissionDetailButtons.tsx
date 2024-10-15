@@ -31,7 +31,6 @@ export default function MissionDetailButtons({
   const [isMissionStarted, setIsMissionStarted] = useState(isStarted);
 
   const handleStartMission = () => {
-    handleModalOpen();
     setIsMissionStarted(true);
   };
 

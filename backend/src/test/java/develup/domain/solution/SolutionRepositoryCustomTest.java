@@ -1,7 +1,9 @@
 package develup.domain.solution;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -20,7 +22,6 @@ import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
 import develup.support.data.SolutionCommentTestData;
 import develup.support.data.SolutionTestData;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +48,89 @@ public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
     private HashTagRepository hashTagRepository;
 
     @Test
+    @DisplayName("솔루션 목록 조회 시 연관관계가 모두 조회된다.")
+    void findAllCompletedSolutionWithRelations() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag java = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        HashTag oop = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("OOP").build());
+        Mission mission1 = createMissionWithHashTags(java, oop);
+        Mission mission2 = createMissionWithHashTags(java);
+        Solution solution1 = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission1)
+                .withStatus(SolutionStatus.COMPLETED)
+                .withSubmittedAt(LocalDateTime.of(2024, 1, 1, 0, 0))
+                .build();
+        Solution solution2 = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission2)
+                .withStatus(SolutionStatus.COMPLETED)
+                .withSubmittedAt(LocalDateTime.of(2024, 1, 2, 0, 0))
+                .build();
+
+        solutionRepository.saveAll(List.of(solution1, solution2));
+
+        List<Solution> solutions = solutionRepositoryCustom.findAllCompletedSolutionByHashTagName("all", "JAVA");
+
+        assertAll(
+                () -> {
+                    List<HashTag> hashTags = solutions.getFirst().getHashTags()
+                            .stream()
+                            .map(MissionHashTag::getHashTag)
+                            .toList();
+                    assertThat(hashTags).containsExactly(java);
+                },
+                () -> {
+                    List<HashTag> hashTags = solutions.get(1).getHashTags()
+                            .stream()
+                            .map(MissionHashTag::getHashTag)
+                            .toList();
+                    assertThat(hashTags).containsExactly(java, oop);
+                }
+        );
+    }
+
+    private Mission createMissionWithHashTags(HashTag... hashTags) {
+        return missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTags)).build());
+    }
+
+    @Test
+    @DisplayName("솔루션을 제출일자 역순으로 조회할 수 있다.")
+    void findAllCompletedSolutionByHashTagOrderBySubmittedAtDesc() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        Mission mission1 = createMissionWithHashTags(hashTag);
+        Mission mission2 = createMissionWithHashTags(hashTag);
+        Solution solution1 = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission1)
+                .withStatus(SolutionStatus.COMPLETED)
+                .withSubmittedAt(LocalDateTime.of(2024, 1, 1, 0, 0))
+                .build();
+        Solution solution2 = SolutionTestData.defaultSolution()
+                .withMember(member)
+                .withMission(mission2)
+                .withStatus(SolutionStatus.COMPLETED)
+                .withSubmittedAt(LocalDateTime.of(2024, 1, 2, 0, 0))
+                .build();
+
+        solutionRepository.saveAll(List.of(solution1, solution2));
+
+        List<Solution> solutions = solutionRepositoryCustom.findAllCompletedSolutionByHashTagName("all", "all");
+
+        assertThat(solutions)
+                .map(Solution::getId)
+                .containsExactly(solution2.getId(), solution1.getId());
+    }
+
+    @Test
     @DisplayName("주어진 해시태그가 포함된 완료된 솔루션을 조회할 수 있다.")
     void findAllCompletedSolutionByHashTag() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         HashTag hashTag1 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
         HashTag hashTag2 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JS").build());
-        Mission mission1 = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag1)).build());
-        Mission mission2 = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag2)).build());
+        Mission mission1 = createMissionWithHashTags(hashTag1);
+        Mission mission2 = createMissionWithHashTags(hashTag2);
         Solution solution1 = SolutionTestData.defaultSolution()
                 .withMember(member)
                 .withMission(mission1)
@@ -81,7 +158,7 @@ public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
     void findAllCompletedSolutionByMissionName() {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
         HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
-        Mission otherMission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+        Mission otherMission = createMissionWithHashTags(hashTag);
         Mission targetMission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).withTitle("테스트 미션 제목").build());
         Solution otherSolution = SolutionTestData.defaultSolution()
                 .withMember(member)
@@ -139,7 +216,7 @@ public class SolutionRepositoryCustomTest extends IntegrationTestSupport {
         Optional<Solution> hashTaggedFound = solutionRepositoryCustom.findFetchById(hashTaggedSolution.getId());
         Optional<Solution> noneTaggedFound = solutionRepositoryCustom.findFetchById(nonTaggedSolution.getId());
 
-        Assertions.assertAll(
+        assertAll(
                 () -> assertThat(hashTaggedFound)
                         .isPresent()
                         .map(it -> it.getHashTags().size())
