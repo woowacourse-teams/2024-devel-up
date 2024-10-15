@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
-import develup.api.common.PageResponse;
 import develup.domain.discussion.comment.DiscussionComment;
 import develup.domain.discussion.comment.DiscussionCommentCounts;
 import develup.domain.discussion.comment.DiscussionCommentRepository;
@@ -29,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -321,30 +321,26 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         PageRequest firstPageRequest = PageRequest.of(0, pageSize);
         PageRequest secondPageRequest = PageRequest.of(1, pageSize);
         PageRequest thirdPageRequest = PageRequest.of(2, pageSize);
-        PageResponse<List<Discussion>> firstResult = discussionRepositoryCustom
+        Page<Discussion> firstResult = discussionRepositoryCustom
                 .findPageByMemberIdOrderByDesc(member.getId(), firstPageRequest);
-        PageResponse<List<Discussion>> secondResult = discussionRepositoryCustom
+        Page<Discussion> secondResult = discussionRepositoryCustom
                 .findPageByMemberIdOrderByDesc(member.getId(), secondPageRequest);
-        PageResponse<List<Discussion>> thirdResult = discussionRepositoryCustom
+        Page<Discussion> thirdResult = discussionRepositoryCustom
                 .findPageByMemberIdOrderByDesc(member.getId(), thirdPageRequest);
 
         List<Long> firstPageIds = firstResult
-                .data().stream()
+                .getContent().stream()
                 .map(Discussion::getId)
                 .toList();
         List<Long> secondPageIds = secondResult
-                .data().stream()
+                .getContent().stream()
                 .map(Discussion::getId)
                 .toList();
 
         assertAll(
-                () -> assertThat(firstResult.currentPage()).isEqualTo(0),
-                () -> assertThat(secondResult.currentPage()).isEqualTo(1),
-                () -> assertThat(secondResult.totalPage()).isEqualTo(2),
-                () -> assertThat(secondResult.totalPage()).isEqualTo(2),
                 () -> assertThat(firstPageIds).containsAll(expectedFirstPageIds),
                 () -> assertThat(secondPageIds).containsAll(expectedSecondPageIds),
-                () -> assertThat(thirdResult.data()).isEmpty()
+                () -> assertThat(thirdResult.getContent()).isEmpty()
         );
     }
 
