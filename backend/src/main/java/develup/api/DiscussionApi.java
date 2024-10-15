@@ -86,7 +86,11 @@ public class DiscussionApi {
 
     @GetMapping("/discussions/mine")
     @Operation(summary = "나의 디스커션 목록 조회 API", description = "내가 작성한 디스커션 목록을 조회합니다.")
-    public ResponseEntity<ApiResponse<List<SummarizedDiscussionResponse>>> getMyDiscussions(@Auth Accessor accessor) {
+    public ResponseEntity<ApiResponse<List<SummarizedDiscussionResponse>>> getMyDiscussions(
+            @RequestParam(required = false) Long size,
+            @RequestParam(required = false) Long page,
+            @Auth Accessor accessor
+    ) {
         List<SummarizedDiscussionResponse> response = discussionReadService.getDiscussionsByMemberId(accessor.id());
 
         return ResponseEntity.ok(new ApiResponse<>(response));
