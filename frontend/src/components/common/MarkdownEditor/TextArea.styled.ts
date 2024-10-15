@@ -55,5 +55,5 @@ export const DangerText = styled.p`
   color: ${(props) => props.theme.colors.danger600};
   ${(props) => props.theme.font.caption}
   margin-top: 1rem;
-  margin-left: 1rem;
+  margin-left: 2.3rem;
 `;
