@@ -1,6 +1,7 @@
 package develup.application.discussion.comment;
 
 import java.util.List;
+import develup.api.common.PageResponse;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.discussion.comment.DiscussionComment;
@@ -43,5 +44,13 @@ public class DiscussionCommentReadService {
         return mySolutionComments.stream()
                 .map(MyDiscussionCommentResponse::from)
                 .toList();
+    }
+
+    public PageResponse<List<MyDiscussionCommentResponse>> getMyComments(
+            Long id,
+            Integer page,
+            Integer size
+    ) {
+        return null;
     }
 }
