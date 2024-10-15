@@ -222,6 +222,17 @@ body {
     --white-color: #FFFFFF;
     --black-color: #000000;
   }
+  
+/* 모든 요소에 대해 스크롤바 숨기기 */
+* {
+scrollbar-width: none; /* Firefox */
+-ms-overflow-style: none; /* IE and Edge */
+}
+
+/* WebKit 기반 브라우저 (Chrome, Safari) */
+*::-webkit-scrollbar {
+display: none;
+}
 `;
 
 export default GlobalStyle;
