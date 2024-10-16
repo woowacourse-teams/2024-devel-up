@@ -83,7 +83,7 @@ public class SolutionApi {
 
     @GetMapping("/solutions")
     @Operation(summary = "솔루션 목록 조회 API", description = "솔루션 목록을 조회합니다.")
-    public ResponseEntity<ApiResponse<?>> getSolutions(
+    public ResponseEntity<?> getSolutions(
             @RequestParam(defaultValue = "all") String mission,
             @RequestParam(defaultValue = "all") String hashTag,
             @RequestParam(required = false) Integer page,
@@ -102,7 +102,7 @@ public class SolutionApi {
                 page,
                 size
         );
-        return ResponseEntity.ok(new ApiResponse<>(responses));
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/solutions/{id}")
