@@ -5,11 +5,7 @@ export default function LevelMission() {
     <S.LevelMissionContainer>
       <S.Bold>🎯 레벨 별 실전 문제 제공</S.Bold>
       <S.ContentWrapper>
-        <S.MissionCardWrapper>
-          <S.MissionCardElevatorImg />
-          <S.MissionCardReactImg />
-        </S.MissionCardWrapper>
-        <S.VSCodeImg />
+        <S.LevelMissionImg />
 
         <S.LevelMissionTextWrapper>
           <S.MediumBold>미션</S.MediumBold>

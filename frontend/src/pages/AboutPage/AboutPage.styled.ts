@@ -1,8 +1,6 @@
 import { styled } from 'styled-components';
 import Rocket from '@/assets/images/rocket.svg';
-import VSCode from '@/assets/images/vscode.svg';
-import MissionCardElevator from '@/assets/images/missionCardElevator.svg';
-import MissionCardReact from '@/assets/images/missionCardReact.svg';
+import LevelMission from '@/assets/images/levelMission.svg';
 import Discussion from '@/assets/images/discussion.svg';
 import media from '@/styles/mediaQueries';
 
@@ -73,6 +71,11 @@ export const Text = styled(Bold)`
 export const MediumBold = styled(Bold)`
   font-size: 2rem;
 
+  // 컨텐츠 너비를 890px로 지정해서 breakpoint를 890px로 설정해두었습니다.
+  @media screen and (max-width: 890px) {
+    font-size: 1.6rem;
+  }
+
   ${media.small`
       font-size: 1.3rem;
     `}
@@ -80,6 +83,10 @@ export const MediumBold = styled(Bold)`
 
 export const MediumText = styled(Text)`
   font-size: 2rem;
+
+  @media screen and (max-width: 890px) {
+    font-size: 1.6rem;
+  }
 
   ${media.small`
       font-size: 1.3rem;
@@ -91,17 +98,24 @@ export const MediumText = styled(Text)`
 export const LevelMissionContainer = styled.article`
   display: flex;
   flex-direction: column;
-  justify-items: start;
+  justify-items: center;
   gap: 4rem;
 
+  max-width: 120rem;
+  width: 89rem;
   height: 100vh;
-  min-width: 96rem;
+  margin: 2rem auto;
+
   background-color: ${(props) => props.theme.colors.white};
   background-color: lightblue;
 
+  @media screen and (max-width: 890px) {
+    width: 100%;
+    padding: 2rem 1.5rem;
+  }
+
   ${media.small`
       gap: 2rem;
-      min-width: 28rem;
     `}
 `;
 
@@ -118,14 +132,6 @@ export const ContentWrapper = styled.div`
     `}
 `;
 
-export const VSCodeImg = styled(VSCode)`
-  width: 60rem;
-
-  ${media.small`
-      width: 20rem;
-    `}
-`;
-
 export const MissionCardWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -133,29 +139,33 @@ export const MissionCardWrapper = styled.div`
   right: -2rem;
   bottom: 0;
 
+  @media screen and (max-width: 890px) {
+    right: -10rem;
+  }
+
   ${media.small`
       right: -2rem;
       bottom: 3rem;
     `}
 `;
 
-export const MissionCardElevatorImg = styled(MissionCardElevator)`
-  width: 23rem;
-
-  ${media.small`
-      width: 8rem;
-    `}
-`;
-export const MissionCardReactImg = styled(MissionCardReact)`
-  width: 23rem;
-
-  ${media.small`
-      width: 8rem;
-    `}
+export const LevelMissionImg = styled(LevelMission)`
+  width: 100%;
 `;
 
 export const LevelMissionTextWrapper = styled.div`
   text-align: start;
+
+  position: absolute;
+  bottom: 4rem;
+
+  @media screen and (max-width: 890px) {
+    bottom: 3rem;
+  }
+
+  ${media.small`
+        bottom: -2rem;
+      `}
 `;
 
 // 소통 공간 제공
@@ -173,14 +183,14 @@ export const DiscussionContainer = styled.article`
   background-color: ${(props) => props.theme.colors.white};
   background-color: pink;
 
-  ${media.small`
-      gap: 2rem;
-    `}
-
   @media screen and (max-width: 890px) {
     width: 100%;
     padding: 2rem 1.5rem;
   }
+
+  ${media.small`
+      gap: 2rem;
+    `}
 `;
 
 export const DiscussionImgWrapper = styled.div`
@@ -194,25 +204,7 @@ export const DiscussionImgWrapper = styled.div`
 export const DiscussionImg = styled(Discussion)`
   width: 82rem;
 
-  ${media.small`
-      width: 20rem;
-    `}
-
   @media screen and (max-width: 890px) {
     width: 100%;
   }
 `;
-
-// export const ButtonWrapper = styled.div`
-//   position: relative;
-//   width: 100%;
-// `;
-
-// export const Button = styled.button`
-//   position: absolute;
-// `;
-
-// export const Image = styled.img`
-//   width: 100%;
-//   height: 100%;
-// `;
