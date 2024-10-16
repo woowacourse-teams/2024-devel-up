@@ -8,6 +8,7 @@ export const Container = styled.header`
 
 export const BannerTitle = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const GithubIcon = styled(GithubLogo)`

@@ -89,9 +89,9 @@ const routes = [
       <QueryErrorBoundary>
         <App>
           <SpinnerSuspense>
-            <PrivateRoute redirectTo={ROUTES.login}>
-              <MissionSubmitPage />
-            </PrivateRoute>
+            {/* <PrivateRoute redirectTo={ROUTES.login}> */}
+            <MissionSubmitPage />
+            {/* </PrivateRoute> */}
           </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
@@ -241,9 +241,9 @@ const routes = [
       <QueryErrorBoundary>
         <App>
           <SpinnerSuspense>
-            <PrivateRoute redirectTo={ROUTES.login}>
-              <DiscussionSubmitPage />
-            </PrivateRoute>
+            {/* <PrivateRoute redirectTo={ROUTES.login}> */}
+            <DiscussionSubmitPage />
+            {/* </PrivateRoute> */}
           </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
