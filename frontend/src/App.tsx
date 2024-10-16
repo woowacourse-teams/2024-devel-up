@@ -7,16 +7,16 @@ import * as S from './App.styled';
 
 export default function App({ children }: PropsWithChildren) {
   return (
-    <>
+    <S.Container>
       <GlobalLayout>
         <S.SkipTag href="#main-content" className="visually-hidden">
           본문으로 바로가기
         </S.SkipTag>
         <Header />
-        <div id="main-content">{children}</div>
+        <main id="main-content">{children}</main>
       </GlobalLayout>
       <Footer />
       <ScrollToTopButton />
-    </>
+    </S.Container>
   );
 }
