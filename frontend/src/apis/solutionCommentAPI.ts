@@ -6,6 +6,8 @@ import type {
 import type { SolutionComment, MyComments } from '@/types';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH, PATH_FORMATTER } from './paths';
+import { getWithPagination } from './paginationAPI';
+import type { PaginationResponse } from './paginationAPI';
 
 export const getSolutionComments = async (solutionId: number): Promise<SolutionComment[]> => {
   const { data } = await develupAPIClient.get<{ data: SolutionComment[] }>(
@@ -76,8 +78,21 @@ export const deleteSolutionComment = async ({
   return commentId;
 };
 
-export const getMyComments = async (): Promise<MyComments[]> => {
-  const { data } = await develupAPIClient.get<{ data: MyComments[] }>(PATH.myComments);
+interface GetMyCommentsOptions {
+  page: string;
+}
 
-  return data;
+export const getMyComments = async ({
+  page,
+}: GetMyCommentsOptions): Promise<PaginationResponse<MyComments[]>> => {
+  const { data, currentPage, totalPage } = await getWithPagination<MyComments[]>(PATH.myComments, {
+    size: '9',
+    page,
+  });
+
+  return {
+    data: data,
+    currentPage: currentPage,
+    totalPage: totalPage,
+  };
 };

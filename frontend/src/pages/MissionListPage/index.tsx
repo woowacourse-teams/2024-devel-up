@@ -5,11 +5,30 @@ import useHashTags from '@/hooks/useHashTags';
 import TagList from '@/components/common/TagList';
 import { useState } from 'react';
 import type { HashTag } from '@/types';
+import { usePagination } from '@/hooks/usePagination';
+import { HASHTAGS } from '@/constants/hashTags';
+import PageButtons from '@/components/common/PageButtons';
 
 export default function MissionListPage() {
   const [selectedHashTag, setSelectedHashTag] = useState<HashTag | null>(null);
-  const { data: allMissions } = useMissions(selectedHashTag?.name);
   const { data: allHashTags } = useHashTags();
+  const {
+    currentPage,
+    setTotalPages,
+    goToPage,
+    goToPreviousGroup,
+    goToNextGroup,
+    pageNumbers,
+    hasPreviousGroup,
+    hasNextGroup,
+  } = usePagination();
+  const { missions } = useMissions({
+    filter: selectedHashTag ? selectedHashTag.name : HASHTAGS.all,
+    page: currentPage,
+    onPageInfoUpdate: (totalPagesFromServer) => {
+      setTotalPages(totalPagesFromServer);
+    },
+  });
 
   return (
     <S.MissionListPageContainer>
@@ -23,7 +42,16 @@ export default function MissionListPage() {
         selectedTag={selectedHashTag}
         keyName="name"
       />
-      <MissionList missions={allMissions} />
+      <MissionList missions={missions} />
+      <PageButtons
+        goToNextGroup={goToNextGroup}
+        goToPage={goToPage}
+        goToPreviousGroup={goToPreviousGroup}
+        pageNumbers={pageNumbers}
+        hasPreviousGroup={hasPreviousGroup}
+        hasNextGroup={hasNextGroup}
+        currentPage={currentPage}
+      />
     </S.MissionListPageContainer>
   );
 }

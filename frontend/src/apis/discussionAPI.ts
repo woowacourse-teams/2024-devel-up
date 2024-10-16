@@ -2,14 +2,34 @@ import type { Discussion } from '@/types';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH } from './paths';
 import type { DiscussionDetail } from '@/types/discussion';
+import { getWithPagination } from './paginationAPI';
+import type { PaginationResponse } from './paginationAPI';
 
-export const getDiscussions = async (mission = 'all', hashTag = 'all'): Promise<Discussion[]> => {
-  const { data } = await develupAPIClient.get<{ data: Discussion[] }>(PATH.discussions, {
+interface GetDiscussionsOptions {
+  mission: string;
+  hashTag: string;
+  page: string;
+  size: string;
+}
+
+export const getDiscussions = async ({
+  mission,
+  hashTag,
+  page = '0',
+  size = '9',
+}: GetDiscussionsOptions): Promise<PaginationResponse<Discussion[]>> => {
+  const { data, currentPage, totalPage } = await getWithPagination<Discussion[]>(PATH.discussions, {
     mission,
     hashTag,
+    page,
+    size,
   });
 
-  return data;
+  return {
+    data: data,
+    currentPage: currentPage,
+    totalPage: totalPage,
+  };
 };
 
 interface GetDiscussionResponse {

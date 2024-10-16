@@ -12,7 +12,7 @@ export default function SolutionListPage() {
   const [selectedHashTag, setSelectedHashTag] = useState<{ id: number; name: string } | null>(null);
 
   const { data: allHashTags } = useHashTags();
-  const { data: allMissions } = useMissions();
+  const { missions } = useMissions();
 
   return (
     <S.SolutionListPageContainer>
@@ -21,7 +21,7 @@ export default function SolutionListPage() {
         <S.Subtitle>다른 사람이 푼 풀이도 확인해보세요!</S.Subtitle>
       </S.TitleWrapper>
       <TagList
-        tags={allMissions}
+        tags={missions}
         setSelectedTag={setSelectedMission}
         selectedTag={selectedMission}
         keyName="title"
