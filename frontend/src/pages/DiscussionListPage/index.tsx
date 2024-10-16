@@ -2,7 +2,6 @@ import DiscussionListContent from '@/components/DiscussionList/DiscussionListCon
 import * as S from './DiscussionListPage.styled';
 import DiscussionListHeader from '@/components/DiscussionList/DiscussionListHeader';
 import { useState } from 'react';
-import useDiscussions from '@/hooks/useDiscussions';
 import TagList from '@/components/common/TagList';
 import useHashTags from '@/hooks/useHashTags';
 import type { HashTag } from '@/types';

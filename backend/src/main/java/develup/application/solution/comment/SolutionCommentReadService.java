@@ -1,6 +1,7 @@
 package develup.application.solution.comment;
 
 import java.util.List;
+import develup.api.common.PageResponse;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.solution.comment.MySolutionComment;
@@ -8,6 +9,9 @@ import develup.domain.solution.comment.SolutionComment;
 import develup.domain.solution.comment.SolutionCommentRepository;
 import develup.domain.solution.comment.SolutionCommentRepositoryCustom;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,5 +49,13 @@ public class SolutionCommentReadService {
         return mySolutionComments.stream()
                 .map(MySolutionCommentResponse::from)
                 .toList();
+    }
+
+    public PageResponse<List<MySolutionCommentResponse>> getMyComments(Long memberId, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MySolutionCommentResponse> mySolutionComments = solutionCommentRepositoryCustom
+                .findAllMySolutionCommentOrderByDesc(memberId, pageable)
+                .map(MySolutionCommentResponse::from);
+        return new PageResponse<>(mySolutionComments.getContent(), page, mySolutionComments.getTotalPages());
     }
 }

@@ -17,9 +17,13 @@ import develup.support.data.DiscussionCommentTestData;
 import develup.support.data.DiscussionTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 class DiscussionCommentRepositoryCustomTest extends IntegrationTestSupport {
 
@@ -37,6 +41,9 @@ class DiscussionCommentRepositoryCustomTest extends IntegrationTestSupport {
 
     @Autowired
     private DiscussionCommentRepository discussionCommentRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     @DisplayName("특정 회원이 작성한 댓글 목록을 조회한다.")
@@ -59,7 +66,53 @@ class DiscussionCommentRepositoryCustomTest extends IntegrationTestSupport {
                         .map(MyDiscussionComment::id)
                         .containsExactly(4L, 3L, 2L, 1L)
         );
+    }
 
+    @Test
+    @DisplayName("pageable 기반으로 특정 회원이 작성한 댓글 목록을 조회한다.")
+    @Transactional
+    void getMyCommentsPage() {
+        Discussion discussion = createRootDiscussion();
+        Member member = createRootMember();
+        int pageSize = 5;
+        List<Long> expectedFirstPageIds = new ArrayList<>();
+        List<Long> expectedSecondPageIds = new ArrayList<>();
+
+        for (int i = 0; i < pageSize; i++) {
+            // 정렬 조건이 DESC 반대로 넣어줘야한다.
+            expectedSecondPageIds.add(createRootDiscussionComment(discussion, member).getId());
+        }
+
+        for (int i = 0; i < pageSize; i++) {
+            expectedFirstPageIds.add(createRootDiscussionComment(discussion, member).getId());
+        }
+
+        entityManager.clear();
+
+        PageRequest firstPageRequest = PageRequest.of(0, pageSize);
+        PageRequest secondPageRequest = PageRequest.of(1, pageSize);
+        PageRequest thirdPageRequest = PageRequest.of(2, pageSize);
+        Page<MyDiscussionComment> firstResult = discussionCommentRepositoryCustom
+                .findPageMyDiscussionCommentOrderByCreatedAtDesc(member.getId(), firstPageRequest);
+        Page<MyDiscussionComment> secondResult = discussionCommentRepositoryCustom
+                .findPageMyDiscussionCommentOrderByCreatedAtDesc(member.getId(), secondPageRequest);
+        Page<MyDiscussionComment> thirdResult = discussionCommentRepositoryCustom
+                .findPageMyDiscussionCommentOrderByCreatedAtDesc(member.getId(), thirdPageRequest);
+
+        List<Long> firstPageIds = firstResult
+                .getContent().stream()
+                .map(MyDiscussionComment::id)
+                .toList();
+        List<Long> secondPageIds = secondResult
+                .getContent().stream()
+                .map(MyDiscussionComment::id)
+                .toList();
+
+        assertAll(
+                () -> assertThat(firstPageIds).containsAll(expectedFirstPageIds),
+                () -> assertThat(secondPageIds).containsAll(expectedSecondPageIds),
+                () -> assertThat(thirdResult.getContent()).isEmpty()
+        );
     }
 
     @Test

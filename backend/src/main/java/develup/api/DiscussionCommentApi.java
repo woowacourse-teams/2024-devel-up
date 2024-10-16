@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
+import develup.api.common.PageResponse;
 import develup.application.auth.Accessor;
 import develup.application.discussion.comment.CreateDiscussionCommentResponse;
 import develup.application.discussion.comment.DiscussionCommentReadService;
@@ -18,12 +19,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -46,9 +49,36 @@ public class DiscussionCommentApi {
 
     @GetMapping("/discussions/comments/mine")
     @Operation(summary = "사용자가 디스커션에 단 댓글 조회 API", description = "사용자가 디스커션에 단 댓글 목록을 조회합니다. 댓글 정보와 댓글이 달린 디스커션의 일부 정보를 조회합니다.")
-    public ResponseEntity<ApiResponse<List<MyDiscussionCommentResponse>>> getMyComments(@Auth Accessor accessor) {
-        List<MyDiscussionCommentResponse> responses = discussionCommentReadService.getMyComments(accessor.id());
-        return ResponseEntity.ok(new ApiResponse<>(responses));
+    public ResponseEntity<?> getMyComments(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size,
+            @Auth Accessor accessor
+    ) throws MissingServletRequestParameterException {
+        // TODO : 하위호환
+        if (isBothNull(page, size)) {
+            List<MyDiscussionCommentResponse> responses = discussionCommentReadService.getMyComments(accessor.id());
+            return ResponseEntity.ok(new ApiResponse<>(responses));
+        }
+
+        requireNonNull(page, size);
+
+        PageResponse<List<MyDiscussionCommentResponse>> response =
+                discussionCommentReadService.getMyComments(accessor.id(), page, size);
+        return ResponseEntity.ok(response);
+    }
+
+    private boolean isBothNull(Integer page, Integer size) {
+        return page == null && size == null;
+    }
+
+    private void requireNonNull(Integer page, Integer size) throws MissingServletRequestParameterException {
+        if (page == null) {
+            throw new MissingServletRequestParameterException("page", "number");
+        }
+
+        if (size == null) {
+            throw new MissingServletRequestParameterException("size", "number");
+        }
     }
 
     @PostMapping("/discussions/{discussionId}/comments")

@@ -47,6 +47,7 @@ export default function DiscussionSubmit() {
     discussionTitle,
     isDiscussionTitleError,
     handleDiscussionTitle,
+    handleMarkDownDescription,
     isDescriptionError,
     handleDescription,
     handleSubmitDiscussion,
@@ -125,8 +126,7 @@ export default function DiscussionSubmit() {
           value={description}
           danger={isDescriptionError}
           dangerMessage={ERROR_MESSAGE.no_content}
-          onChange={handleDescription}
-          placeholder="내용을 입력해 주세요."
+          onChange={handleMarkDownDescription}
         />
         <SubmitButton />
       </form>

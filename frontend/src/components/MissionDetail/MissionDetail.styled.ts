@@ -7,7 +7,7 @@ import SanitizedMDPreview from '../common/SanitizedMDPreview';
 
 // MissionDetailHeader
 
-export const MissionDetailHeaderContainer = styled.div`
+export const MissionDetailHeaderContainer = styled.header`
   width: 100%;
   height: 20rem;
   margin: 0 auto;
@@ -136,7 +136,7 @@ export const SubmitButton = styled.button`
 
 // MissionDetailContent
 
-export const MissionDescription = styled.div`
+export const MissionDescription = styled.section`
   width: 100%;
   padding: 2rem;
 

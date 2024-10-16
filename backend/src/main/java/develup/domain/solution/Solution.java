@@ -17,13 +17,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Entity
 public class Solution extends CreatedAtAuditableEntity {
 
@@ -49,6 +47,18 @@ public class Solution extends CreatedAtAuditableEntity {
     private SolutionStatus status = SolutionStatus.IN_PROGRESS;
 
     private LocalDateTime submittedAt;
+
+    public Solution(
+            Mission mission,
+            Member member,
+            SolutionTitle title,
+            String description,
+            PullRequestUrl pullRequestUrl,
+            SolutionStatus status,
+            LocalDateTime submittedAt
+    ) {
+        this(null, mission, member, title, description, pullRequestUrl, status, submittedAt);
+    }
 
     public Solution(
             Long id,
