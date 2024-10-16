@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -119,5 +120,15 @@ public class SolutionApi {
         List<MySolutionResponse> response = solutionReadService.getSubmittedSolutionsByMemberId(accessor.id());
 
         return ResponseEntity.ok(new ApiResponse<>(response));
+    }
+
+    private void requiredNotNull(Integer page, Integer size) throws MissingServletRequestParameterException {
+        if (page == null) {
+            throw new MissingServletRequestParameterException("page", "number");
+        }
+
+        if (size == null) {
+            throw new MissingServletRequestParameterException("size", "number");
+        }
     }
 }
