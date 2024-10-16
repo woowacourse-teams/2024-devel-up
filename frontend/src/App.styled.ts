@@ -6,12 +6,23 @@ export const Container = styled.div`
 
 export const SkipTag = styled.a`
   position: absolute;
-  width: 0.1rem;
-  height: 0.1rem;
+  top: 0;
+  left: 0;
+  width: 10rem;
+  height: 8rem;
   padding: 0;
-  margin: -0.1rem;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  border: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:focus {
+    z-index: 1000;
+    background: ${(props) => props.theme.colors.primary500};
+    color: ${(props) => props.theme.colors.white};
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
 `;
