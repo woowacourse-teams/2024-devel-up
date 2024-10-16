@@ -36,6 +36,17 @@ public class SolutionReadService {
                 .toList();
     }
 
+    public PageResponse<List<MySolutionResponse>> getSubmittedSolutionsByMemberId(Long memberId, Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Solution> mySolutions = solutionRepositoryCustom.findPageByMemberIdOrderByDesc(memberId, pageRequest);
+
+        List<MySolutionResponse> responses = mySolutions.getContent().stream()
+                .map(MySolutionResponse::from)
+                .toList();
+
+        return new PageResponse<>(responses, pageRequest.getPageNumber(), mySolutions.getTotalPages());
+    }
+
     public List<SummarizedSolutionResponse> getCompletedSummaries(String missionTitle, String hashTagName) {
         return solutionRepositoryCustom.findAllCompletedSolutionByHashTagName(missionTitle, hashTagName).stream()
                 .map(SummarizedSolutionResponse::from)
