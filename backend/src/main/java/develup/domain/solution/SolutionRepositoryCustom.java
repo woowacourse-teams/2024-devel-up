@@ -11,10 +11,15 @@ import java.util.Optional;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.domain.solution.comment.SolutionCommentCount;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,6 +28,44 @@ public class SolutionRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
     private final EntityManager entityManager;
+
+    public Page<Solution> findAllCompletedSolutionByHashTagName(
+            String missionTitle,
+            String hashTagName,
+            PageRequest pageRequest
+    ) {
+
+        int totalCount = queryFactory.select(solution.id)
+                .distinct()
+                .from(solution)
+                .join(solution.mission, mission)
+                .join(mission.missionHashTags.hashTags, missionHashTag)
+                .join(missionHashTag.hashTag)
+                .where(
+                        eqCompleted(),
+                        eqMissionTitle(missionTitle),
+                        eqHashTagName(hashTagName)
+                )
+                .fetch()
+                .size();
+
+
+        List<Solution> data = queryFactory.selectFrom(solution)
+                .join(solution.mission, mission)
+                .join(mission.missionHashTags.hashTags, missionHashTag)
+                .join(missionHashTag.hashTag)
+                .where(
+                        eqCompleted(),
+                        eqMissionTitle(missionTitle),
+                        eqHashTagName(hashTagName)
+                )
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize())
+                .orderBy(solution.submittedAt.desc())
+                .distinct()
+                .fetch();
+        return new PageImpl<>(data, pageRequest, totalCount);
+    }
 
     public List<Solution> findAllCompletedSolutionByHashTagName(String missionTitle, String hashTagName) {
         return queryFactory.selectFrom(solution)
@@ -95,6 +138,35 @@ public class SolutionRepositoryCustom {
                 .on(solutionComment.solution.id.eq(solution.id))
                 .where(solutionComment.deletedAt.isNull().and(solutionComment.parentCommentId.isNull()))
                 .groupBy(solution.id)
+                .fetch();
+    }
+
+    public Page<Solution> findPageByMemberIdOrderByDesc(Long memberId, PageRequest pageRequest) {
+        long offset = pageRequest.getOffset();
+        int limit = pageRequest.getPageSize();
+        JPAQuery<Long> countQuery = getMemberSolutionCountQuery(memberId);
+        List<Solution> data = fetchMemberSolutions(memberId, offset, limit);
+
+        return PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
+    }
+
+    private JPAQuery<Long> getMemberSolutionCountQuery(Long memberId) {
+        return queryFactory.select(solution.count())
+                .from(solution)
+                .where(solution.member.id.eq(memberId));
+    }
+
+    private List<Solution> fetchMemberSolutions(Long memberId, long offset, int limit) {
+        return queryFactory.select(solution).distinct()
+                .from(solution)
+                .innerJoin(solution.member, member).fetchJoin()
+                .join(solution.mission, mission).fetchJoin()
+                .join(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
+                .join(missionHashTag.hashTag).fetchJoin()
+                .where(member.id.eq(memberId))
+                .orderBy(solution.submittedAt.desc())
+                .offset(offset)
+                .limit(limit)
                 .fetch();
     }
 }
