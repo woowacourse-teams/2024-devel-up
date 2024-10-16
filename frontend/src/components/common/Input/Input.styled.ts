@@ -42,7 +42,7 @@ const borderRadiusStyles = {
 
 const typeStyles = {
   default: css`
-    background: ${(props) => props.theme.colors.grey100};
+    background: ${(props) => props.theme.colors.white};
   `,
 };
 
@@ -54,7 +54,7 @@ export const Input = styled.input<InputProps>`
   outline: none;
   padding: 2.3rem;
   border: none;
-  border: 0.15rem solid transparent;
+  border: 0.1rem solid #d0d7de;
 
   &::placeholder {
     color: rgba(0, 0, 0, 0.3);
