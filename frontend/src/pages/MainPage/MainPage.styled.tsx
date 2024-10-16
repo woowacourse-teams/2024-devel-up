@@ -4,6 +4,7 @@ export const MainPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 10rem;
+  width: 100%;
 `;
 
 export const MissionListWrapper = styled.div`

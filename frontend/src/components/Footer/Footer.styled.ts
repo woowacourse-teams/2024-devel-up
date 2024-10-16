@@ -1,13 +1,17 @@
+import media from '@/styles/mediaQueries';
 import { styled } from 'styled-components';
 
 export const Container = styled.footer`
-  width: 100rem;
-  min-width: 100%;
+  width: 100%;
   height: 15.2rem;
   background: var(--grey-50);
   padding: 0 24.5rem;
   display: flex;
   flex-direction: column;
+
+  ${media.small`
+      padding: 0 6rem;
+    `}
 `;
 
 export const TextWrapper = styled.div`
