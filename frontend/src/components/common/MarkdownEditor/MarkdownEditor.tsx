@@ -21,6 +21,7 @@ export default function MarkdownEditor({
   return (
     <>
       <S.MarkdownEditor
+        aria-label="마크다운 에디터"
         textareaProps={{ id }}
         $type={type}
         $size={size}
