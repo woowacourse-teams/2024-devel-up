@@ -20,6 +20,7 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
   const {
     description,
     handleDescription,
+    handleMarkDownDescription,
     isValidDescription,
     isDescriptionError,
     setIsDescriptionError,
@@ -63,6 +64,7 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
     description,
     solutionTitle,
     handleDescription,
+    handleMarkDownDescription,
     handleUrl,
     handleSubmitSolution,
     handleSolutionTitle,

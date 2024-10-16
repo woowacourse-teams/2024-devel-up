@@ -7,7 +7,7 @@ import SubmitButton from '@/components/MissionSubmit/SubmitButton';
 import SubmitSuccessPopUp from '@/components/PopUp/SubmitSuccessPopUp';
 import { useParams, useSearchParams } from 'react-router-dom';
 import useMission from '@/hooks/useMission';
-import { PROGRESS_MESSAGE } from '@/constants/messages';
+import { ERROR_MESSAGE } from '@/constants/messages';
 import useSubmitSolution from '@/hooks/useSubmitSolution';
 import LoadingSpinner from '@/components/common/LoadingSpinner/LoadingSpinner';
 import MissionTitle from '@/components/MissionSubmit/MissionTitle';
@@ -33,6 +33,7 @@ export default function MissionSubmitPage() {
     url,
     description,
     handleDescription,
+    handleMarkDownDescription,
     handleUrl,
     handleSubmitSolution,
     handleSolutionTitle,
@@ -103,9 +104,9 @@ export default function MissionSubmitPage() {
         />
         <OneWord
           danger={isDescriptionError}
+          dangerMessage={ERROR_MESSAGE.no_content}
           value={description ?? ''}
-          onChange={handleDescription}
-          placeholder={PROGRESS_MESSAGE.solution_description}
+          onChange={handleMarkDownDescription}
         />
         <SubmitButton />
       </form>
