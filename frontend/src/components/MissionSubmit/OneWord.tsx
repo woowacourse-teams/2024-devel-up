@@ -1,16 +1,18 @@
 import * as S from './OneWord.styled';
-import TextArea from '../common/TextArea/TextArea';
-import type { TextareaHTMLAttributes } from 'react';
+import MarkdownEditor from '../common/MarkdownEditor/MarkdownEditor';
 
-interface OneWordProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface OneWordProps {
   danger: boolean;
+  dangerMessage?: string;
+  value: string;
+  onChange: (v?: string) => void;
 }
 
-export default function OneWord({ danger, ...props }: OneWordProps) {
+export default function OneWord({ ...props }: OneWordProps) {
   return (
     <S.Container>
       <S.Title>구현 방식에 대한 설명</S.Title>
-      <TextArea danger={danger} {...props} />
+      <MarkdownEditor {...props} />
     </S.Container>
   );
 }

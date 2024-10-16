@@ -1,21 +1,28 @@
-import TextArea from '@/components/common/TextArea/TextArea';
+import MarkdownEditor from '../common/MarkdownEditor/MarkdownEditor';
 import * as S from './DiscussionSubmit.styled';
-import type { TextareaHTMLAttributes } from 'react';
 
-interface DiscussionDescriptionProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface DiscussionDescriptionProps {
+  value: string;
+  onChange: (v?: string) => void;
   danger: boolean;
   dangerMessage: string;
 }
 
 export default function DiscussionDescription({
+  value,
+  onChange,
   danger,
   dangerMessage,
-  ...props
 }: DiscussionDescriptionProps) {
   return (
     <S.DiscussionDescriptionContainer>
       <S.DiscussionDescriptionTitle>내용</S.DiscussionDescriptionTitle>
-      <TextArea danger={danger} dangerMessage={dangerMessage} {...props} />
+      <MarkdownEditor
+        value={value}
+        onChange={onChange}
+        danger={danger}
+        dangerMessage={dangerMessage}
+      />
     </S.DiscussionDescriptionContainer>
   );
 }

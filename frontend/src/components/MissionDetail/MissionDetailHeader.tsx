@@ -24,9 +24,9 @@ export default function MissionDetailHeader({
           {hashTags &&
             hashTags.map((tag) => {
               return (
-                <TagButton key={tag.id} isClickable={false}>
-                  # {tag.name}
-                </TagButton>
+                <li key={tag.id}>
+                  <TagButton isClickable={false}># {tag.name}</TagButton>
+                </li>
               );
             })}
         </S.HashTagWrapper>

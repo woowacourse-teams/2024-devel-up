@@ -19,9 +19,21 @@ const useDescription = () => {
     setIsDescriptionError(false);
   };
 
+  const handleMarkDownDescription = (v: string = '') => {
+    setDescription(v);
+
+    if (v.trim().length === 0) {
+      setIsDescriptionError(true);
+      return;
+    }
+
+    setIsDescriptionError(false);
+  };
+
   return {
     description,
     handleDescription,
+    handleMarkDownDescription,
     isValidDescription,
     setIsDescriptionError,
     isDescriptionError,
