@@ -1,5 +1,8 @@
 import { styled } from 'styled-components';
 import Rocket from '@/assets/images/rocket.svg';
+import VSCode from '@/assets/images/vscode.svg';
+import MissionCardElevator from '@/assets/images/missionCardElevator.svg';
+import MissionCardReact from '@/assets/images/missionCardReact.svg';
 import media from '@/styles/mediaQueries';
 
 export const Container = styled.div`
@@ -10,7 +13,9 @@ export const Container = styled.div`
   width: 100%;
 `;
 
-export const RocketWrapper = styled.div`
+// 로켓 이미지
+
+export const RocketContainer = styled.article`
   background: linear-gradient(180deg, #9ca6e1 0%, #fff 100%);
   width: 100%;
   height: 100vh;
@@ -41,19 +46,7 @@ export const TextAlignCenterWrapper = styled.div`
   text-align: center;
 `;
 
-export const PrimaryBold = styled.span`
-  color: ${(props) => props.theme.colors.primary500};
-  text-align: center;
-  font-family: 'Pretendard Variable';
-  font-size: 2.5rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-
-  ${media.small`
-      font-size: 2rem;
-    `}
-`;
+// 폰트
 
 export const Bold = styled.span`
   color: ${(props) => props.theme.colors.black};
@@ -64,20 +57,112 @@ export const Bold = styled.span`
   line-height: normal;
 
   ${media.small`
-      font-size: 2rem;
+    font-size: 1.6rem;
     `}
 `;
 
-export const ButtonWrapper = styled.div`
+export const PrimaryBold = styled(Bold)`
+  color: ${(props) => props.theme.colors.primary500};
+`;
+
+export const Text = styled(Bold)`
+  font-weight: 500;
+`;
+
+export const MediumBold = styled(Bold)`
+  font-size: 2rem;
+
+  ${media.small`
+      font-size: 1.3rem;
+    `}
+`;
+
+export const MediumText = styled(Text)`
+  font-size: 2rem;
+
+  ${media.small`
+      font-size: 1.3rem;
+    `}
+`;
+
+// 레벨 별 실전 문제 제공
+
+export const LevelMissionContainer = styled.article`
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  gap: 4rem;
+
+  height: 100vh;
+  background-color: ${(props) => props.theme.colors.white};
+
+  ${media.small`
+      gap: 2rem;
+    `}
+`;
+
+export const ContentWrapper = styled.div`
   position: relative;
-  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  ${media.small`
+      gap: 2rem;
+    `}
 `;
 
-export const Button = styled.button`
+export const VSCodeImg = styled(VSCode)`
+  width: 60rem;
+
+  ${media.small`
+      width: 20rem;
+    `}
+`;
+
+export const MissionCardWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
   position: absolute;
+  right: -19rem;
+  bottom: -7rem;
+
+  ${media.small`
+      right: -2rem;
+      bottom: 3rem;
+    `}
 `;
 
-export const Image = styled.img`
-  width: 100%;
-  height: 100%;
+export const MissionCardElevatorImg = styled(MissionCardElevator)`
+  width: 23rem;
+
+  ${media.small`
+      width: 8rem;
+    `}
 `;
+export const MissionCardReactImg = styled(MissionCardReact)`
+  width: 23rem;
+
+  ${media.small`
+      width: 8rem;
+    `}
+`;
+
+export const LevelMissionTextWrapper = styled.div`
+  text-align: start;
+`;
+
+// export const ButtonWrapper = styled.div`
+//   position: relative;
+//   width: 100%;
+// `;
+
+// export const Button = styled.button`
+//   position: absolute;
+// `;
+
+// export const Image = styled.img`
+//   width: 100%;
+//   height: 100%;
+// `;

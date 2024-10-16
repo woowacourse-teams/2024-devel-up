@@ -1,22 +1,12 @@
 import * as S from './AboutPage.styled';
+import LevelMission from './LevelMission';
+import Rocket from './Rocket';
 
 export default function AboutPage() {
   return (
     <S.Container>
-      {/* 로켓 이미지 영역 */}
-      <S.RocketWrapper>
-        <S.RocketImg />
-        <div>
-          <S.TextAlignCenterWrapper>
-            <S.PrimaryBold>Devel Up</S.PrimaryBold>
-            <S.Bold>이 여러분의</S.Bold>
-          </S.TextAlignCenterWrapper>
-          <div>
-            <S.PrimaryBold>Level Up</S.PrimaryBold>
-            <S.Bold>을 도와드릴게요!</S.Bold>
-          </div>
-        </div>
-      </S.RocketWrapper>
+      <Rocket />
+      <LevelMission />
     </S.Container>
   );
 }
