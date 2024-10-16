@@ -3,6 +3,7 @@ import Rocket from '@/assets/images/rocket.svg';
 import VSCode from '@/assets/images/vscode.svg';
 import MissionCardElevator from '@/assets/images/missionCardElevator.svg';
 import MissionCardReact from '@/assets/images/missionCardReact.svg';
+import Discussion from '@/assets/images/discussion.svg';
 import media from '@/styles/mediaQueries';
 
 export const Container = styled.div`
@@ -90,26 +91,30 @@ export const MediumText = styled(Text)`
 export const LevelMissionContainer = styled.article`
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  justify-items: start;
   gap: 4rem;
 
   height: 100vh;
+  min-width: 96rem;
   background-color: ${(props) => props.theme.colors.white};
+  background-color: lightblue;
 
   ${media.small`
       gap: 2rem;
+      min-width: 28rem;
     `}
 `;
 
 export const ContentWrapper = styled.div`
   position: relative;
-  margin: 0 auto;
+  padding-left: 7rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
 
   ${media.small`
-      gap: 2rem;
+    gap: 2rem;
+    padding-left: 2rem;
     `}
 `;
 
@@ -125,8 +130,8 @@ export const MissionCardWrapper = styled.div`
   display: flex;
   flex-direction: row;
   position: absolute;
-  right: -19rem;
-  bottom: -7rem;
+  right: -2rem;
+  bottom: 0;
 
   ${media.small`
       right: -2rem;
@@ -151,6 +156,51 @@ export const MissionCardReactImg = styled(MissionCardReact)`
 
 export const LevelMissionTextWrapper = styled.div`
   text-align: start;
+`;
+
+// 소통 공간 제공
+
+export const DiscussionContainer = styled.article`
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  gap: 4rem;
+
+  max-width: 120rem;
+  height: 100vh;
+  margin: 2rem auto;
+
+  background-color: ${(props) => props.theme.colors.white};
+  background-color: pink;
+
+  ${media.small`
+      gap: 2rem;
+    `}
+
+  @media screen and (max-width: 890px) {
+    width: 100%;
+    padding: 2rem 1.5rem;
+  }
+`;
+
+export const DiscussionImgWrapper = styled.div`
+  padding-left: 7rem;
+
+  ${media.small`
+    padding-left: 2rem;
+    `}
+`;
+
+export const DiscussionImg = styled(Discussion)`
+  width: 82rem;
+
+  ${media.small`
+      width: 20rem;
+    `}
+
+  @media screen and (max-width: 890px) {
+    width: 100%;
+  }
 `;
 
 // export const ButtonWrapper = styled.div`
