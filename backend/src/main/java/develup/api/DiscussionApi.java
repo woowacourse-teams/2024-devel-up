@@ -3,6 +3,7 @@ package develup.api;
 import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
+import develup.api.common.PageResponse;
 import develup.application.auth.Accessor;
 import develup.application.discussion.CreateDiscussionRequest;
 import develup.application.discussion.DiscussionReadService;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -86,9 +88,35 @@ public class DiscussionApi {
 
     @GetMapping("/discussions/mine")
     @Operation(summary = "나의 디스커션 목록 조회 API", description = "내가 작성한 디스커션 목록을 조회합니다.")
-    public ResponseEntity<ApiResponse<List<SummarizedDiscussionResponse>>> getMyDiscussions(@Auth Accessor accessor) {
-        List<SummarizedDiscussionResponse> response = discussionReadService.getDiscussionsByMemberId(accessor.id());
+    public ResponseEntity<?> getMyDiscussions(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size,
+            @Auth Accessor accessor
+    ) throws MissingServletRequestParameterException {
+        // TODO : 하위호환
+        if (isBothNull(page, size)) {
+            List<SummarizedDiscussionResponse> response = discussionReadService.getDiscussionsByMemberId(accessor.id());
+            return ResponseEntity.ok(new ApiResponse<>(response));
+        }
 
-        return ResponseEntity.ok(new ApiResponse<>(response));
+        requireNonNull(page, size);
+
+        PageResponse<List<SummarizedDiscussionResponse>> response =
+                discussionReadService.getDiscussionsByMemberId(accessor.id(), page, size);
+        return ResponseEntity.ok(response);
+    }
+
+    private boolean isBothNull(Integer page, Integer size) {
+        return page == null && size == null;
+    }
+
+    private void requireNonNull(Integer page, Integer size) throws MissingServletRequestParameterException {
+        if (page == null) {
+            throw new MissingServletRequestParameterException("page", "number");
+        }
+
+        if (size == null) {
+            throw new MissingServletRequestParameterException("size", "number");
+        }
     }
 }
