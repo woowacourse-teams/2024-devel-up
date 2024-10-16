@@ -2,11 +2,11 @@ import * as S from './SolutionListPage.styled';
 import TagList from '@/components/common/TagList';
 import useHashTags from '@/hooks/useHashTags';
 
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import SolutionList from '@/components/SolutionList';
 import type { SelectedMissionType } from '@/types/mission';
 import useMissions from '@/hooks/useMissions';
-import LoadingSpinner from '@/components/common/LoadingSpinner/LoadingSpinner';
+import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function SolutionListPage() {
   const [selectedMission, setSelectedMission] = useState<SelectedMissionType | null>(null);
@@ -34,9 +34,9 @@ export default function SolutionListPage() {
         selectedTag={selectedHashTag}
         keyName="name"
       />
-      <Suspense fallback={<LoadingSpinner />}>
+      <SpinnerSuspense>
         <SolutionList selectedMission={selectedMission} selectedHashTag={selectedHashTag} />
-      </Suspense>
+      </SpinnerSuspense>
     </S.SolutionListPageContainer>
   );
 }
