@@ -4,12 +4,12 @@ import GithubLogo from '@/assets/images/githubLogo.svg';
 import { Link } from 'react-router-dom';
 import SanitizedMDPreview from '../common/SanitizedMDPreview';
 
-export const SolutionDetailTitle = styled.h2`
+export const SolutionDetailTitle = styled.h1`
   margin: 4rem 0 2rem 0;
   ${({ theme }) => theme.font.heading1}
 `;
 
-export const MissionTitle = styled.div`
+export const MissionTitle = styled.h2`
   width: fit-content;
   ${({ theme }) => theme.font.badge}
   background-color: ${({ theme }) => theme.colors.danger50};
@@ -30,9 +30,9 @@ export const HeaderUserInfo = styled.div`
   gap: 1.2rem;
 `;
 
-export const SolutionDetailHeaderContainer = styled.div`
+export const SolutionDetailHeaderContainer = styled.header`
   width: 100%;
-  height: 20rem;
+  /* height: 20rem; */
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,7 @@ export const GithubIcon = styled(GithubLogo)`
 
 export const ThumbnailWrapper = styled.div`
   position: relative;
-  height: 100%;
+  height: 20rem;
   border-radius: 1rem;
   overflow: hidden;
 `;

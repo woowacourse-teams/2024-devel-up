@@ -1,5 +1,5 @@
 import type { Solution } from '@/types/solution';
-import * as S from './SolutionSection.styled';
+import * as S from './SolutionDetail.styled';
 import TagButton from '@/components/common/TagButton';
 
 interface SolutionDetailHeaderProps {
@@ -11,6 +11,7 @@ export default function SolutionDetailHeader({ solution }: SolutionDetailHeaderP
 
   return (
     <S.SolutionDetailHeaderContainer>
+      <S.SolutionDetailTitle>💡 풀이</S.SolutionDetailTitle>
       <S.ThumbnailWrapper>
         <S.ThumbnailImg src={mission.thumbnail} alt="미션 썸네일 이미지" />
         <S.GradientOverlay />
@@ -25,9 +26,9 @@ export default function SolutionDetailHeader({ solution }: SolutionDetailHeaderP
         <S.HashTagWrapper>
           {mission.hashTags &&
             mission.hashTags.map((tag) => (
-              <TagButton key={tag.id} isClickable={false}>
-                # {tag.name}
-              </TagButton>
+              <li key={tag.id}>
+                <TagButton isClickable={false}># {tag.name}</TagButton>
+              </li>
             ))}
         </S.HashTagWrapper>
       </S.ThumbnailWrapper>
