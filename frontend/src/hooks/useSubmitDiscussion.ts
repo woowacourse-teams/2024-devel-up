@@ -20,6 +20,7 @@ export const useSubmitDiscussion = ({ missionId, hashTagIds }: useSubmitDiscussi
   const {
     description,
     handleDescription,
+    handleMarkDownDescription,
     isValidDescription,
     isDescriptionError,
     setIsDescriptionError,
@@ -51,6 +52,7 @@ export const useSubmitDiscussion = ({ missionId, hashTagIds }: useSubmitDiscussi
   return {
     discussionTitle,
     handleDiscussionTitle,
+    handleMarkDownDescription,
     isValidDiscussionTitle,
     isDiscussionTitleError,
     description,

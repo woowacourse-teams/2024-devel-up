@@ -20,6 +20,9 @@ import develup.support.data.SolutionTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 class SolutionCommentRepositoryCustomTest extends IntegrationTestSupport {
 
@@ -96,6 +99,56 @@ class SolutionCommentRepositoryCustomTest extends IntegrationTestSupport {
 
         assertThat(myComments)
                 .hasSize(solutionComments.size());
+    }
+
+    @Test
+    @DisplayName("특정 회원이 작성한 댓글 목록을 작성일자 역순으로 페이지네이션 기반 조회한다.")
+    @Transactional
+    void getMyCommentsPage() {
+        Solution solution = createSolution();
+        Member member = createMember();
+        List<SolutionComment> solutionComments = new ArrayList<>();
+        int pageSize = 2;
+
+        List<Long> expectedFirstPageIds = new ArrayList<>();
+        List<Long> expectedSecondPageIds = new ArrayList<>();
+
+        for (int i = 0; i < pageSize; i++) {
+            SolutionComment solutionComment = createSolutionComment(solution, member);
+            solutionComments.add(solutionComment);
+            expectedSecondPageIds.add(0, solutionComment.getId());
+        }
+
+        for (int i = 0; i < pageSize; i++) {
+            SolutionComment solutionComment = createSolutionComment(solution, member);
+            solutionComments.add(solutionComment);
+            expectedFirstPageIds.add(0, solutionComment.getId());
+        }
+
+        PageRequest firstPage = PageRequest.of(0, pageSize);
+        PageRequest secondPage = PageRequest.of(1, pageSize);
+        Page<MySolutionComment> firstResult = solutionCommentRepositoryCustom.findAllMySolutionCommentOrderByDesc(
+                member.getId(),
+                firstPage
+        );
+        Page<MySolutionComment> secondResult = solutionCommentRepositoryCustom.findAllMySolutionCommentOrderByDesc(
+                member.getId(),
+                secondPage
+        );
+
+        List<Long> firstPageIds = firstResult.getContent().stream()
+                .map(MySolutionComment::id)
+                .toList();
+        List<Long> secondPageIds = secondResult.getContent().stream()
+                .map(MySolutionComment::id)
+                .toList();
+
+        assertAll(
+                () -> assertThat(firstPageIds).containsExactlyElementsOf(expectedFirstPageIds),
+                () -> assertThat(secondPageIds).containsExactlyElementsOf(expectedSecondPageIds),
+                () -> assertThat(firstResult.getTotalElements()).isEqualTo(solutionComments.size()),
+                () -> assertThat(firstResult.getTotalPages()).isEqualTo(2)
+        );
     }
 
     private Solution createSolution() {
