@@ -31,9 +31,9 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
             <S.HashTagWrapper>
               {hashTags &&
                 hashTags.map((tag) => (
-                  <TagButton key={tag.id} isClickable={false}>
-                    # {tag.name}
-                  </TagButton>
+                  <li key={tag.id}>
+                    <TagButton isClickable={false}># {tag.name}</TagButton>
+                  </li>
                 ))}
             </S.HashTagWrapper>
           </S.DiscussionDetailInfo>

@@ -28,7 +28,7 @@ export default function CommentSection({
   const hasComment = comments.length > 0;
 
   return (
-    <div>
+    <section>
       {(hasComment || isLoggedIn) && <S.SeparationLine />}
       <CommentList
         comments={comments}
@@ -41,6 +41,6 @@ export default function CommentSection({
           <CommentSubmitForm postId={postId} usePostCommentMutation={usePostCommentMutation} />
         </S.CommentFormWrapper>
       )}
-    </div>
+    </section>
   );
 }
