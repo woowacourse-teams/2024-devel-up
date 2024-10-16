@@ -27,6 +27,7 @@ export default function TagList<T extends { id: number }>({
           const isSelected = tag.id === selectedTag?.id;
           return (
             <TagButton
+              aria-label={`${name} 태그`}
               key={tag.id}
               isSelected={isSelected}
               onClick={() => setSelectedTag(isSelected ? null : tag)}

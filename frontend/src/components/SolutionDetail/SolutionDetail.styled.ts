@@ -30,7 +30,7 @@ export const HeaderUserInfo = styled.div`
   gap: 1.2rem;
 `;
 
-export const SolutionDetailHeaderContainer = styled.header`
+export const SolutionDetailHeaderContainer = styled.div`
   width: 100%;
   /* height: 20rem; */
   margin: 0 auto;

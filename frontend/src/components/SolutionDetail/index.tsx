@@ -17,6 +17,7 @@ export default function SolutionDetail({ solution }: SolutionDetailProps) {
 
   return (
     <div>
+      <S.SolutionDetailTitle>💡 풀이</S.SolutionDetailTitle>
       <SolutionDetailHeader solution={solution} />
       <S.CodeViewButtonWrapper>
         <S.CodeViewButtonLink to={url + '/files'} target="_blank">
