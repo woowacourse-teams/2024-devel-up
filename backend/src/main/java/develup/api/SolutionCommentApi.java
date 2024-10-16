@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import develup.api.auth.Auth;
 import develup.api.common.ApiResponse;
+import develup.api.common.PageResponse;
 import develup.application.auth.Accessor;
 import develup.application.solution.comment.CreateSolutionCommentResponse;
 import develup.application.solution.comment.MySolutionCommentResponse;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RequiredArgsConstructor
 @RestController
@@ -46,9 +50,32 @@ public class SolutionCommentApi {
 
     @GetMapping("/solutions/comments/mine")
     @Operation(summary = "사용자가 솔루션에 단 댓글 조회 API", description = "사용자가 솔루션에 단 댓글 목록을 조회합니다. 댓글 정보와 댓글이 달린 솔루션의 일부 정보를 조회합니다.")
-    public ResponseEntity<ApiResponse<List<MySolutionCommentResponse>>> getMyComments(@Auth Accessor accessor) {
-        List<MySolutionCommentResponse> responses = solutionCommentReadService.getMyComments(accessor.id());
-        return ResponseEntity.ok(new ApiResponse<>(responses));
+    public ResponseEntity<?> getMyComments(
+            @Auth Accessor accessor,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size
+    ) {
+        if (isPaginationNotProvided(page, size)) {
+            List<MySolutionCommentResponse> responses = solutionCommentReadService.getMyComments(accessor.id());
+            return ResponseEntity.ok(new ApiResponse<>(responses));
+        }
+        if (isPaginationPartiallyProvided(page, size)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        PageResponse<List<MySolutionCommentResponse>> responses = solutionCommentReadService.getMyComments(
+                accessor.id(),
+                page,
+                size
+        );
+        return ResponseEntity.ok(responses);
+    }
+
+    private boolean isPaginationNotProvided(Integer page, Integer size) {
+        return page == null && size == null;
+    }
+
+    private boolean isPaginationPartiallyProvided(Integer page, Integer size) {
+        return page == null || size == null;
     }
 
     @PostMapping("/solutions/{solutionId}/comments")
