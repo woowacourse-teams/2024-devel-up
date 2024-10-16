@@ -10,7 +10,11 @@ export default function DiscussionDetailHeader({ discussion }: DiscussionDetailH
   const { mission, member, title, hashTags } = discussion;
 
   return (
-    <S.DiscussionDetailHeaderContainer>
+    <S.DiscussionDetailHeaderContainer
+      tabIndex={0}
+      aria-atomic="true"
+      aria-label={`디스커션 게시글 제목 ${title}, 작성자 ${member.name}`}
+    >
       <S.ThumbnailWrapper>
         <S.HeaderLeftArea>
           <S.MissionActionHeader>
