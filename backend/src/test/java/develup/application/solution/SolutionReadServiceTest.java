@@ -135,7 +135,7 @@ class SolutionReadServiceTest extends IntegrationTestSupport {
         PageResponse<List<SummarizedSolutionResponse>> response = solutionReadService.getCompletedSummaries(
                 "all",
                 "all",
-                1,
+                0,
                 5
         );
 
@@ -143,7 +143,7 @@ class SolutionReadServiceTest extends IntegrationTestSupport {
         assertAll(
                 () -> assertThat(data.stream().map(SummarizedSolutionResponse::title)).containsExactly("10", "9", "8", "7", "6"),
                 () -> assertThat(response.totalPage()).isEqualTo(3),
-                () -> assertThat(response.currentPage()).isEqualTo(1)
+                () -> assertThat(response.currentPage()).isEqualTo(0)
         );
     }
 }

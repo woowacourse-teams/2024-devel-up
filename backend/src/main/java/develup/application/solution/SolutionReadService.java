@@ -51,7 +51,7 @@ public class SolutionReadService {
         Page<SummarizedSolutionResponse> pageResponse = solutionRepositoryCustom.findAllCompletedSolutionByHashTagName(
                         missionTitle,
                         hashTagName,
-                        PageRequest.of(page - 1, size)
+                        PageRequest.of(page, size)
                 )
                 .map(SummarizedSolutionResponse::from);
         return new PageResponse<>(pageResponse.toList(), page, pageResponse.getTotalPages());
