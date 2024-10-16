@@ -13,10 +13,14 @@ import java.util.Optional;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import develup.domain.discussion.comment.DiscussionCommentCount;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -83,6 +87,35 @@ public class DiscussionRepositoryCustom {
                 .leftJoin(discussionHashTag.hashTag, hashTag).fetchJoin()
                 .where(member.id.eq(memberId))
                 .orderBy(discussion.id.desc())
+                .fetch();
+    }
+
+    public Page<Discussion> findPageByMemberIdOrderByDesc(Long memberId, Pageable pageRequest) {
+        long offset = pageRequest.getOffset();
+        int limit = pageRequest.getPageSize();
+        JPAQuery<Long> countQuery = getMemberDiscussionsCountQuery(memberId);
+        List<Discussion> data = fetchMemberDiscussions(memberId, offset, limit);
+
+        return PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
+    }
+
+    private JPAQuery<Long> getMemberDiscussionsCountQuery(Long memberId) {
+        return queryFactory.select(discussion.count())
+                .from(discussion)
+                .where(discussion.member.id.eq(memberId));
+    }
+
+    private List<Discussion> fetchMemberDiscussions(Long memberId, Long offset, Integer limit) {
+        return queryFactory.select(discussion).distinct()
+                .from(discussion)
+                .innerJoin(discussion.member, member).fetchJoin()
+                .leftJoin(discussion.mission, mission).fetchJoin()
+                .leftJoin(discussion.discussionHashTags.hashTags, discussionHashTag)
+                .leftJoin(discussionHashTag.hashTag, hashTag)
+                .where(member.id.eq(memberId))
+                .orderBy(discussion.id.desc())
+                .offset(offset)
+                .limit(limit)
                 .fetch();
     }
 

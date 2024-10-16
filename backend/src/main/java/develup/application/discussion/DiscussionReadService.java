@@ -1,12 +1,15 @@
 package develup.application.discussion;
 
 import java.util.List;
+import develup.api.common.PageResponse;
 import develup.api.exception.DevelupException;
 import develup.api.exception.ExceptionType;
 import develup.domain.discussion.Discussion;
 import develup.domain.discussion.DiscussionRepositoryCustom;
 import develup.domain.discussion.comment.DiscussionCommentCounts;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +46,27 @@ public class DiscussionReadService {
                         discussionCommentCounts.getCount(discussion))
                 )
                 .toList();
+    }
+
+    public PageResponse<List<SummarizedDiscussionResponse>> getDiscussionsByMemberId(
+            Long memberId,
+            Integer page,
+            Integer size
+    ) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Discussion> myDiscussions = discussionRepositoryCustom.findPageByMemberIdOrderByDesc(memberId, pageRequest);
+        DiscussionCommentCounts discussionCommentCounts = new DiscussionCommentCounts(
+                discussionRepositoryCustom.findAllDiscussionCommentCounts()
+        );
+
+        List<SummarizedDiscussionResponse> countIncludeData = myDiscussions.getContent().stream()
+                .map(discussion -> SummarizedDiscussionResponse.of(
+                        discussion,
+                        discussionCommentCounts.getCount(discussion))
+                )
+                .toList();
+
+        return new PageResponse<>(countIncludeData, pageRequest.getPageNumber(), myDiscussions.getTotalPages());
     }
 
     public DiscussionResponse getById(Long id) {
