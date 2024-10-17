@@ -71,10 +71,9 @@ export const Text = styled(Bold)`
 export const MediumBold = styled(Bold)`
   font-size: 2rem;
 
-  // 컨텐츠 너비를 890px로 지정해서 breakpoint를 890px로 설정해두었습니다.
-  @media screen and (max-width: 890px) {
-    font-size: 1.6rem;
-  }
+  ${media.landingMedium`
+      font-size: 1.6rem;
+    `}
 
   ${media.small`
       font-size: 1.3rem;
@@ -84,9 +83,9 @@ export const MediumBold = styled(Bold)`
 export const MediumText = styled(Text)`
   font-size: 2rem;
 
-  @media screen and (max-width: 890px) {
+  ${media.landingMedium`
     font-size: 1.6rem;
-  }
+  `}
 
   ${media.small`
       font-size: 1.3rem;
@@ -109,10 +108,10 @@ export const LevelMissionContainer = styled.article`
   background-color: ${(props) => props.theme.colors.white};
   background-color: lightblue;
 
-  @media screen and (max-width: 890px) {
-    width: 100%;
-    padding: 2rem 1.5rem;
-  }
+  ${media.landingMedium`
+      width: 100%;
+      padding: 2rem 1.5rem;
+  `}
 
   ${media.small`
       gap: 2rem;
@@ -139,9 +138,9 @@ export const MissionCardWrapper = styled.div`
   right: -2rem;
   bottom: 0;
 
-  @media screen and (max-width: 890px) {
+  ${media.landingMedium`
     right: -10rem;
-  }
+  `}
 
   ${media.small`
       right: -2rem;
@@ -159,13 +158,13 @@ export const LevelMissionTextWrapper = styled.div`
   position: absolute;
   bottom: 4rem;
 
-  @media screen and (max-width: 890px) {
-    bottom: 3rem;
-  }
+  ${media.landingMedium`
+      bottom: 3rem;
+    `}
 
   ${media.small`
-        bottom: -2rem;
-      `}
+      bottom: -2rem;
+    `}
 `;
 
 // 소통 공간 제공
@@ -183,10 +182,10 @@ export const DiscussionContainer = styled.article`
   background-color: ${(props) => props.theme.colors.white};
   background-color: pink;
 
-  @media screen and (max-width: 890px) {
+  ${media.landingMedium`
     width: 100%;
     padding: 2rem 1.5rem;
-  }
+  `}
 
   ${media.small`
       gap: 2rem;
@@ -204,7 +203,7 @@ export const DiscussionImgWrapper = styled.div`
 export const DiscussionImg = styled(Discussion)`
   width: 82rem;
 
-  @media screen and (max-width: 890px) {
+  ${media.landingMedium`
     width: 100%;
-  }
+  `}
 `;
