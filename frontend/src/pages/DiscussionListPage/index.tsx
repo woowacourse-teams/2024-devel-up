@@ -10,6 +10,7 @@ import type { SelectedMissionType } from '@/types/mission';
 import { usePagination } from '@/hooks/usePagination';
 import { HASHTAGS } from '@/constants/hashTags';
 import PageButtons from '@/components/common/PageButtons';
+import useDiscussions from '@/hooks/useDiscussions';
 
 export default function DiscussionListPage() {
   const [selectedMission, setSelectedMission] = useState<SelectedMissionType | null>(null);
@@ -29,7 +30,7 @@ export default function DiscussionListPage() {
     mission: selectedMission?.title ?? HASHTAGS.all,
     hashTag: selectedHashTag?.name ?? HASHTAGS.all,
     page: currentPage,
-    onPageInfoUpdate: (totalPagesFromServer) => {
+    onPageInfoUpdate: (totalPagesFromServer: number) => {
       setTotalPages(totalPagesFromServer);
     },
   });
