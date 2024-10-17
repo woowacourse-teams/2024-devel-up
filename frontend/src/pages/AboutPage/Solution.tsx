@@ -1,8 +1,14 @@
+import React from 'react';
 import * as S from './AboutPage.styled';
 
-export default function Solution() {
+interface SolutionProps {
+  ref?: React.Ref<HTMLOptionElement>;
+  isVisible: boolean;
+}
+
+const Solution = React.forwardRef<HTMLOptionElement, SolutionProps>(({ isVisible }, ref) => {
   return (
-    <S.SolutionContainer>
+    <S.SolutionContainer isVisible={isVisible} ref={ref}>
       <S.Wrapper>
         <S.Bold>🧑🏻‍💻 다른 개발자들의 풀이 코드 제공</S.Bold>
         <S.ImgLeftPadding>
@@ -25,4 +31,8 @@ export default function Solution() {
       </S.Wrapper>
     </S.SolutionContainer>
   );
-}
+});
+
+Solution.displayName = 'Solution';
+
+export default Solution;

@@ -125,7 +125,13 @@ export const MediumText = styled(Text)`
 
 // 레벨 별 실전 문제 제공 (LevelMission)
 
-export const LevelMissionContainer = styled.section`
+export const LevelMissionContainer = styled.section<{ isVisible: boolean }>`
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) => (props.isVisible ? 'translateY(0)' : 'translateY(20px)')};
+  transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
+
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -134,7 +140,7 @@ export const LevelMissionContainer = styled.section`
 
   max-width: 120rem;
   width: 89rem;
-  height: 80vh;
+  height: 90vh;
 
   background-color: ${(props) => props.theme.colors.white};
 
@@ -178,8 +184,20 @@ export const MissionCardWrapper = styled.div`
     `}
 `;
 
+const slideUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 export const LevelMissionImg = styled(LevelMission)`
   width: 100%;
+  animation: ${slideUp} 1s ease-out;
 `;
 
 export const LevelMissionTextWrapper = styled.div`
@@ -199,7 +217,13 @@ export const LevelMissionTextWrapper = styled.div`
 
 // 소통 공간 제공 (DiscussionSpace)
 
-export const DiscussionContainer = styled.section`
+export const DiscussionContainer = styled.section<{ isVisible: boolean }>`
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) => (props.isVisible ? 'translateY(0)' : 'translateY(20px)')};
+  transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
+
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -208,13 +232,12 @@ export const DiscussionContainer = styled.section`
   gap: 3rem;
 
   width: 100%;
-  height: 80vh;
+  height: 90vh;
   margin: 2rem auto;
 
   background-color: ${(props) => props.theme.colors.white};
 
   ${media.landingMedium`
-    width: 100%;
     padding: 2rem 1.5rem;
   `}
 
@@ -233,6 +256,7 @@ export const ImgLeftPadding = styled.div`
 
 export const DiscussionImg = styled(Discussion)`
   width: 82rem;
+  animation: ${slideUp} 1s ease-out;
 
   ${media.landingMedium`
     width: 100%;
@@ -241,13 +265,14 @@ export const DiscussionImg = styled(Discussion)`
 
 // 다른 개발자들의 풀이 코드 제공 (Solution)
 
-export const SolutionContainer = styled(DiscussionContainer)`
-  background: linear-gradient(
-    180deg,
-    #fff 0%,
-    #fff 80%,
-    ${(props) => props.theme.colors.grey300} 100%
-  );
+export const SolutionContainer = styled.section<{ isVisible: boolean }>`
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) => (props.isVisible ? 'translateY(0)' : 'translateY(20px)')};
+  transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
+
+  height: 90vh;
 `;
 
 export const SolutionImg = styled(VSCodeSolution)`
@@ -260,4 +285,9 @@ export const SolutionImg = styled(VSCodeSolution)`
 
 export const Wrapper = styled.article`
   margin: 0 auto;
+
+  ${media.landingMedium`
+    margin: 0;
+    width: 100%;
+  `}
 `;
