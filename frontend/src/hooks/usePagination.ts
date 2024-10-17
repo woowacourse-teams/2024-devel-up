@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-export const DEFAULT_PAGE_SIZE = 9;
 const GROUP_SIZE = 5;
 
 export function usePagination() {
@@ -26,7 +25,7 @@ export function usePagination() {
       const newPage = Math.max(1, Math.min(page, totalPages));
       const searchParams = new URLSearchParams(location.search);
       searchParams.set('page', newPage.toString());
-      navigate(`${location.pathname}?${searchParams.toString()}`, { replace: true });
+      navigate(`${location.pathname}?${searchParams.toString()}`);
       setCurrentPage(newPage);
     },
     [navigate, location.pathname, totalPages],

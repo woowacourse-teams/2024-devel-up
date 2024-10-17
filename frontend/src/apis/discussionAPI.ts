@@ -4,6 +4,7 @@ import { PATH } from './paths';
 import type { DiscussionDetail } from '@/types/discussion';
 import { getWithPagination } from './paginationAPI';
 import type { PaginationResponse } from './paginationAPI';
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
 
 interface GetDiscussionsOptions {
   mission: string;
@@ -16,7 +17,7 @@ export const getDiscussions = async ({
   mission,
   hashTag,
   page = '0',
-  size = '9',
+  size = DEFAULT_PAGE_SIZE,
 }: GetDiscussionsOptions): Promise<PaginationResponse<Discussion[]>> => {
   const { data, currentPage, totalPage } = await getWithPagination<Discussion[]>(PATH.discussions, {
     mission,

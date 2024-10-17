@@ -8,6 +8,7 @@ import { develupAPIClient } from './clients/develupClient';
 import { PATH, PATH_FORMATTER } from './paths';
 import { getWithPagination } from './paginationAPI';
 import type { PaginationResponse } from './paginationAPI';
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
 
 export const getSolutionComments = async (solutionId: number): Promise<SolutionComment[]> => {
   const { data } = await develupAPIClient.get<{ data: SolutionComment[] }>(
@@ -86,7 +87,7 @@ export const getMyComments = async ({
   page,
 }: GetMyCommentsOptions): Promise<PaginationResponse<MyComments[]>> => {
   const { data, currentPage, totalPage } = await getWithPagination<MyComments[]>(PATH.myComments, {
-    size: '9',
+    size: DEFAULT_PAGE_SIZE,
     page,
   });
 

@@ -12,6 +12,7 @@ import { HASHTAGS } from '@/constants/hashTags';
 import type { MissionInProgress } from '@/types/mission';
 import { getWithPagination } from './paginationAPI';
 import type { PaginationResponse } from './paginationAPI';
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
 
 interface getMissionByIdResponse {
   data: MissionWithDescription;
@@ -30,7 +31,7 @@ interface GetMissionsOptions {
 export const getMissions = async ({
   hashTag = HASHTAGS.all,
   page = '0',
-  size = '9',
+  size = DEFAULT_PAGE_SIZE,
 }: GetMissionsOptions): Promise<PaginationResponse<Mission[]>> => {
   const { data, currentPage, totalPage } = await getWithPagination<Mission[]>(PATH.missionList, {
     size,
@@ -62,7 +63,7 @@ export const getMissionInProgress = async ({
   const { data, currentPage, totalPage } = await getWithPagination<MissionInProgress[]>(
     PATH.missionInProgress,
     {
-      size: '9',
+      size: DEFAULT_PAGE_SIZE,
       page,
     },
   );

@@ -24,8 +24,8 @@ interface PageButtonWrapperProps {
 }
 
 export const PageButtonWrapper = styled(DefaultButtonWrapper)<PageButtonWrapperProps>`
-  background: ${({ $isActive }) => ($isActive ? 'var(--primary-50)' : '')};
-  color: ${({ $isActive }) => ($isActive ? 'black' : 'var(--grey-500)')};
+  background: ${({ $isActive, theme }) => ($isActive ? theme.colors.primary50 : '')};
+  color: ${({ $isActive, theme }) => ($isActive ? 'black' : theme.colors.grey500)};
   font-size: 1.4rem;
 `;
 

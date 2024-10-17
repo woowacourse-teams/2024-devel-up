@@ -2,7 +2,7 @@ import { getDiscussions } from '@/apis/discussionAPI';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { discussionsKeys } from './queries/keys';
 import { HASHTAGS } from '@/constants/hashTags';
-import { DEFAULT_PAGINATION_SIZE } from './useMissions';
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
 import { useEffect } from 'react';
 
 interface UseDiscussionsOptions {
@@ -25,7 +25,7 @@ const useDiscussions = ({
         mission: mission || HASHTAGS.all,
         hashTag: hashTag || HASHTAGS.all,
         page: page.toString(),
-        size: DEFAULT_PAGINATION_SIZE,
+        size: DEFAULT_PAGE_SIZE,
       }),
   });
 

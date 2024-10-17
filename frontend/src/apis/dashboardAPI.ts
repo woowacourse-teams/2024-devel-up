@@ -3,6 +3,7 @@ import { getWithPagination } from './paginationAPI';
 import type { PaginationResponse } from './paginationAPI';
 import type { UserInfo } from '@/types/user';
 import type { HashTag } from '@/types';
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
 
 interface GetDashboardDiscussionOptions {
   page: string;
@@ -24,7 +25,7 @@ export const getDashboardDiscussion = async ({
   const { data, currentPage, totalPage } = await getWithPagination<Discussion[]>(
     PATH.dashboardDiscussion,
     {
-      size: '9',
+      size: DEFAULT_PAGE_SIZE,
       page,
     },
   );
@@ -55,7 +56,7 @@ export const getDashboardDiscussionComments = async ({
   const { data, currentPage, totalPage } = await getWithPagination<DiscussionComment[]>(
     PATH.dashboardDiscussionComment,
     {
-      size: '9',
+      size: DEFAULT_PAGE_SIZE,
       page,
     },
   );

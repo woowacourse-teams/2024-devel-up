@@ -4,6 +4,7 @@ import type { HashTag } from '@/types';
 import type { Solution, SubmittedSolution } from '@/types/solution';
 import { getWithPagination } from './paginationAPI';
 import type { PaginationResponse } from './paginationAPI';
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
 
 export interface SolutionSummary {
   // solution 리스트에 필요한 필드만 포함한 데이터 (solution 원본 데이터와는 다름)
@@ -25,7 +26,7 @@ export const getSolutionSummaries = async ({
   mission,
   hashTag,
   page = '0',
-  size = '9',
+  size = DEFAULT_PAGE_SIZE,
 }: GetSolutionSummariesOptions): Promise<PaginationResponse<SolutionSummary[]>> => {
   const { data, currentPage, totalPage } = await getWithPagination<SolutionSummary[]>(
     PATH.solutionSummaries,
@@ -91,7 +92,7 @@ export const getSubmittedSolution = async ({
   const { data, currentPage, totalPage } = await getWithPagination<SubmittedSolution[]>(
     PATH.mySolutions,
     {
-      size: '9',
+      size: DEFAULT_PAGE_SIZE,
       page,
     },
   );

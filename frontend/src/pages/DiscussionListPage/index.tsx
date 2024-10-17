@@ -11,6 +11,7 @@ import { usePagination } from '@/hooks/usePagination';
 import { HASHTAGS } from '@/constants/hashTags';
 import PageButtons from '@/components/common/PageButtons';
 import useDiscussions from '@/hooks/useDiscussions';
+import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function DiscussionListPage() {
   const [selectedMission, setSelectedMission] = useState<SelectedMissionType | null>(null);
@@ -56,18 +57,20 @@ export default function DiscussionListPage() {
           keyName="name"
         />
       </S.TagListWrapper>
-      <DiscussionListContent discussions={discussions} />
-      {discussions.length > 0 && (
-        <PageButtons
-          goToNextGroup={goToNextGroup}
-          goToPage={goToPage}
-          goToPreviousGroup={goToPreviousGroup}
-          pageNumbers={pageNumbers}
-          hasPreviousGroup={hasPreviousGroup}
-          hasNextGroup={hasNextGroup}
-          currentPage={currentPage}
-        />
-      )}
+      <SpinnerSuspense>
+        <DiscussionListContent discussions={discussions} />
+        {discussions.length > 0 && (
+          <PageButtons
+            goToNextGroup={goToNextGroup}
+            goToPage={goToPage}
+            goToPreviousGroup={goToPreviousGroup}
+            pageNumbers={pageNumbers}
+            hasPreviousGroup={hasPreviousGroup}
+            hasNextGroup={hasNextGroup}
+            currentPage={currentPage}
+          />
+        )}
+      </SpinnerSuspense>
     </S.DiscussionListPageContainer>
   );
 }

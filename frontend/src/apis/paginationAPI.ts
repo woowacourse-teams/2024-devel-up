@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
 import { develupAPIClient } from './clients/develupClient';
 
 interface PaginationParams {
@@ -18,7 +19,7 @@ export const getWithPagination = async <T>(
   path: string,
   params: PaginationParams,
 ): Promise<PaginationResponse<T>> => {
-  const { size = '9', page = '0', filter, hashTag, mission } = params;
+  const { size = DEFAULT_PAGE_SIZE, page = '0', filter, hashTag, mission } = params;
 
   const queryParams: Record<string, string> = Object.entries({
     size,

@@ -3,14 +3,13 @@ import { getMissions } from '@/apis/missionAPI';
 import { missionKeys } from './queries/keys';
 import { HASHTAGS } from '@/constants/hashTags';
 import { useEffect } from 'react';
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
 
 interface UseMissionsOptions {
   filter?: string;
   page?: number;
   onPageInfoUpdate?: (currentPage: number, totalPage: number) => void;
 }
-
-export const DEFAULT_PAGINATION_SIZE = '9';
 
 const useMissions = ({
   filter = HASHTAGS.all,
@@ -19,8 +18,7 @@ const useMissions = ({
 }: UseMissionsOptions = {}) => {
   const { data: missionsResponse } = useSuspenseQuery({
     queryKey: [...missionKeys.all, filter, page],
-    queryFn: () =>
-      getMissions({ hashTag: filter, page: page.toString(), size: DEFAULT_PAGINATION_SIZE }),
+    queryFn: () => getMissions({ hashTag: filter, page: page.toString(), size: DEFAULT_PAGE_SIZE }),
   });
 
   const { data, currentPage, totalPage } = missionsResponse;
