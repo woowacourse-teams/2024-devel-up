@@ -25,8 +25,11 @@ const ErrorFallback = ({ statusCode }: ErrorFallbackProps) => {
 
   return (
     <GlobalLayout>
+      <S.SkipTag href="#main-content" className="visually-hidden">
+        본문으로 바로가기
+      </S.SkipTag>
       <ErrorLogo />
-      <S.Container>
+      <S.Container id="main-content">
         <ImgComponent />
         <S.Wrapper>
           <S.Header>{heading}</S.Header>

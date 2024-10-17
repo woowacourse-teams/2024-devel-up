@@ -14,7 +14,7 @@ export default function Modal({ children, isModalOpen }: ModalProps) {
       $unMountAnimation={fadeOut}
       $animationTime={300}
     >
-      <ModalWrapper.Portal id="modal">
+      <ModalWrapper.Portal id="modal" aria-modal="true">
         <ModalWrapper.Backdrop opacity="rgba(0, 0, 0, 0.3)">
           <ModalWrapper.Container>{children}</ModalWrapper.Container>
         </ModalWrapper.Backdrop>

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import SolutionList from '@/components/SolutionList';
 import type { SelectedMissionType } from '@/types/mission';
 import useMissions from '@/hooks/useMissions';
+import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function SolutionListPage() {
   const [selectedMission, setSelectedMission] = useState<SelectedMissionType | null>(null);
@@ -33,7 +34,9 @@ export default function SolutionListPage() {
         selectedTag={selectedHashTag}
         keyName="name"
       />
-      <SolutionList selectedMission={selectedMission} selectedHashTag={selectedHashTag} />
+      <SpinnerSuspense>
+        <SolutionList selectedMission={selectedMission} selectedHashTag={selectedHashTag} />
+      </SpinnerSuspense>
     </S.SolutionListPageContainer>
   );
 }

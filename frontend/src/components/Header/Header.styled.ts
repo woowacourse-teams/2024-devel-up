@@ -5,7 +5,6 @@ import styled from 'styled-components';
 export const Container = styled.nav`
   z-index: 100;
   width: 100%;
-  min-width: 100rem;
   height: 6rem;
   position: fixed;
   background: ${(props) => props.theme.colors.white};
@@ -19,8 +18,6 @@ export const Container = styled.nav`
 `;
 
 export const Wrapper = styled.div`
-  width: 100rem;
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;

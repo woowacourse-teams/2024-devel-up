@@ -9,14 +9,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Entity
 public class DiscussionHashTag {
 
@@ -35,6 +33,12 @@ public class DiscussionHashTag {
 
     public DiscussionHashTag(Discussion discussion, HashTag hashTag) {
         this(new DiscussionHashTagId(discussion.getId(), hashTag.getId()), discussion, hashTag);
+    }
+
+    public DiscussionHashTag(DiscussionHashTagId id, Discussion discussion, HashTag hashTag) {
+        this.id = id;
+        this.discussion = discussion;
+        this.hashTag = hashTag;
     }
 
     @Override
