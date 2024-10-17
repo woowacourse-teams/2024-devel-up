@@ -2,19 +2,13 @@ import * as S from './DiscussionList.styled';
 import DiscussionListItem from './DiscussionListItem';
 import { Link } from 'react-router-dom';
 import NoContentWithoutButton from '../common/NoContent/NoContentWithoutButton';
-import useDiscussions from '@/hooks/useDiscussions';
+import type { Discussion } from '@/types';
 
 interface DiscussionListContentProps {
-  missionTitle?: string;
-  hashtag?: string;
+  discussions: Discussion[];
 }
 
-export default function DiscussionListContent({
-  missionTitle,
-  hashtag,
-}: DiscussionListContentProps) {
-  const { data: discussions } = useDiscussions(missionTitle, hashtag);
-
+export default function DiscussionListContent({ discussions }: DiscussionListContentProps) {
   return (
     <S.ContentContainer>
       {discussions.length ? (
