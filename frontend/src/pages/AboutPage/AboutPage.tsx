@@ -2,6 +2,7 @@ import * as S from './AboutPage.styled';
 import DiscussionSpace from './DiscussionSpace';
 import LevelMission from './LevelMission';
 import Rocket from './Rocket';
+import Solution from './Solution';
 
 export default function AboutPage() {
   return (
@@ -9,6 +10,7 @@ export default function AboutPage() {
       <Rocket />
       <LevelMission />
       <DiscussionSpace />
+      <Solution />
     </S.Container>
   );
 }

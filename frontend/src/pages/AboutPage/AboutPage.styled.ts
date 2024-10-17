@@ -1,7 +1,8 @@
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 import Rocket from '@/assets/images/rocket.svg';
 import LevelMission from '@/assets/images/levelMission.svg';
 import Discussion from '@/assets/images/discussion.svg';
+import VSCodeSolution from '@/assets/images/vscodeSolution.svg';
 import media from '@/styles/mediaQueries';
 
 export const Container = styled.div`
@@ -20,7 +21,7 @@ export const RocketContainer = styled.article`
   height: 100vh;
 
   display: flex;
-  gap: 6rem;
+  gap: 2rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -30,10 +31,21 @@ export const RocketContainer = styled.article`
   `}
 `;
 
+const bounce = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.5rem);
+  }
+`;
+
 export const RocketImg = styled(Rocket)`
-  width: 22rem;
-  height: 22rem;
-  margin: 2rem auto;
+  width: 25rem;
+  height: 25rem;
+  margin: 0 auto;
+
+  animation: ${bounce} 1.5s ease-in-out infinite;
 
   ${media.small`
     width: 15rem;
@@ -92,21 +104,20 @@ export const MediumText = styled(Text)`
     `}
 `;
 
-// 레벨 별 실전 문제 제공
+// 레벨 별 실전 문제 제공 (LevelMission)
 
 export const LevelMissionContainer = styled.article`
   display: flex;
   flex-direction: column;
   justify-items: center;
+  justify-content: center;
   gap: 4rem;
 
   max-width: 120rem;
   width: 89rem;
   height: 100vh;
-  margin: 2rem auto;
 
-  background-color: ${(props) => props.theme.colors.white};
-  background-color: lightblue;
+  // background-color: ${(props) => props.theme.colors.white};
 
   ${media.landingMedium`
       width: 100%;
@@ -167,20 +178,19 @@ export const LevelMissionTextWrapper = styled.div`
     `}
 `;
 
-// 소통 공간 제공
+// 소통 공간 제공 (DiscussionSpace)
 
 export const DiscussionContainer = styled.article`
   display: flex;
   flex-direction: column;
   justify-items: center;
-  gap: 4rem;
+  gap: 3rem;
 
   max-width: 120rem;
   height: 100vh;
   margin: 2rem auto;
 
-  background-color: ${(props) => props.theme.colors.white};
-  background-color: pink;
+  // background-color: ${(props) => props.theme.colors.white};
 
   ${media.landingMedium`
     width: 100%;
@@ -205,5 +215,15 @@ export const DiscussionImg = styled(Discussion)`
 
   ${media.landingMedium`
     width: 100%;
-  `}
+    `}
+`;
+
+// 다른 개발자들의 풀이 코드 제공 (Solution)
+
+export const SolutionImg = styled(VSCodeSolution)`
+  width: 82rem;
+
+  ${media.landingMedium`
+    width: 100%;
+    `}
 `;
