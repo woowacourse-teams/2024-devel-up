@@ -27,9 +27,7 @@ public class DataSourceConfig {
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.read")
     public DataSource readDataSource() {
-        HikariDataSource build = DataSourceBuilder.create().type(HikariDataSource.class).build();
-        build.setMaximumPoolSize(50);
-        return build;
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     @Bean
