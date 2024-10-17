@@ -10,25 +10,40 @@ import type {
 import { populateMissionDescription } from './utils/populateMissionDescription';
 import { HASHTAGS } from '@/constants/hashTags';
 import type { MissionInProgress } from '@/types/mission';
+import { getWithPagination } from './paginationAPI';
+import type { PaginationResponse } from './paginationAPI';
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
 
 interface getMissionByIdResponse {
   data: MissionWithDescription;
-}
-
-interface getAllMissionResponse {
-  data: Mission[];
 }
 
 interface getHashTagsResponse {
   data: HashTag[];
 }
 
-export const getMissions = async (filter: string = HASHTAGS.all): Promise<Mission[]> => {
-  const { data } = await develupAPIClient.get<getAllMissionResponse>(PATH.missionList, {
-    hashTag: filter,
+interface GetMissionsOptions {
+  hashTag: string;
+  page: string;
+  size: string;
+}
+
+export const getMissions = async ({
+  hashTag = HASHTAGS.all,
+  page = '0',
+  size = DEFAULT_PAGE_SIZE,
+}: GetMissionsOptions): Promise<PaginationResponse<Mission[]>> => {
+  const { data, currentPage, totalPage } = await getWithPagination<Mission[]>(PATH.missionList, {
+    size,
+    page,
+    hashTag,
   });
 
-  return data;
+  return {
+    data: data,
+    currentPage: currentPage,
+    totalPage: totalPage,
+  };
 };
 
 export const getMissionById = async (id: number): Promise<MissionWithDescription> => {
@@ -38,14 +53,26 @@ export const getMissionById = async (id: number): Promise<MissionWithDescription
   return mission;
 };
 
-interface GetMissionInProgressResponse {
-  data: MissionInProgress[];
+interface GetMissionInProgressOptions {
+  page: string;
 }
 
-export const getMissionInProgress = async () => {
-  const { data } = await develupAPIClient.get<GetMissionInProgressResponse>(PATH.missionInProgress);
+export const getMissionInProgress = async ({
+  page,
+}: GetMissionInProgressOptions): Promise<PaginationResponse<MissionInProgress[]>> => {
+  const { data, currentPage, totalPage } = await getWithPagination<MissionInProgress[]>(
+    PATH.missionInProgress,
+    {
+      size: DEFAULT_PAGE_SIZE,
+      page,
+    },
+  );
 
-  return data;
+  return {
+    data: data,
+    currentPage: currentPage,
+    totalPage: totalPage,
+  };
 };
 
 export interface PostSubmissionResponse {

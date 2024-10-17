@@ -14,6 +14,7 @@ import useDiscussion from '@/hooks/useDiscussion';
 import useUserInfo from '@/hooks/useUserInfo';
 import { useUpdateDiscussion } from '@/hooks/useUpdateDiscussion';
 import { ERROR_MESSAGE } from '@/constants/messages';
+import { usePagination } from '@/contexts/PaginationContext';
 
 export default function DiscussionSubmit() {
   const [searchParams] = useSearchParams();
@@ -22,14 +23,18 @@ export default function DiscussionSubmit() {
 
   const { data: discussion } = useDiscussion(discussionId);
   const { data: allHashTags } = useHashTags();
-  const { data: allMissions } = useMissions();
-  const { data: userInfo } = useUserInfo();
-  const { discussionPatchMutation } = useUpdateDiscussion(discussionId);
-
   const [selectedHashTags, setSelectedHashTags] = useState<HashTag[]>([]);
   const [selectedMission, setSelectedMission] = useState<{ id: number; title: string } | null>(
     null,
   );
+  const { currentPage, updatePageInfo } = usePagination();
+  const { missions } = useMissions({
+    page: currentPage,
+    onPageInfoUpdate: updatePageInfo,
+  });
+
+  const { data: userInfo } = useUserInfo();
+  const { discussionPatchMutation } = useUpdateDiscussion(discussionId);
 
   const hashTagIds = selectedHashTags.map((tag) => tag.id);
   const useSubmitDiscussionData = {
@@ -95,7 +100,7 @@ export default function DiscussionSubmit() {
     <S.DiscussionSubmitContainer>
       <S.DiscussionTagListWrapper>
         <TagList
-          tags={allMissions}
+          tags={missions}
           selectedTag={selectedMission}
           setSelectedTag={setSelectedMission}
           variant="danger"
