@@ -67,7 +67,7 @@ export const MissionDetailButtonsContainer = styled.div`
   align-items: center;
 `;
 
-export const InfoMsgWrapper = styled.div`
+export const InfoMsgWrapper = styled.button`
   display: flex;
   gap: 0.4rem;
   align-items: center;

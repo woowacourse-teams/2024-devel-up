@@ -15,9 +15,11 @@ export default function MissionDetailHeader({
   hashTags,
 }: MissionDetailHeaderProps) {
   return (
-    <S.MissionDetailHeaderContainer>
+    <S.MissionDetailHeaderContainer
+      aria-label={`${title} 미션 상세페이지입니다. 관련 키워드는 ${hashTags.map(({ name }) => name).join(', ')}입니다.`}
+    >
       <S.ThumbnailWrapper>
-        <S.ThumbnailImg src={thumbnail} alt="미션 썸네일 이미지" />
+        <S.ThumbnailImg src={thumbnail} alt="" />
         <S.GradientOverlay />
         <S.Title>{title}</S.Title>
         <S.HashTagWrapper>
