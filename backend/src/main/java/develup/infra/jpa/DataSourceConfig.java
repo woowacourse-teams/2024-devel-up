@@ -3,8 +3,8 @@ package develup.infra.jpa;
 import javax.sql.DataSource;
 import java.util.Map;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -16,18 +16,19 @@ import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 @Configuration
 @Profile("dev")
 @EnableJpaRepositories(basePackages = "develup")
+@Slf4j
 public class DataSourceConfig {
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.write")
     public DataSource writeDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+        return new HikariDataSource();
     }
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.read")
     public DataSource readDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+        return new HikariDataSource();
     }
 
     @Bean
@@ -37,6 +38,7 @@ public class DataSourceConfig {
         DataSource writeDataSource = writeDataSource();
         DataSource readDataSource = readDataSource();
 
+        log.info("read pool size" + ((HikariDataSource) readDataSource).getMaximumPoolSize() + "");
         Map<Object, Object> dataSourceMap = Map.of(
                 "write", writeDataSource,
                 "read", readDataSource
