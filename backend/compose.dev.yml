@@ -29,8 +29,6 @@ services:
 
   application:
     image: ${BACKEND_APP_IMAGE_NAME}
-    depends_on:
-      - mysql
     networks:
       - nginx-app-net
       - app-mysql-net
@@ -43,18 +41,6 @@ services:
       HOSTNAME: ${HOST_NAME}
     restart: always
     container_name: develup-app
-
-  mysql:
-    image: mysql
-    networks:
-      - app-mysql-net
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
-    container_name: develup-db-dev
 
 networks:
   nginx-app-net:
