@@ -59,7 +59,7 @@ export const HeaderProfileImg = styled.img`
   border-radius: 10rem;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h2`
   margin: 2.4rem 0;
   ${(props) => props.theme.font.heading2}
 `;

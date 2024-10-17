@@ -116,20 +116,22 @@ export default function DiscussionSubmit() {
         />
       </S.DiscussionTagListWrapper>
 
-      <form onSubmit={handleFormSubmit}>
-        <DiscussionTitle
-          value={discussionTitle}
-          onChange={handleDiscussionTitle}
-          danger={isDiscussionTitleError}
-        />
-        <DiscussionDescription
-          value={description}
-          danger={isDescriptionError}
-          dangerMessage={ERROR_MESSAGE.no_content}
-          onChange={handleMarkDownDescription}
-        />
-        <SubmitButton />
-      </form>
+      <section>
+        <form onSubmit={handleFormSubmit}>
+          <DiscussionTitle
+            value={discussionTitle}
+            onChange={handleDiscussionTitle}
+            danger={isDiscussionTitleError}
+          />
+          <DiscussionDescription
+            value={description}
+            danger={isDescriptionError}
+            dangerMessage={ERROR_MESSAGE.no_content}
+            onChange={handleMarkDownDescription}
+          />
+          <SubmitButton />
+        </form>
+      </section>
     </S.DiscussionSubmitContainer>
   );
 }

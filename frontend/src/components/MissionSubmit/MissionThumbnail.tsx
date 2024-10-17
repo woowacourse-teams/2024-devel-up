@@ -10,13 +10,11 @@ interface MissionImageProps {
 export default function MissionImage({ thumbnail, title, language }: MissionImageProps) {
   language;
   return (
-    <S.MissionImageContainer>
+    <S.MissionImageContainer aria-label={`선택된 미션: ${title}`}>
       <S.MissionImageWrapper>
-        <S.MissionImg src={thumbnail} alt="미션 이미지" />
+        <S.MissionImg src={thumbnail} alt="" />
         <S.MissionSummaryWrapper>
           <S.MissionSummaryText>{title}</S.MissionSummaryText>
-          {/* 뱃지는 안쓰이고 있어서 주석처리할게요 @프룬 */}
-          {/* <Badge text={language} /> */}
         </S.MissionSummaryWrapper>
       </S.MissionImageWrapper>
     </S.MissionImageContainer>

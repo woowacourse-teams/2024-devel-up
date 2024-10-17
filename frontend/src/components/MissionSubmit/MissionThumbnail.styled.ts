@@ -3,7 +3,7 @@ import javaIcon from '@/assets/images/java.svg';
 
 //TODO shadow에 대한 스타일 변수 적용해야합니다. @버건디
 export const MissionImageContainer = styled.div`
-  margin-bottom: 4rem;
+  margin: 2rem 0;
 `;
 
 export const MissionImageWrapper = styled.div`
@@ -34,7 +34,7 @@ export const MissionSummaryWrapper = styled.div`
   border-radius: 0 0 1rem 1rem;
 `;
 
-export const MissionSummaryText = styled.span`
+export const MissionSummaryText = styled.h2`
   ${(props) => props.theme.font.bodyBold}
 `;
 

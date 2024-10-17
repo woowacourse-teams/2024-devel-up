@@ -8,7 +8,7 @@ export const DiscussionDetailPageContainer = styled.div`
   max-width: 100%;
 `;
 
-export const DiscussionDetailTitle = styled.h2`
+export const DiscussionDetailTitle = styled.h1`
   margin: 4.5rem 0;
   ${({ theme }) => theme.font.heading1}
   width: fit-content;

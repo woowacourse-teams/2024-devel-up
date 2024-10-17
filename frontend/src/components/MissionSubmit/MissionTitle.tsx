@@ -12,8 +12,9 @@ interface MissionTitleProps {
 export default function MissionTitle({ danger, value, onChange }: MissionTitleProps) {
   return (
     <S.Container>
-      <S.Title>제목</S.Title>
+      <S.Title htmlFor="title">제목</S.Title>
       <Input
+        id="title"
         width="xlarge"
         danger={danger}
         dangerMessage={ERROR_MESSAGE.invalid_title}
