@@ -3,6 +3,7 @@ import Rocket from '@/assets/images/rocket.svg';
 import LevelMission from '@/assets/images/levelMission.svg';
 import Discussion from '@/assets/images/discussion.svg';
 import VSCodeSolution from '@/assets/images/vscodeSolution.svg';
+import UpArrow from '@/assets/images/upArrow.svg';
 import media from '@/styles/mediaQueries';
 
 export const Container = styled.div`
@@ -15,7 +16,7 @@ export const Container = styled.div`
 
 // 로켓 이미지
 
-export const RocketContainer = styled.article`
+export const RocketContainer = styled.section`
   background: linear-gradient(180deg, #9ca6e1 0%, #fff 100%);
   width: 100%;
   height: 100vh;
@@ -57,6 +58,23 @@ export const TextAlignCenterWrapper = styled.div`
   text-align: center;
 `;
 
+export const DownArrow = styled(UpArrow)`
+  transform: rotate(180deg);
+  transition: transform 0.3s ease-in-out;
+  width: 4rem;
+  margin-top: 5rem;
+  cursor: pointer;
+
+  &:hover {
+    transform: rotate(180deg) scale(1.2);
+  }
+
+  ${media.small`
+      width: 2rem;
+      margin-top: 1rem;
+    `}
+`;
+
 // 폰트
 
 export const Bold = styled.span`
@@ -66,6 +84,7 @@ export const Bold = styled.span`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  width: 100%;
 
   ${media.small`
     font-size: 1.6rem;
@@ -106,7 +125,7 @@ export const MediumText = styled(Text)`
 
 // 레벨 별 실전 문제 제공 (LevelMission)
 
-export const LevelMissionContainer = styled.article`
+export const LevelMissionContainer = styled.section`
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -115,9 +134,9 @@ export const LevelMissionContainer = styled.article`
 
   max-width: 120rem;
   width: 89rem;
-  height: 100vh;
+  height: 80vh;
 
-  // background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.white};
 
   ${media.landingMedium`
       width: 100%;
@@ -180,17 +199,19 @@ export const LevelMissionTextWrapper = styled.div`
 
 // 소통 공간 제공 (DiscussionSpace)
 
-export const DiscussionContainer = styled.article`
+export const DiscussionContainer = styled.section`
   display: flex;
   flex-direction: column;
   justify-items: center;
+  justify-content: center;
+  align-items: center;
   gap: 3rem;
 
-  max-width: 120rem;
-  height: 100vh;
+  width: 100%;
+  height: 80vh;
   margin: 2rem auto;
 
-  // background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.white};
 
   ${media.landingMedium`
     width: 100%;
@@ -202,7 +223,7 @@ export const DiscussionContainer = styled.article`
     `}
 `;
 
-export const DiscussionImgWrapper = styled.div`
+export const ImgLeftPadding = styled.div`
   padding-left: 7rem;
 
   ${media.small`
@@ -220,10 +241,23 @@ export const DiscussionImg = styled(Discussion)`
 
 // 다른 개발자들의 풀이 코드 제공 (Solution)
 
+export const SolutionContainer = styled(DiscussionContainer)`
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    #fff 80%,
+    ${(props) => props.theme.colors.grey300} 100%
+  );
+`;
+
 export const SolutionImg = styled(VSCodeSolution)`
   width: 82rem;
 
   ${media.landingMedium`
     width: 100%;
     `}
+`;
+
+export const Wrapper = styled.article`
+  margin: 0 auto;
 `;

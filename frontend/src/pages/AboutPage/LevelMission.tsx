@@ -1,8 +1,13 @@
+import React from 'react';
 import * as S from './AboutPage.styled';
 
-export default function LevelMission() {
+interface LevelMissionProps {
+  ref?: React.Ref<HTMLOptionElement>;
+}
+
+const LevelMission = React.forwardRef<HTMLOptionElement, LevelMissionProps>((_, ref) => {
   return (
-    <S.LevelMissionContainer>
+    <S.LevelMissionContainer ref={ref}>
       <S.Bold>🎯 레벨 별 실전 문제 제공</S.Bold>
       <S.ContentWrapper>
         <S.LevelMissionImg />
@@ -19,4 +24,8 @@ export default function LevelMission() {
       </S.ContentWrapper>
     </S.LevelMissionContainer>
   );
-}
+});
+
+LevelMission.displayName = 'LevelMission';
+
+export default LevelMission;

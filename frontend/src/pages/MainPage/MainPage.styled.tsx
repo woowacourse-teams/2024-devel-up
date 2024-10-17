@@ -8,7 +8,6 @@ export const MainPageContainer = styled.div`
 `;
 
 export const MissionListWrapper = styled.div`
-  width: fit-content;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

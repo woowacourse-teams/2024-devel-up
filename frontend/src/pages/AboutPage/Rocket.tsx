@@ -1,6 +1,10 @@
 import * as S from './AboutPage.styled';
 
-export default function Rocket() {
+interface RocketProps {
+  handleScrollDown: () => void;
+}
+
+export default function Rocket({ handleScrollDown }: RocketProps) {
   return (
     <S.RocketContainer>
       <S.RocketImg />
@@ -14,6 +18,7 @@ export default function Rocket() {
           <S.Bold>을 도와드릴게요!</S.Bold>
         </div>
       </div>
+      <S.DownArrow onClick={handleScrollDown} />
     </S.RocketContainer>
   );
 }
