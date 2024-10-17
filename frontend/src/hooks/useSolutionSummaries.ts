@@ -1,13 +1,44 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { getSolutionSummaries, type SolutionSummary } from '@/apis/solutions';
+import { getSolutionSummaries } from '@/apis/solutions';
 import { solutionKeys } from './queries/keys';
 import { HASHTAGS } from '@/constants/hashTags';
+import { DEFAULT_PAGE_SIZE } from '@/constants/pagination';
+import { useEffect } from 'react';
 
-const useSolutionSummaries = (mission: string = HASHTAGS.all, hashTag: string = HASHTAGS.all) => {
-  return useSuspenseQuery<SolutionSummary[]>({
-    queryKey: [...solutionKeys.all, mission, hashTag],
-    queryFn: () => getSolutionSummaries({ mission, hashTag }),
+interface UseSolutionSummariesOptions {
+  mission: string | null;
+  hashTag: string | null;
+  page: number;
+  onPageInfoUpdate?: (totalPage: number) => void;
+}
+
+const useSolutionSummaries = ({
+  mission = HASHTAGS.all,
+  hashTag = HASHTAGS.all,
+  page,
+  onPageInfoUpdate,
+}: UseSolutionSummariesOptions) => {
+  const { data: solutionSummariesResponse } = useSuspenseQuery({
+    queryKey: [...solutionKeys.all, mission, hashTag, page],
+    queryFn: () =>
+      getSolutionSummaries({
+        mission: mission || HASHTAGS.all,
+        hashTag: hashTag || HASHTAGS.all,
+        page: page.toString(),
+        size: DEFAULT_PAGE_SIZE,
+      }),
   });
+
+  const { data, currentPage, totalPage } = solutionSummariesResponse;
+
+  //TODO useEffect 외부에서 선언하면 too many renders에러가 발생하여 일단 useEffect내부로 넣습니다!
+  useEffect(() => {
+    if (onPageInfoUpdate) {
+      onPageInfoUpdate(totalPage);
+    }
+  }, [currentPage]);
+
+  return { solutionSummaries: data, currentPageFromServer: currentPage, totalPage };
 };
 
 export default useSolutionSummaries;

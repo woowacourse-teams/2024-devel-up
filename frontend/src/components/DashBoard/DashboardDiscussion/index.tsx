@@ -1,13 +1,29 @@
-import type { Discussion } from '@/types/dashboard';
+import PageButtons from '@/components/common/PageButtons';
+import useDashboardDiscussion from '@/hooks/useDashboardDiscussion';
+import { usePagination } from '@/hooks/usePagination';
 import NoContent from '../DashBoardMissionList/NoContent';
 import * as S from './DashboardDiscussion.styled';
 import DiscussionItem from './DiscussionItem';
 
-interface DashBoardDiscussionListProps {
-  discussionList: Discussion[];
-}
+export default function DashBoardDiscussionList() {
+  const {
+    currentPage,
+    setTotalPages,
+    goToPage,
+    goToPreviousGroup,
+    goToNextGroup,
+    pageNumbers,
+    hasPreviousGroup,
+    hasNextGroup,
+  } = usePagination();
 
-export default function DashBoardDiscussionList({ discussionList }: DashBoardDiscussionListProps) {
+  const { discussionList } = useDashboardDiscussion({
+    page: currentPage,
+    onPageInfoUpdate: (totalPagesFromServer) => {
+      setTotalPages(totalPagesFromServer);
+    },
+  });
+
   return (
     <>
       {!discussionList.length ? (
@@ -29,6 +45,18 @@ export default function DashBoardDiscussionList({ discussionList }: DashBoardDis
             );
           })}
         </S.Container>
+      )}
+
+      {discussionList.length > 0 && (
+        <PageButtons
+          goToNextGroup={goToNextGroup}
+          goToPage={goToPage}
+          goToPreviousGroup={goToPreviousGroup}
+          pageNumbers={pageNumbers}
+          hasPreviousGroup={hasPreviousGroup}
+          hasNextGroup={hasNextGroup}
+          currentPage={currentPage}
+        />
       )}
     </>
   );
