@@ -11,8 +11,8 @@ interface OneWordProps {
 export default function OneWord({ ...props }: OneWordProps) {
   return (
     <S.Container>
-      <S.Title>구현 방식에 대한 설명</S.Title>
-      <MarkdownEditor {...props} />
+      <S.Title htmlFor="description">구현 방식에 대한 설명</S.Title>
+      <MarkdownEditor id="description" {...props} />
     </S.Container>
   );
 }

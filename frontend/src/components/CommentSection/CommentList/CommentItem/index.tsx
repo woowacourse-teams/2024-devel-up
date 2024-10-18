@@ -47,7 +47,7 @@ export default function CommentItem({
   };
 
   return (
-    <S.CommentItemContainer>
+    <S.CommentItemContainer aria-atomic="true">
       <S.CommentContentWrapper>
         {isDeleted ? (
           <S.DeletedComment>삭제된 댓글입니다.</S.DeletedComment>

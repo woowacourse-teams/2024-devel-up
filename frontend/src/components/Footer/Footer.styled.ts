@@ -1,7 +1,7 @@
 import media from '@/styles/mediaQueries';
 import { styled } from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.footer`
   width: 100%;
   height: 15.2rem;
   background: var(--grey-50);

@@ -4,7 +4,7 @@ import MissionList from '@/components/MissionList';
 import AboutPage from '../AboutPage/AboutPage';
 
 export default function MainPage() {
-  const { data: missions } = useMissions();
+  const { missions } = useMissions();
 
   return (
     <S.MainPageContainer>

@@ -24,7 +24,7 @@ export const solutionKeys = {
   all: ['solutions'],
   detail: (id: number) => [...solutionKeys.all, id],
   summaries: ['solutionSummaries'],
-  submitted: ['submitted solutions'],
+  submitted: (page: number) => ['submitted solutions', page],
 };
 
 export const discussionKeys = {
@@ -47,6 +47,6 @@ export const discussionsKeys = {
 export const dashboardKeys = {
   default: ['dashboard'],
   discussions: () => [...dashboardKeys.default, 'discussions'],
-  discussionComments: () => [...dashboardKeys.default, 'discussion', 'comments'],
-  solutionComments: () => [...dashboardKeys.default, 'solution', 'comments'],
+  discussionComments: (page: number) => [...dashboardKeys.default, 'discussion', 'comments', page],
+  solutionComments: (page: number) => [...dashboardKeys.default, 'solution', 'comments', page],
 } as const;

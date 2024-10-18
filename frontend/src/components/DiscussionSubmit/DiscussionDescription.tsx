@@ -16,8 +16,9 @@ export default function DiscussionDescription({
 }: DiscussionDescriptionProps) {
   return (
     <S.DiscussionDescriptionContainer>
-      <S.DiscussionDescriptionTitle>내용</S.DiscussionDescriptionTitle>
+      <S.DiscussionDescriptionTitle htmlFor="description">내용</S.DiscussionDescriptionTitle>
       <MarkdownEditor
+        id="description"
         value={value}
         onChange={onChange}
         danger={danger}
