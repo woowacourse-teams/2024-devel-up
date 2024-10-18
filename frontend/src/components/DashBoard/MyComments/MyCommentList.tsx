@@ -16,7 +16,7 @@ export default function MyCommentList() {
     hasPreviousGroup,
     hasNextGroup,
   } = usePagination();
-  const { myComments } = useMyComments({
+  const { myComments, totalPage } = useMyComments({
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);
@@ -45,7 +45,7 @@ export default function MyCommentList() {
         </S.Container>
       )}
 
-      {myComments.length > 0 && (
+      {totalPage > 0 && (
         <PageButtons
           goToNextGroup={goToNextGroup}
           goToPage={goToPage}

@@ -17,7 +17,7 @@ export default function DashBoardDiscussionList() {
     hasNextGroup,
   } = usePagination();
 
-  const { discussionList } = useDashboardDiscussion({
+  const { discussionList, totalPage } = useDashboardDiscussion({
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);
@@ -47,7 +47,7 @@ export default function DashBoardDiscussionList() {
         </S.Container>
       )}
 
-      {discussionList.length > 0 && (
+      {totalPage > 0 && (
         <PageButtons
           goToNextGroup={goToNextGroup}
           goToPage={goToPage}
