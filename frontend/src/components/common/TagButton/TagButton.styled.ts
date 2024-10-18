@@ -54,7 +54,7 @@ export const Button = styled.button<ButtonProps>`
       isClickable: props.$isClickable,
       theme: props.theme,
     })};
-  transition: 0.2s;
+  transition: 0.4s;
 
   padding: 1rem 1.6rem;
   border-radius: 2rem;
