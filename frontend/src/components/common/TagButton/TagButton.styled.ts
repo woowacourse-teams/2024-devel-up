@@ -61,6 +61,7 @@ export const Button = styled.button<ButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
 
   ${(props) => props.theme.font.badge}
 `;

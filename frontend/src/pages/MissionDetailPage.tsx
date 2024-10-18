@@ -11,18 +11,20 @@ export default function MissionDetailPage() {
 
   return (
     <S.MissionDetailPageContainer>
-      <MissionDetailHeader
-        title={missionData.title}
-        thumbnail={missionData.thumbnail}
-        language={missionData.language}
-        hashTags={missionData.hashTags}
-      />
-      <MissionDetailButtons
-        id={Number(missionData.id)}
-        missionUrl={missionData.url}
-        isStarted={missionData.isStarted}
-      />
-      <MissionDetailContent description={missionData.description} />
+      <S.MissionDetailInnerWrapper>
+        <MissionDetailHeader
+          title={missionData.title}
+          thumbnail={missionData.thumbnail}
+          language={missionData.language}
+          hashTags={missionData.hashTags}
+        />
+        <MissionDetailButtons
+          id={Number(missionData.id)}
+          missionUrl={missionData.url}
+          isStarted={missionData.isStarted}
+        />
+        <MissionDetailContent description={missionData.description} />
+      </S.MissionDetailInnerWrapper>
     </S.MissionDetailPageContainer>
   );
 }
