@@ -1,11 +1,24 @@
-import styled from 'styled-components';
 import SanitizedMDPreview from '@/components/common/SanitizedMDPreview';
+import styled, { keyframes } from 'styled-components';
+
+const show = keyframes`
+  0% {
+    opacity: 0;
+    }
+
+  100% {
+    opacity: 1;
+  }
+`;
 
 export const DiscussionDetailPageContainer = styled.div`
   margin: 0 auto;
   width: fit-content;
   padding-bottom: 10rem;
   max-width: 100%;
+
+  animation: ${show} 0.5s;
+  transition: 0.5s;
 `;
 
 export const DiscussionDetailTitle = styled.h1`
