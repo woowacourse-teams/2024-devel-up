@@ -35,7 +35,8 @@ public class SolutionRepositoryCustom {
             PageRequest pageRequest
     ) {
 
-        int totalCount = queryFactory.select(solution.id)
+
+        Long totalCount = queryFactory.select(solution.countDistinct())
                 .distinct()
                 .from(solution)
                 .join(solution.mission, mission)
@@ -46,8 +47,7 @@ public class SolutionRepositoryCustom {
                         eqMissionTitle(missionTitle),
                         eqHashTagName(hashTagName)
                 )
-                .fetch()
-                .size();
+                .fetchOne();
 
 
         List<Solution> data = queryFactory.selectFrom(solution)
