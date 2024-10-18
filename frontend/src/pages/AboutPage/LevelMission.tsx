@@ -9,7 +9,7 @@ interface LevelMissionProps {
 const LevelMission = React.forwardRef<HTMLOptionElement, LevelMissionProps>(
   ({ isVisible }, ref) => {
     return (
-      <S.ComponentContainer isVisible={isVisible} ref={ref}>
+      <S.ComponentContainer $isVisible={isVisible} ref={ref}>
         <S.Wrapper>
           <S.Bold>🎯 레벨 별 실전 문제 제공</S.Bold>
           <S.ImgLeftPadding>

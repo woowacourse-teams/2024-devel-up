@@ -140,9 +140,9 @@ export const Wrapper = styled.article`
   `}
 `;
 
-export const ComponentContainer = styled.figure<{ isVisible: boolean }>`
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
-  transform: ${(props) => (props.isVisible ? 'translateY(0)' : 'translateY(20px)')};
+export const ComponentContainer = styled.figure<{ $isVisible: boolean }>`
+  opacity: ${(props) => (props.$isVisible ? 1 : 0)};
+  transform: ${(props) => (props.$isVisible ? 'translateY(0)' : 'translateY(20px)')};
   transition:
     opacity 0.5s ease-in-out,
     transform 0.5s ease-in-out;

@@ -9,7 +9,7 @@ interface DiscussionSpaceProps {
 const DiscussionSpace = React.forwardRef<HTMLOptionElement, DiscussionSpaceProps>(
   ({ isVisible }, ref) => {
     return (
-      <S.ComponentContainer isVisible={isVisible} ref={ref}>
+      <S.ComponentContainer $isVisible={isVisible} ref={ref}>
         <S.Wrapper>
           <S.Bold>📝 소통 공간 제공</S.Bold>
           <S.ImgLeftPadding>
