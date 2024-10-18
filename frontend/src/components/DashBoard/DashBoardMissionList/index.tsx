@@ -1,13 +1,28 @@
-import type { MissionInProgress } from '@/types/mission';
 import Mission from '../../Mission';
 import * as S from '@/components/Mission/Mission.styled';
 import NoContent from './NoContent';
+import useMissionInProgress from '@/hooks/useMissionInProgress';
+import { usePagination } from '@/hooks/usePagination';
+import PageButtons from '@/components/common/PageButtons';
 
-interface DashBoardMissionListProps {
-  missionList: MissionInProgress[];
-}
+export default function DashBoardMissionList() {
+  const {
+    currentPage,
+    setTotalPages,
+    goToPage,
+    goToPreviousGroup,
+    goToNextGroup,
+    pageNumbers,
+    hasPreviousGroup,
+    hasNextGroup,
+  } = usePagination();
+  const { missionList } = useMissionInProgress({
+    page: currentPage,
+    onPageInfoUpdate: (totalPagesFromServer) => {
+      setTotalPages(totalPagesFromServer);
+    },
+  });
 
-export default function DashBoardMissionList({ missionList }: DashBoardMissionListProps) {
   return (
     <>
       {!missionList.length ? (
@@ -27,6 +42,17 @@ export default function DashBoardMissionList({ missionList }: DashBoardMissionLi
             );
           })}
         </S.MissionListContainer>
+      )}
+      {missionList.length > 0 && (
+        <PageButtons
+          goToNextGroup={goToNextGroup}
+          goToPage={goToPage}
+          goToPreviousGroup={goToPreviousGroup}
+          pageNumbers={pageNumbers}
+          hasPreviousGroup={hasPreviousGroup}
+          hasNextGroup={hasNextGroup}
+          currentPage={currentPage}
+        />
       )}
     </>
   );

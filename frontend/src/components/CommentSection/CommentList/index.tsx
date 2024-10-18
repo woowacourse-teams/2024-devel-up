@@ -23,13 +23,14 @@ export default function CommentList({
   return (
     <S.CommentListContainer>
       {comments.map((comment) => (
-        <CommentItem
-          key={comment.id}
-          comment={comment}
-          usePostCommentMutation={usePostCommentMutation}
-          usePatchCommentMutation={usePatchCommentMutation}
-          useDeleteCommentMutation={useDeleteCommentMutation}
-        />
+        <li key={comment.id}>
+          <CommentItem
+            comment={comment}
+            usePostCommentMutation={usePostCommentMutation}
+            usePatchCommentMutation={usePatchCommentMutation}
+            useDeleteCommentMutation={useDeleteCommentMutation}
+          />
+        </li>
       ))}
     </S.CommentListContainer>
   );

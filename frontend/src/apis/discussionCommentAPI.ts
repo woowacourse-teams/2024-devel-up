@@ -1,11 +1,11 @@
 import type {
   DeleteCommentParams,
   PatchCommentParams,
+  PostCommentParams,
 } from '@/components/CommentSection/CommentForm/types';
 import type { DiscussionComment } from '@/types';
 import { develupAPIClient } from './clients/develupClient';
 import { PATH_FORMATTER } from './paths';
-import type { PostCommentParams } from '@/components/CommentSection/CommentForm/types';
 
 export const getDiscussionComments = async (solutionId: number): Promise<DiscussionComment[]> => {
   const { data } = await develupAPIClient.get<{ data: DiscussionComment[] }>(

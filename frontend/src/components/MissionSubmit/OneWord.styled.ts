@@ -6,7 +6,8 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.label`
+  cursor: pointer;
   ${(props) => props.theme.font.bodyBold}
   margin: 1.1rem 0;
 `;

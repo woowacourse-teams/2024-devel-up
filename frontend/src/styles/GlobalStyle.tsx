@@ -124,7 +124,6 @@ html,
   }
   button {
     cursor: pointer;
-    outline: none;
     border: none;
     background-color: inherit;
     padding: 0;

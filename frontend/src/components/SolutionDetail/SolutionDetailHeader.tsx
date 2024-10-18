@@ -1,5 +1,5 @@
 import type { Solution } from '@/types/solution';
-import * as S from './SolutionSection.styled';
+import * as S from './SolutionDetail.styled';
 import TagButton from '@/components/common/TagButton';
 
 interface SolutionDetailHeaderProps {
@@ -10,24 +10,26 @@ export default function SolutionDetailHeader({ solution }: SolutionDetailHeaderP
   const { mission, member, title } = solution;
 
   return (
-    <S.SolutionDetailHeaderContainer>
+    <S.SolutionDetailHeaderContainer
+      aria-label={`풀이 게시글 제목 ${title}, 작성자 ${member.name}`}
+    >
       <S.ThumbnailWrapper>
-        <S.ThumbnailImg src={mission.thumbnail} alt="미션 썸네일 이미지" />
+        <S.ThumbnailImg src={mission.thumbnail} alt="" />
         <S.GradientOverlay />
         <S.HeaderLeftArea>
           <S.MissionTitle># {mission.title}</S.MissionTitle>
           <S.Title>{title}</S.Title>
           <S.HeaderUserInfo>
-            <S.HeaderProfileImg src={member.imageUrl} />
+            <S.HeaderProfileImg src={member.imageUrl} alt="" />
             <S.HeaderUserName>{member.name}</S.HeaderUserName>
           </S.HeaderUserInfo>
         </S.HeaderLeftArea>
         <S.HashTagWrapper>
           {mission.hashTags &&
             mission.hashTags.map((tag) => (
-              <TagButton key={tag.id} isClickable={false}>
-                # {tag.name}
-              </TagButton>
+              <li key={tag.id}>
+                <TagButton isClickable={false}># {tag.name}</TagButton>
+              </li>
             ))}
         </S.HashTagWrapper>
       </S.ThumbnailWrapper>

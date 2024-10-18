@@ -8,7 +8,7 @@ import type { HashTag } from '@/types';
 
 export default function MissionListPage() {
   const [selectedHashTag, setSelectedHashTag] = useState<HashTag | null>(null);
-  const { data: allMissions } = useMissions(selectedHashTag?.name);
+  const { missions } = useMissions();
   const { data: allHashTags } = useHashTags();
 
   return (
@@ -23,7 +23,7 @@ export default function MissionListPage() {
         selectedTag={selectedHashTag}
         keyName="name"
       />
-      <MissionList missions={allMissions} />
+      <MissionList missions={missions} />
     </S.MissionListPageContainer>
   );
 }

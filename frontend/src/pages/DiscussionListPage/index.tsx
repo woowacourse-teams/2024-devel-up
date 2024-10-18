@@ -7,21 +7,44 @@ import useHashTags from '@/hooks/useHashTags';
 import type { HashTag } from '@/types';
 import useMissions from '@/hooks/useMissions';
 import type { SelectedMissionType } from '@/types/mission';
+import { usePagination } from '@/hooks/usePagination';
+import { HASHTAGS } from '@/constants/hashTags';
+import PageButtons from '@/components/common/PageButtons';
+import useDiscussions from '@/hooks/useDiscussions';
 import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function DiscussionListPage() {
   const [selectedMission, setSelectedMission] = useState<SelectedMissionType | null>(null);
   const [selectedHashTag, setSelectedHashTag] = useState<HashTag | null>(null);
+  const {
+    currentPage,
+    setTotalPages,
+    goToPage,
+    goToPreviousGroup,
+    goToNextGroup,
+    pageNumbers,
+    hasPreviousGroup,
+    hasNextGroup,
+  } = usePagination();
 
+  const { discussions } = useDiscussions({
+    mission: selectedMission?.title ?? HASHTAGS.all,
+    hashTag: selectedHashTag?.name ?? HASHTAGS.all,
+    page: currentPage,
+    onPageInfoUpdate: (totalPagesFromServer: number) => {
+      setTotalPages(totalPagesFromServer);
+    },
+  });
   const { data: allHashTags } = useHashTags();
-  const { data: allMissions } = useMissions();
+
+  const { missions } = useMissions();
 
   return (
     <S.DiscussionListPageContainer>
       <DiscussionListHeader />
       <S.TagListWrapper>
         <TagList
-          tags={allMissions}
+          tags={missions}
           setSelectedTag={setSelectedMission}
           selectedTag={selectedMission}
           keyName="title"
@@ -35,10 +58,18 @@ export default function DiscussionListPage() {
         />
       </S.TagListWrapper>
       <SpinnerSuspense>
-        <DiscussionListContent
-          missionTitle={selectedMission?.title}
-          hashtag={selectedHashTag?.name}
-        />
+        <DiscussionListContent discussions={discussions} />
+        {discussions.length > 0 && (
+          <PageButtons
+            goToNextGroup={goToNextGroup}
+            goToPage={goToPage}
+            goToPreviousGroup={goToPreviousGroup}
+            pageNumbers={pageNumbers}
+            hasPreviousGroup={hasPreviousGroup}
+            hasNextGroup={hasNextGroup}
+            currentPage={currentPage}
+          />
+        )}
       </SpinnerSuspense>
     </S.DiscussionListPageContainer>
   );

@@ -1,4 +1,3 @@
-import MissionImage from '@/components/MissionSubmit/MissionThumbnail';
 import * as S from './MissionSubmitPage.styled';
 import SubmitBanner from '@/components/MissionSubmit/SubmitBanner';
 import PRLink from '@/components/MissionSubmit/PRLink';
@@ -83,12 +82,7 @@ export default function MissionSubmitPage() {
   return (
     <S.Container>
       {isPending && <LoadingSpinner />}
-      <SubmitBanner />
-      <MissionImage
-        thumbnail={mission.thumbnail}
-        title={mission.title}
-        language={mission.language}
-      />
+      <SubmitBanner mission={mission} />
       <form onSubmit={handleFormSubmit}>
         <MissionTitle
           value={solutionTitle}
@@ -99,7 +93,6 @@ export default function MissionSubmitPage() {
           value={url}
           onChange={handleUrl}
           missionId={missionId}
-          // danger={isUrlError || !isMatchedMissionName}
           danger={isUrlError || isSubmitSolutionError}
         />
         <OneWord

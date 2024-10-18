@@ -6,7 +6,7 @@ interface MissionDetailContentProps {
 
 export default function MissionDetailContent({ description }: MissionDetailContentProps) {
   return (
-    <S.MissionDescription>
+    <S.MissionDescription aria-atomic="true">
       <S.MissionDescriptionText source={description} />
     </S.MissionDescription>
   );

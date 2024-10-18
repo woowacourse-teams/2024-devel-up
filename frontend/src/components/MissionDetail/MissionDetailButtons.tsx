@@ -63,7 +63,7 @@ export default function MissionDetailButtons({
             </Button>
           ) : (
             <a href={`${API_URL}${PATH.githubLogin}?next=${pathname}`}>
-              <Button variant="primary" size="half">
+              <Button variant="primary" size="half" tabIndex={-1}>
                 로그인 후 미션 시작하기
               </Button>
             </a>

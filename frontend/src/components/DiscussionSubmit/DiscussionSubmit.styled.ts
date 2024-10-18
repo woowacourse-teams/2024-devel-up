@@ -6,7 +6,7 @@ export const DiscussionSubmitContainer = styled.div`
   gap: 3.5rem;
 `;
 
-export const DiscussionTagListWrapper = styled.div`
+export const DiscussionTagListWrapper = styled.section`
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
@@ -19,7 +19,8 @@ export const DiscussionTitleContainer = styled.div`
   margin-bottom: 4rem;
 `;
 
-export const DiscussionTitle = styled.h1`
+export const DiscussionTitle = styled.label`
+  cursor: pointer;
   ${(props) => props.theme.font.bodyBold}
   margin: 1.1rem 0;
 `;
@@ -30,13 +31,14 @@ export const DiscussionDescriptionContainer = styled.div`
   flex-direction: column;
 `;
 
-export const DiscussionDescriptionTitle = styled.h1`
+export const DiscussionDescriptionTitle = styled.label`
+  cursor: pointer;
   ${(props) => props.theme.font.bodyBold}
   margin: 1.1rem 0;
 `;
 
 // Header
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.header`
   display: flex;
   flex-direction: column;
   gap: 1rem;

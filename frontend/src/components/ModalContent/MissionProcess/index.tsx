@@ -53,8 +53,12 @@ export default function MissionProcess({ handleModalClose, onClick }: MissionPro
   };
 
   return (
-    <S.MissionProcessContentContainer>
-      <S.CloseIconWrapper onClick={handleModalClose}>
+    <S.MissionProcessContentContainer
+      aria-atomic="true"
+      aria-live="polite"
+      aria-label={currentContent.content}
+    >
+      <S.CloseIconWrapper onClick={handleModalClose} aria-label="진행 방법 설명 대화상자 닫기">
         <S.CloseIcon />
       </S.CloseIconWrapper>
       <S.ContentWrapper>
@@ -71,13 +75,16 @@ export default function MissionProcess({ handleModalClose, onClick }: MissionPro
           ) : (
             <>
               {contentId > 1 ? (
-                <S.LeftArrowButton onClick={handlePreviousMissionProcess}>
+                <S.LeftArrowButton
+                  onClick={handlePreviousMissionProcess}
+                  aria-label="이전 페이지 보기"
+                >
                   <LeftArrow />
                   Prev
                 </S.LeftArrowButton>
               ) : null}
 
-              <S.RightArrowButton onClick={handleNextMissionProcess}>
+              <S.RightArrowButton onClick={handleNextMissionProcess} aria-label="다음 페이지 보기">
                 Next
                 <RightArrow />
               </S.RightArrowButton>
