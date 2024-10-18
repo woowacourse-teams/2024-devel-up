@@ -1,4 +1,6 @@
+import media from '@/styles/mediaQueries';
 import styled from 'styled-components';
+// import UpArrow from '@/assets/images/upArrow.svg';
 
 export const ScrollButton = styled.button`
   width: 7rem;
@@ -7,6 +9,7 @@ export const ScrollButton = styled.button`
   background-color: rgba(115, 131, 214, 0.3);
   color: white;
   border: none;
+  padding: 2rem;
 
   position: fixed;
   bottom: 4.5rem;
@@ -22,4 +25,16 @@ export const ScrollButton = styled.button`
   &:hover {
     background-color: rgba(115, 131, 214, 0.5);
   }
+
+  ${media.small`
+      width: 3rem;
+      height: 3rem;
+      padding: 1rem;
+
+      right: 5rem;
+    `}
 `;
+
+// export const UpArrowImg = styled(UpArrow)`
+//   w
+// `
