@@ -9,7 +9,7 @@ interface DiscussionSpaceProps {
 const DiscussionSpace = React.forwardRef<HTMLOptionElement, DiscussionSpaceProps>(
   ({ isVisible }, ref) => {
     return (
-      <S.DiscussionContainer isVisible={isVisible} ref={ref}>
+      <S.ComponentContainer isVisible={isVisible} ref={ref}>
         <S.Wrapper>
           <S.Bold>📝 소통 공간 제공</S.Bold>
           <S.ImgLeftPadding>
@@ -29,7 +29,7 @@ const DiscussionSpace = React.forwardRef<HTMLOptionElement, DiscussionSpaceProps
             <S.MediumText>을 올바르게 조정해 나갈 수 있어요.</S.MediumText>
           </S.TextAlignCenterWrapper>
         </S.Wrapper>
-      </S.DiscussionContainer>
+      </S.ComponentContainer>
     );
   },
 );

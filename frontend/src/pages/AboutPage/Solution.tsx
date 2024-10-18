@@ -8,7 +8,7 @@ interface SolutionProps {
 
 const Solution = React.forwardRef<HTMLOptionElement, SolutionProps>(({ isVisible }, ref) => {
   return (
-    <S.SolutionContainer isVisible={isVisible} ref={ref}>
+    <S.ComponentContainer isVisible={isVisible} ref={ref}>
       <S.Wrapper>
         <S.Bold>🧑🏻‍💻 다른 개발자들의 풀이 코드 제공</S.Bold>
         <S.ImgLeftPadding>
@@ -29,7 +29,7 @@ const Solution = React.forwardRef<HTMLOptionElement, SolutionProps>(({ isVisible
           <S.MediumText>을 구할 수 있어요.</S.MediumText>
         </S.TextAlignCenterWrapper>
       </S.Wrapper>
-    </S.SolutionContainer>
+    </S.ComponentContainer>
   );
 });
 
