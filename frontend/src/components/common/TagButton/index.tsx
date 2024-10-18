@@ -18,7 +18,13 @@ export default function TagButton({
   ...props
 }: PropsWithChildren<TagButtonProps>) {
   return (
-    <S.Button $isSelected={isSelected} $variant={variant} $isClickable={isClickable} {...props}>
+    <S.Button
+      tabIndex={isClickable ? 0 : -1}
+      $isSelected={isSelected}
+      $variant={variant}
+      $isClickable={isClickable}
+      {...props}
+    >
       {children}
     </S.Button>
   );

@@ -1,6 +1,7 @@
 import * as S from './TextArea.styled';
 
 interface MarkdownEditorProps {
+  id?: string;
   type?: 'Default';
   size?: 'Default';
   danger?: boolean;
@@ -10,6 +11,7 @@ interface MarkdownEditorProps {
 }
 
 export default function MarkdownEditor({
+  id,
   type = 'Default',
   size = 'Default',
   danger = false,
@@ -18,7 +20,14 @@ export default function MarkdownEditor({
 }: MarkdownEditorProps) {
   return (
     <>
-      <S.MarkdownEditor $type={type} $size={size} $danger={danger} {...props} />
+      <S.MarkdownEditor
+        aria-label="마크다운 에디터"
+        textareaProps={{ id }}
+        $type={type}
+        $size={size}
+        $danger={danger}
+        {...props}
+      />
       {danger && dangerMessage && <S.DangerText>{dangerMessage}</S.DangerText>}
     </>
   );

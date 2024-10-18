@@ -1,7 +1,7 @@
 import SanitizedMDPreview from '@/components/common/SanitizedMDPreview';
 import styled from 'styled-components';
 
-export const CommentListContainer = styled.div`
+export const CommentListContainer = styled.ul`
   margin: 3rem 0;
 `;
 
