@@ -10,7 +10,7 @@ export const useScrollComponent = (
   { threshold = 0.5, index }: UseScrollComponentOptions,
 ) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  // const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -18,7 +18,7 @@ export const useScrollComponent = (
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            setCurrentIndex(index);
+            // setCurrentIndex(index);
           } else {
             setIsVisible(false);
           }
@@ -40,5 +40,5 @@ export const useScrollComponent = (
     };
   }, [ref, threshold, index]);
 
-  return { isVisible, currentIndex };
+  return { isVisible };
 };

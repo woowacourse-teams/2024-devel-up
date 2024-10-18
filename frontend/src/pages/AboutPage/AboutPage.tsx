@@ -13,30 +13,23 @@ export default function AboutPage() {
     useRef<HTMLOptionElement>(null),
   ];
 
-  const { isVisible: isLevelMissionVisible, currentIndex: levelMissionIndex } = useScrollComponent(
-    componentRefs[0],
-    { threshold: 0.5, index: 0 },
-  );
+  const { isVisible: isLevelMissionVisible } = useScrollComponent(componentRefs[0], {
+    threshold: 0.5,
+    index: 0,
+  });
 
-  const { isVisible: isDiscussionSpaceVisible, currentIndex: discussionSpaceIndex } =
-    useScrollComponent(componentRefs[1], {
-      threshold: 0.5,
-      index: 1,
-    });
+  const { isVisible: isDiscussionSpaceVisible } = useScrollComponent(componentRefs[1], {
+    threshold: 0.5,
+    index: 1,
+  });
 
-  const { isVisible: isSolutionVisible, currentIndex: solutionIndex } = useScrollComponent(
-    componentRefs[2],
-    { threshold: 0.5, index: 2 },
-  );
-
-  const currentIndex = Math.max(
-    levelMissionIndex ?? -1,
-    discussionSpaceIndex ?? -1,
-    solutionIndex ?? -1,
-  );
+  const { isVisible: isSolutionVisible } = useScrollComponent(componentRefs[2], {
+    threshold: 0.5,
+    index: 2,
+  });
 
   const handleScrollDown = () => {
-    const nextIndex = currentIndex + 1;
+    const nextIndex = 0;
     if (nextIndex < componentRefs.length && componentRefs[nextIndex].current) {
       componentRefs[nextIndex].current.scrollIntoView({ behavior: 'smooth' });
     }
