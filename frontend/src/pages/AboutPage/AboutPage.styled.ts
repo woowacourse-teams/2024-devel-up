@@ -48,7 +48,7 @@ export const RocketImg = styled(Rocket)`
 
   animation: ${bounce} 1.5s ease-in-out infinite;
 
-  ${media.small`
+  ${media.landingMedium`
     width: 15rem;
     height: 15rem;
     `}
