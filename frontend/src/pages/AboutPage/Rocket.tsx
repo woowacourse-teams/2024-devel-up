@@ -16,6 +16,7 @@ export default function Rocket({ handleScrollDown }: RocketProps) {
         </S.Bold>
       </S.TextAlignCenterWrapper>
       <S.DownArrow
+        onKeyDown={handleScrollDown}
         onClick={handleScrollDown}
         id="main-down-arrow"
         aria-label="아래 버튼"
