@@ -8,17 +8,19 @@ export default function Rocket({ handleScrollDown }: RocketProps) {
   return (
     <S.RocketContainer>
       <S.RocketImg />
-      <div>
-        <S.TextAlignCenterWrapper>
-          <S.PrimaryBold>Devel Up</S.PrimaryBold>
-          <S.Bold>이 여러분의</S.Bold>
-        </S.TextAlignCenterWrapper>
-        <div>
-          <S.PrimaryBold>Level Up</S.PrimaryBold>
-          <S.Bold>을 도와드릴게요!</S.Bold>
-        </div>
-      </div>
-      <S.DownArrow onClick={handleScrollDown} />
+      <S.TextAlignCenterWrapper>
+        <S.Bold>
+          <S.PrimaryBold>Devel Up</S.PrimaryBold>이 여러분의
+          <br />
+          <S.PrimaryBold>Level Up</S.PrimaryBold>을 도와드릴게요!
+        </S.Bold>
+      </S.TextAlignCenterWrapper>
+      <S.DownArrow
+        onClick={handleScrollDown}
+        id="main-down-arrow"
+        aria-label="아래 버튼"
+        tabIndex={0}
+      />
     </S.RocketContainer>
   );
 }

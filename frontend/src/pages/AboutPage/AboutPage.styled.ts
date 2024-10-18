@@ -6,7 +6,7 @@ import VSCodeSolution from '@/assets/images/vscodeSolution.svg';
 import UpArrow from '@/assets/images/upArrow.svg';
 import media from '@/styles/mediaQueries';
 
-export const Container = styled.div`
+export const Container = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +16,7 @@ export const Container = styled.div`
 
 // 로켓 이미지
 
-export const RocketContainer = styled.section`
+export const RocketContainer = styled.figure`
   background: linear-gradient(180deg, #9ca6e1 0%, #fff 100%);
   width: 100%;
   height: 100vh;
@@ -54,10 +54,6 @@ export const RocketImg = styled(Rocket)`
     `}
 `;
 
-export const TextAlignCenterWrapper = styled.div`
-  text-align: center;
-`;
-
 export const DownArrow = styled(UpArrow)`
   transform: rotate(180deg);
   transition: transform 0.3s ease-in-out;
@@ -84,6 +80,8 @@ export const Bold = styled.span`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  white-space: nowrap;
+
   width: 100%;
 
   ${media.landingMedium`
@@ -142,7 +140,7 @@ export const Wrapper = styled.article`
   `}
 `;
 
-export const ComponentContainer = styled.section<{ isVisible: boolean }>`
+export const ComponentContainer = styled.figure<{ isVisible: boolean }>`
   opacity: ${(props) => (props.isVisible ? 1 : 0)};
   transform: ${(props) => (props.isVisible ? 'translateY(0)' : 'translateY(20px)')};
   transition:
@@ -171,17 +169,8 @@ export const ComponentContainer = styled.section<{ isVisible: boolean }>`
     `}
 `;
 
-export const ContentWrapper = styled.div`
-  position: relative;
-  padding-left: 7rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-
-  ${media.small`
-    gap: 2rem;
-    padding-left: 2rem;
-    `}
+export const TextAlignCenterWrapper = styled.div`
+  text-align: center;
 `;
 
 export const ImgLeftPadding = styled.div`
@@ -224,6 +213,7 @@ export const MissionCardWrapper = styled.div`
 
 export const LevelMissionImg = styled(LevelMission)`
   width: 82rem;
+  height: fit-content;
   animation: ${slideUp} 1s ease-out;
 
   ${media.landingMedium`
@@ -235,6 +225,7 @@ export const LevelMissionImg = styled(LevelMission)`
 
 export const DiscussionImg = styled(Discussion)`
   width: 82rem;
+  height: fit-content;
   animation: ${slideUp} 1s ease-out;
 
   ${media.landingMedium`
@@ -246,6 +237,7 @@ export const DiscussionImg = styled(Discussion)`
 
 export const SolutionImg = styled(VSCodeSolution)`
   width: 82rem;
+  height: fit-content;
 
   ${media.landingMedium`
     width: 100%;

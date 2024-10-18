@@ -16,17 +16,15 @@ const Solution = React.forwardRef<HTMLOptionElement, SolutionProps>(({ isVisible
         </S.ImgLeftPadding>
 
         <S.TextAlignCenterWrapper>
-          <S.MediumText>다른 개발자들의 </S.MediumText>
-          <S.MediumBold>풀이 코드</S.MediumBold>
           <S.MediumText>
+            다른 개발자들의
+            <S.MediumBold> 풀이 코드</S.MediumBold>
             를 둘러보며
-            <br />
+            <br />더 나은 코드 작성법을
+            <S.MediumBold> 학습</S.MediumBold>
+            하고
+            <S.MediumBold> 조언</S.MediumBold>을 구할 수 있어요.
           </S.MediumText>
-          <S.MediumText>더 나은 코드 작성법을 </S.MediumText>
-          <S.MediumBold>학습</S.MediumBold>
-          <S.MediumText>하고 </S.MediumText>
-          <S.MediumBold>조언</S.MediumBold>
-          <S.MediumText>을 구할 수 있어요.</S.MediumText>
         </S.TextAlignCenterWrapper>
       </S.Wrapper>
     </S.ComponentContainer>

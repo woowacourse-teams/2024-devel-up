@@ -16,12 +16,11 @@ const LevelMission = React.forwardRef<HTMLOptionElement, LevelMissionProps>(
             <S.LevelMissionImg />
           </S.ImgLeftPadding>
           <S.TextAlignCenterWrapper>
-            <S.MediumBold>미션</S.MediumBold>
             <S.MediumText>
-              을 직접 풀며 <br />
+              <S.MediumBold>미션</S.MediumBold>을 직접 풀며
+              <br />
+              <S.MediumBold>프로그래밍 실력</S.MediumBold>을 진단할 수 있어요.
             </S.MediumText>
-            <S.MediumBold>프로그래밍 실력</S.MediumBold>
-            <S.MediumText>을 진단할 수 있어요.</S.MediumText>
           </S.TextAlignCenterWrapper>
         </S.Wrapper>
       </S.ComponentContainer>
