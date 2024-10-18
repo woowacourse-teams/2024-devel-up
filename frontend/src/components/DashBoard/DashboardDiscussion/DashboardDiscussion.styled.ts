@@ -29,6 +29,13 @@ export const Image = styled.img`
 export const Container = styled.div`
   width: 67.4rem;
   height: 100%;
+
+  @media (max-width: 1024px) {
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const DiscussionWrapper = styled(Link)`
@@ -41,6 +48,15 @@ export const DiscussionWrapper = styled(Link)`
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   cursor: pointer;
+
+  @media (max-width: 1024px) {
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    height: 15rem;
+  }
 `;
 
 export const CommentCountWrapper = styled.div`
@@ -54,6 +70,13 @@ export const ImageCommentWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 1024px) {
+  }
+
+  @media (max-width: 768px) {
+    justify-content: end;
+  }
 `;
 
 export const TextWrapper = styled.div`

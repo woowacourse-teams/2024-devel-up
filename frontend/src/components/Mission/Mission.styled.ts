@@ -9,6 +9,14 @@ export const MissionListContainer = styled.ul`
   margin-bottom: 10rem;
   padding-top: 3rem;
   width: 100%;
+
+  @media (max-width: 1024px) {
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 1.6rem;
+  }
 `;
 
 export const MissionItemContainer = styled.article`
@@ -17,6 +25,7 @@ export const MissionItemContainer = styled.article`
   border-radius: 1rem;
   border: 1px solid ${(props) => props.theme.colors.grey200};
   cursor: pointer;
+  margin: 0 auto;
 `;
 
 export const MissionThumbnailImg = styled.img`
