@@ -13,16 +13,18 @@ export default function MissionList({ missions }: MissionListProps) {
     <S.MissionList>
       {missions.length > 0 ? (
         missions.map(({ id, thumbnail, title, hashTags, summary }) => (
-          <Link key={id} to={`/missions/${id}`} draggable={false}>
-            <InfoCard
-              id={id}
-              thumbnailSrc={thumbnail}
-              title={title}
-              hashTags={hashTags}
-              description={summary}
-              thumbnailFallbackText="Mission"
-            />
-          </Link>
+          <S.MissionItemWrapper key={id}>
+            <Link to={`/missions/${id}`} draggable={false}>
+              <InfoCard
+                id={id}
+                thumbnailSrc={thumbnail}
+                title={title}
+                hashTags={hashTags}
+                description={summary}
+                thumbnailFallbackText="Mission"
+              />
+            </Link>
+          </S.MissionItemWrapper>
         ))
       ) : (
         <NoContentWithoutButton type="mission" />

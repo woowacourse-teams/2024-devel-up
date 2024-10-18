@@ -25,7 +25,7 @@ const show = keyframes`
   }
 `;
 
-export const MissionList = styled.div`
+export const MissionList = styled.ul`
   flex-wrap: wrap;
 
   display: flex;
@@ -36,6 +36,8 @@ export const MissionList = styled.div`
   animation: ${show} 0.5s;
   transition: 0.5s;
 `;
+
+export const MissionItemWrapper = styled.li``;
 
 export const MissionItemContainer = styled.article`
   width: 35rem;

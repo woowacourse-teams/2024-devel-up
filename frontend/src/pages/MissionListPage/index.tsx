@@ -14,7 +14,7 @@ export default function MissionListPage() {
   return (
     <S.MissionListPageContainer>
       <S.TitleWrapper>
-        <S.MissionListTitle>🎯 지금 참여할 수 있는 미션</S.MissionListTitle>
+        <S.MissionListTitle id="mission-title">🎯 지금 참여할 수 있는 미션</S.MissionListTitle>
         <S.Subtitle>미션에 참여하고 의견을 주고받을 수 있어요!</S.Subtitle>
       </S.TitleWrapper>
       <TagList
@@ -22,6 +22,7 @@ export default function MissionListPage() {
         setSelectedTag={setSelectedHashTag}
         selectedTag={selectedHashTag}
         keyName="name"
+        aria-labelledby="mission-title"
       />
       <MissionList missions={missions} />
     </S.MissionListPageContainer>
