@@ -7,7 +7,7 @@ export default function SubmitBanner({ mission }: { mission: Mission }) {
     <S.Container>
       <S.BannerTitle>
         <S.GithubIcon />
-        <S.BannerTitleText>제출하기</S.BannerTitleText>
+        <S.BannerTitleText aria-label="제출하기">제출하기</S.BannerTitleText>
       </S.BannerTitle>
       <MissionImage
         thumbnail={mission.thumbnail}
