@@ -39,8 +39,8 @@ export default function InfoCard({
       contentElement={
         <S.InfoCardContainer onClick={handleClick}>
           <S.TitleWrapper>
-            <S.Title>{title}</S.Title>
-            <S.Description>{description}</S.Description>
+            <S.Title aria-label={title}>{title}</S.Title>
+            <S.Description aria-label={description}>{description}</S.Description>
           </S.TitleWrapper>
           <S.TagWrapper
             onMouseDown={onMouseDown}
@@ -52,7 +52,7 @@ export default function InfoCard({
               hashTags.map((tag) => {
                 return (
                   <li key={tag.id}>
-                    <Badge text={`# ${tag.name}`} />
+                    <Badge text={`# ${tag.name}`} aria-label={`태그: ${tag.name}`} />
                   </li>
                 );
               })}
