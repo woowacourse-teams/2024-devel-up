@@ -62,5 +62,7 @@ export const Button = styled.button<ButtonProps>`
   justify-content: center;
   align-items: center;
 
+  width: fit-content;
+
   ${(props) => props.theme.font.badge}
 `;

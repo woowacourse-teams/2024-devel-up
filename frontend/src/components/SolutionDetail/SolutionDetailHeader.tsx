@@ -1,6 +1,8 @@
 import type { Solution } from '@/types/solution';
 import * as S from './SolutionDetail.styled';
 import TagButton from '@/components/common/TagButton';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 interface SolutionDetailHeaderProps {
   solution: Solution;
@@ -8,6 +10,11 @@ interface SolutionDetailHeaderProps {
 
 export default function SolutionDetailHeader({ solution }: SolutionDetailHeaderProps) {
   const { mission, member, title } = solution;
+
+  const navigate = useNavigate();
+  const navigateToMission = () => {
+    navigate(`${ROUTES.missionDetail}/${solution.mission.id}`);
+  };
 
   return (
     <S.SolutionDetailHeaderContainer
@@ -17,7 +24,9 @@ export default function SolutionDetailHeader({ solution }: SolutionDetailHeaderP
         <S.ThumbnailImg src={mission.thumbnail} alt="" />
         <S.GradientOverlay />
         <S.HeaderLeftArea>
-          <S.MissionTitle># {mission.title}</S.MissionTitle>
+          <TagButton variant="danger" onClick={navigateToMission}>
+            # {mission.title}
+          </TagButton>
           <S.Title>{title}</S.Title>
           <S.HeaderUserInfo>
             <S.HeaderProfileImg src={member.imageUrl} alt="" />
