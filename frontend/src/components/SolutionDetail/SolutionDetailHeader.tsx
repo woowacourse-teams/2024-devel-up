@@ -28,19 +28,21 @@ export default function SolutionDetailHeader({ solution }: SolutionDetailHeaderP
             # {mission.title}
           </TagButton>
           <S.Title>{title}</S.Title>
-          <S.HeaderUserInfo>
-            <S.HeaderProfileImg src={member.imageUrl} alt="" />
-            <S.HeaderUserName>{member.name}</S.HeaderUserName>
-          </S.HeaderUserInfo>
+          <S.HeaderLeftAreaInnerWrapper>
+            <S.HeaderUserInfo>
+              <S.HeaderProfileImg src={member.imageUrl} alt="" />
+              <S.HeaderUserName>{member.name}</S.HeaderUserName>
+            </S.HeaderUserInfo>
+            <S.HashTagWrapper>
+              {mission.hashTags &&
+                mission.hashTags.map((tag) => (
+                  <li key={tag.id}>
+                    <TagButton isClickable={false}># {tag.name}</TagButton>
+                  </li>
+                ))}
+            </S.HashTagWrapper>
+          </S.HeaderLeftAreaInnerWrapper>
         </S.HeaderLeftArea>
-        <S.HashTagWrapper>
-          {mission.hashTags &&
-            mission.hashTags.map((tag) => (
-              <li key={tag.id}>
-                <TagButton isClickable={false}># {tag.name}</TagButton>
-              </li>
-            ))}
-        </S.HashTagWrapper>
       </S.ThumbnailWrapper>
     </S.SolutionDetailHeaderContainer>
   );
