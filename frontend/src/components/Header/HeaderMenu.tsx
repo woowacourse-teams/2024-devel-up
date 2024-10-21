@@ -1,18 +1,19 @@
-import { Link } from 'react-router-dom';
+import type { HTMLAttributes } from 'react';
 import * as S from './Header.styled';
 
-interface HeaderMenuProps {
+interface HeaderMenuProps extends HTMLAttributes<HTMLDivElement> {
   name: string;
   path: string;
   currentPath: string;
+  handleToggle?: () => void;
 }
 
-export default function HeaderMenu({ name, path, currentPath }: HeaderMenuProps) {
+export default function HeaderMenu({ name, path, currentPath, handleToggle }: HeaderMenuProps) {
   const isCurrentMenu = currentPath === path;
 
   return (
-    <Link to={path}>
+    <S.MenuTextLink to={path} onClick={handleToggle}>
       <S.MenuText $isActive={isCurrentMenu}>{name}</S.MenuText>
-    </Link>
+    </S.MenuTextLink>
   );
 }
