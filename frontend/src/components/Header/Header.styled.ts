@@ -20,8 +20,7 @@ export const Container = styled.nav`
   white-space: nowrap;
 
   ${media.medium`
-      opacity: 0;
-      pointer-events: none;
+      display: none;
     `}
 `;
 
@@ -112,8 +111,7 @@ export const MenuText = styled.p<{ $isActive?: boolean }>`
 //  Mobile
 
 export const MobileContainer = styled.nav`
-  opacity: 0;
-  pointer-events: none;
+  display: none;
 
   z-index: 100;
   width: 100%;
@@ -121,7 +119,6 @@ export const MobileContainer = styled.nav`
   background: ${(props) => props.theme.colors.white};
   top: 0;
   left: 0;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -130,8 +127,7 @@ export const MobileContainer = styled.nav`
   padding: 0 2rem;
 
   ${media.medium`
-      opacity: 1;
-      pointer-events: auto;
+      display: block;
     `}
 `;
 
