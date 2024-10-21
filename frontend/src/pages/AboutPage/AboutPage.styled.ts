@@ -12,6 +12,7 @@ export const Container = styled.article`
   align-items: center;
   flex-direction: column;
   width: 100%;
+  margin-bottom: 10rem;
 `;
 
 // 로켓 이미지
@@ -155,7 +156,7 @@ export const ComponentContainer = styled.figure<{ $isVisible: boolean }>`
 
   max-width: 120rem;
   width: 89rem;
-  height: 100vh;
+  height: 90vh;
 
   background-color: ${(props) => props.theme.colors.white};
 
