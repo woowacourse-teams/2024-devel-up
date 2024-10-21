@@ -1,15 +1,4 @@
-import styled, { keyframes } from 'styled-components';
-
-const show = keyframes`
-  0% {
-    opacity: 0;
-    }
-
-  100% {
-    opacity: 1;
-  }
-`;
-
+import styled from 'styled-components';
 import media from '@/styles/mediaQueries';
 
 export const Container = styled.div`
