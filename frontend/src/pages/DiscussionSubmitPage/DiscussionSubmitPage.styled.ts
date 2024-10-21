@@ -7,4 +7,5 @@ export const DiscussionSubmitPageContainer = styled.div`
   margin: 4.5rem auto 0;
   width: 100%;
   max-width: 100rem;
+  padding: 0 1.6rem;
 `;

@@ -31,8 +31,6 @@ export const HeaderUserInfo = styled.div`
 `;
 
 export const SolutionDetailHeaderContainer = styled.div`
-  width: 100%;
-  /* height: 20rem; */
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -74,6 +72,7 @@ export const HeaderLeftArea = styled.div`
   bottom: 2.4rem;
   display: flex;
   flex-direction: column;
+  width: 95%;
 `;
 
 export const HeaderProfileImg = styled.img`
@@ -87,6 +86,17 @@ export const Title = styled.h1`
   color: ${(props) => props.theme.colors.white};
 `;
 
+export const HeaderLeftAreaInnerWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1rem;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+`;
+
 export const JavaIcon = styled(javaIcon)``;
 
 export const HashTagWrapper = styled.ul`
@@ -94,10 +104,6 @@ export const HashTagWrapper = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 1.1rem;
-
-  position: absolute;
-  right: 2.1rem;
-  bottom: 2.4rem;
 `;
 
 export const CodeViewButtonWrapper = styled.div`

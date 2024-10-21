@@ -82,27 +82,29 @@ export default function MissionSubmitPage() {
   return (
     <S.Container>
       {isPending && <LoadingSpinner />}
-      <SubmitBanner mission={mission} />
-      <form onSubmit={handleFormSubmit}>
-        <MissionTitle
-          value={solutionTitle}
-          onChange={handleSolutionTitle}
-          danger={isSolutionTitleError}
-        />
-        <PRLink
-          value={url}
-          onChange={handleUrl}
-          missionId={missionId}
-          danger={isUrlError || isSubmitSolutionError}
-        />
-        <OneWord
-          danger={isDescriptionError}
-          dangerMessage={ERROR_MESSAGE.no_content}
-          value={description ?? ''}
-          onChange={handleMarkDownDescription}
-        />
-        <SubmitButton />
-      </form>
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <SubmitBanner mission={mission} />
+        <form onSubmit={handleFormSubmit}>
+          <MissionTitle
+            value={solutionTitle}
+            onChange={handleSolutionTitle}
+            danger={isSolutionTitleError}
+          />
+          <PRLink
+            value={url}
+            onChange={handleUrl}
+            missionId={missionId}
+            danger={isUrlError || isSubmitSolutionError}
+          />
+          <OneWord
+            danger={isDescriptionError}
+            dangerMessage={ERROR_MESSAGE.no_content}
+            value={description ?? ''}
+            onChange={handleMarkDownDescription}
+          />
+          <SubmitButton />
+        </form>
+      </div>
 
       <SubmitSuccessPopUp isModalOpen={isModalOpen} thumbnail={mission.thumbnail} />
     </S.Container>
