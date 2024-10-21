@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MainPageContainer = styled.div`
+export const MainPageContainer = styled.section`
   display: flex;
   flex-direction: column;
   margin-bottom: 10rem;
@@ -8,7 +8,6 @@ export const MainPageContainer = styled.div`
 `;
 
 export const MissionListWrapper = styled.div`
-  width: fit-content;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

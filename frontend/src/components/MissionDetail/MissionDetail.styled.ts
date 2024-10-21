@@ -39,9 +39,9 @@ export const GradientOverlay = styled.div`
 `;
 
 export const Title = styled.h1`
-  position: absolute;
+  /* position: absolute;
   left: 2.1rem;
-  bottom: 2.4rem;
+  bottom: 2.4rem; */
   ${(props) => props.theme.font.heading1}
   color: ${(props) => props.theme.colors.white};
 `;
@@ -54,9 +54,10 @@ export const HashTagWrapper = styled.ul`
   justify-content: center;
   gap: 1.1rem;
 
-  position: absolute;
+  white-space: wrap;
+  /* position: absolute;
   right: 2.1rem;
-  bottom: 2.4rem;
+  bottom: 2.4rem; */
 `;
 
 // MissionDetailButtons
@@ -92,6 +93,7 @@ export const ButtonWrapper = styled.div`
   gap: 0.8rem;
   width: 100%;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 export const GithubIcon = styled(githubLogo)`

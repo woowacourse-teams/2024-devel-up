@@ -39,7 +39,7 @@ export default function Header() {
             )}
             {!userInfo ? (
               <a href={`${API_URL}${PATH.githubLogin}?next=${pathname}`}>
-                <S.LoginButton>로그인</S.LoginButton>
+                <S.LoginButton aria-label='클릭하면 깃허브 로그인으로 이동합니다.'>로그인</S.LoginButton>
               </a>
             ) : (
               <S.LoginButton onClick={handleUserLogout}>로그아웃</S.LoginButton>

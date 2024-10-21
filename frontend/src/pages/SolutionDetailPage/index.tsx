@@ -20,15 +20,17 @@ export default function SolutionDetailPage() {
 
   return (
     <S.SolutionDetailPageContainer>
-      <SolutionDetail solution={solution} />
-      <CommentSection
-        comments={comments}
-        postId={solutionId}
-        usePostCommentMutation={usePostSolutionCommentMutation}
-        usePatchCommentMutation={usePatchSolutionCommentMutation}
-        useDeleteCommentMutation={useDeleteSolutionCommentMutation}
-        isLoggedIn={isLoggedIn}
-      />
+      <div style={{ maxWidth: '100rem', margin: '0 auto' }}>
+        <SolutionDetail solution={solution} />
+        <CommentSection
+          comments={comments}
+          postId={solutionId}
+          usePostCommentMutation={usePostSolutionCommentMutation}
+          usePatchCommentMutation={usePatchSolutionCommentMutation}
+          useDeleteCommentMutation={useDeleteSolutionCommentMutation}
+          isLoggedIn={isLoggedIn}
+        />
+      </div>
     </S.SolutionDetailPageContainer>
   );
 }
