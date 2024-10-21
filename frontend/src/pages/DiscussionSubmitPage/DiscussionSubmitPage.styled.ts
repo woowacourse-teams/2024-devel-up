@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const show = keyframes`
+  0% {
+    opacity: 0;
+    }
+
+  100% {
+    opacity: 1;
+  }
+`;
 
 export const DiscussionSubmitPageContainer = styled.div`
   display: flex;
@@ -7,4 +17,7 @@ export const DiscussionSubmitPageContainer = styled.div`
   margin: 4.5rem auto 0;
   width: 100%;
   max-width: 100rem;
+
+  animation: ${show} 0.5s;
+  transition: 0.5s;
 `;
