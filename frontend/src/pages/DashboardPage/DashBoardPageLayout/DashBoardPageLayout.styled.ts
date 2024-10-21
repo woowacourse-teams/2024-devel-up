@@ -10,6 +10,8 @@ const show = keyframes`
   }
 `;
 
+import media from '@/styles/mediaQueries';
+
 export const Container = styled.div`
   display: flex;
   gap: 4rem;
@@ -18,8 +20,18 @@ export const Container = styled.div`
   padding: 3.5rem 0;
   width: 100rem;
 
-  animation: ${show} 0.5s;
-  transition: 0.5s;
+  ${media.large`
+  width: 80rem;
+    padding: 3rem 0;
+    gap: 3rem;
+  `}
+
+  ${media.medium`
+  width: 90%;
+    padding: 2.5rem 0;
+    gap: 2rem;
+    flex-direction: column;
+  `}
 `;
 
 export const ContentWrapper = styled.div`
@@ -31,6 +43,11 @@ export const ProfileAndCurrentPathWrapper = styled.div`
   flex-direction: column;
   min-width: 28rem;
   padding: 3rem;
+
+  ${media.medium`
+  display: flex;
+    flex-direction: column;
+  `}
 `;
 
 export const ProfileWrapper = styled.div`
@@ -38,6 +55,10 @@ export const ProfileWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 5rem;
+
+  ${media.medium`
+  justify-content: center;
+  `}
 `;
 
 export const ProfileImageWrapper = styled.div`
@@ -65,6 +86,12 @@ export const PathWrapper = styled.div`
   flex-direction: column;
   padding: 5rem 3.5rem;
   border-top: 1px solid ${(props) => props.theme.colors.grey200};
+
+  ${media.medium`
+  border: none;
+    margin: 0 auto;
+    padding: 0;
+  `}
 `;
 
 export const LinkWrapper = styled.div`
