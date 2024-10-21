@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 
 @Configuration
-@Profile("dev")
+@Profile("prod")
 @EnableJpaRepositories(basePackages = "develup")
 @Slf4j
 public class DataSourceConfig {

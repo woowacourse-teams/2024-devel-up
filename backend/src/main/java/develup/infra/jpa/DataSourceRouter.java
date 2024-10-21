@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-@Profile("dev")
+@Profile("prod")
 public class DataSourceRouter extends AbstractRoutingDataSource {
 
     private final AtomicLong counter = new AtomicLong(0);
