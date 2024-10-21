@@ -33,16 +33,6 @@ export default function Mobile({ userInfo, handleUserLogout }: MobileProps) {
           </S.MobileCenter>
 
           <S.RightPart>
-            {userInfo && (
-              <S.DashboardWrapper>
-                <HeaderMenu
-                  name="대시보드"
-                  path={ROUTES.dashboardHome}
-                  currentPath={pathname}
-                  handleToggle={handleToggle}
-                />
-              </S.DashboardWrapper>
-            )}
             {!userInfo ? (
               <a href={`${API_URL}${PATH.githubLogin}?next=${pathname}`}>
                 <S.LoginButton aria-label="클릭하면 깃허브 로그인으로 이동합니다.">
@@ -74,6 +64,14 @@ export default function Mobile({ userInfo, handleUserLogout }: MobileProps) {
               currentPath={pathname}
               handleToggle={handleToggle}
             />
+            {userInfo && (
+              <HeaderMenu
+                name="대시보드"
+                path={ROUTES.dashboardHome}
+                currentPath={pathname}
+                handleToggle={handleToggle}
+              />
+            )}
           </S.ToggleMenu>
         )}
       </S.MobileContainer>
