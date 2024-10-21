@@ -1,4 +1,14 @@
-import { styled } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const show = keyframes`
+  0% {
+    opacity: 0;
+    }
+
+  100% {
+    opacity: 1;
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -7,6 +17,9 @@ export const Container = styled.div`
   margin-bottom: 10rem;
   padding: 3.5rem 0;
   width: 100rem;
+
+  animation: ${show} 0.5s;
+  transition: 0.5s;
 `;
 
 export const ContentWrapper = styled.div`
