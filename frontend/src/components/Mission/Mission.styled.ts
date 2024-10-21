@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import media from '@/styles/mediaQueries';
 
 export const MissionListContainer = styled.ul`
   display: grid;
@@ -10,13 +11,10 @@ export const MissionListContainer = styled.ul`
   padding-top: 3rem;
   width: 100%;
 
-  @media (max-width: 1024px) {
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(1, 1fr);
+  ${media.medium`
+  grid-template-columns: repeat(1, 1fr);
     padding: 1.6rem;
-  }
+    `}
 `;
 
 export const MissionItemContainer = styled.article`

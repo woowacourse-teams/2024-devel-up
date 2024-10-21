@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
+import media from '@/styles/mediaQueries';
 
 export const HashTagWrapper = styled.div`
   display: flex;
@@ -30,12 +31,9 @@ export const Container = styled.div`
   width: 67.4rem;
   height: 100%;
 
-  @media (max-width: 1024px) {
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  ${media.medium`
+      padding: 0 6rem;
+    `}
 `;
 
 export const DiscussionWrapper = styled(Link)`
@@ -49,14 +47,11 @@ export const DiscussionWrapper = styled(Link)`
   margin-bottom: 1.5rem;
   cursor: pointer;
 
-  @media (max-width: 1024px) {
-  }
-
-  @media (max-width: 768px) {
-    display: flex;
+  ${media.medium`
+  display: flex;
     flex-direction: column;
     height: 15rem;
-  }
+    `}
 `;
 
 export const CommentCountWrapper = styled.div`
@@ -71,12 +66,9 @@ export const ImageCommentWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 1024px) {
-  }
-
-  @media (max-width: 768px) {
-    justify-content: end;
-  }
+  ${media.medium`
+  justify-content: end;
+    `}
 `;
 
 export const TextWrapper = styled.div`
