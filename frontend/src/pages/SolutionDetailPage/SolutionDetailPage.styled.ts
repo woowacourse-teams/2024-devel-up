@@ -11,8 +11,9 @@ const show = keyframes`
 `;
 
 export const SolutionDetailPageContainer = styled.div`
-  width: 100rem;
   margin: 0 auto;
+  padding: 0 1.6rem 10rem;
+  min-width: 40rem;
   padding-bottom: 10rem;
 
   animation: ${show} 0.5s;
