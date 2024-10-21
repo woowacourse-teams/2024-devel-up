@@ -3,7 +3,6 @@ package develup.domain.hashtag;
 import develup.domain.IdentifiableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "hash_tag2")
+//@Table(name = "hash_tag2")
 public class HashTag extends IdentifiableEntity {
 
     @Column(nullable = false)
