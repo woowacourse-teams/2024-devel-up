@@ -38,7 +38,7 @@ public class SolutionRepositoryCustom {
             PageRequest pageRequest
     ) {
         long start = System.currentTimeMillis();
-        int totalCount = queryFactory.select(solution.countDistinct())
+        Long totalCount = queryFactory.select(solution.countDistinct())
                 .from(solution)
                 .join(solution.mission, mission)
                 .join(mission.missionHashTags.hashTags, missionHashTag)
@@ -48,8 +48,7 @@ public class SolutionRepositoryCustom {
                         eqMissionTitle(missionTitle),
                         eqHashTagName(hashTagName)
                 )
-                .fetch()
-                .size();
+                .fetchOne();
 
         List<Tuple> tuples = queryFactory.select(solution.id, solution.submittedAt)
                 .from(solution)
