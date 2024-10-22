@@ -39,10 +39,11 @@ public class DiscussionRepositoryCustom {
                 .from(discussion)
                 .where(filterByMissionName(missionTitle), filterByHashTagName(hashTagName));
 
-        List<Discussion> data = queryFactory
-                .selectFrom(discussion).distinct()
-                .innerJoin(discussion.member, member).fetchJoin()
-                .leftJoin(discussion.mission, mission).fetchJoin()
+        List<Long> discussionIds = queryFactory
+                .select(discussion.id)
+                .from(discussion).distinct()
+                .innerJoin(discussion.member, member)
+                .leftJoin(discussion.mission, mission)
                 .leftJoin(mission.missionHashTags.hashTags, missionHashTag)
                 .leftJoin(discussion.discussionHashTags.hashTags, discussionHashTag)
                 .leftJoin(discussionHashTag.hashTag, hashTag)
@@ -50,6 +51,17 @@ public class DiscussionRepositoryCustom {
                 .orderBy(discussion.id.desc())
                 .offset(offset)
                 .limit(limit)
+                .fetch();
+
+        List<Discussion> data = queryFactory
+                .selectFrom(discussion)
+                .innerJoin(discussion.member, member).fetchJoin()
+                .leftJoin(discussion.mission, mission).fetchJoin()
+                .leftJoin(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
+                .leftJoin(discussion.discussionHashTags.hashTags, discussionHashTag).fetchJoin()
+                .leftJoin(discussionHashTag.hashTag, hashTag).fetchJoin()
+                .where(discussion.id.in(discussionIds))
+                .orderBy(discussion.id.desc())
                 .fetch();
 
         return PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
