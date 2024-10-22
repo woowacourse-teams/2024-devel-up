@@ -7,8 +7,10 @@ import static develup.domain.solution.QSolution.solution;
 import static develup.domain.solution.comment.QSolutionComment.solutionComment;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -50,8 +52,8 @@ public class SolutionRepositoryCustom {
                 .fetch()
                 .size();
 
-
-        List<Solution> data = queryFactory.selectFrom(solution)
+        List<Tuple> tuples = queryFactory.select(solution.id, solution.submittedAt)
+                .from(solution)
                 .join(solution.mission, mission)
                 .join(mission.missionHashTags.hashTags, missionHashTag)
                 .join(missionHashTag.hashTag)
@@ -65,6 +67,21 @@ public class SolutionRepositoryCustom {
                 .orderBy(solution.submittedAt.desc())
                 .distinct()
                 .fetch();
+
+        List<Long> ids = new ArrayList<>(tuples.size());
+        for (Tuple tuple : tuples) {
+            ids.add(tuple.get(0, Long.class));
+        }
+
+        List<Solution> data = queryFactory.selectFrom(solution)
+                .from(solution).fetchJoin()
+                .join(solution.mission, mission).fetchJoin()
+                .join(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
+                .join(missionHashTag.hashTag).fetchJoin()
+                .where(solution.id.in(ids))
+                .orderBy(solution.submittedAt.desc())
+                .fetch();
+
         long end = System.currentTimeMillis();
         String timeString = new BigDecimal(end - start).divide(new BigDecimal(1000)).toString();
         System.out.println("시간 : " + timeString);
