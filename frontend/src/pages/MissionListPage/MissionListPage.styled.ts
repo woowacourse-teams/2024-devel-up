@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const show = keyframes`
+  0% {
+    opacity: 0;
+    }
+
+  100% {
+    opacity: 1;
+  }
+`;
 
 export const MissionListPageContainer = styled.div`
   display: flex;
@@ -8,6 +18,9 @@ export const MissionListPageContainer = styled.div`
   margin: 5rem auto;
   width: 100%;
   max-width: 100rem;
+
+  animation: ${show} 0.5s;
+  transition: 0.5s;
 `;
 
 export const MissionListTitle = styled.h2`

@@ -16,7 +16,7 @@ export default function DiscussionCommentList() {
     hasPreviousGroup,
     hasNextGroup,
   } = usePagination();
-  const { discussionCommentList } = useDashboardDiscussionComment({
+  const { discussionCommentList, totalPage } = useDashboardDiscussionComment({
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);
@@ -45,7 +45,7 @@ export default function DiscussionCommentList() {
         </S.Container>
       )}
 
-      {discussionCommentList.length > 0 && (
+      {totalPage > 0 && (
         <PageButtons
           goToNextGroup={goToNextGroup}
           goToPage={goToPage}
