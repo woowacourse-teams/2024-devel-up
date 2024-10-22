@@ -51,6 +51,13 @@ export function usePagination() {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }, [currentGroup, totalPages]);
 
+  const handleInitializePage = useCallback(() => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('page', '1');
+    navigate(`${location.pathname}?${searchParams.toString()}`);
+    setCurrentPage(1);
+  }, [navigate, location.pathname, location.search]);
+
   return {
     currentPage,
     totalPages,
@@ -61,5 +68,6 @@ export function usePagination() {
     pageNumbers,
     hasPreviousGroup: currentGroup > 0,
     hasNextGroup: (currentGroup + 1) * GROUP_SIZE < totalPages,
+    handleInitializePage,
   };
 }
