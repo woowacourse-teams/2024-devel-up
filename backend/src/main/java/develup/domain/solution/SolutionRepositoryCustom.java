@@ -38,8 +38,7 @@ public class SolutionRepositoryCustom {
             PageRequest pageRequest
     ) {
         long start = System.currentTimeMillis();
-        int totalCount = queryFactory.select(solution.id)
-                .distinct()
+        int totalCount = queryFactory.select(solution.countDistinct())
                 .from(solution)
                 .join(solution.mission, mission)
                 .join(mission.missionHashTags.hashTags, missionHashTag)
