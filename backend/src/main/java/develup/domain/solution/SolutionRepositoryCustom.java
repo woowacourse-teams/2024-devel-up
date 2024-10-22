@@ -6,7 +6,6 @@ import static develup.domain.mission.QMissionHashTag.missionHashTag;
 import static develup.domain.solution.QSolution.solution;
 import static develup.domain.solution.comment.QSolutionComment.solutionComment;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +36,7 @@ public class SolutionRepositoryCustom {
             String hashTagName,
             PageRequest pageRequest
     ) {
-        long start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
         Long totalCount = queryFactory.select(solution.countDistinct())
                 .from(solution)
                 .join(solution.mission, mission)
@@ -80,9 +79,9 @@ public class SolutionRepositoryCustom {
                 .orderBy(solution.submittedAt.desc())
                 .fetch();
 
-        long end = System.currentTimeMillis();
-        String timeString = new BigDecimal(end - start).divide(new BigDecimal(1000)).toString();
-        System.out.println("시간 : " + timeString);
+//        long end = System.currentTimeMillis();
+//        String timeString = new BigDecimal(end - start).divide(new BigDecimal(1000)).toString();
+//        System.out.println("시간 : " + timeString);
         return new PageImpl<>(data, pageRequest, totalCount);
     }
 
