@@ -35,14 +35,25 @@ public class DiscussionRepositoryCustom {
         long offset = pageRequest.getOffset();
         int limit = pageRequest.getPageSize();
 
-        JPAQuery<Long> countQuery = queryFactory.select(discussion.count())
+        JPAQuery<Long> countQuery = createCountQuery(missionTitle, hashTagName);
+        List<Long> discussionIds = getDiscussionIds(missionTitle, hashTagName, offset, limit);
+        List<Discussion> data = fetchDiscussionsByIds(discussionIds);
+
+        return PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
+    }
+
+    private JPAQuery<Long> createCountQuery(String missionTitle, String hashTagName) {
+        return queryFactory.select(discussion.count())
                 .from(discussion)
                 .where(filterByMissionName(missionTitle), filterByHashTagName(hashTagName));
+    }
 
-        List<Discussion> data = queryFactory
-                .selectFrom(discussion).distinct()
-                .innerJoin(discussion.member, member).fetchJoin()
-                .leftJoin(discussion.mission, mission).fetchJoin()
+    private List<Long> getDiscussionIds(String missionTitle, String hashTagName, long offset, int limit) {
+        return queryFactory
+                .select(discussion.id)
+                .from(discussion).distinct()
+                .innerJoin(discussion.member, member)
+                .leftJoin(discussion.mission, mission)
                 .leftJoin(mission.missionHashTags.hashTags, missionHashTag)
                 .leftJoin(discussion.discussionHashTags.hashTags, discussionHashTag)
                 .leftJoin(discussionHashTag.hashTag, hashTag)
@@ -51,8 +62,19 @@ public class DiscussionRepositoryCustom {
                 .offset(offset)
                 .limit(limit)
                 .fetch();
+    }
 
-        return PageableExecutionUtils.getPage(data, pageRequest, countQuery::fetchOne);
+    private List<Discussion> fetchDiscussionsByIds(List<Long> discussionIds) {
+        return queryFactory
+                .selectFrom(discussion)
+                .innerJoin(discussion.member, member).fetchJoin()
+                .leftJoin(discussion.mission, mission).fetchJoin()
+                .leftJoin(mission.missionHashTags.hashTags, missionHashTag).fetchJoin()
+                .leftJoin(discussion.discussionHashTags.hashTags, discussionHashTag).fetchJoin()
+                .leftJoin(discussionHashTag.hashTag, hashTag).fetchJoin()
+                .where(discussion.id.in(discussionIds))
+                .orderBy(discussion.id.desc())
+                .fetch();
     }
 
     public List<Discussion> findAllByMissionAndHashTagNameOrderByDesc(String missionTitle, String hashTagName) {
