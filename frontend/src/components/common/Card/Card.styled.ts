@@ -1,3 +1,4 @@
+import media from '@/styles/mediaQueries';
 import styled from 'styled-components';
 
 export const CardContainer = styled.div`
@@ -10,6 +11,10 @@ export const CardContainer = styled.div`
   &:hover {
     transform: scale(1.04);
   }
+
+  ${media.small`
+      width: 28rem;
+    `}
 `;
 
 export const Thumbnail = styled.img`
@@ -17,6 +22,10 @@ export const Thumbnail = styled.img`
   height: 21.9rem;
   object-fit: cover;
   border-radius: 0.8rem 0.8rem 0 0;
+
+  ${media.small`
+      width: 28rem;
+    `}
 `;
 
 export const Content = styled.div`

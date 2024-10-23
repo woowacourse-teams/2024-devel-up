@@ -32,5 +32,5 @@ export const BadgeContainer = styled.div<BadgeContainerProps>`
   width: fit-content;
   padding: 0.4rem 0.8rem;
   border-radius: 0.4rem;
-  white-space: nowrap;
+  white-space: wrap;
 `;

@@ -16,6 +16,7 @@ export const MissionListPageContainer = styled.div`
   gap: 3rem;
 
   margin: 5rem auto;
+  padding: 0 1.5rem;
   width: 100%;
   max-width: 100rem;
 
