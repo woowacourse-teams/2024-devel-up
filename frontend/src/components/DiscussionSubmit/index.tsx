@@ -42,6 +42,8 @@ export default function DiscussionSubmit() {
     description,
     discussionTitle,
     isDiscussionTitleError,
+    isValidDiscussionTitle,
+    isValidDescription,
     handleDiscussionTitle,
     handleMarkDownDescription,
     isDescriptionError,
@@ -117,11 +119,11 @@ export default function DiscussionSubmit() {
           <DiscussionTitle
             value={discussionTitle}
             onChange={handleDiscussionTitle}
-            danger={isDiscussionTitleError}
+            danger={isDiscussionTitleError || !isValidDiscussionTitle}
           />
           <DiscussionDescription
             value={description}
-            danger={isDescriptionError}
+            danger={isDescriptionError || !isValidDescription}
             dangerMessage={ERROR_MESSAGE.no_content}
             onChange={handleMarkDownDescription}
           />
