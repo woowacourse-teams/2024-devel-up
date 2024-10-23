@@ -30,6 +30,6 @@ export const Content = styled.div`
   justify-content: space-between;
 
   ${media.medium`
-    min-height: 15rem;
+    min-height: 15.3rem;
     `}
 `;
