@@ -10,7 +10,7 @@ import { usePagination } from '@/hooks/usePagination';
 import { HASHTAGS } from '@/constants/hashTags';
 import PageButtons from '../common/PageButtons';
 import SpinnerSuspense from '../common/SpinnerSuspense';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface SolutionListProps {
   selectedMission: SelectedMissionType | null;
@@ -30,9 +30,17 @@ export default function SolutionList({ selectedMission, selectedHashTag }: Solut
     hasNextGroup,
   } = usePagination();
 
+  const prevMissionRef = useRef(selectedMission);
+  const prevHashTagRef = useRef(selectedHashTag);
+
   useEffect(() => {
-    handleInitializePage();
-  }, [selectedMission, selectedHashTag]);
+    if (prevMissionRef.current !== selectedMission || prevHashTagRef.current !== selectedHashTag) {
+      handleInitializePage();
+    }
+
+    prevMissionRef.current = selectedMission;
+    prevHashTagRef.current = selectedHashTag;
+  }, [selectedMission, selectedHashTag, handleInitializePage]);
 
   const { solutionSummaries } = useSolutionSummaries({
     mission: selectedMission?.title ?? HASHTAGS.all,

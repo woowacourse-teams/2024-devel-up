@@ -40,7 +40,6 @@ export default function MissionProcess({ handleModalClose, onClick }: MissionPro
   const [contentId, setContentId] = useState(1);
   const currentContent = CONTENT_LIST.find((content) => content.id === contentId);
   if (!currentContent) throw new Error();
-  console.log(contentId);
 
   const isEndContent = contentId === CONTENT_LIST.length;
 

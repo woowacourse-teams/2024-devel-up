@@ -19,11 +19,13 @@ export const getWithPagination = async <T>(
   path: string,
   params: PaginationParams,
 ): Promise<PaginationResponse<T>> => {
-  const { size = DEFAULT_PAGE_SIZE, page = '0', filter, hashTag, mission } = params;
+  const { size = DEFAULT_PAGE_SIZE, page, filter, hashTag, mission } = params;
+
+  const sendedPage = Number(page) - 1 < 0 ? '0' : (Number(page) - 1).toString();
 
   const queryParams: Record<string, string> = Object.entries({
     size,
-    page,
+    page: sendedPage,
     filter,
     hashTag,
     mission,
