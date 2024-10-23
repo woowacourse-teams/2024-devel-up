@@ -5,7 +5,6 @@ export const Container = styled.footer`
   width: 100vw;
   height: 15.2rem;
   background: var(--grey-50);
-  /* padding: 0 24.5rem; */
   display: flex;
   flex-direction: column;
 
