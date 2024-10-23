@@ -29,6 +29,7 @@ export const SolutionListPageContainer = styled.div`
   width: 100%;
   max-width: 100rem;
   margin: 5rem auto;
+  padding: 0 1.5rem;
 
   display: flex;
   flex-direction: column;

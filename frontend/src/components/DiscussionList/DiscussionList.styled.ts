@@ -55,6 +55,7 @@ export const ItemRight = styled.div`
   align-items: center;
   gap: 1.7rem;
   width: 10.5rem;
+  margin: 0 1rem;
 
   color: ${(props) => props.theme.colors.grey400};
   ${(props) => props.theme.font.caption};
