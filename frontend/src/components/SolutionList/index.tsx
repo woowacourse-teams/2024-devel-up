@@ -9,6 +9,8 @@ import NoContentWithoutButton from '../common/NoContent/NoContentWithoutButton';
 import { usePagination } from '@/hooks/usePagination';
 import { HASHTAGS } from '@/constants/hashTags';
 import PageButtons from '../common/PageButtons';
+import SpinnerSuspense from '../common/SpinnerSuspense';
+import { useEffect, useRef } from 'react';
 
 interface SolutionListProps {
   selectedMission: SelectedMissionType | null;
@@ -24,8 +26,22 @@ export default function SolutionList({ selectedMission, selectedHashTag }: Solut
     goToNextGroup,
     pageNumbers,
     hasPreviousGroup,
+    handleInitializePage,
     hasNextGroup,
   } = usePagination();
+
+  const prevMissionRef = useRef(selectedMission);
+  const prevHashTagRef = useRef(selectedHashTag);
+
+  useEffect(() => {
+    if (prevMissionRef.current !== selectedMission || prevHashTagRef.current !== selectedHashTag) {
+      handleInitializePage();
+    }
+
+    prevMissionRef.current = selectedMission;
+    prevHashTagRef.current = selectedHashTag;
+  }, [selectedMission, selectedHashTag, handleInitializePage]);
+
   const { solutionSummaries } = useSolutionSummaries({
     mission: selectedMission?.title ?? HASHTAGS.all,
     hashTag: selectedHashTag?.name ?? HASHTAGS.all,
@@ -37,24 +53,27 @@ export default function SolutionList({ selectedMission, selectedHashTag }: Solut
 
   return (
     <>
-      <S.SolutionList>
-        {solutionSummaries.length > 0 ? (
-          solutionSummaries.map(({ id, thumbnail, title, description, hashTags }) => (
-            <Link key={id} to={`${ROUTES.solutions}/${id}`}>
-              <InfoCard
-                id={id}
-                thumbnailSrc={thumbnail}
-                title={title}
-                hashTags={hashTags}
-                description={description}
-                thumbnailFallbackText="Solution"
-              />
-            </Link>
-          ))
-        ) : (
-          <NoContentWithoutButton type="solution" />
-        )}
-      </S.SolutionList>
+      <SpinnerSuspense>
+        <S.SolutionList>
+          {solutionSummaries.length > 0 ? (
+            solutionSummaries.map(({ id, thumbnail, title, description, hashTags }) => (
+              <Link key={id} to={`${ROUTES.solutions}/${id}`}>
+                <InfoCard
+                  id={id}
+                  thumbnailSrc={thumbnail}
+                  title={title}
+                  hashTags={hashTags}
+                  description={description}
+                  thumbnailFallbackText="Solution"
+                />
+              </Link>
+            ))
+          ) : (
+            <NoContentWithoutButton type="solution" />
+          )}
+        </S.SolutionList>
+      </SpinnerSuspense>
+
       {solutionSummaries.length > 0 && (
         <PageButtons
           goToNextGroup={goToNextGroup}

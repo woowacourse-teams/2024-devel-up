@@ -45,7 +45,7 @@ export const handlers = [
   http.get(`${API_URL}${PATH.missionInProgress}`, () => {
     return HttpResponse.json({
       data: missionInProgress,
-      currentPage: 1,
+      currentPage: 0,
       totalPage: 10,
     });
   }),

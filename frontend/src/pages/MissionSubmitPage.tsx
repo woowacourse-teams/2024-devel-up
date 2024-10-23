@@ -42,6 +42,9 @@ export default function MissionSubmitPage() {
     isDescriptionError,
     isSolutionTitleError,
     isSubmitSolutionError,
+    isValidUrl,
+    isValidDescription,
+    isValidSolutionTitle,
     // isMatchedMissionName,
   } = useSubmitSolution({ missionId, missionName });
 
@@ -88,16 +91,16 @@ export default function MissionSubmitPage() {
           <MissionTitle
             value={solutionTitle}
             onChange={handleSolutionTitle}
-            danger={isSolutionTitleError}
+            danger={isSolutionTitleError || !isValidSolutionTitle}
           />
           <PRLink
             value={url}
             onChange={handleUrl}
             missionId={missionId}
-            danger={isUrlError || isSubmitSolutionError}
+            danger={isUrlError || isSubmitSolutionError || !isValidUrl}
           />
           <OneWord
-            danger={isDescriptionError}
+            danger={isDescriptionError || !isValidDescription}
             dangerMessage={ERROR_MESSAGE.no_content}
             value={description ?? ''}
             onChange={handleMarkDownDescription}
