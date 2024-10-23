@@ -1,3 +1,4 @@
+import media from '@/styles/mediaQueries';
 import styled, { keyframes } from 'styled-components';
 
 export const MissionListContainer = styled.div`
@@ -5,6 +6,7 @@ export const MissionListContainer = styled.div`
   flex-direction: column;
   gap: 5rem;
   margin: 0 auto;
+  padding: 0 1.5rem;
   margin-bottom: 10rem;
   padding-top: 6rem;
   width: fit-content;
@@ -29,12 +31,16 @@ export const MissionList = styled.ul`
   flex-wrap: wrap;
 
   display: flex;
-  width: 100rem;
-  column-gap: 5rem;
+  justify-content: space-between;
   row-gap: 3.6rem;
 
   animation: ${show} 0.5s;
   transition: 0.5s;
+
+  ${media.medium`
+    justify-content: center;
+    column-gap: 3rem;
+    `}
 `;
 
 export const MissionItemWrapper = styled.li``;
