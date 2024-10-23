@@ -1,7 +1,7 @@
 import DiscussionListContent from '@/components/DiscussionList/DiscussionListContent';
 import * as S from './DiscussionListPage.styled';
 import DiscussionListHeader from '@/components/DiscussionList/DiscussionListHeader';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import TagList from '@/components/common/TagList';
 import useHashTags from '@/hooks/useHashTags';
 import type { HashTag } from '@/types';
@@ -28,9 +28,17 @@ export default function DiscussionListPage() {
     handleInitializePage,
   } = usePagination();
 
+  const prevMissionRef = useRef(selectedMission);
+  const prevHashTagRef = useRef(selectedHashTag);
+
   useEffect(() => {
-    handleInitializePage();
-  }, [selectedMission, selectedHashTag]);
+    if (prevMissionRef.current !== selectedMission || prevHashTagRef.current !== selectedHashTag) {
+      handleInitializePage();
+    }
+
+    prevMissionRef.current = selectedMission;
+    prevHashTagRef.current = selectedHashTag;
+  }, [selectedMission, selectedHashTag, handleInitializePage]);
 
   const { discussions } = useDiscussions({
     mission: selectedMission?.title ?? HASHTAGS.all,

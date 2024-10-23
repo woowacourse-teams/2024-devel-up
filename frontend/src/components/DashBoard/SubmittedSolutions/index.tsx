@@ -24,7 +24,7 @@ export default function SubmittedSolutionList() {
   //   },
   // });
 
-  const { submittedSolutionList } = useSubmittedSolutions({
+  const { submittedSolutionList, totalPage } = useSubmittedSolutions({
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);
@@ -50,7 +50,7 @@ export default function SubmittedSolutionList() {
           })}
         </S.MissionListContainer>
       )}
-      {submittedSolutionList.length > 0 && (
+      {totalPage > 0 && (
         <PageButtons
           goToNextGroup={goToNextGroup}
           goToPage={goToPage}

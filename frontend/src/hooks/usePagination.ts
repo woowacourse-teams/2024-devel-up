@@ -18,7 +18,7 @@ export function usePagination() {
     if (pageFromURL !== currentPage) {
       setCurrentPage(pageFromURL);
     }
-  }, [location.search, currentPage]);
+  }, [location.search]);
 
   const goToPage = useCallback(
     (page: number) => {
@@ -55,7 +55,6 @@ export function usePagination() {
     const searchParams = new URLSearchParams(location.search);
     searchParams.set('page', '1');
     navigate(`${location.pathname}?${searchParams.toString()}`);
-    setCurrentPage(1);
   }, [navigate, location.pathname, location.search]);
 
   return {
