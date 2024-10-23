@@ -5,19 +5,21 @@ export const Container = styled.div`
 `;
 
 export const SkipTag = styled.a`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 10rem;
-  height: 8rem;
-  padding: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  opacity: 0;
 
   &:focus {
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10rem;
+    height: 8rem;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 1000;
     background: ${(props) => props.theme.colors.primary500};
     color: ${(props) => props.theme.colors.white};

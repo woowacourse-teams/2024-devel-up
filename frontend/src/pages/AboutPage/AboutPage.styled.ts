@@ -156,7 +156,8 @@ export const ComponentContainer = styled.figure<{ $isVisible: boolean }>`
 
   max-width: 120rem;
   width: 89rem;
-  height: 90vh;
+  height: fit-content;
+  padding-top: 2rem;
 
   background-color: ${(props) => props.theme.colors.white};
 
