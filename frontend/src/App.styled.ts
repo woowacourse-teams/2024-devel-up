@@ -5,7 +5,10 @@ export const Container = styled.div`
 `;
 
 export const SkipTag = styled.a`
+  opacity: 0;
+
   &:focus {
+    opacity: 1;
     position: absolute;
     top: 0;
     left: 0;
