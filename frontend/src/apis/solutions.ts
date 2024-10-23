@@ -25,7 +25,7 @@ interface GetSolutionSummariesOptions {
 export const getSolutionSummaries = async ({
   mission,
   hashTag,
-  page = '0',
+  page,
   size = DEFAULT_PAGE_SIZE,
 }: GetSolutionSummariesOptions): Promise<PaginationResponse<SolutionSummary[]>> => {
   const { data, currentPage, totalPage } = await getWithPagination<SolutionSummary[]>(

@@ -4,6 +4,7 @@ import NoContent from './NoContent';
 import useMissionInProgress from '@/hooks/useMissionInProgress';
 import { usePagination } from '@/hooks/usePagination';
 import PageButtons from '@/components/common/PageButtons';
+import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function DashBoardMissionList() {
   const {
@@ -16,7 +17,7 @@ export default function DashBoardMissionList() {
     hasPreviousGroup,
     hasNextGroup,
   } = usePagination();
-  const { missionList } = useMissionInProgress({
+  const { missionList, totalPage } = useMissionInProgress({
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);
@@ -25,6 +26,7 @@ export default function DashBoardMissionList() {
 
   return (
     <>
+      <SpinnerSuspense />
       {!missionList.length ? (
         <NoContent type="inProgress" />
       ) : (
@@ -43,7 +45,7 @@ export default function DashBoardMissionList() {
           })}
         </S.MissionListContainer>
       )}
-      {missionList.length > 0 && (
+      {totalPage > 0 && (
         <PageButtons
           goToNextGroup={goToNextGroup}
           goToPage={goToPage}
