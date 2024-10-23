@@ -28,11 +28,12 @@ const show = keyframes`
 `;
 
 export const MissionList = styled.ul`
-  flex-wrap: wrap;
-
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 30rem));
+  justify-content: center;
+  justify-items: center;
   row-gap: 3.6rem;
+  column-gap: 2rem;
 
   animation: ${show} 0.5s;
   transition: 0.5s;
@@ -43,7 +44,9 @@ export const MissionList = styled.ul`
     `}
 `;
 
-export const MissionItemWrapper = styled.li``;
+export const MissionItemWrapper = styled.li`
+  max-width: 30rem;
+`;
 
 export const MissionItemContainer = styled.article`
   width: 35rem;
