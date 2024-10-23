@@ -1,10 +1,11 @@
+import media from '@/styles/mediaQueries';
 import styled from 'styled-components';
 
 export const InfoCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  gap: 1rem;
 `;
 
 export const TitleWrapper = styled.div`
@@ -31,6 +32,10 @@ export const Description = styled.div`
   color: ${(props) => props.theme.colors.grey500};
   margin-top: 0.5rem;
   ${(props) => props.theme.font.body}
+
+  ${media.medium`
+    -webkit-line-clamp: 2;
+    `}
 `;
 
 export const TagWrapper = styled.ul`

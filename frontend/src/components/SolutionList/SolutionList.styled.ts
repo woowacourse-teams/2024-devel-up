@@ -12,12 +12,12 @@ const show = keyframes`
 `;
 
 export const SolutionList = styled.div`
-  display: flex;
-  max-width: 100rem;
-
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 30rem));
+  justify-content: center;
+  justify-items: center;
   row-gap: 3.6rem;
-  flex-wrap: wrap;
+  column-gap: 2rem;
 
   animation: ${show} 0.5s;
   transition: 0.5s;
@@ -26,4 +26,8 @@ export const SolutionList = styled.div`
     justify-content: center;
     column-gap: 3rem;
     `}
+`;
+
+export const SolutionItemWrapper = styled.div`
+  max-width: 30rem;
 `;
