@@ -81,7 +81,7 @@ export const MissionHashTagWrapper = styled.div`
 `;
 
 export const MissionHashTag = styled.span`
-  background: ${(props) => props.theme.colors.primary100};
+  background: ${(props) => props.theme.colors.primary50};
   border-radius: 0.8rem;
   padding: 0.4rem 0.8rem;
   text-align: center;
