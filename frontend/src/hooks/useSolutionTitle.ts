@@ -7,8 +7,7 @@ const MAX_SOLUTION_TITLE_LENGTH = 50;
 const useSolutionTitle = () => {
   const [solutionTitle, setSolutionTitle] = useState('');
   const [isSolutionTitleError, setIsSolutionTitleError] = useState(false);
-  const isValidSolutionTitle =
-    solutionTitle.length && solutionTitle.length < MAX_SOLUTION_TITLE_LENGTH;
+  const isValidSolutionTitle = solutionTitle.length < MAX_SOLUTION_TITLE_LENGTH;
 
   const handleSolutionTitle = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
