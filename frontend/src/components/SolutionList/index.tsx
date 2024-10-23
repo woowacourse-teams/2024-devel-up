@@ -57,16 +57,18 @@ export default function SolutionList({ selectedMission, selectedHashTag }: Solut
         <S.SolutionList>
           {solutionSummaries.length > 0 ? (
             solutionSummaries.map(({ id, thumbnail, title, description, hashTags }) => (
-              <Link key={id} to={`${ROUTES.solutions}/${id}`}>
-                <InfoCard
-                  id={id}
-                  thumbnailSrc={thumbnail}
-                  title={title}
-                  hashTags={hashTags}
-                  description={description}
-                  thumbnailFallbackText="Solution"
-                />
-              </Link>
+              <S.SolutionItemWrapper key={id}>
+                <Link to={`${ROUTES.solutions}/${id}`} draggable={false}>
+                  <InfoCard
+                    id={id}
+                    thumbnailSrc={thumbnail}
+                    title={title}
+                    hashTags={hashTags}
+                    description={description}
+                    thumbnailFallbackText="Solution"
+                  />
+                </Link>
+              </S.SolutionItemWrapper>
             ))
           ) : (
             <NoContentWithoutButton type="solution" />
