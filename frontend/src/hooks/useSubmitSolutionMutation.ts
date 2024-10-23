@@ -18,11 +18,15 @@ const useSubmitSolutionMutation = ({
 }: UseSubmissionMutationParams) => {
   const navigate = useNavigate();
 
-  const { mutate: submitSolutionMutation, isPending } = useSingleRequestMutation({
+  const {
+    mutate: submitSolutionMutation,
+    isPending,
+    isError: isSubmitSolutionError,
+  } = useSingleRequestMutation({
     mutationFn: postSolutionSubmit,
     onSuccess: ({ id }) => {
       onSuccessCallback();
-      queryClient.invalidateQueries({ queryKey: missionKeys.detail(missionId) });
+      queryClient.invalidateQueries({ queryKey: missionKeys.detail(missionId, '') });
       queryClient.invalidateQueries({ queryKey: solutionKeys.summaries });
       navigate(ROUTES.solutions + `/${id}`);
     },

@@ -19,7 +19,7 @@ const useDiscussions = ({
   onPageInfoUpdate,
 }: UseDiscussionsOptions) => {
   const { data: discussionsResponse } = useSuspenseQuery({
-    queryKey: [...discussionsKeys.all, mission, hashTag],
+    queryKey: [...discussionsKeys.all, mission, hashTag, page],
     queryFn: () =>
       getDiscussions({
         mission: mission || HASHTAGS.all,

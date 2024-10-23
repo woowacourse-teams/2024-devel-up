@@ -5,8 +5,10 @@ import useMissionInProgress from '@/hooks/useMissionInProgress';
 import { usePagination } from '@/hooks/usePagination';
 import PageButtons from '@/components/common/PageButtons';
 import SpinnerSuspense from '@/components/common/SpinnerSuspense';
+import { useDashboardLayoutContext } from '@/pages/DashboardPage/DashBoardPageLayout';
 
 export default function DashBoardMissionList() {
+  const { path } = useDashboardLayoutContext();
   const {
     currentPage,
     setTotalPages,
@@ -18,6 +20,7 @@ export default function DashBoardMissionList() {
     hasNextGroup,
   } = usePagination();
   const { missionList, totalPage } = useMissionInProgress({
+    path,
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);
