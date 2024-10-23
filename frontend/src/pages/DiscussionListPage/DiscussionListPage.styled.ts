@@ -15,6 +15,7 @@ export const DiscussionListPageContainer = styled.div`
   flex-direction: column;
   gap: 4.5rem;
   margin: 4.5rem auto 0;
+  padding: 0 1.5rem;
   width: 100%;
   max-width: 100rem;
 
