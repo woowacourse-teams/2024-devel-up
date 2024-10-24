@@ -6,6 +6,8 @@ export const InfoCardContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
+  word-break: break-all;
+  width: 100%;
 `;
 
 export const TitleWrapper = styled.div`
