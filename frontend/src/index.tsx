@@ -296,28 +296,28 @@ export const router = createBrowserRouter(routes, {
 //   return worker.start();
 // }
 
-enableMocking().then(() => {
-  root.render(
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <GlobalStyle />
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </React.StrictMode>,
-  );
-});
+// enableMocking().then(() => {
+//   root.render(
+//     <React.StrictMode>
+//       <QueryClientProvider client={queryClient}>
+//         <ThemeProvider theme={theme}>
+//           <ReactQueryDevtools initialIsOpen={false} />
+//           <GlobalStyle />
+//           <RouterProvider router={router} />
+//         </ThemeProvider>
+//       </QueryClientProvider>
+//     </React.StrictMode>,
+//   );
+// });
 
-// root.render(
-//   <React.StrictMode>
-//     <QueryClientProvider client={queryClient}>
-//       <ReactQueryDevtools />
-//       <ThemeProvider theme={theme}>
-//         <GlobalStyle />
-//         <RouterProvider router={router} />
-//       </ThemeProvider>
-//     </QueryClientProvider>
-//   </React.StrictMode>,
-// );
+root.render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
+  </React.StrictMode>,
+);
