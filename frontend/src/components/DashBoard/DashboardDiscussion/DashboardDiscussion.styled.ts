@@ -44,7 +44,6 @@ export const Container = styled.div`
 
 export const DiscussionWrapper = styled(Link)`
   height: 9.7rem;
-  width: 80%;
   border-radius: 2.8rem;
   background: ${(props) => props.theme.colors.white};
   box-shadow: ${(props) => props.theme.boxShadow.shadow04};
@@ -82,7 +81,11 @@ export const ImageCommentWrapper = styled.div`
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 50rem;
+
+  ${media.medium`
+  width:18rem
+    `}
 `;
 
 export const CommentText = styled.span`
