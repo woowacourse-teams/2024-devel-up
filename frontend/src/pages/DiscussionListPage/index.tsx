@@ -19,6 +19,7 @@ export default function DiscussionListPage() {
   const {
     currentPage,
     setTotalPages,
+    totalPages,
     goToPage,
     goToPreviousGroup,
     goToNextGroup,
@@ -72,18 +73,18 @@ export default function DiscussionListPage() {
       </S.TagListWrapper>
       <SpinnerSuspense>
         <DiscussionListContent discussions={discussions} />
-        {discussions.length > 0 && (
-          <PageButtons
-            goToNextGroup={goToNextGroup}
-            goToPage={goToPage}
-            goToPreviousGroup={goToPreviousGroup}
-            pageNumbers={pageNumbers}
-            hasPreviousGroup={hasPreviousGroup}
-            hasNextGroup={hasNextGroup}
-            currentPage={currentPage}
-          />
-        )}
       </SpinnerSuspense>
+      {totalPages > 0 && (
+        <PageButtons
+          goToNextGroup={goToNextGroup}
+          goToPage={goToPage}
+          goToPreviousGroup={goToPreviousGroup}
+          pageNumbers={pageNumbers}
+          hasPreviousGroup={hasPreviousGroup}
+          hasNextGroup={hasNextGroup}
+          currentPage={currentPage}
+        />
+      )}
     </S.DiscussionListPageContainer>
   );
 }

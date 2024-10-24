@@ -4,13 +4,14 @@ import { missionKeys } from './queries/keys';
 import { useEffect } from 'react';
 
 interface UseMissionInProgressOptions {
+  path: string;
   page: number;
   onPageInfoUpdate?: (totalPage: number) => void;
 }
 
-const useMissionInProgress = ({ page, onPageInfoUpdate }: UseMissionInProgressOptions) => {
+const useMissionInProgress = ({ path, page, onPageInfoUpdate }: UseMissionInProgressOptions) => {
   const { data: missionInProgressResponse } = useSuspenseQuery({
-    queryKey: missionKeys.detail(page),
+    queryKey: missionKeys.detail(page, path),
     queryFn: () => getMissionInProgress({ page: page.toString() }),
   });
 

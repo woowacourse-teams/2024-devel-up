@@ -26,7 +26,6 @@ public class GithubOAuthStrategy implements OAuthStrategy {
         return UriComponentsBuilder.fromHttpUrl("https://github.com/login/oauth/authorize")
                 .queryParam("client_id", properties.clientId())
                 .queryParam("redirect_uri", redirectUriWithNext)
-                .queryParam("scope", "user:email")
                 .build()
                 .toUriString();
     }

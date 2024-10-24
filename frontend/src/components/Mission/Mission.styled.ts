@@ -36,6 +36,8 @@ export const MissionThumbnailImg = styled.img`
 
 export const MissionInfoWrapper = styled.div`
   padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const MissionDescription = styled.div`
@@ -49,13 +51,17 @@ export const MissionTitle = styled.p`
   ${(props) => props.theme.font.bodyBold}
   color: black;
   margin-bottom: 1.7rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const MissionSummary = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: inline-block;
   height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   ${(props) => props.theme.font.body}
   color: ${(props) => props.theme.colors.grey500};
 `;

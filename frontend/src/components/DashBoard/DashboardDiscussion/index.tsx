@@ -4,8 +4,11 @@ import { usePagination } from '@/hooks/usePagination';
 import NoContent from '../DashBoardMissionList/NoContent';
 import * as S from './DashboardDiscussion.styled';
 import DiscussionItem from './DiscussionItem';
+import { useDashboardLayoutContext } from '@/pages/DashboardPage/DashBoardPageLayout';
 
 export default function DashBoardDiscussionList() {
+  const { path } = useDashboardLayoutContext();
+
   const {
     currentPage,
     setTotalPages,
@@ -18,6 +21,7 @@ export default function DashBoardDiscussionList() {
   } = usePagination();
 
   const { discussionList, totalPage } = useDashboardDiscussion({
+    path,
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);
@@ -38,7 +42,7 @@ export default function DashBoardDiscussionList() {
                 hashTags={discussion.hashTags}
                 title={discussion.title}
                 mission={discussion.mission}
-                imageUrl={discussion.member.imageUrl}
+                imageUrl={discussion.member?.imageUrl}
                 commentCount={discussion.commentCount}
                 createdAt={discussion.createdAt}
               />

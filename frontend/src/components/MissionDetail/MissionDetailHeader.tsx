@@ -16,7 +16,7 @@ export default function MissionDetailHeader({
 }: MissionDetailHeaderProps) {
   return (
     <S.MissionDetailHeaderContainer
-      aria-label={`${title} 미션 상세페이지입니다. 관련 키워드는 ${hashTags.map(({ name }) => name).join(', ')}입니다.`}
+      aria-label={`${title} 미션 상세페이지입니다. 관련 키워드는 ${hashTags?.map(({ name }) => name).join(', ')}입니다.`}
     >
       <S.ThumbnailWrapper>
         <S.ThumbnailImg src={thumbnail} alt="" />

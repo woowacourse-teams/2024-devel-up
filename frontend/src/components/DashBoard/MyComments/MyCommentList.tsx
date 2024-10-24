@@ -4,8 +4,10 @@ import MyComment from './MyComment';
 import useMyComments from '@/hooks/useMyComments';
 import PageButtons from '@/components/common/PageButtons';
 import { usePagination } from '@/hooks/usePagination';
+import { useDashboardLayoutContext } from '@/pages/DashboardPage/DashBoardPageLayout';
 
 export default function MyCommentList() {
+  const { path } = useDashboardLayoutContext();
   const {
     currentPage,
     setTotalPages,
@@ -16,7 +18,9 @@ export default function MyCommentList() {
     hasPreviousGroup,
     hasNextGroup,
   } = usePagination();
+
   const { myComments, totalPage } = useMyComments({
+    path,
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);

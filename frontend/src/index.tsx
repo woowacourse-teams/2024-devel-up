@@ -4,7 +4,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import React, { lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
@@ -12,6 +12,7 @@ import { theme } from './styles/theme';
 import './styles/fonts.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import SpinnerSuspense from './components/common/SpinnerSuspense';
+import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -101,11 +102,11 @@ const routes = [
     path: `${ROUTES.missionDetail}/:id`,
     element: (
       <QueryErrorBoundary>
-        <App>
-          <SpinnerSuspense>
+        <Suspense fallback={<LoadingSpinner />}>
+          <App>
             <MissionDetailPage />
-          </SpinnerSuspense>
-        </App>
+          </App>
+        </Suspense>
       </QueryErrorBoundary>
     ),
   },
