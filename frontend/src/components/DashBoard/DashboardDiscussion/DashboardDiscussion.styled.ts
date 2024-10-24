@@ -4,6 +4,7 @@ import media from '@/styles/mediaQueries';
 
 export const HashTagWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 0.5rem;
 `;
 
@@ -12,6 +13,11 @@ export const HashTag = styled.span<{ $isTitle?: boolean }>`
   border-radius: 2rem;
   margin-right: 0.7rem;
   background-color: ${(props) => (props.$isTitle ? 'var(--danger-50)' : 'var(--primary-50)')};
+
+  ${media.medium`
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+    `}
 `;
 
 export const ImageWrapper = styled.div`
@@ -28,7 +34,7 @@ export const Image = styled.img`
 `;
 
 export const Container = styled.div`
-  width: 67.4rem;
+  width: 100%;
   height: 100%;
 
   ${media.medium`
@@ -46,11 +52,12 @@ export const DiscussionWrapper = styled(Link)`
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   cursor: pointer;
+  justify-content: space-between;
 
   ${media.medium`
   display: flex;
     flex-direction: column;
-    height: 15rem;
+    height: 100%;
     `}
 `;
 
@@ -74,12 +81,10 @@ export const ImageCommentWrapper = styled.div`
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 50rem;
 `;
 
 export const CommentText = styled.span`
   ${(props) => props.theme.font.body}
-  margin-bottom: 0.6rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -87,7 +92,8 @@ export const CommentText = styled.span`
 
 export const SubText = styled.span`
   ${(props) => props.theme.font.badge}
-  color : var(--grey-400)
+  color : var(--grey-400);
+  margin-bottom: 0.5rem;
 `;
 
 export const CommentCountText = styled(SubText)`

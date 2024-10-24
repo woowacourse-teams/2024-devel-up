@@ -5,8 +5,10 @@ import useSubmittedSolutions from '@/hooks/useSubmittedSolutions';
 import { formatDateString } from '@/utils/formatDateString';
 import { usePagination } from '@/hooks/usePagination';
 import PageButtons from '@/components/common/PageButtons';
+import { useDashboardLayoutContext } from '@/pages/DashboardPage/DashBoardPageLayout';
 
 export default function SubmittedSolutionList() {
+  const { path } = useDashboardLayoutContext();
   const {
     currentPage,
     setTotalPages,
@@ -25,6 +27,7 @@ export default function SubmittedSolutionList() {
   // });
 
   const { submittedSolutionList, totalPage } = useSubmittedSolutions({
+    path,
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);
