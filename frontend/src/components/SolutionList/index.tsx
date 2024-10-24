@@ -54,9 +54,9 @@ export default function SolutionList({ selectedMission, selectedHashTag }: Solut
   return (
     <>
       <SpinnerSuspense>
-        <S.SolutionList>
-          {solutionSummaries.length > 0 ? (
-            solutionSummaries.map(({ id, thumbnail, title, description, hashTags }) => (
+        {solutionSummaries.length > 0 ? (
+          <S.SolutionList>
+            {solutionSummaries.map(({ id, thumbnail, title, description, hashTags }) => (
               <S.SolutionItemWrapper key={id}>
                 <Link to={`${ROUTES.solutions}/${id}`} draggable={false}>
                   <InfoCard
@@ -69,11 +69,11 @@ export default function SolutionList({ selectedMission, selectedHashTag }: Solut
                   />
                 </Link>
               </S.SolutionItemWrapper>
-            ))
-          ) : (
-            <NoContentWithoutButton type="solution" />
-          )}
-        </S.SolutionList>
+            ))}
+          </S.SolutionList>
+        ) : (
+          <NoContentWithoutButton type="solution" />
+        )}
       </SpinnerSuspense>
 
       {solutionSummaries.length > 0 && (
