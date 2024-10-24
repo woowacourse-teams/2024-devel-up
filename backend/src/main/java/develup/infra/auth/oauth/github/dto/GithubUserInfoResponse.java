@@ -19,7 +19,7 @@ public record GithubUserInfoResponse(
                 id,
                 login,
                 avatarUrl,
-                email,
+                null,
                 name
         );
     }

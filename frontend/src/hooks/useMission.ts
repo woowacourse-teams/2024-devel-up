@@ -5,7 +5,7 @@ import { getMissionById } from '@/apis/missionAPI';
 
 const useMission = (id: number) => {
   return useSuspenseQuery<MissionWithDescription>({
-    queryKey: missionKeys.detail(id),
+    queryKey: missionKeys.detail(id, ''),
     queryFn: () => getMissionById(id),
   });
 };

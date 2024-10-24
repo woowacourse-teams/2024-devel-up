@@ -4,13 +4,14 @@ import { getSubmittedSolution } from '../apis/solutions';
 import { useEffect } from 'react';
 
 interface UseSubmittedSolutionsOptions {
+  path: string;
   page: number;
   onPageInfoUpdate?: (totalPage: number) => void;
 }
 
-const useSubmittedSolutions = ({ page, onPageInfoUpdate }: UseSubmittedSolutionsOptions) => {
+const useSubmittedSolutions = ({ path, page, onPageInfoUpdate }: UseSubmittedSolutionsOptions) => {
   const { data: submittedSolutionsResponse } = useSuspenseQuery({
-    queryKey: solutionKeys.submitted(page),
+    queryKey: solutionKeys.submitted(page, path),
     queryFn: () => getSubmittedSolution({ page: page.toString() }),
   });
 
