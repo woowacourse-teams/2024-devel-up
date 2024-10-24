@@ -7,12 +7,7 @@ import useMission from '@/hooks/useMission';
 
 export default function MissionDetailPage() {
   const { id } = useParams();
-  console.log('id: ', id);
   const { data: missionData } = useMission(Number(id));
-
-  console.log('missionData : ', missionData);
-
-  // console.log('missionData.hashTags : ', missionData.hashTags);
 
   return (
     <S.MissionDetailPageContainer>
