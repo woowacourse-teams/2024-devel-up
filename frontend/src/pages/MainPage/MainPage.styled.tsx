@@ -13,6 +13,7 @@ export const MissionListWrapper = styled.div`
   margin: 0 auto;
   padding: 0 1.5rem;
   max-width: 100rem;
+  width: 100%;
 `;
 
 export const MissionListTitle = styled.h2`

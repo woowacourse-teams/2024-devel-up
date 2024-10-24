@@ -4,13 +4,18 @@ import { dashboardKeys } from './queries/keys';
 import { useEffect } from 'react';
 
 interface UseDashboardDiscussionOptions {
+  path: string;
   page: number;
   onPageInfoUpdate?: (totalPage: number) => void;
 }
 
-const useDashboardDiscussion = ({ page, onPageInfoUpdate }: UseDashboardDiscussionOptions) => {
+const useDashboardDiscussion = ({
+  path,
+  page,
+  onPageInfoUpdate,
+}: UseDashboardDiscussionOptions) => {
   const { data: dashboardDiscussionResponse } = useSuspenseQuery({
-    queryKey: dashboardKeys.discussionComments(page),
+    queryKey: dashboardKeys.discussionComments(page, path),
     queryFn: () => getDashboardDiscussion({ page: page.toString() }),
   });
 

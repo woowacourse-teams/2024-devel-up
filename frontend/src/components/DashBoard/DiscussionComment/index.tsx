@@ -4,8 +4,11 @@ import * as S from '../MyComments/MyComments.styled';
 import useDashboardDiscussionComment from '@/hooks/useDashboardDiscussionComment';
 import { usePagination } from '@/hooks/usePagination';
 import PageButtons from '@/components/common/PageButtons';
+import { useDashboardLayoutContext } from '@/pages/DashboardPage/DashBoardPageLayout';
 
 export default function DiscussionCommentList() {
+  const { path } = useDashboardLayoutContext();
+
   const {
     currentPage,
     setTotalPages,
@@ -17,6 +20,7 @@ export default function DiscussionCommentList() {
     hasNextGroup,
   } = usePagination();
   const { discussionCommentList, totalPage } = useDashboardDiscussionComment({
+    path,
     page: currentPage,
     onPageInfoUpdate: (totalPagesFromServer) => {
       setTotalPages(totalPagesFromServer);

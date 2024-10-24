@@ -4,7 +4,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import React, { lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
@@ -12,6 +12,7 @@ import { theme } from './styles/theme';
 import './styles/fonts.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import SpinnerSuspense from './components/common/SpinnerSuspense';
+import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -101,11 +102,11 @@ const routes = [
     path: `${ROUTES.missionDetail}/:id`,
     element: (
       <QueryErrorBoundary>
-        <App>
-          <SpinnerSuspense>
+        <Suspense fallback={<LoadingSpinner />}>
+          <App>
             <MissionDetailPage />
-          </SpinnerSuspense>
-        </App>
+          </App>
+        </Suspense>
       </QueryErrorBoundary>
     ),
   },
@@ -283,40 +284,40 @@ export const router = createBrowserRouter(routes, {
   basename: ROUTES.main,
 });
 
-// async function enableMocking() {
-//   if (process.env.NODE_ENV !== 'development') {
-//     return;
-//   }
+async function enableMocking() {
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
 
-//   const { worker } = await import('./mocks/browser');
+  const { worker } = await import('./mocks/browser');
 
-//   // `worker.start()` returns a Promise that resolves
-//   // once the Service Worker is up and ready to intercept requests.
-//   return worker.start();
-// }
+  // `worker.start()` returns a Promise that resolves
+  // once the Service Worker is up and ready to intercept requests.
+  return worker.start();
+}
 
-// enableMocking().then(() => {
-//   root.render(
-//     <React.StrictMode>
-//       <QueryClientProvider client={queryClient}>
-//         <ThemeProvider theme={theme}>
-//           <ReactQueryDevtools initialIsOpen={false} />
-//           <GlobalStyle />
-//           <RouterProvider router={router} />
-//         </ThemeProvider>
-//       </QueryClientProvider>
-//     </React.StrictMode>,
-//   );
-// });
+enableMocking().then(() => {
+  root.render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <GlobalStyle />
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </React.StrictMode>,
+  );
+});
 
-root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools />
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </QueryClientProvider>
-  </React.StrictMode>,
-);
+// root.render(
+//   <React.StrictMode>
+//     <QueryClientProvider client={queryClient}>
+//       <ReactQueryDevtools />
+//       <ThemeProvider theme={theme}>
+//         <GlobalStyle />
+//         <RouterProvider router={router} />
+//       </ThemeProvider>
+//     </QueryClientProvider>
+//   </React.StrictMode>,
+// );
