@@ -42,7 +42,7 @@ export default function DashBoardDiscussionList() {
                 hashTags={discussion.hashTags}
                 title={discussion.title}
                 mission={discussion.mission}
-                imageUrl={discussion.member.imageUrl}
+                imageUrl={discussion.member?.imageUrl}
                 commentCount={discussion.commentCount}
                 createdAt={discussion.createdAt}
               />

@@ -14,8 +14,9 @@ const show = keyframes`
 export const DiscussionDetailPageContainer = styled.div`
   margin: 0 auto;
   width: fit-content;
-  padding-bottom: 10rem;
-  max-width: 100%;
+  padding: 0 1.6rem 10rem 1.6rem;
+  max-width: 100rem;
+  width: 100%;
 
   animation: ${show} 0.5s;
   transition: 0.5s;
