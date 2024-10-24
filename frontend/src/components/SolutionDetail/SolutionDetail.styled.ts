@@ -82,6 +82,7 @@ export const HeaderProfileImg = styled.img`
 
 export const Title = styled.h1`
   margin: 1rem 0;
+  word-break: break-all;
   ${(props) => props.theme.font.heading1}
   color: ${(props) => props.theme.colors.white};
 `;
