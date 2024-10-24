@@ -30,16 +30,16 @@ export default function DashBoardDiscussionList() {
 
   return (
     <>
-      {!discussionList.length ? (
+      {!discussionList?.length ? (
         <NoContent type="dashboardDiscussion" />
       ) : (
         <S.Container>
-          {discussionList.map((discussion) => {
+          {discussionList?.map((discussion) => {
             return (
               <DiscussionItem
                 key={discussion.id}
                 id={discussion.id}
-                hashTags={discussion.hashTags}
+                hashTags={discussion?.hashTags || []}
                 title={discussion.title}
                 mission={discussion.mission}
                 imageUrl={discussion.member?.imageUrl}

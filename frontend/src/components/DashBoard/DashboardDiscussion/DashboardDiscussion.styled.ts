@@ -81,6 +81,11 @@ export const ImageCommentWrapper = styled.div`
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 50rem;
+
+  ${media.medium`
+  width:18rem
+    `}
 `;
 
 export const CommentText = styled.span`
@@ -88,6 +93,7 @@ export const CommentText = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 80%;
 `;
 
 export const SubText = styled.span`

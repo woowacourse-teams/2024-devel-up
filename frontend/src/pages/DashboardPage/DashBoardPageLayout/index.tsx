@@ -1,7 +1,7 @@
 import { createContext, type PropsWithChildren, useContext, useEffect, useState } from 'react';
 import useUserInfo from '@/hooks/useUserInfo';
 import * as S from './DashBoardPageLayout.styled';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const PATH_INFO = [
   {
@@ -63,6 +63,11 @@ export default function DashboardPageLayout({ children }: PropsWithChildren) {
   const { data: userInfo } = useUserInfo();
   const currentPathText = PATH_INFO.find((item) => item.name === path);
 
+  const URL =
+    process.env.NODE_ENV === 'development'
+      ? 'https://dev.devel-up.co.kr'
+      : 'https://devel-up.co.kr';
+
   return (
     <S.Container>
       <S.ProfileAndCurrentPathWrapper>
@@ -78,9 +83,9 @@ export default function DashboardPageLayout({ children }: PropsWithChildren) {
             return (
               <S.LinkWrapper key={index}>
                 <S.Circle $isSelected={path.name === location.pathname} />
-                <Link to={path.name}>
+                <a href={`${URL}${path.name}`}>
                   <S.Path $isSelected={path.name === location.pathname}>{path.text}</S.Path>
-                </Link>
+                </a>
               </S.LinkWrapper>
             );
           })}
