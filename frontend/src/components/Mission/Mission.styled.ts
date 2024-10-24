@@ -7,7 +7,7 @@ export const MissionListContainer = styled.ul`
   column-gap: 5rem;
   row-gap: 3.6rem;
   margin: 0 auto;
-  margin-bottom: 10rem;
+  margin-bottom: 5rem;
   padding-top: 3rem;
   width: 100%;
 
@@ -20,6 +20,7 @@ export const MissionListContainer = styled.ul`
 export const MissionItemContainer = styled.article`
   width: 100%;
   max-width: 30rem;
+  min-width: 30rem;
   border-radius: 1rem;
   border: 1px solid ${(props) => props.theme.colors.grey200};
   cursor: pointer;
