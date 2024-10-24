@@ -105,4 +105,7 @@ export const Circle = styled.div<{ $isSelected: boolean }>`
 
 export const CurrentPathText = styled.div`
   ${(props) => props.theme.font.bodyBold}
+  ${media.medium`
+  margin-left : 2.6rem
+    `}
 `;
