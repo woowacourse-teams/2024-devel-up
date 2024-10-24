@@ -10,7 +10,6 @@ import type { SelectedMissionType } from '@/types/mission';
 import { usePagination } from '@/hooks/usePagination';
 import { HASHTAGS } from '@/constants/hashTags';
 import PageButtons from '@/components/common/PageButtons';
-import useDiscussions from '@/hooks/useDiscussions';
 import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function DiscussionListPage() {
@@ -41,14 +40,6 @@ export default function DiscussionListPage() {
     prevHashTagRef.current = selectedHashTag;
   }, [selectedMission, selectedHashTag, handleInitializePage]);
 
-  const { discussions } = useDiscussions({
-    mission: selectedMission?.title ?? HASHTAGS.all,
-    hashTag: selectedHashTag?.name ?? HASHTAGS.all,
-    page: currentPage,
-    onPageInfoUpdate: (totalPagesFromServer: number) => {
-      setTotalPages(totalPagesFromServer);
-    },
-  });
   const { data: allHashTags } = useHashTags();
 
   const { missions } = useMissions();
@@ -72,7 +63,14 @@ export default function DiscussionListPage() {
         />
       </S.TagListWrapper>
       <SpinnerSuspense>
-        <DiscussionListContent discussions={discussions} />
+        <DiscussionListContent
+          selectedMission={selectedMission?.title ?? HASHTAGS.all}
+          selectedHashTag={selectedHashTag?.name ?? HASHTAGS.all}
+          page={currentPage}
+          onPageInfoUpdate={(totalPagesFromServer: number) => {
+            setTotalPages(totalPagesFromServer);
+          }}
+        />
       </SpinnerSuspense>
       {totalPages > 0 && (
         <PageButtons
