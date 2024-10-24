@@ -13,13 +13,13 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayoutContextProvider>
-      {/* <PrivateRoute redirectTo={ROUTES.login}> */}
-      <DashboardPageLayout>
-        <SpinnerSuspense>
-          <Outlet />
-        </SpinnerSuspense>
-      </DashboardPageLayout>
-      {/* </PrivateRoute> */}
+      <PrivateRoute redirectTo={ROUTES.login}>
+        <DashboardPageLayout>
+          <SpinnerSuspense>
+            <Outlet />
+          </SpinnerSuspense>
+        </DashboardPageLayout>
+      </PrivateRoute>
     </DashboardLayoutContextProvider>
   );
 }
