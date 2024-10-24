@@ -11,9 +11,12 @@ interface MissionProps extends PropsWithChildren {
 export default function Mission({ id, type, children }: MissionProps) {
   // TODO 솔루션 상세 URL이 아직 정해져 있지 않아서 임시로 해놓습니다.
   const targeRoute = type === 'mission' ? '/missions/' : '/solutions/';
+  const URL = 'https://dev.devel-up.co.kr';
+  const LOCAL_HOST = 'http://localhost:3000';
   return (
     <S.MissionItemContainer>
-      <Link to={`${targeRoute}${id}`}>{children}</Link>
+      <a href={`${URL}${targeRoute}${id}`}>{children}</a>
+      {/* <Link to={`${targeRoute}${id}`}>{children}</Link> */}
     </S.MissionItemContainer>
   );
 }
