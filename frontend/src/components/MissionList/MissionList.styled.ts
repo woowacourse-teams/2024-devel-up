@@ -30,7 +30,7 @@ const show = keyframes`
 export const MissionList = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(12rem, 30rem));
-  justify-content: center;
+  justify-content: start;
   justify-items: center;
   row-gap: 3.6rem;
   column-gap: 2rem;
