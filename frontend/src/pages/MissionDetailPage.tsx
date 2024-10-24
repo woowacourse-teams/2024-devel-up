@@ -7,23 +7,28 @@ import useMission from '@/hooks/useMission';
 
 export default function MissionDetailPage() {
   const { id } = useParams();
+  console.log('id: ', id);
   const { data: missionData } = useMission(Number(id));
+
+  console.log('missionData : ', missionData);
+
+  // console.log('missionData.hashTags : ', missionData.hashTags);
 
   return (
     <S.MissionDetailPageContainer>
       <S.MissionDetailInnerWrapper>
         <MissionDetailHeader
-          title={missionData.title}
-          thumbnail={missionData.thumbnail}
-          language={missionData.language}
-          hashTags={missionData.hashTags}
+          title={missionData?.title}
+          thumbnail={missionData?.thumbnail}
+          language={missionData?.language}
+          hashTags={missionData?.hashTags || []}
         />
         <MissionDetailButtons
-          id={Number(missionData.id)}
-          missionUrl={missionData.url}
-          isStarted={missionData.isStarted}
+          id={Number(missionData?.id)}
+          missionUrl={missionData?.url}
+          isStarted={missionData?.isStarted}
         />
-        <MissionDetailContent description={missionData.description} />
+        <MissionDetailContent description={missionData?.description} />
       </S.MissionDetailInnerWrapper>
     </S.MissionDetailPageContainer>
   );

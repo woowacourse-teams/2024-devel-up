@@ -22,7 +22,7 @@ const useSubmitSolutionMutation = ({
     mutationFn: postSolutionSubmit,
     onSuccess: ({ id }) => {
       onSuccessCallback();
-      queryClient.invalidateQueries({ queryKey: missionKeys.detail(missionId) });
+      queryClient.invalidateQueries({ queryKey: missionKeys.detail(missionId, '') });
       queryClient.invalidateQueries({ queryKey: solutionKeys.summaries });
       navigate(ROUTES.solutions + `/${id}`);
     },
