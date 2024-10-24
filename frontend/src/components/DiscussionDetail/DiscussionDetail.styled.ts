@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const DiscussionDetailHeaderContainer = styled.div`
-  width: 100rem;
-
   display: flex;
   flex-direction: column;
   position: relative;
