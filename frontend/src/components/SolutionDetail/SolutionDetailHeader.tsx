@@ -18,32 +18,30 @@ export default function SolutionDetailHeader({ solution }: SolutionDetailHeaderP
 
   return (
     <S.SolutionDetailHeaderContainer
+      $url={mission.thumbnail}
       aria-label={`풀이 게시글 제목 ${title}, 작성자 ${member.name}`}
     >
-      <S.ThumbnailWrapper>
-        <S.ThumbnailImg src={mission.thumbnail} alt="" />
-        <S.GradientOverlay />
-        <S.HeaderLeftArea>
-          <TagButton variant="danger" onClick={navigateToMission}>
-            # {mission.title}
-          </TagButton>
-          <S.Title>{title}</S.Title>
-          <S.HeaderLeftAreaInnerWrapper>
-            <S.HeaderUserInfo>
-              <S.HeaderProfileImg src={member.imageUrl} alt="" />
-              <S.HeaderUserName>{member.name}</S.HeaderUserName>
-            </S.HeaderUserInfo>
-            <S.HashTagWrapper>
-              {mission.hashTags &&
-                mission.hashTags.map((tag) => (
-                  <li key={tag.id}>
-                    <TagButton isClickable={false}># {tag.name}</TagButton>
-                  </li>
-                ))}
-            </S.HashTagWrapper>
-          </S.HeaderLeftAreaInnerWrapper>
-        </S.HeaderLeftArea>
-      </S.ThumbnailWrapper>
+      <S.GradientOverlay />
+      <S.HeaderLeftArea>
+        <TagButton variant="danger" onClick={navigateToMission}>
+          # {mission.title}
+        </TagButton>
+        <S.Title>{title}</S.Title>
+        <S.HeaderLeftAreaInnerWrapper>
+          <S.HeaderUserInfo>
+            <S.HeaderProfileImg src={member.imageUrl} alt="" />
+            <S.HeaderUserName>{member.name}</S.HeaderUserName>
+          </S.HeaderUserInfo>
+          <S.HashTagWrapper>
+            {mission.hashTags &&
+              mission.hashTags.map((tag) => (
+                <li key={tag.id}>
+                  <TagButton isClickable={false}># {tag.name}</TagButton>
+                </li>
+              ))}
+          </S.HashTagWrapper>
+        </S.HeaderLeftAreaInnerWrapper>
+      </S.HeaderLeftArea>
     </S.SolutionDetailHeaderContainer>
   );
 }
