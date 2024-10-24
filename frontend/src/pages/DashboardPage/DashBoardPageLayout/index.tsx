@@ -1,7 +1,7 @@
 import { createContext, type PropsWithChildren, useContext, useEffect, useState } from 'react';
 import useUserInfo from '@/hooks/useUserInfo';
 import * as S from './DashBoardPageLayout.styled';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const PATH_INFO = [
   {
