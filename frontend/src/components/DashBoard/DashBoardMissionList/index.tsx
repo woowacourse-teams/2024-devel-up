@@ -26,8 +26,6 @@ export default function DashBoardMissionList() {
     },
   });
 
-  console.log('missionList : ', missionList);
-
   return (
     <>
       {!missionList?.length ? (
