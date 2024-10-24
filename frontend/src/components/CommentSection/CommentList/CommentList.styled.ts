@@ -85,6 +85,7 @@ export const CommentContentWrapper = styled.div`
 
 export const CommentReplySectionContainer = styled.section`
   margin-left: 6.2rem;
+  margin-bottom: 2rem;
 `;
 
 export const CommentReplyFormWrapper = styled.div`
