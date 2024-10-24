@@ -6,7 +6,7 @@ import { formatDateString } from '@/utils/formatDateString';
 interface DiscussionItemProps {
   id: number;
   mission: string;
-  hashTags: HashTag[];
+  hashTags?: HashTag[];
   title: string;
   imageUrl: string;
   commentCount: number;
@@ -27,9 +27,10 @@ export default function DiscussionItem({
       <S.TextWrapper>
         <S.HashTagWrapper>
           {mission && <S.HashTag $isTitle>{mission}</S.HashTag>}
-          {hashTags.map((hashTag) => {
-            return <S.HashTag key={hashTag.id}>{hashTag.name}</S.HashTag>;
-          })}
+          {hashTags &&
+            hashTags.map((hashTag) => {
+              return <S.HashTag key={hashTag.id}>{hashTag.name}</S.HashTag>;
+            })}
         </S.HashTagWrapper>
         <S.CommentText>{title}</S.CommentText>
         <S.SubText>{formatDateString(createdAt)}</S.SubText>

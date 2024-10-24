@@ -10,7 +10,6 @@ export const Container = styled.div`
   width: 100rem;
 
   ${media.large`
-  width: 80rem;
     padding: 3rem 0;
     gap: 3rem;
   `}
