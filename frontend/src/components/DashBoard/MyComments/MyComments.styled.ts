@@ -1,9 +1,14 @@
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
+import media from '@/styles/mediaQueries';
 
 export const Container = styled.div`
   width: 67.4rem;
   height: 100%;
+
+  ${media.medium`
+  width: 100%;
+    `}
 `;
 
 export const CommentWrapper = styled(Link)`
@@ -29,6 +34,11 @@ export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 54rem;
+
+  ${media.medium`
+  width: 28rem;
+    min-width: 0;
+    `}
 `;
 
 export const CommentText = styled.span`

@@ -6,7 +6,7 @@
 
 export const missionKeys = {
   all: ['missions'],
-  detail: (id: number) => [...missionKeys.all, id],
+  detail: (id: number, path: string) => [...missionKeys.all, id, path],
   inProgress: ['inProgress'],
 } as const;
 
@@ -24,7 +24,7 @@ export const solutionKeys = {
   all: ['solutions'],
   detail: (id: number) => [...solutionKeys.all, id],
   summaries: ['solutionSummaries'],
-  submitted: ['submitted solutions'],
+  submitted: (page: number, path: string) => ['submitted solutions', page, path],
 };
 
 export const discussionKeys = {
@@ -47,6 +47,18 @@ export const discussionsKeys = {
 export const dashboardKeys = {
   default: ['dashboard'],
   discussions: () => [...dashboardKeys.default, 'discussions'],
-  discussionComments: () => [...dashboardKeys.default, 'discussion', 'comments'],
-  solutionComments: () => [...dashboardKeys.default, 'solution', 'comments'],
+  discussionComments: (page: number, path: string) => [
+    ...dashboardKeys.default,
+    'discussion',
+    'comments',
+    page,
+    path,
+  ],
+  solutionComments: (page: number, path: string) => [
+    ...dashboardKeys.default,
+    'solution',
+    'comments',
+    page,
+    path,
+  ],
 } as const;

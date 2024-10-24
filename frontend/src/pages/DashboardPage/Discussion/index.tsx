@@ -1,8 +1,10 @@
-import useDashboardDiscussion from '@/hooks/useDashboardDiscussion';
 import DashBoardDiscussionList from '@/components/DashBoard/DashboardDiscussion';
+import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function DashboardDiscussionPage() {
-  const { data: discussionList } = useDashboardDiscussion();
-
-  return <DashBoardDiscussionList discussionList={discussionList} />;
+  return (
+    <SpinnerSuspense>
+      <DashBoardDiscussionList />
+    </SpinnerSuspense>
+  );
 }

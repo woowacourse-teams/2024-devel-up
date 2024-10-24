@@ -13,27 +13,40 @@ import dashboardDiscussions from './dashboardDiscussion.json';
 import dashboardDiscussionComments from './dashboardDiscussionComment.json';
 
 export const handlers = [
-  http.get(`${API_URL}${PATH.missionList}`, ({ request }) => {
+  http.get(`https://dev.api.devel-up.co.kr/missions`, ({ request }) => {
     const url = new URL(request.url);
+    // const size = url.searchParams.get('size');
+    const page = url.searchParams.get('page');
+
     const hashTag = url.searchParams.get('hashTag');
     if (hashTag === HASHTAGS.all) {
-      return HttpResponse.json({ data: missions });
+      return HttpResponse.json({ data: missions, currentPage: Number(page) || 1, totalPage: 10 });
     }
 
     const filteredMissions = missions.filter((mission) => mission.hashTags[0].name === hashTag);
 
-    return HttpResponse.json({ data: filteredMissions });
+    const response = {
+      data: filteredMissions,
+      currentPage: Number(page) || 1,
+      totalPage: 10,
+    };
+
+    return HttpResponse.json(response);
   }),
 
   http.get(`${API_URL}${PATH.mySolutions}`, () => {
     return HttpResponse.json({
       data: submittedSolutions,
+      currentPage: 1,
+      totalPage: 10,
     });
   }),
 
   http.get(`${API_URL}${PATH.missionInProgress}`, () => {
     return HttpResponse.json({
       data: missionInProgress,
+      currentPage: 0,
+      totalPage: 10,
     });
   }),
 
@@ -96,7 +109,10 @@ export const handlers = [
   }),
 
   http.get(`${API_URL}${PATH.solutions}`, () => {
-    return HttpResponse.json({ data: mockSolutions }, { status: 200 });
+    return HttpResponse.json(
+      { data: mockSolutions, currentPage: 1, totalPage: 10 },
+      { status: 200 },
+    );
   }),
 
   http.patch(`${API_URL}${PATH.solutions}`, async ({ request }) => {
@@ -124,7 +140,10 @@ export const handlers = [
   }),
 
   http.get(`${API_URL}${PATH.discussions}`, () => {
-    return HttpResponse.json({ data: mockDiscussions }, { status: 200 });
+    return HttpResponse.json(
+      { data: mockDiscussions, currentPage: 1, totalPage: 10 },
+      { status: 200 },
+    );
   }),
 
   http.get(`${API_URL}${PATH.discussions}/:id`, () => {

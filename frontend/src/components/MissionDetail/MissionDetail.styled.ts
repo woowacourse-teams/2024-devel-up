@@ -7,7 +7,7 @@ import SanitizedMDPreview from '../common/SanitizedMDPreview';
 
 // MissionDetailHeader
 
-export const MissionDetailHeaderContainer = styled.div`
+export const MissionDetailHeaderContainer = styled.header`
   width: 100%;
   height: 20rem;
   margin: 0 auto;
@@ -39,9 +39,9 @@ export const GradientOverlay = styled.div`
 `;
 
 export const Title = styled.h1`
-  position: absolute;
+  /* position: absolute;
   left: 2.1rem;
-  bottom: 2.4rem;
+  bottom: 2.4rem; */
   ${(props) => props.theme.font.heading1}
   color: ${(props) => props.theme.colors.white};
 `;
@@ -54,9 +54,10 @@ export const HashTagWrapper = styled.ul`
   justify-content: center;
   gap: 1.1rem;
 
-  position: absolute;
+  white-space: wrap;
+  /* position: absolute;
   right: 2.1rem;
-  bottom: 2.4rem;
+  bottom: 2.4rem; */
 `;
 
 // MissionDetailButtons
@@ -67,7 +68,7 @@ export const MissionDetailButtonsContainer = styled.div`
   align-items: center;
 `;
 
-export const InfoMsgWrapper = styled.div`
+export const InfoMsgWrapper = styled.button`
   display: flex;
   gap: 0.4rem;
   align-items: center;
@@ -92,6 +93,7 @@ export const ButtonWrapper = styled.div`
   gap: 0.8rem;
   width: 100%;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 export const GithubIcon = styled(githubLogo)`
@@ -136,7 +138,7 @@ export const SubmitButton = styled.button`
 
 // MissionDetailContent
 
-export const MissionDescription = styled.div`
+export const MissionDescription = styled.section`
   width: 100%;
   padding: 2rem;
 

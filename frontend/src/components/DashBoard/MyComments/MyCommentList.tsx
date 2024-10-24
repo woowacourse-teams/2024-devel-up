@@ -1,20 +1,39 @@
-import type { MyComments } from '@/types';
 import * as S from './MyComments.styled';
 import NoContent from '../DashBoardMissionList/NoContent';
 import MyComment from './MyComment';
+import useMyComments from '@/hooks/useMyComments';
+import PageButtons from '@/components/common/PageButtons';
+import { usePagination } from '@/hooks/usePagination';
+import { useDashboardLayoutContext } from '@/pages/DashboardPage/DashBoardPageLayout';
 
-interface MyCommentListProps {
-  comments: MyComments[];
-}
+export default function MyCommentList() {
+  const { path } = useDashboardLayoutContext();
+  const {
+    currentPage,
+    setTotalPages,
+    goToPage,
+    goToPreviousGroup,
+    goToNextGroup,
+    pageNumbers,
+    hasPreviousGroup,
+    hasNextGroup,
+  } = usePagination();
 
-export default function MyCommentList({ comments }: MyCommentListProps) {
+  const { myComments, totalPage } = useMyComments({
+    path,
+    page: currentPage,
+    onPageInfoUpdate: (totalPagesFromServer) => {
+      setTotalPages(totalPagesFromServer);
+    },
+  });
+
   return (
     <>
-      {!comments.length ? (
+      {!myComments.length ? (
         <NoContent type="comments" />
       ) : (
         <S.Container>
-          {comments.map((comment) => {
+          {myComments.map((comment) => {
             return (
               <MyComment
                 key={comment.id}
@@ -28,6 +47,18 @@ export default function MyCommentList({ comments }: MyCommentListProps) {
             );
           })}
         </S.Container>
+      )}
+
+      {totalPage > 0 && (
+        <PageButtons
+          goToNextGroup={goToNextGroup}
+          goToPage={goToPage}
+          goToPreviousGroup={goToPreviousGroup}
+          pageNumbers={pageNumbers}
+          hasPreviousGroup={hasPreviousGroup}
+          hasNextGroup={hasNextGroup}
+          currentPage={currentPage}
+        />
       )}
     </>
   );

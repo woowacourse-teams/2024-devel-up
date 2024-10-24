@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import CommentCount from '@/assets/images/comment-count.svg';
+import media from '@/styles/mediaQueries';
 
 // Content
 
@@ -26,20 +27,28 @@ export const ItemContainer = styled.div`
   &:hover {
     transform: scale(1.01);
   }
+
+  ${media.small`
+      padding: 1.4rem 2rem;
+    `}
 `;
 
 export const BadgeWrapper = styled.div`
   display: flex;
   gap: 0.7rem;
+  flex-wrap: wrap;
 `;
 
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  flex: 1;
 `;
 
 export const Title = styled.p`
+  width: 100%;
+  word-break: break-all;
   color: ${(props) => props.theme.colors.black};
   ${(props) => props.theme.font.body}
 `;
@@ -55,6 +64,7 @@ export const ItemRight = styled.div`
   align-items: center;
   gap: 1.7rem;
   width: 10.5rem;
+  margin: 0 1rem;
 
   color: ${(props) => props.theme.colors.grey400};
   ${(props) => props.theme.font.caption};

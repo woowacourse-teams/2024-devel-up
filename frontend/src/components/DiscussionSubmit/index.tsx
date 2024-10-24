@@ -22,14 +22,15 @@ export default function DiscussionSubmit() {
 
   const { data: discussion } = useDiscussion(discussionId);
   const { data: allHashTags } = useHashTags();
-  const { data: allMissions } = useMissions();
-  const { data: userInfo } = useUserInfo();
-  const { discussionPatchMutation } = useUpdateDiscussion(discussionId);
-
   const [selectedHashTags, setSelectedHashTags] = useState<HashTag[]>([]);
   const [selectedMission, setSelectedMission] = useState<{ id: number; title: string } | null>(
     null,
   );
+
+  const { missions } = useMissions();
+
+  const { data: userInfo } = useUserInfo();
+  const { discussionPatchMutation } = useUpdateDiscussion(discussionId);
 
   const hashTagIds = selectedHashTags.map((tag) => tag.id);
   const useSubmitDiscussionData = {
@@ -41,7 +42,10 @@ export default function DiscussionSubmit() {
     description,
     discussionTitle,
     isDiscussionTitleError,
+    isValidDiscussionTitle,
+    // isValidDescription,
     handleDiscussionTitle,
+    handleMarkDownDescription,
     isDescriptionError,
     handleDescription,
     handleSubmitDiscussion,
@@ -94,7 +98,7 @@ export default function DiscussionSubmit() {
     <S.DiscussionSubmitContainer>
       <S.DiscussionTagListWrapper>
         <TagList
-          tags={allMissions}
+          tags={missions}
           selectedTag={selectedMission}
           setSelectedTag={setSelectedMission}
           variant="danger"
@@ -110,21 +114,22 @@ export default function DiscussionSubmit() {
         />
       </S.DiscussionTagListWrapper>
 
-      <form onSubmit={handleFormSubmit}>
-        <DiscussionTitle
-          value={discussionTitle}
-          onChange={handleDiscussionTitle}
-          danger={isDiscussionTitleError}
-        />
-        <DiscussionDescription
-          value={description}
-          danger={isDescriptionError}
-          dangerMessage={ERROR_MESSAGE.no_content}
-          onChange={handleDescription}
-          placeholder="내용을 입력해 주세요."
-        />
-        <SubmitButton />
-      </form>
+      <section>
+        <form onSubmit={handleFormSubmit}>
+          <DiscussionTitle
+            value={discussionTitle}
+            onChange={handleDiscussionTitle}
+            danger={isDiscussionTitleError || !isValidDiscussionTitle}
+          />
+          <DiscussionDescription
+            value={description}
+            danger={isDescriptionError}
+            dangerMessage={ERROR_MESSAGE.no_content}
+            onChange={handleMarkDownDescription}
+          />
+          <SubmitButton />
+        </form>
+      </section>
     </S.DiscussionSubmitContainer>
   );
 }

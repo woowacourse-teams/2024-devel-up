@@ -1,28 +1,64 @@
 import DiscussionListContent from '@/components/DiscussionList/DiscussionListContent';
 import * as S from './DiscussionListPage.styled';
 import DiscussionListHeader from '@/components/DiscussionList/DiscussionListHeader';
-import { useState } from 'react';
-import useDiscussions from '@/hooks/useDiscussions';
+import { useState, useEffect, useRef } from 'react';
 import TagList from '@/components/common/TagList';
 import useHashTags from '@/hooks/useHashTags';
 import type { HashTag } from '@/types';
 import useMissions from '@/hooks/useMissions';
 import type { SelectedMissionType } from '@/types/mission';
+import { usePagination } from '@/hooks/usePagination';
+import { HASHTAGS } from '@/constants/hashTags';
+import PageButtons from '@/components/common/PageButtons';
+import useDiscussions from '@/hooks/useDiscussions';
+import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function DiscussionListPage() {
   const [selectedMission, setSelectedMission] = useState<SelectedMissionType | null>(null);
   const [selectedHashTag, setSelectedHashTag] = useState<HashTag | null>(null);
+  const {
+    currentPage,
+    setTotalPages,
+    totalPages,
+    goToPage,
+    goToPreviousGroup,
+    goToNextGroup,
+    pageNumbers,
+    hasPreviousGroup,
+    hasNextGroup,
+    handleInitializePage,
+  } = usePagination();
 
-  const { data: discussions } = useDiscussions(selectedMission?.title, selectedHashTag?.name);
+  const prevMissionRef = useRef(selectedMission);
+  const prevHashTagRef = useRef(selectedHashTag);
+
+  useEffect(() => {
+    if (prevMissionRef.current !== selectedMission || prevHashTagRef.current !== selectedHashTag) {
+      handleInitializePage();
+    }
+
+    prevMissionRef.current = selectedMission;
+    prevHashTagRef.current = selectedHashTag;
+  }, [selectedMission, selectedHashTag, handleInitializePage]);
+
+  const { discussions } = useDiscussions({
+    mission: selectedMission?.title ?? HASHTAGS.all,
+    hashTag: selectedHashTag?.name ?? HASHTAGS.all,
+    page: currentPage,
+    onPageInfoUpdate: (totalPagesFromServer: number) => {
+      setTotalPages(totalPagesFromServer);
+    },
+  });
   const { data: allHashTags } = useHashTags();
-  const { data: allMissions } = useMissions();
+
+  const { missions } = useMissions();
 
   return (
     <S.DiscussionListPageContainer>
       <DiscussionListHeader />
       <S.TagListWrapper>
         <TagList
-          tags={allMissions}
+          tags={missions}
           setSelectedTag={setSelectedMission}
           selectedTag={selectedMission}
           keyName="title"
@@ -35,7 +71,20 @@ export default function DiscussionListPage() {
           keyName="name"
         />
       </S.TagListWrapper>
-      <DiscussionListContent discussions={discussions} />
+      <SpinnerSuspense>
+        <DiscussionListContent discussions={discussions} />
+      </SpinnerSuspense>
+      {totalPages > 0 && (
+        <PageButtons
+          goToNextGroup={goToNextGroup}
+          goToPage={goToPage}
+          goToPreviousGroup={goToPreviousGroup}
+          pageNumbers={pageNumbers}
+          hasPreviousGroup={hasPreviousGroup}
+          hasNextGroup={hasNextGroup}
+          currentPage={currentPage}
+        />
+      )}
     </S.DiscussionListPageContainer>
   );
 }

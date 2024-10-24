@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import type { BadgeVariant } from '.';
 import type { DefaultTheme } from 'styled-components/dist/types';
+import media from '@/styles/mediaQueries';
 
 interface BadgeContainerProps {
   $variant: BadgeVariant;
@@ -33,4 +34,11 @@ export const BadgeContainer = styled.div<BadgeContainerProps>`
   padding: 0.4rem 0.8rem;
   border-radius: 0.4rem;
   white-space: nowrap;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  ${media.small`
+      max-width: 10rem;
+    `}
 `;

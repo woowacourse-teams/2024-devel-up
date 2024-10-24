@@ -22,6 +22,7 @@ export const CommentButton = styled.button`
 export const StartFromRight = styled.div`
   display: flex;
   flex-direction: row-reverse;
+  margin-bottom: 1rem;
 `;
 
 export const MDEditor = styled(MarkdownEditor)`

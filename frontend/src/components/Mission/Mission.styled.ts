@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import media from '@/styles/mediaQueries';
 
 export const MissionListContainer = styled.ul`
   display: grid;
@@ -6,17 +7,24 @@ export const MissionListContainer = styled.ul`
   column-gap: 5rem;
   row-gap: 3.6rem;
   margin: 0 auto;
-  margin-bottom: 10rem;
+  margin-bottom: 5rem;
   padding-top: 3rem;
   width: 100%;
+
+  ${media.medium`
+  grid-template-columns: repeat(1, 1fr);
+    padding: 1.6rem;
+    `}
 `;
 
 export const MissionItemContainer = styled.article`
   width: 100%;
   max-width: 30rem;
+  min-width: 30rem;
   border-radius: 1rem;
   border: 1px solid ${(props) => props.theme.colors.grey200};
   cursor: pointer;
+  margin: 0 auto;
 `;
 
 export const MissionThumbnailImg = styled.img`
@@ -29,6 +37,8 @@ export const MissionThumbnailImg = styled.img`
 
 export const MissionInfoWrapper = styled.div`
   padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const MissionDescription = styled.div`
@@ -42,13 +52,17 @@ export const MissionTitle = styled.p`
   ${(props) => props.theme.font.bodyBold}
   color: black;
   margin-bottom: 1.7rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const MissionSummary = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: inline-block;
   height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   ${(props) => props.theme.font.body}
   color: ${(props) => props.theme.colors.grey500};
 `;
@@ -74,7 +88,7 @@ export const MissionHashTagWrapper = styled.div`
 `;
 
 export const MissionHashTag = styled.span`
-  background: ${(props) => props.theme.colors.primary100};
+  background: ${(props) => props.theme.colors.primary50};
   border-radius: 0.8rem;
   padding: 0.4rem 0.8rem;
   text-align: center;

@@ -1,7 +1,7 @@
 import SanitizedMDPreview from '@/components/common/SanitizedMDPreview';
 import styled from 'styled-components';
 
-export const CommentListContainer = styled.div`
+export const CommentListContainer = styled.ul`
   margin: 3rem 0;
 `;
 
@@ -85,6 +85,7 @@ export const CommentContentWrapper = styled.div`
 
 export const CommentReplySectionContainer = styled.section`
   margin-left: 6.2rem;
+  margin-bottom: 2rem;
 `;
 
 export const CommentReplyFormWrapper = styled.div`

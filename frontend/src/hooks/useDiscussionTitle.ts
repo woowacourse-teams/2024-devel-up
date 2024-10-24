@@ -6,8 +6,7 @@ const MAX_DISCUSSION_TITLE_LENGTH = 50;
 const useDiscussionTitle = () => {
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [isDiscussionTitleError, setIsDiscussionTitleError] = useState(false);
-  const isValidDiscussionTitle =
-    discussionTitle.length && discussionTitle.length < MAX_DISCUSSION_TITLE_LENGTH;
+  const isValidDiscussionTitle = discussionTitle.length < MAX_DISCUSSION_TITLE_LENGTH;
 
   const handleDiscussionTitle = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

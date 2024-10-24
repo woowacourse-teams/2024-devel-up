@@ -1,3 +1,4 @@
+import media from '@/styles/mediaQueries';
 import styled, { keyframes } from 'styled-components';
 
 export const MissionListContainer = styled.div`
@@ -5,6 +6,7 @@ export const MissionListContainer = styled.div`
   flex-direction: column;
   gap: 5rem;
   margin: 0 auto;
+  padding: 0 1.5rem;
   margin-bottom: 10rem;
   padding-top: 6rem;
   width: fit-content;
@@ -25,16 +27,25 @@ const show = keyframes`
   }
 `;
 
-export const MissionList = styled.div`
-  flex-wrap: wrap;
-
-  display: flex;
-  width: 100rem;
-  column-gap: 5rem;
+export const MissionList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 30rem));
+  justify-content: center;
+  justify-items: center;
   row-gap: 3.6rem;
+  column-gap: 2rem;
 
   animation: ${show} 0.5s;
   transition: 0.5s;
+
+  ${media.medium`
+    justify-content: center;
+    column-gap: 3rem;
+    `}
+`;
+
+export const MissionItemWrapper = styled.li`
+  max-width: 30rem;
 `;
 
 export const MissionItemContainer = styled.article`

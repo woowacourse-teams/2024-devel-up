@@ -1,8 +1,10 @@
-import useMissionInProgress from '@/hooks/useMissionInProgress';
 import DashBoardMissionList from '@/components/DashBoard/DashBoardMissionList';
+import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function DashBoardMissionInProgressPage() {
-  const { data: missionListInProgress } = useMissionInProgress();
-
-  return <DashBoardMissionList missionList={missionListInProgress} />;
+  return (
+    <SpinnerSuspense>
+      <DashBoardMissionList />
+    </SpinnerSuspense>
+  );
 }

@@ -3,6 +3,7 @@ package develup.domain.discussion;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -21,12 +22,15 @@ import develup.support.data.DiscussionTestData;
 import develup.support.data.HashTagTestData;
 import develup.support.data.MemberTestData;
 import develup.support.data.MissionTestData;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
-public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
+class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
 
     @Autowired
     private DiscussionRepository discussionRepository;
@@ -46,6 +50,36 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
     @Autowired
     private HashTagRepository hashTagRepository;
 
+    @Autowired
+    private EntityManager entityManager;
+
+    @Test
+    @DisplayName("디스커션 목록 조회 시 연관관계가 모두 조회된다.")
+    @Transactional
+    void findAllDiscussionWithRelations() {
+        HashTag java = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        HashTag oop = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("OOP").build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().build());
+
+        createDiscussion(mission, List.of(java, oop));
+        createDiscussion(mission, List.of(oop, java));
+        createDiscussion(null, List.of(oop));
+        createDiscussion(mission, Collections.emptyList());
+        createDiscussion(null, List.of(java));
+
+        List<Discussion> actual = discussionRepositoryCustom.findAllByMissionAndHashTagNameOrderByDesc(
+                "all",
+                "JAVA"
+        );
+
+        assertAll(
+                () -> assertThat(actual).hasSize(3),
+                () -> assertThat(actual.get(2).getHashTags()).containsExactly(java, oop),
+                () -> assertThat(actual.get(1).getHashTags()).containsExactly(oop, java),
+                () -> assertThat(actual.get(0).getHashTags()).containsExactly(java)
+        );
+    }
+
     @Test
     @DisplayName("디스커션 목록을 조회할 수 있다.")
     @Transactional
@@ -59,7 +93,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         createDiscussion(mission, Collections.emptyList());
         createDiscussion(null, Collections.emptyList());
 
-        List<Discussion> actual = discussionRepositoryCustom.findAllByMissionAndHashTagName(
+        List<Discussion> actual = discussionRepositoryCustom.findAllByMissionAndHashTagNameOrderByDesc(
                 "all",
                 "all"
         );
@@ -77,7 +111,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         createDiscussion(mission, List.of(hashTag1));
         createDiscussion(mission, List.of(hashTag2));
 
-        List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagName(
+        List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagNameOrderByDesc(
                 "all",
                 "JAVA"
         );
@@ -99,7 +133,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         createDiscussion(mission1, List.of(hashTag));
         createDiscussion(mission2, List.of(hashTag));
 
-        List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagName(
+        List<Discussion> discussions = discussionRepositoryCustom.findAllByMissionAndHashTagNameOrderByDesc(
                 "루터회관 흡연단속",
                 "all"
         );
@@ -107,6 +141,55 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         assertThat(discussions)
                 .map(Discussion::getMission)
                 .contains(mission1);
+    }
+
+    @Test
+    @DisplayName("페이지네이션을 통해서 디스커션들을 조회할 수 있다.")
+    @Transactional
+    void findAllDiscussionWithPagination() {
+        HashTag hashTag1 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("JAVA").build());
+        HashTag hashTag2 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("객체지향").build());
+        HashTag hashTag3 = hashTagRepository.save(HashTagTestData.defaultHashTag().withName("스프링").build());
+
+        Mission mission1 = missionRepository.save(MissionTestData.defaultMission()
+                .withTitle("미션 1")
+                .withHashTags(List.of(hashTag1, hashTag2)).build());
+        Mission mission2 = missionRepository.save(MissionTestData.defaultMission()
+                .withTitle("미션 2")
+                .withHashTags(List.of(hashTag1, hashTag2, hashTag3)).build());
+        Mission mission3 = missionRepository.save(MissionTestData.defaultMission()
+                .withTitle("미션 3")
+                .withHashTags(List.of(hashTag2, hashTag3)).build());
+
+        Discussion discussion1 = createDiscussion(mission1, List.of(hashTag1, hashTag2));
+        createDiscussion(mission2, List.of(hashTag1, hashTag2, hashTag3));
+        createDiscussion(mission3, List.of(hashTag2, hashTag3));
+        Discussion discussion2 = createDiscussion(mission1, List.of(hashTag1, hashTag2));
+        createDiscussion(mission2, List.of(hashTag3));
+        createDiscussion(mission3, List.of(hashTag2, hashTag3));
+        Discussion discussion3 = createDiscussion(mission1, List.of(hashTag1, hashTag2));
+        createDiscussion(mission2, List.of(hashTag1, hashTag2, hashTag3));
+        createDiscussion(mission3, List.of(hashTag1, hashTag3));
+        createDiscussion(mission1, List.of(hashTag1, hashTag3));
+        Discussion discussion4 = createDiscussion(mission1, List.of(hashTag1, hashTag2));
+        createDiscussion(mission1, List.of(hashTag3));
+
+        Page<Discussion> page0 = discussionRepositoryCustom.findAllByMissionAndHashTagNameOrderByDesc(
+                "미션 1",
+                "객체지향",
+                PageRequest.of(0, 3)
+        );
+        Page<Discussion> page1 = discussionRepositoryCustom.findAllByMissionAndHashTagNameOrderByDesc(
+                "미션 1",
+                "객체지향",
+                PageRequest.of(1, 3)
+        );
+
+        assertAll(
+                () -> assertThat(page0.getTotalPages()).isEqualTo(2),
+                () -> assertThat(page0.getContent()).containsExactly(discussion4, discussion3, discussion2),
+                () -> assertThat(page1).containsExactly(discussion1)
+        );
     }
 
     @Test
@@ -260,7 +343,54 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
         assertThat(count).isEqualTo(1);
     }
 
-    private void createDiscussion(Mission mission, List<HashTag> hashTags) {
+    @Test
+    @DisplayName("pageable 기반으로 사용자의 디스커션을 id 역순으로 조회한다.")
+    @Transactional
+    void pageDescMemberDiscussion() {
+        Member member = memberRepository.save(MemberTestData.defaultMember().build());
+        HashTag hashTag = hashTagRepository.save(HashTagTestData.defaultHashTag().build());
+        Mission mission = missionRepository.save(MissionTestData.defaultMission().withHashTags(List.of(hashTag)).build());
+
+        int pageSize = 5;
+        List<Long> expectedFirstPageIds = new ArrayList<>();
+        List<Long> expectedSecondPageIds = new ArrayList<>();
+        for (int i = 0; i < pageSize; i++) {
+            // 정렬 조건이 DESC 반대로 넣어줘야한다.
+            expectedSecondPageIds.add(getSavedDiscussion(mission, member, hashTag).getId());
+        }
+        for (int i = 0; i < pageSize; i++) {
+            expectedFirstPageIds.add(getSavedDiscussion(mission, member, hashTag).getId());
+        }
+
+        entityManager.clear();
+
+        PageRequest firstPageRequest = PageRequest.of(0, pageSize);
+        PageRequest secondPageRequest = PageRequest.of(1, pageSize);
+        PageRequest thirdPageRequest = PageRequest.of(2, pageSize);
+        Page<Discussion> firstResult = discussionRepositoryCustom
+                .findPageByMemberIdOrderByDesc(member.getId(), firstPageRequest);
+        Page<Discussion> secondResult = discussionRepositoryCustom
+                .findPageByMemberIdOrderByDesc(member.getId(), secondPageRequest);
+        Page<Discussion> thirdResult = discussionRepositoryCustom
+                .findPageByMemberIdOrderByDesc(member.getId(), thirdPageRequest);
+
+        List<Long> firstPageIds = firstResult
+                .getContent().stream()
+                .map(Discussion::getId)
+                .toList();
+        List<Long> secondPageIds = secondResult
+                .getContent().stream()
+                .map(Discussion::getId)
+                .toList();
+
+        assertAll(
+                () -> assertThat(firstPageIds).containsAll(expectedFirstPageIds),
+                () -> assertThat(secondPageIds).containsAll(expectedSecondPageIds),
+                () -> assertThat(thirdResult.getContent()).isEmpty()
+        );
+    }
+
+    private Discussion createDiscussion(Mission mission, List<HashTag> hashTags) {
         Member member = memberRepository.save(MemberTestData.defaultMember().build());
 
         Discussion discussion = DiscussionTestData.defaultDiscussion()
@@ -269,7 +399,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
                 .withHashTags(hashTags)
                 .build();
 
-        discussionRepository.save(discussion);
+        return discussionRepository.save(discussion);
     }
 
     private Discussion getSavedDiscussion(Mission mission, Member member, HashTag hashTag) {
@@ -278,6 +408,7 @@ public class DiscussionRepositoryCustomTest extends IntegrationTestSupport {
                 .withMember(member)
                 .withHashTags(List.of(hashTag))
                 .build();
+
         return discussionRepository.save(discussion);
     }
 

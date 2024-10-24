@@ -5,13 +5,14 @@ import GlobalStyle from './styles/GlobalStyle';
 import { ROUTES } from './constants/routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
-import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import QueryErrorBoundary from './components/common/Error/QueryErrorBoundary';
 import * as Sentry from '@sentry/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import './styles/fonts.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import SpinnerSuspense from './components/common/SpinnerSuspense';
+import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -76,9 +77,9 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <MainPage />
-          </Suspense>
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -88,11 +89,11 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
-            <PrivateRoute redirectTo={ROUTES.login}>
-              <MissionSubmitPage />
-            </PrivateRoute>
-          </Suspense>
+          <SpinnerSuspense>
+            {/* <PrivateRoute redirectTo={ROUTES.login}> */}
+            <MissionSubmitPage />
+            {/* </PrivateRoute> */}
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -101,11 +102,11 @@ const routes = [
     path: `${ROUTES.missionDetail}/:id`,
     element: (
       <QueryErrorBoundary>
-        <App>
-          <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<LoadingSpinner />}>
+          <App>
             <MissionDetailPage />
-          </Suspense>
-        </App>
+          </App>
+        </Suspense>
       </QueryErrorBoundary>
     ),
   },
@@ -114,11 +115,11 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <PrivateRoute redirectTo={ROUTES.login}>
               <UserProfilePage />
             </PrivateRoute>
-          </Suspense>
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -138,9 +139,9 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <MissionListPage />
-          </Suspense>
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -150,9 +151,9 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <SolutionListPage />
-          </Suspense>
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -162,9 +163,9 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <DashboardPage />
-          </Suspense>
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -172,41 +173,41 @@ const routes = [
       {
         path: ROUTES.dashboardMissionInProgress,
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <DashBoardMissionInProgressPage />
-          </Suspense>
+          </SpinnerSuspense>
         ),
       },
       {
         path: ROUTES.dashboardSubmittedSolution,
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <SubmittedSolutionList />
-          </Suspense>
+          </SpinnerSuspense>
         ),
       },
       {
         path: ROUTES.dashboardComments,
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <MyCommentsPage />
-          </Suspense>
+          </SpinnerSuspense>
         ),
       },
       {
         path: ROUTES.dashboardDiscussions,
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <DashboardDiscussionPage />
-          </Suspense>
+          </SpinnerSuspense>
         ),
       },
       {
         path: ROUTES.dashboardDiscussionComments,
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <DashboardDiscussionCommentPage />
-          </Suspense>
+          </SpinnerSuspense>
         ),
       },
     ],
@@ -216,9 +217,9 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <SolutionDetailPage />
-          </Suspense>
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -228,9 +229,9 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <DiscussionDetailPage />
-          </Suspense>
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -240,11 +241,11 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
-            <PrivateRoute redirectTo={ROUTES.login}>
-              <DiscussionSubmitPage />
-            </PrivateRoute>
-          </Suspense>
+          <SpinnerSuspense>
+            {/* <PrivateRoute redirectTo={ROUTES.login}> */}
+            <DiscussionSubmitPage />
+            {/* </PrivateRoute> */}
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -254,9 +255,9 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <DiscussionListPage />
-          </Suspense>
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -266,9 +267,9 @@ const routes = [
     element: (
       <QueryErrorBoundary>
         <App>
-          <Suspense fallback={<LoadingSpinner />}>
+          <SpinnerSuspense>
             <NeedToLoginPage />
-          </Suspense>
+          </SpinnerSuspense>
         </App>
       </QueryErrorBoundary>
     ),
@@ -283,17 +284,17 @@ export const router = createBrowserRouter(routes, {
   basename: ROUTES.main,
 });
 
-// async function enableMocking() {
-//   if (process.env.NODE_ENV !== 'development') {
-//     return;
-//   }
+async function enableMocking() {
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
 
-//   const { worker } = await import('./mocks/browser');
+  const { worker } = await import('./mocks/browser');
 
-//   // `worker.start()` returns a Promise that resolves
-//   // once the Service Worker is up and ready to intercept requests.
-//   return worker.start();
-// }
+  // `worker.start()` returns a Promise that resolves
+  // once the Service Worker is up and ready to intercept requests.
+  return worker.start();
+}
 
 // enableMocking().then(() => {
 //   root.render(

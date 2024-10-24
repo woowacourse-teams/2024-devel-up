@@ -1,4 +1,4 @@
-import * as S from './SolutionSection.styled';
+import * as S from './SolutionDetail.styled';
 import { ROUTES } from '@/constants/routes';
 import Modal from '@/components/common/Modal/Modal';
 import ConfirmButtons from '@/components/ModalContent/ConfirmButtons';

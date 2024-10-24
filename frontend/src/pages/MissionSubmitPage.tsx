@@ -1,4 +1,3 @@
-import MissionImage from '@/components/MissionSubmit/MissionThumbnail';
 import * as S from './MissionSubmitPage.styled';
 import SubmitBanner from '@/components/MissionSubmit/SubmitBanner';
 import PRLink from '@/components/MissionSubmit/PRLink';
@@ -7,7 +6,7 @@ import SubmitButton from '@/components/MissionSubmit/SubmitButton';
 import SubmitSuccessPopUp from '@/components/PopUp/SubmitSuccessPopUp';
 import { useParams, useSearchParams } from 'react-router-dom';
 import useMission from '@/hooks/useMission';
-import { PROGRESS_MESSAGE } from '@/constants/messages';
+import { ERROR_MESSAGE } from '@/constants/messages';
 import useSubmitSolution from '@/hooks/useSubmitSolution';
 import LoadingSpinner from '@/components/common/LoadingSpinner/LoadingSpinner';
 import MissionTitle from '@/components/MissionSubmit/MissionTitle';
@@ -33,6 +32,7 @@ export default function MissionSubmitPage() {
     url,
     description,
     handleDescription,
+    handleMarkDownDescription,
     handleUrl,
     handleSubmitSolution,
     handleSolutionTitle,
@@ -42,6 +42,9 @@ export default function MissionSubmitPage() {
     isDescriptionError,
     isSolutionTitleError,
     isSubmitSolutionError,
+    // isValidUrl,
+    // isValidDescription,
+    isValidSolutionTitle,
     // isMatchedMissionName,
   } = useSubmitSolution({ missionId, missionName });
 
@@ -82,33 +85,29 @@ export default function MissionSubmitPage() {
   return (
     <S.Container>
       {isPending && <LoadingSpinner />}
-      <SubmitBanner />
-      <MissionImage
-        thumbnail={mission.thumbnail}
-        title={mission.title}
-        language={mission.language}
-      />
-      <form onSubmit={handleFormSubmit}>
-        <MissionTitle
-          value={solutionTitle}
-          onChange={handleSolutionTitle}
-          danger={isSolutionTitleError}
-        />
-        <PRLink
-          value={url}
-          onChange={handleUrl}
-          missionId={missionId}
-          // danger={isUrlError || !isMatchedMissionName}
-          danger={isUrlError || isSubmitSolutionError}
-        />
-        <OneWord
-          danger={isDescriptionError}
-          value={description ?? ''}
-          onChange={handleDescription}
-          placeholder={PROGRESS_MESSAGE.solution_description}
-        />
-        <SubmitButton />
-      </form>
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <SubmitBanner mission={mission} />
+        <form onSubmit={handleFormSubmit}>
+          <MissionTitle
+            value={solutionTitle}
+            onChange={handleSolutionTitle}
+            danger={isSolutionTitleError || !isValidSolutionTitle}
+          />
+          <PRLink
+            value={url}
+            onChange={handleUrl}
+            missionId={missionId}
+            danger={isUrlError || isSubmitSolutionError}
+          />
+          <OneWord
+            danger={isDescriptionError}
+            dangerMessage={ERROR_MESSAGE.no_content}
+            value={description ?? ''}
+            onChange={handleMarkDownDescription}
+          />
+          <SubmitButton />
+        </form>
+      </div>
 
       <SubmitSuccessPopUp isModalOpen={isModalOpen} thumbnail={mission.thumbnail} />
     </S.Container>

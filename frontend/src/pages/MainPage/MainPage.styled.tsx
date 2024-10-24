@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 
-export const MainPageContainer = styled.div`
+export const MainPageContainer = styled.section`
   display: flex;
   flex-direction: column;
   margin-bottom: 10rem;
+  width: 100%;
 `;
 
 export const MissionListWrapper = styled.div`
-  width: fit-content;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  padding: 0 1.5rem;
+  max-width: 100rem;
+  width: 100%;
 `;
 
 export const MissionListTitle = styled.h2`

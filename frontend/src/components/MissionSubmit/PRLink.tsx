@@ -13,8 +13,9 @@ interface PRLinkProps {
 export default function PRLink({ missionId, value, onChange, danger }: PRLinkProps) {
   return (
     <S.Container>
-      <S.Title>Github PR 링크</S.Title>
+      <S.Title htmlFor="prLink">Github PR 링크</S.Title>
       <Input
+        id="prLink"
         width="xlarge"
         danger={danger}
         dangerMessage={ERROR_MESSAGE.invalid_pr}

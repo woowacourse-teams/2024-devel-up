@@ -1,7 +1,7 @@
-import type { PropsWithChildren } from 'react';
+import { createContext, type PropsWithChildren, useContext, useEffect, useState } from 'react';
 import useUserInfo from '@/hooks/useUserInfo';
 import * as S from './DashBoardPageLayout.styled';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const PATH_INFO = [
   {
@@ -26,10 +26,47 @@ const PATH_INFO = [
   },
 ];
 
-export default function DashboardPageLayout({ children }: PropsWithChildren) {
-  const { data: userInfo } = useUserInfo();
+interface DashboardLayoutContextValue {
+  path: string;
+  setPath: (path: string) => void;
+}
+
+const DashboardLayoutContext = createContext<DashboardLayoutContextValue | null>(null);
+
+export const useDashboardLayoutContext = () => {
+  const context = useContext(DashboardLayoutContext);
+
+  if (!context) {
+    throw new Error('');
+  }
+
+  return context;
+};
+
+export const DashboardLayoutContextProvider = ({ children }: PropsWithChildren) => {
+  const [path, setPath] = useState('');
   const location = useLocation();
-  const currentPathText = PATH_INFO.find((path) => path.name === location.pathname);
+
+  useEffect(() => {
+    setPath(location.pathname);
+  }, [location.pathname]);
+
+  return (
+    <DashboardLayoutContext.Provider value={{ path, setPath }}>
+      {children}
+    </DashboardLayoutContext.Provider>
+  );
+};
+
+export default function DashboardPageLayout({ children }: PropsWithChildren) {
+  const { path } = useDashboardLayoutContext();
+  const { data: userInfo } = useUserInfo();
+  const currentPathText = PATH_INFO.find((item) => item.name === path);
+
+  const URL =
+    process.env.NODE_ENV === 'development'
+      ? 'https://dev.devel-up.co.kr'
+      : 'https://devel-up.co.kr';
 
   return (
     <S.Container>
@@ -46,9 +83,9 @@ export default function DashboardPageLayout({ children }: PropsWithChildren) {
             return (
               <S.LinkWrapper key={index}>
                 <S.Circle $isSelected={path.name === location.pathname} />
-                <Link to={path.name}>
+                <a href={`${URL}${path.name}`}>
                   <S.Path $isSelected={path.name === location.pathname}>{path.text}</S.Path>
-                </Link>
+                </a>
               </S.LinkWrapper>
             );
           })}

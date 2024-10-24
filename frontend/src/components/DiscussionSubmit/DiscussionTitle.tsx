@@ -12,8 +12,9 @@ interface DiscussionTitleProps {
 export default function DiscussionTitle({ danger, value, onChange }: DiscussionTitleProps) {
   return (
     <S.DiscussionTitleContainer>
-      <S.DiscussionTitle>제목</S.DiscussionTitle>
+      <S.DiscussionTitle htmlFor="title">제목</S.DiscussionTitle>
       <Input
+        id="title"
         width="xlarge"
         danger={danger}
         dangerMessage={ERROR_MESSAGE.invalid_title}

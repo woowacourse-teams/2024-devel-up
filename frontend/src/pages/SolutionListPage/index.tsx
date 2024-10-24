@@ -6,13 +6,14 @@ import { useState } from 'react';
 import SolutionList from '@/components/SolutionList';
 import type { SelectedMissionType } from '@/types/mission';
 import useMissions from '@/hooks/useMissions';
+import SpinnerSuspense from '@/components/common/SpinnerSuspense';
 
 export default function SolutionListPage() {
   const [selectedMission, setSelectedMission] = useState<SelectedMissionType | null>(null);
   const [selectedHashTag, setSelectedHashTag] = useState<{ id: number; name: string } | null>(null);
 
   const { data: allHashTags } = useHashTags();
-  const { data: allMissions } = useMissions();
+  const { missions } = useMissions();
 
   return (
     <S.SolutionListPageContainer>
@@ -21,7 +22,7 @@ export default function SolutionListPage() {
         <S.Subtitle>다른 사람이 푼 풀이도 확인해보세요!</S.Subtitle>
       </S.TitleWrapper>
       <TagList
-        tags={allMissions}
+        tags={missions}
         setSelectedTag={setSelectedMission}
         selectedTag={selectedMission}
         keyName="title"
@@ -33,7 +34,9 @@ export default function SolutionListPage() {
         selectedTag={selectedHashTag}
         keyName="name"
       />
-      <SolutionList selectedMission={selectedMission} selectedHashTag={selectedHashTag} />
+      <SpinnerSuspense>
+        <SolutionList selectedMission={selectedMission} selectedHashTag={selectedHashTag} />
+      </SpinnerSuspense>
     </S.SolutionListPageContainer>
   );
 }

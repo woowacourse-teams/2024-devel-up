@@ -1,8 +1,10 @@
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
+import media from '@/styles/mediaQueries';
 
 export const HashTagWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 0.5rem;
 `;
 
@@ -11,6 +13,11 @@ export const HashTag = styled.span<{ $isTitle?: boolean }>`
   border-radius: 2rem;
   margin-right: 0.7rem;
   background-color: ${(props) => (props.$isTitle ? 'var(--danger-50)' : 'var(--primary-50)')};
+
+  ${media.medium`
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+    `}
 `;
 
 export const ImageWrapper = styled.div`
@@ -27,8 +34,12 @@ export const Image = styled.img`
 `;
 
 export const Container = styled.div`
-  width: 67.4rem;
+  width: 100%;
   height: 100%;
+
+  ${media.medium`
+      padding: 0 6rem;
+    `}
 `;
 
 export const DiscussionWrapper = styled(Link)`
@@ -41,6 +52,13 @@ export const DiscussionWrapper = styled(Link)`
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   cursor: pointer;
+  justify-content: space-between;
+
+  ${media.medium`
+  display: flex;
+    flex-direction: column;
+    height: 100%;
+    `}
 `;
 
 export const CommentCountWrapper = styled.div`
@@ -54,25 +72,34 @@ export const ImageCommentWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${media.medium`
+  justify-content: end;
+    `}
 `;
 
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 50rem;
+  width: 50rem;
+
+  ${media.medium`
+  width:18rem
+    `}
 `;
 
 export const CommentText = styled.span`
   ${(props) => props.theme.font.body}
-  margin-bottom: 0.6rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 80%;
 `;
 
 export const SubText = styled.span`
   ${(props) => props.theme.font.badge}
-  color : var(--grey-400)
+  color : var(--grey-400);
+  margin-bottom: 0.5rem;
 `;
 
 export const CommentCountText = styled(SubText)`

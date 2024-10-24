@@ -1,8 +1,8 @@
 import * as S from './DiscussionList.styled';
 import DiscussionListItem from './DiscussionListItem';
 import { Link } from 'react-router-dom';
-import type { Discussion } from '@/types';
 import NoContentWithoutButton from '../common/NoContent/NoContentWithoutButton';
+import type { Discussion } from '@/types';
 
 interface DiscussionListContentProps {
   discussions: Discussion[];
