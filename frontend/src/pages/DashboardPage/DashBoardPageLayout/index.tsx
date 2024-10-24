@@ -1,4 +1,4 @@
-import type { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { createContext, type PropsWithChildren, useContext, useEffect, useState } from 'react';
 import useUserInfo from '@/hooks/useUserInfo';
 import * as S from './DashBoardPageLayout.styled';
 import { Link, useLocation } from 'react-router-dom';
