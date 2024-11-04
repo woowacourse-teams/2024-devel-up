@@ -19,37 +19,37 @@
 
 <br/>
 
-### [서비스 바로가기](https://www.devel-up.co.kr/)
+### [Devel Up 바로가기](https://www.devel-up.co.kr/)
 
 <br/>
 
-![1](/image/github1.png)
-![2](/image/github2.png)
-![3](/image/github3.png)
-![4](/image/github4.png)
-![5](/image/github5.png)
-![6](/image/github6.png)
+![github1](https://github.com/user-attachments/assets/329eb4ec-8d5c-4f73-93c9-bdca475dedb2)
+![github3](https://github.com/user-attachments/assets/82ec6c77-756d-4525-bd6f-6581f9f81243)
+![github2](https://github.com/user-attachments/assets/237f8b74-51eb-4fc6-bc96-5a6627115467)
+![github4](https://github.com/user-attachments/assets/ab68e53e-8c19-42a4-aff7-7ad6822f0dfb)
+![github5](https://github.com/user-attachments/assets/d20dc3be-21db-442d-8a60-8fe0691c41f0)
+![github6](https://github.com/user-attachments/assets/72b45dc6-673c-4630-9772-a65c658a7ccf)
 
 
 ## 기술 스택
 
 ### Frontend
-![프론트엔드 기술 스택](/image/skills_frontend.png)
+![skills_frontend](https://github.com/user-attachments/assets/cd84c89b-0c55-442d-8547-1fb38e9ea304)
 
 ### Backend
-![백엔드 기술 스택](/image/skills_backend.png)
+![skills_backend](https://github.com/user-attachments/assets/72e7ea20-4679-4d8d-aadd-029404a10702)
 
 ## CI/CD 파이프라인
 
 ### Frontend CI/CD
-![프론트엔드 CI/CD](/image/frontend_cicd.png)
+![프론트엔드 CI/CD](https://github.com/user-attachments/assets/955be8c0-b6a1-4a9c-940a-0651dd7ffa7d)
 
 ### Backend CI/CD
-![백엔드 CI/CD](/image/backend_cicd.png)
+![백엔드 CI/CD](https://github.com/user-attachments/assets/7fdf5fa3-768c-431e-a906-b74a252b1209)
 
 ## 서비스 아키텍처
 
-![서비스 아키텍처](/image/service_arch.png)
+![서비스 아키텍처](https://github.com/user-attachments/assets/db3dbc45-cf94-4673-be4b-993957643071)
 
 
 ## 👤멤버들
@@ -76,4 +76,4 @@
 [구름 깃허브]: https://github.com/alstn113
 
 
-### [서비스 바로가기](https://www.devel-up.co.kr/)
+### [Devel Up 바로가기](https://www.devel-up.co.kr/)
