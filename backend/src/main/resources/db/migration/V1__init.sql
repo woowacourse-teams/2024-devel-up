@@ -30,10 +30,12 @@ CREATE TABLE IF NOT EXISTS discussion (
     CONSTRAINT fk_mission FOREIGN KEY (mission_id) REFERENCES mission(id)
 );
 
+SET FOREIGN_KEY_CHECKS = 0;
 ALTER TABLE discussion DROP FOREIGN KEY fk_member;
 ALTER TABLE discussion DROP FOREIGN KEY fk_mission;
 ALTER TABLE discussion ADD CONSTRAINT fk_discussion_member FOREIGN KEY (member_id) REFERENCES member(id);
 ALTER TABLE discussion ADD CONSTRAINT fk_discussion_mission FOREIGN KEY (mission_id) REFERENCES mission(id);
+SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE discussion_comment (
     id BIGINT AUTO_INCREMENT,
