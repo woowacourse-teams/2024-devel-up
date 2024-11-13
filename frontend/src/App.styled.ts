@@ -6,7 +6,7 @@ export const Container = styled.div`
 
 export const SkipTag = styled.a`
   opacity: 0;
-  position: fixed;
+  position: absolute;
 
   &:focus {
     opacity: 1;
