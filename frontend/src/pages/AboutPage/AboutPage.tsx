@@ -20,7 +20,7 @@ export default function AboutPage() {
   });
 
   const handleScrollDown = () => {
-    const nextIndex = (visibleIndex ?? 0) + 1;
+    const nextIndex = visibleIndex ?? 0;
     if (nextIndex < componentRefs.length && componentRefs[nextIndex].current) {
       componentRefs[nextIndex].current.scrollIntoView({ behavior: 'smooth' });
     }
