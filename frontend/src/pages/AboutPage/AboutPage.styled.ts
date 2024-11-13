@@ -156,7 +156,7 @@ export const ComponentContainer = styled.figure<{ $isVisible: boolean }>`
 
   max-width: 120rem;
   width: 89rem;
-  height: fit-content;
+  height: 100vh;
   padding-top: 2rem;
 
   background-color: ${(props) => props.theme.colors.white};
@@ -238,7 +238,7 @@ export const DiscussionImg = styled(Discussion)`
 // 다른 개발자들의 풀이 코드 제공 (Solution)
 
 export const SolutionImg = styled(VSCodeSolution)`
-  width: 82rem;
+  width: 75rem;
   height: fit-content;
 
   ${media.landingMedium`
