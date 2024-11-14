@@ -2,43 +2,41 @@ import { useState, useEffect, type RefObject } from 'react';
 
 interface UseScrollComponentOptions {
   threshold?: number;
-  index: number;
 }
 
 export const useScrollComponent = (
-  ref: RefObject<HTMLElement>,
-  { threshold = 0.5, index }: UseScrollComponentOptions,
+  refs: RefObject<HTMLOptionElement>[],
+  { threshold = 0.5 }: UseScrollComponentOptions,
 ) => {
-  const [isVisible, setIsVisible] = useState(false);
-  // const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [visibleIndex, setVisibleIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            // setCurrentIndex(index);
-          } else {
-            setIsVisible(false);
+          const index = refs.findIndex((ref) => ref.current === entry.target);
+          if (entry.isIntersecting && index !== -1) {
+            setVisibleIndex(index);
           }
         });
       },
-      {
-        threshold,
-      },
+      { threshold },
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    refs.forEach((ref) => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      refs.forEach((ref) => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      });
     };
-  }, [ref, threshold, index]);
+  }, [refs, threshold]);
 
-  return { isVisible };
+  return { visibleIndex };
 };
