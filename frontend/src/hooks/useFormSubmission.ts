@@ -15,7 +15,6 @@ export const useFormSubmission = <T>({
   patchMutation,
   props,
 }: FormSubmissionParams<T>) => {
-  console.log(isEditMode);
   const handleEditSubmit = useCallback(() => {
     patchMutation({
       ...props,
