@@ -3,7 +3,7 @@ import DiscussionTitle from './DiscussionTitle';
 import DiscussionDescription from './DiscussionDescription';
 import SubmitButton from '../MissionSubmit/SubmitButton';
 import useHashTags from '@/hooks/useHashTags';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useMissions from '@/hooks/useMissions';
 import TagMultipleList from '../common/TagMultipleList';
 import type { HashTag } from '@/types';
@@ -43,7 +43,6 @@ export default function DiscussionSubmit() {
     discussionTitle,
     isDiscussionTitleError,
     isValidDiscussionTitle,
-    // isValidDescription,
     handleDiscussionTitle,
     handleMarkDownDescription,
     isDescriptionError,
@@ -59,40 +58,69 @@ export default function DiscussionSubmit() {
     member,
   } = discussion;
 
-  useEffect(() => {
-    if (isEditMode && member.id === userInfo?.id) {
-      if (inputTitle)
-        handleDiscussionTitle({
-          target: { value: inputTitle },
-        } as React.ChangeEvent<HTMLInputElement>);
-      if (inputContent)
-        handleDescription({
-          target: { value: inputContent },
-        } as React.ChangeEvent<HTMLTextAreaElement>);
-      if (inputMission)
-        setSelectedMission({
-          id: inputMission.id,
-          title: inputMission.title,
-        });
-      if (inputHashTags) setSelectedHashTags(inputHashTags);
+  // 초기 데이터 설정 함수
+  const initializeFormValues = useCallback(() => {
+    if (!isEditMode || member.id !== userInfo?.id) return;
+
+    if (inputTitle) {
+      handleDiscussionTitle({
+        target: { value: inputTitle },
+      } as React.ChangeEvent<HTMLInputElement>);
+    }
+
+    if (inputContent) {
+      handleDescription({
+        target: { value: inputContent },
+      } as React.ChangeEvent<HTMLTextAreaElement>);
+    }
+
+    if (inputMission) {
+      setSelectedMission({
+        id: inputMission.id,
+        title: inputMission.title,
+      });
+    }
+
+    if (inputHashTags) {
+      setSelectedHashTags(inputHashTags);
     }
   }, [isEditMode, inputTitle, inputContent, inputMission, inputHashTags, member.id, userInfo?.id]);
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    initializeFormValues();
+  }, [initializeFormValues]);
 
-    if (isEditMode && discussionId) {
-      discussionPatchMutation({
-        discussionId,
-        title: discussionTitle,
-        content: description,
-        missionId: selectedMission?.id,
-        hashTagIds: selectedHashTags.map((hashTag) => hashTag.id),
-      });
-    } else {
-      handleSubmitDiscussion(e);
-    }
-  };
+  // 수정 모드 제출 함수
+  const handleEditSubmit = useCallback(() => {
+    discussionPatchMutation({
+      discussionId,
+      title: discussionTitle,
+      content: description,
+      missionId: selectedMission?.id,
+      hashTagIds,
+    });
+  }, [
+    discussionId,
+    discussionPatchMutation,
+    discussionTitle,
+    description,
+    selectedMission?.id,
+    hashTagIds,
+  ]);
+
+  // 폼 제출 핸들러
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (isEditMode && discussionId) {
+        handleEditSubmit();
+      } else {
+        handleSubmitDiscussion(e);
+      }
+    },
+    [isEditMode, handleEditSubmit, handleSubmitDiscussion],
+  );
 
   return (
     <S.DiscussionSubmitContainer>

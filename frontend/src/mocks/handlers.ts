@@ -146,9 +146,11 @@ export const handlers = [
     );
   }),
 
-  http.get(`${API_URL}${PATH.discussions}/:id`, () => {
-    // id가 1번인 discussion만 리턴하도록 할게요
-    return HttpResponse.json({ data: mockDiscussion }, { status: 200 });
+  http.get(`${API_URL}${PATH.discussions}/:id`, ({ request }) => {
+    const url = new URL(request.url);
+    const id = Number(url.pathname.split('/').pop());
+
+    return HttpResponse.json({ data: mockDiscussion[id - 1] }, { status: 200 });
   }),
 
   http.patch(`${API_URL}${PATH.discussions}`, async ({ request }) => {
@@ -160,7 +162,8 @@ export const handlers = [
       hashTagIds: number[];
     };
 
-    mockDiscussion.content = content;
+    mockDiscussion[discussionId - 1].title = title;
+    mockDiscussion[discussionId - 1].content = content;
 
     const discussionIndex = mockDiscussions.findIndex(
       (discussion) => discussion.id === discussionId,
@@ -234,6 +237,39 @@ export const handlers = [
       mockSolutions.push(newSolution);
 
       return HttpResponse.json({ data: newSolution }, { status: 201 });
+    } catch (error) {
+      return HttpResponse.json({ message: 'Invalid data' }, { status: 400 });
+    }
+  }),
+
+  http.post(`${API_URL}${PATH.submitDiscussion}`, async ({ request }) => {
+    try {
+      const { title, content, missionId, hashTagIds } = (await request.json()) as {
+        title: string;
+        content: string;
+        missionId?: number;
+        hashTagIds: number[];
+      };
+
+      const newDiscussion = {
+        id: mockDiscussions.length + 1,
+        title,
+        content,
+        mission: '단어 퍼즐 게임',
+        hashTags: [],
+        member: {
+          id: 1,
+          email: 'test@example.com',
+          name: 'test',
+          imageUrl: 'sample.com',
+        },
+        commentCount: 10,
+        createdAt: '2024-11-08T16:33:56.081285',
+      };
+
+      mockDiscussions.push(newDiscussion);
+
+      return HttpResponse.json({ data: newDiscussion }, { status: 201 });
     } catch (error) {
       return HttpResponse.json({ message: 'Invalid data' }, { status: 400 });
     }
