@@ -11,7 +11,7 @@ import useSubmitSolution from '@/hooks/useSubmitSolution';
 import LoadingSpinner from '@/components/common/LoadingSpinner/LoadingSpinner';
 import MissionTitle from '@/components/MissionSubmit/MissionTitle';
 import useUserInfo from '@/hooks/useUserInfo';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useUpdateSolution } from '@/hooks/useUpdateSolution';
 import useSolution from '@/hooks/useSolution';
 
@@ -42,50 +42,62 @@ export default function MissionSubmitPage() {
     isDescriptionError,
     isSolutionTitleError,
     isSubmitSolutionError,
-    // isValidUrl,
-    // isValidDescription,
     isValidSolutionTitle,
-    // isMatchedMissionName,
   } = useSubmitSolution({ missionId, missionName });
 
   const { title: inputTitle, url: inputUrl, description: inputDescription, member } = solution;
   const isEditMode = !!solutionId;
 
-  // 글을 수정하는 경우 input의 초기값을 해당 값으로 변경
+  // 초기값 설정 함수
+  const setInitialInputValues = useCallback(() => {
+    if (!isEditMode || member?.id !== userInfo?.id) return;
+
+    if (inputTitle) {
+      handleSolutionTitle({ target: { value: inputTitle } } as React.ChangeEvent<HTMLInputElement>);
+    }
+    if (inputDescription) {
+      handleDescription({
+        target: { value: inputDescription },
+      } as React.ChangeEvent<HTMLTextAreaElement>);
+    }
+    if (inputUrl) {
+      handleUrl({ target: { value: inputUrl } } as React.ChangeEvent<HTMLInputElement>);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode, member?.id, userInfo?.id, inputTitle, inputDescription, inputUrl]);
+
   useEffect(() => {
-    if (isEditMode && member?.id === userInfo?.id) {
-      if (inputTitle)
-        handleSolutionTitle({
-          target: { value: inputTitle },
-        } as React.ChangeEvent<HTMLInputElement>);
-      if (inputDescription)
-        handleDescription({
-          target: { value: inputDescription },
-        } as React.ChangeEvent<HTMLTextAreaElement>);
-      if (inputUrl)
-        handleUrl({ target: { value: inputUrl } } as React.ChangeEvent<HTMLInputElement>);
-    }
-  }, [isEditMode, inputTitle, inputDescription, inputUrl, member?.id, userInfo?.id]);
+    setInitialInputValues();
+  }, [setInitialInputValues]);
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // 수정 모드에서의 제출 처리
+  const handleEditSubmit = useCallback(() => {
+    solutionPatchMutation({
+      solutionId,
+      title: solutionTitle,
+      description,
+      url,
+    });
+  }, [solutionId, solutionPatchMutation, solutionTitle, description, url]);
 
-    if (isEditMode && solutionId) {
-      solutionPatchMutation({
-        solutionId,
-        title: solutionTitle,
-        description,
-        url,
-      });
-    } else {
-      handleSubmitSolution(e);
-    }
-  };
+  // 제출 처리
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (isEditMode && solutionId) {
+        handleEditSubmit();
+      } else {
+        handleSubmitSolution(e);
+      }
+    },
+    [isEditMode, handleEditSubmit, handleSubmitSolution, solutionId],
+  );
 
   return (
     <S.Container>
       {isPending && <LoadingSpinner />}
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <S.Wrapper>
         <SubmitBanner mission={mission} />
         <form onSubmit={handleFormSubmit}>
           <MissionTitle
@@ -107,7 +119,7 @@ export default function MissionSubmitPage() {
           />
           <SubmitButton />
         </form>
-      </div>
+      </S.Wrapper>
 
       <SubmitSuccessPopUp isModalOpen={isModalOpen} thumbnail={mission.thumbnail} />
     </S.Container>

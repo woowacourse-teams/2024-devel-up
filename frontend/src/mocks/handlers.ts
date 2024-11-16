@@ -197,4 +197,45 @@ export const handlers = [
   http.delete(`${API_URL}${PATH.discussions}/:id`, () => {
     return HttpResponse.json({ status: 200 });
   }),
+
+  http.post(`${API_URL}${PATH.submitSolution}`, async ({ request }) => {
+    try {
+      const { missionId, title, url, description } = (await request.json()) as {
+        missionId: number;
+        title: string;
+        url: string;
+        description: string;
+      };
+
+      const newSolution = {
+        id: mockSolutions.length + 1,
+        title,
+        description,
+        url,
+        member: {
+          id: 1,
+          email: 'email@example.com',
+          name: 'test',
+          imageUrl: 'http://example.com',
+        },
+        mission: {
+          id: missionId,
+          title: 'string',
+          language: 'string',
+          descriptionUrl: 'string',
+          thumbnail: 'string',
+          url: 'https://github.com/develup-mission/react-auth-form',
+          isStarted: 'boolean',
+          summary: 'string',
+          hashTags: [{ id: 1, name: 'zz' }],
+        },
+      };
+
+      mockSolutions.push(newSolution);
+
+      return HttpResponse.json({ data: newSolution }, { status: 201 });
+    } catch (error) {
+      return HttpResponse.json({ message: 'Invalid data' }, { status: 400 });
+    }
+  }),
 ];
