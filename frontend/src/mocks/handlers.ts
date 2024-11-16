@@ -197,8 +197,13 @@ export const handlers = [
     }
   }),
 
-  http.delete(`${API_URL}${PATH.discussions}/:id`, () => {
-    return HttpResponse.json({ status: 200 });
+  http.delete(`${API_URL}${PATH.discussions}/:id`, ({ request }) => {
+    const url = new URL(request.url);
+    const id = Number(url.pathname.split('/').pop());
+
+    const discussions = mockDiscussions.filter((discussion) => discussion.id !== id);
+
+    return HttpResponse.json({ data: discussions }, { status: 200 });
   }),
 
   http.post(`${API_URL}${PATH.submitSolution}`, async ({ request }) => {
@@ -267,7 +272,43 @@ export const handlers = [
         createdAt: '2024-11-08T16:33:56.081285',
       };
 
+      const newDiscussionDetail = {
+        id: mockDiscussions.length + 1,
+        title,
+        content,
+        hashTags: [],
+        member: {
+          id: 1,
+          email: 'test@example.com',
+          name: 'test',
+          imageUrl: 'sample.com',
+        },
+        mission: {
+          id: missionId || 0,
+          title: '미션 제목',
+          thumbnail:
+            'https://raw.githubusercontent.com/develup-mission/docs/main/image/java-order.webp',
+          summary: '  ',
+          url: 'https://github.com/develup-mission/java-order',
+          hashTags: [
+            {
+              id: 1,
+              name: 'JAVA',
+            },
+            {
+              id: 2,
+              name: '객체지향',
+            },
+            {
+              id: 3,
+              name: '클린코드',
+            },
+          ],
+        },
+      };
+
       mockDiscussions.push(newDiscussion);
+      mockDiscussion.push(newDiscussionDetail);
 
       return HttpResponse.json({ data: newDiscussion }, { status: 201 });
     } catch (error) {
