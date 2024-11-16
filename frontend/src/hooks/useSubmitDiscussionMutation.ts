@@ -3,6 +3,7 @@ import useSingleRequestMutation from './useSingleRequestMutation';
 import { ROUTES } from '../constants/routes';
 import { useNavigate } from 'react-router-dom';
 import { postDiscussionSubmit } from '@/apis/discussionAPI';
+import { discussionKeys } from './queries/keys';
 
 const SINGLE_REQUEST_ID = 'submit_discussion';
 
@@ -12,7 +13,7 @@ const useSubmitDiscussionMutation = () => {
   const { mutate: submitDiscussionMutation, isPending } = useSingleRequestMutation({
     mutationFn: postDiscussionSubmit,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['all'] }); // TODO: all, 필터링까지 캐시 무효화 잘 되는지 확인 필요 @프룬
+      queryClient.invalidateQueries({ queryKey: discussionKeys.all });
       navigate(ROUTES.discussions);
     },
     onError: (error: Error) => {
