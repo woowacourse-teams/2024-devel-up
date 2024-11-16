@@ -13,7 +13,7 @@ import { useSubmitDiscussion } from '@/hooks/useSubmitDiscussion';
 import type { HashTag } from '@/types';
 import { useSearchParams } from 'react-router-dom';
 
-export const useDiscussionSubmitHandlers = () => {
+export const useSubmitDiscussionHandlers = () => {
   const [searchParams] = useSearchParams();
   const discussionId = Number(searchParams.get('discussionId')) ?? null;
 

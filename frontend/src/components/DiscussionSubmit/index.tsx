@@ -5,7 +5,7 @@ import TagMultipleList from '../common/TagMultipleList';
 import TagList from '@/components/common/TagList';
 import * as S from './DiscussionSubmit.styled';
 import { ERROR_MESSAGE } from '@/constants/messages';
-import { useDiscussionSubmitHandlers } from '@/hooks/useSubmitDiscussionHandlers';
+import { useSubmitDiscussionHandlers } from '@/hooks/useSubmitDiscussionHandlers';
 
 export default function DiscussionSubmit() {
   const {
@@ -23,7 +23,7 @@ export default function DiscussionSubmit() {
     isValidDiscussionTitle,
     isDescriptionError,
     handleFormSubmit,
-  } = useDiscussionSubmitHandlers();
+  } = useSubmitDiscussionHandlers();
 
   return (
     <S.DiscussionSubmitContainer>
