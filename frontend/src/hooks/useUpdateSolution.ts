@@ -5,7 +5,7 @@ import { queryClient } from '..';
 import { ROUTES } from '@/constants/routes';
 import { solutionKeys } from './queries/keys';
 
-interface SolutionPatchMutationProps {
+export interface SolutionPatchMutationProps {
   solutionId: number;
   title: string;
   description: string;

@@ -18,3 +18,8 @@ export const Container = styled.div`
   animation: ${show} 0.5s;
   transition: 0.5s;
 `;
+
+export const Wrapper = styled.section`
+  max-width: 100rem;
+  margin: 0 auto;
+`;

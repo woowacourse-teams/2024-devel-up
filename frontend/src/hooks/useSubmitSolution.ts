@@ -4,7 +4,6 @@ import useSubmitSolutionMutation from './useSubmitSolutionMutation';
 import useModal from './useModal';
 import type { FormEvent } from 'react';
 import useSolutionTitle from './useSolutionTitle';
-// import extractMissionName from '@/utils/extractMissionName';
 
 interface UseSubmitSolutionParams {
   missionId: number;
@@ -13,9 +12,6 @@ interface UseSubmitSolutionParams {
 
 const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
   const { url, handleUrl, isValidUrl, isUrlError, setIsUrlError } = useUrl();
-
-  //TODO 임시 주석 처리
-  // const isMatchedMissionName = missionName === extractMissionName(url);
 
   const {
     description,
@@ -77,7 +73,6 @@ const useSubmitSolution = ({ missionId }: UseSubmitSolutionParams) => {
     isDescriptionError,
     isSolutionTitleError,
     isSubmitSolutionError,
-    // isMatchedMissionName,
   };
 };
 
