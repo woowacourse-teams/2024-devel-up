@@ -3,7 +3,7 @@ import useMission from '@/hooks/useMission';
 import useSubmitSolution from '@/hooks/useSubmitSolution';
 import useSolution from '@/hooks/useSolution';
 import useUserInfo from '@/hooks/useUserInfo';
-import { useUpdateSolution } from '@/hooks/useUpdateSolution';
+import { type SolutionPatchMutationProps, useUpdateSolution } from '@/hooks/useUpdateSolution';
 import { useInitializeInputs } from './useInitializeInputs';
 import { useFormSubmission } from './useFormSubmission';
 
@@ -54,14 +54,17 @@ export const useSubmitSolutionHandlers = () => {
   });
 
   // 폼 제출 로직
-  const handleFormSubmit = useFormSubmission({
+  const handleFormSubmit = useFormSubmission<SolutionPatchMutationProps>({
     isEditMode,
     id: solutionId,
     handleSubmit,
     patchMutation: solutionPatchMutation,
-    solutionTitle,
-    description,
-    url,
+    props: {
+      solutionId,
+      title: solutionTitle,
+      description,
+      url,
+    },
   });
 
   return {

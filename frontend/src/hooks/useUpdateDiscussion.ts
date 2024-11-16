@@ -5,7 +5,7 @@ import { queryClient } from '..';
 import { discussionKeys } from './queries/keys';
 import { ROUTES } from '@/constants/routes';
 
-interface DiscussionPatchMutationProps {
+export interface DiscussionPatchMutationProps {
   discussionId: number;
   title: string;
   content: string;

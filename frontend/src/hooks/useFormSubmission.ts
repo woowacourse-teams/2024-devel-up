@@ -1,33 +1,27 @@
 import { useCallback } from 'react';
-import type { SolutionPatchMutationProps } from './useUpdateSolution';
 
-interface FormSubmissionParams {
+interface FormSubmissionParams<T> {
   isEditMode: boolean;
   id: number;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  patchMutation: (props: SolutionPatchMutationProps) => void;
-  solutionTitle: string;
-  description: string;
-  url: string;
+  patchMutation: (props: T) => void;
+  props: T;
 }
 
-export const useFormSubmission = ({
+export const useFormSubmission = <T>({
   isEditMode,
   id,
   handleSubmit,
   patchMutation,
-  solutionTitle,
-  description,
-  url,
-}: FormSubmissionParams) => {
+  props,
+}: FormSubmissionParams<T>) => {
+  console.log(isEditMode);
   const handleEditSubmit = useCallback(() => {
     patchMutation({
-      solutionId: id,
-      title: solutionTitle,
-      description,
-      url,
+      ...props,
+      id,
     });
-  }, [id, patchMutation, solutionTitle, description, url]);
+  }, [patchMutation, props, id]);
 
   const handleFormSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {

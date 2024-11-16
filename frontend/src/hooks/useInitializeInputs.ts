@@ -27,7 +27,7 @@ export const useInitializeInputs = ({
 }: InitializeInputsParams) => {
   const setInitialInputValues = useCallback(() => {
     if (!isEditMode || member?.id !== userInfo?.id) return;
-
+    
     if (inputTitle)
       handleTitle({ target: { value: inputTitle } } as React.ChangeEvent<HTMLInputElement>);
     if (inputDescription)

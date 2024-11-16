@@ -3,7 +3,7 @@ import { discussionKeys } from './queries/keys';
 import type { DiscussionDetail } from '@/types/discussion';
 import { getDiscussionById } from '@/apis/discussionAPI';
 
-const useDiscussion = (discussionId?: number) => {
+const useDiscussion = (discussionId: number) => {
   const { data } = useQuery<DiscussionDetail>({
     queryKey: discussionKeys.detail(discussionId || 0),
     queryFn: discussionId ? () => getDiscussionById(discussionId) : undefined,
