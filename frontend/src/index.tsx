@@ -40,7 +40,7 @@ const UserProfilePage = lazy(() => import('./pages/UserProfilePage'));
 
 // 미션
 const MissionDetailPage = lazy(() => import('./pages/MissionDetailPage'));
-const MissionSubmitPage = lazy(() => import('./pages/MissionSubmitPage'));
+const MissionSubmitPage = lazy(() => import('./pages/MissionSubmitPage/MissionSubmitPage'));
 const MissionListPage = lazy(() => import('./pages/MissionListPage'));
 
 // 풀이 (솔루션)

@@ -20,6 +20,6 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.section`
-  maxwidth: 100rem;
+  max-width: 100rem;
   margin: 0 auto;
-`
+`;
