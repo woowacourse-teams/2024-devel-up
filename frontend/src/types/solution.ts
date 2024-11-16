@@ -1,6 +1,6 @@
 import type { Mission } from '.';
 
-interface Member {
+export interface Member {
   id: number;
   email: string;
   name: string;
